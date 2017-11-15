@@ -41,9 +41,9 @@ namespace EDU.Web.Controllers
             eduProduct.ProductDescription = eduProduct.ProductName;
 
             eduProduct.CreatedBy = USER_ID;
-            eduProduct.CreatedOn = UTILITY.SINGAPORETIME;
+            //eduProduct.CreatedOn = UTILITY.SINGAPORETIME;
             eduProduct.ModifiedBy = USER_ID;
-            eduProduct.ModifiedOn = UTILITY.SINGAPORETIME;
+            //eduProduct.ModifiedOn = UTILITY.SINGAPORETIME;
             if (!IsEduProductExists(eduProduct.ProductName))
             {
                 var result = new EduProductBO().SaveEduProduct(eduProduct);
@@ -66,6 +66,37 @@ namespace EDU.Web.Controllers
         public bool IsEduProductExists(string productName)
         {
             return new EduProductBO().IsEduProductExists(new EduProduct { ProductName = productName });
+        }
+
+        #endregion
+        #region Course
+        [HttpGet]
+        public ViewResult CourseList()
+        {
+            var list = new CourseBO().GetList().AsEnumerable();
+            return View("CourseList", list);
+        }
+        [HttpGet]
+        public PartialViewResult Course(int? Id)
+        {
+            ViewData["ProductData"] = new EduProductBO().GetList();
+            ViewData["CountryData"] = new BranchBO().GetList();
+            if (!Id.HasValue)
+            {
+                ViewBag.Title = "New Course";
+                return PartialView(new Course { Id = -1, IsActive = true });
+            }
+            else
+            {
+                ViewBag.Title = "Update Course";
+                return PartialView(new CourseBO().GetCourse(new Course { Id = Id.Value }));
+            }
+        }
+        [HttpGet]
+        public ViewResult CourseSalesMasterList()
+        {
+            return View("CourseSalesMasterList",
+                new CourseSalesMasterBO().GetList().AsEnumerable());
         }
 
         #endregion

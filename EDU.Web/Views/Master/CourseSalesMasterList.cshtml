@@ -1,0 +1,114 @@
+﻿@using System.Globalization;
+@model IEnumerable<EZY.EDU.Contract.CourseSalesMasterViewModel>
+@{
+    ViewBag.Title = "CourseSalesMasterList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@functions {
+    public string GetMonthById(int id)
+    {
+        var monthData = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
+
+        var month = id == 0 ? null : monthData[id - 1];
+        return month;
+    }
+
+    public string CheckString(string remarks)
+    {
+        return remarks.Replace(System.Environment.NewLine, "<br/>");
+    }
+}
+
+<div class="page">
+    <div class="box box-primary panel-hovered panel">
+        <div class="box-header">
+            <h4 class="box-title"><i class="ion ion-ios-book"></i>&nbsp;Regional Leads List</h4>
+            <div class="box-tools">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=-1")'">Add New Regional Lead</button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table class="table table-condensed table-bordered" id="tblProducts">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Product</th>
+                        <th>Course</th>
+                        <th>No Of Days</th>
+                        <th>Month</th>
+                        <th>Start Dt</th>
+                        <th>End Dt</th>
+                        <th>Min. Reg</th>
+                        <th>Leads on hand</th>
+                        <th>Registered</th>
+                        <th>Avl. Seats</th>
+                        <th>Reg. Closing Dt</th>
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
+                            <th style="width: 10%;text-align:center;">#Action</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Count(); i++)
+                    {
+                        <tr>
+                            <td>@Model.ElementAt(i).CountryName</td>
+                            <td>@Model.ElementAt(i).ProductName</td>
+                            <td>@Model.ElementAt(i).CourseName</td>
+                            <td align="center">@Model.ElementAt(i).NoOfDays</td>
+                            <td>@GetMonthById(Model.ElementAt(i).Month == null ? 0 : Model.ElementAt(i).Month.Value + 1)</td>
+                            <td align="center">@(@Model.ElementAt(i).StartDate == null ? null : Model.ElementAt(i).StartDate.Value.ToString("dd/MM/yyyy"))</td>
+                            <td align="center">@(Model.ElementAt(i).EndDate == null ? null : Model.ElementAt(i).EndDate.Value.ToString("dd/MM/yyyy"))</td>
+                            <td align="center">@Model.ElementAt(i).MinimumReg</td>
+                            <td align="center">
+                                @if (string.IsNullOrWhiteSpace(Model.ElementAt(i).LeadsOnHeadRemarks))
+                                {
+                                    <span>@Model.ElementAt(i).LeadsOnHead</span>
+                                }
+                                else
+                                {
+                                    <a style="cursor:pointer;text-decoration:underline;">
+                                        <span data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(Model.ElementAt(i).LeadsOnHeadRemarks)">@Model.ElementAt(i).LeadsOnHead</span>
+                                    </a>
+                                }
+
+                            </td>
+                            <td align="center">
+                                @if (string.IsNullOrWhiteSpace(Model.ElementAt(i).RegisteredRemarks))
+                                {
+                                    <span>@Model.ElementAt(i).RegisteredRemarks</span>
+                                }
+                                else
+                                {
+                                    <a style="cursor:pointer;text-decoration:underline;">
+                                        <span data-toggle="popover" data-html="true" data-title="Registration Details" data-content="@CheckString(Model.ElementAt(i).RegisteredRemarks)">@Model.ElementAt(i).Registered</span>
+                                    </a>
+                                }
+
+                            </td>
+                            <td align="center">@Model.ElementAt(i).AvailableSeats</td>
+                            <td align="center">@Model.ElementAt(i).RegClosingDate.ToString("dd/MM/yyyy")</td>
+                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                            {
+                                <td style="width: 10%;text-align:center;">
+                                    <button style="margin-top:-10px;" class="btn btn-primary btn-sm" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + Model.ElementAt(i).Id)'"><i class="fa fa-pencil-square-o"></i></button>
+                                    <button style="margin-top:-10px;" class="btn btn-danger btn-sm" onclick="DeleteCourseSalesMaster(@Model.ElementAt(i).Id)"><i class="fa fa-trash-o"></i></button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section SectionScripts{
+    <script type="text/javascript">
+        $(function()
+        {
+            $('liRegionalLeads').addClass('active')
+        })
+    </script>
+    }

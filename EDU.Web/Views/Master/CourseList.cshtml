@@ -1,17 +1,27 @@
-﻿@model IEnumerable<EZY.EDU.Contract.EduProduct>
+﻿@model IEnumerable<EZY.EDU.Contract.CourseVm>
+@{
+    ViewBag.Title = "CourseList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <div class="page">
     <div class="box box-primary panel-hovered panel">
         <div class="box-header">
-            <h4 class="box-title"><i class="ion ion-ios-book"></i>&nbsp;Edu Product List</h4>
+            <h4 class="box-title"><i class="ion ion-ios-book"></i>&nbsp;Course List</h4>
             <div class="box-tools">
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" onclick="AddEduProduct()">Add New Product</button>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" onclick="AddCourse()">Add New Course</button>
             </div>
         </div>
         <div class="box-body">
             <table class="table table-condensed table-bordered" id="tblProducts">
                 <thead>
                     <tr>
-                        <th>Product Name</th>
+                        <th>Product</th>
+                        <th>Course Name</th>
+                        <th>No Of Days</th>
+                        <th>Country</th>
+                        <th>Public Price</th>
+                        <th>Private Price</th>
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
                             <th>#Action</th>
@@ -23,11 +33,16 @@
                     {
                         <tr>
                             <td>@Model.ElementAt(i).ProductName</td>
+                            <td>@Model.ElementAt(i).CourseName</td>
+                            <td align="center">@Model.ElementAt(i).NoOfDays</td>
+                            <td>@Model.ElementAt(i).CountryName</td>
+                            <td align="center">@(Model.ElementAt(i).PublicPrice.ToString("0.00") == "0.00" ? "N/A" : Model.ElementAt(i).PublicPrice.ToString("0.00"))</td>
+                            <td align="center">@(Model.ElementAt(i).PrivatePrice.ToString("0.00") == "0.00" ? "N/A" : Model.ElementAt(i).PrivatePrice.ToString("0.00"))</td>
                             @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                             {
                                 <td>
-                                    <button class="btn btn-success waves-effect btn-xs" onclick="EditEduProduct(@Model.ElementAt(i).Id)"><i class="fa fa-pencil-square-o"></i></button>
-                                    <button class="btn btn-danger waves-effect btn-xs" onclick="DeleteProductCategory(@Model.ElementAt(i).Id)"><i class="fa fa-trash-o"></i></button>
+                                    <button class="btn btn-primary btn-sm" onclick="EditCourse(@Model.ElementAt(i).Id)"><i class="fa fa-pencil-square-o"></i></button>
+                                    <button class="btn btn-danger btn-sm" onclick="DeleteEduCourse(@Model.ElementAt(i).Id)"><i class="fa fa-trash-o"></i></button>
                                 </td>
                             }
                         </tr>
@@ -37,64 +52,46 @@
         </div>
     </div>
 </div>
-@using (Html.BeginForm("SaveEduProduct", "Master", FormMethod.Post, new { id = "frmEduProduct", name = "frmEduProduct" }))
+@using (Html.BeginForm("SaveCourse", "Master", FormMethod.Post, new { id = "frmEduProduct", name = "frmEduProduct" }))
 {
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
 }
+
 @section SectionScripts{
     <script type="text/javascript">
         $(function () {
-            $('#liEduProductList').addClass('active');
+            $('#liCourse').addClass('active');
         });
-
-        function AddEduProduct() {
-            $.ajax({
-                url: '@Url.Content("~/Master/EduProduct")',
-                method: 'get',
-                contentType: 'text/html',
-                success: function (html) {
-                    debugger;
-                    $('#myModal').html(html);
-                    $('#myModal').modal('show');
-                },
-                error: function (err) {
-
-                }
-            });
-        }
-        function EditEduProduct(Id) {
-            $.ajax({
-                url: '@Url.Content("~/Master/EduProduct?Id=")' + Id,
-                method: 'get',
-                contentType: 'text/html',
-                success: function (html) {
-                    $('#myModal').html(html);
-                    $('#myModal').modal('show');
-                },
-                error: function (err) {
-
-                }
-            });
-        }
-
-        $('#frmEduProduct').validate({
-            rules: {
-                ProductName:
-                    {
-                        required: true
-                    }
-            }
-        })
-        function SaveEduProduct() {
+        function AddCourse() {
             debugger;
-            if ($('#frmEduProduct').valid())
-            {
-                $('#frmEduProduct').submit();
-            }
-        };
+            $.ajax({
+                url: '@Url.Content("~/Master/Course")',
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
 
-    </script>
+                }
+            });
+        }
+        function EditCourse(Id) {
+            $.ajax({
+                url: '@Url.Content("~/Master/Course?Id=")' + Id,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+</script>
 }
-
