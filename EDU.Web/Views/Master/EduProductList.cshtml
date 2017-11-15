@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EZY.EDU.Contract.EduProduct>
+@{
+    ViewBag.Title = "EduProductList";
+}
+
+<div class="page">
+    <div class="box box-primary panel-hovered panel">
+        <div class="box-header">
+            <h4 class="box-title"><i class="ion ion-ios-book"></i>&nbsp;Edu Product List</h4>
+            <div class="box-tools">
+
+            </div>
+        </div>
+        <div class="box-body">
+            <table class="table table-condensed table-bordered" id="tblProducts">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
+                            <th>#Action</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Count(); i++)
+                    {
+                        <tr>
+                            <td>@Model.ElementAt(i).ProductName</td>
+                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                            {
+                                <td>
+                                    <button class="btn btn-success waves-effect btn-xs" onclick="EditEduProduct(@Model.ElementAt(i).Id)"><i class="fa fa-pencil-square-o"></i></button>
+                                    <button class="btn btn-danger waves-effect btn-xs" onclick="DeleteProductCategory(@Model.ElementAt(i).Id)"><i class="fa fa-trash-o"></i></button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+@section SectionScripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#liEduProductList').addClass('active');
+        });
+    </script>
+}
+

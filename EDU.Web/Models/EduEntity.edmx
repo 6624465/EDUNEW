@@ -1,0 +1,1321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_9F30C5_edudevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Lookup">
+          <Key>
+            <PropertyRef Name="LookupID" />
+          </Key>
+          <Property Name="LookupID" Type="smallint" Nullable="false" />
+          <Property Name="LookupCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LookupDescription" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LookupCategory" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="ISOCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="MappingCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="255" />
+          <Property Name="CourseDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="NoOfDays" Type="smallint" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="AvailableSeats" Type="smallint" Nullable="false" />
+          <Property Name="PublicPrice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="PrivatePrice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="CourseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Month" Type="smallint" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Product" Type="int" Nullable="false" />
+          <Property Name="Course" Type="int" Nullable="false" />
+          <Property Name="Particulars" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Days" Type="smallint" Nullable="false" />
+          <Property Name="NoPax" Type="smallint" Nullable="false" />
+          <Property Name="LabRental" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="SalesRev" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TrainerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DeliveredBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="Airfare" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Hotel" Type="nvarchar" MaxLength="100" />
+          <Property Name="TrainerFee" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="MISCLocal" Type="nvarchar" MaxLength="50" />
+          <Property Name="RegionalExpenses" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CourseMaterial" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalExp" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Profit" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Percentage" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RegionInvoice" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CourseSalesMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="Product" Type="int" Nullable="false" />
+          <Property Name="Course" Type="int" Nullable="false" />
+          <Property Name="NoOfDays" Type="smallint" Nullable="false" />
+          <Property Name="Month" Type="smallint" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="MinimumReg" Type="smallint" Nullable="false" />
+          <Property Name="LeadsOnHead" Type="smallint" Nullable="false" />
+          <Property Name="Registered" Type="smallint" Nullable="false" />
+          <Property Name="AvailableSeats" Type="smallint" Nullable="false" />
+          <Property Name="RegClosingDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="LeadsOnHeadRemarks" Type="nvarchar" MaxLength="255" />
+          <Property Name="RegisteredRemarks" Type="nvarchar" MaxLength="255" />
+          <Property Name="TOD" Type="bit" />
+          <Property Name="LVC" Type="bit" />
+          <Property Name="IsConfirm" Type="bit" />
+          <Property Name="ILT" Type="bit" />
+        </EntityType>
+        <EntityType Name="CustomerPayments">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderId" Type="nvarchar" MaxLength="250" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="InvoiceValue" Type="nvarchar" MaxLength="500" />
+          <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OtherRecievables" Type="nvarchar" MaxLength="250" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="RecieptDate" Type="datetime" />
+          <Property Name="ReferenceDocument" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="RegistrationId" />
+          </Key>
+          <Property Name="RegistrationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OracleDataBase" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="WHT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment1" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="20" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Product" Type="nvarchar" MaxLength="50" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="TrainerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Revenue">
+          <Key>
+            <PropertyRef Name="RevenueId" />
+          </Key>
+          <Property Name="RevenueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="Product" Type="int" Nullable="false" />
+          <Property Name="CurrencyCode" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="CurrencyExRate" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="YearlyTarget" Type="int" Nullable="false" />
+          <Property Name="HalfYearlyTarget" Type="int" Nullable="false" />
+          <Property Name="QuarterlyTarget" Type="int" Nullable="false" />
+          <Property Name="MonthlyTarget" Type="int" Nullable="false" />
+          <Property Name="YearlyTargetAmt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="HalfYearlyTargetAmt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="QuarterlyTargetAmt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="MonthlyTargetAmt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="TrainerInformation">
+          <Key>
+            <PropertyRef Name="TrianerId" />
+          </Key>
+          <Property Name="TrianerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Technology" Type="nvarchar" MaxLength="100" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="Profile" Type="nvarchar" MaxLength="50" />
+          <Property Name="TrainerRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="VendorName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="20" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="TrainerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressLinkID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SeqNo" Type="smallint" Nullable="false" />
+          <Property Name="AddressType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address3" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address4" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="TelNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FaxNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="WebSite" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsBilling" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RegNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CompanyCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AddressID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyCode" />
+          </Key>
+          <Property Name="CompanyCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RegNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Logo" Type="image" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="AddressID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryCode" />
+          </Key>
+          <Property Name="CountryCode" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="BranchID" />
+            <PropertyRef Name="CustomerCode" />
+          </Key>
+          <Property Name="BranchID" Type="smallint" Nullable="false" />
+          <Property Name="CustomerCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CustomerType" Type="smallint" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="255" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="255" />
+          <Property Name="State" Type="nvarchar" MaxLength="100" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="2" />
+          <Property Name="PostCode" Type="varchar" MaxLength="25" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="FaxNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ContactPerson" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobilePhoneNumber" Type="varchar" MaxLength="25" />
+          <Property Name="EmailID" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserBranch">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="BranchID" Type="smallint" Nullable="false" />
+          <Property Name="CompanyCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RoleRights">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+            <PropertyRef Name="SecurableItem" />
+          </Key>
+          <Property Name="RoleCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SecurableItem" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="RoleDescription" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Securables">
+          <Key>
+            <PropertyRef Name="SecurableItem" />
+          </Key>
+          <Property Name="SecurableItem" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="GroupID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ActionType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Sequence" Type="int" Nullable="false" />
+          <Property Name="ParentSequence" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRights">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="SecurableItem" />
+            <PropertyRef Name="Permission" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SecurableItem" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Permission" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="LogInStatus" Type="bit" Nullable="false" />
+          <Property Name="LastLogInOn" Type="datetime" Nullable="false" />
+          <Property Name="RoleCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentNumberDetail">
+          <Key>
+            <PropertyRef Name="BranchID" />
+            <PropertyRef Name="DocumentKey" />
+            <PropertyRef Name="YearNo" />
+          </Key>
+          <Property Name="BranchID" Type="smallint" Nullable="false" />
+          <Property Name="DocumentKey" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="YearNo" Type="smallint" Nullable="false" />
+          <Property Name="January" Type="bigint" Nullable="false" />
+          <Property Name="February" Type="bigint" Nullable="false" />
+          <Property Name="March" Type="bigint" Nullable="false" />
+          <Property Name="April" Type="bigint" Nullable="false" />
+          <Property Name="May" Type="bigint" Nullable="false" />
+          <Property Name="June" Type="bigint" Nullable="false" />
+          <Property Name="July" Type="bigint" Nullable="false" />
+          <Property Name="August" Type="bigint" Nullable="false" />
+          <Property Name="September" Type="bigint" Nullable="false" />
+          <Property Name="October" Type="bigint" Nullable="false" />
+          <Property Name="November" Type="bigint" Nullable="false" />
+          <Property Name="December" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentNumberHeader">
+          <Key>
+            <PropertyRef Name="BranchID" />
+            <PropertyRef Name="DocumentID" />
+            <PropertyRef Name="DocumentKey" />
+          </Key>
+          <Property Name="BranchID" Type="smallint" Nullable="false" />
+          <Property Name="DocumentID" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="DocumentKey" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DocumentPrefix" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumberLength" Type="smallint" Nullable="false" />
+          <Property Name="LastNumber" Type="smallint" Nullable="false" />
+          <Property Name="UseCompany" Type="bit" Nullable="false" />
+          <Property Name="UseBranch" Type="bit" Nullable="false" />
+          <Property Name="UseYear" Type="bit" Nullable="false" />
+          <Property Name="UseMonth" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DB_9F30C5_edudevModelStoreContainer">
+          <EntitySet Name="Lookup" EntityType="Self.Lookup" Schema="Config" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="CourseDetail" EntityType="Self.CourseDetail" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="CourseSalesMaster" EntityType="Self.CourseSalesMaster" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayments" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="Registration" EntityType="Self.Registration" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="TrainerInformation" EntityType="Self.TrainerInformation" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="UserBranch" EntityType="Self.UserBranch" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="RoleRights" EntityType="Self.RoleRights" Schema="Security" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Security" store:Type="Tables" />
+          <EntitySet Name="Securables" EntityType="Self.Securables" Schema="Security" store:Type="Tables" />
+          <EntitySet Name="UserRights" EntityType="Self.UserRights" Schema="Security" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="Security" store:Type="Tables" />
+          <EntitySet Name="DocumentNumberDetail" EntityType="Self.DocumentNumberDetail" Schema="Utility" store:Type="Tables" />
+          <EntitySet Name="DocumentNumberHeader" EntityType="Self.DocumentNumberHeader" Schema="Utility" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_9F30C5_edudevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Lookup">
+          <Key>
+            <PropertyRef Name="LookupID" />
+          </Key>
+          <Property Name="LookupID" Type="Int16" Nullable="false" />
+          <Property Name="LookupCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LookupDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LookupCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="ISOCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MappingCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CourseDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NoOfDays" Type="Int16" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AvailableSeats" Type="Int16" Nullable="false" />
+          <Property Name="PublicPrice" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="PrivatePrice" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CourseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Month" Type="Int16" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="Course" Type="Int32" Nullable="false" />
+          <Property Name="Particulars" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Days" Type="Int16" Nullable="false" />
+          <Property Name="NoPax" Type="Int16" Nullable="false" />
+          <Property Name="LabRental" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="SalesRev" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TrainerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveredBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Airfare" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Hotel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerFee" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="MISCLocal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RegionalExpenses" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CourseMaterial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalExp" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Profit" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Percentage" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RegionInvoice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CourseSalesMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="Course" Type="Int32" Nullable="false" />
+          <Property Name="NoOfDays" Type="Int16" Nullable="false" />
+          <Property Name="Month" Type="Int16" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="MinimumReg" Type="Int16" Nullable="false" />
+          <Property Name="LeadsOnHead" Type="Int16" Nullable="false" />
+          <Property Name="Registered" Type="Int16" Nullable="false" />
+          <Property Name="AvailableSeats" Type="Int16" Nullable="false" />
+          <Property Name="RegClosingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="LeadsOnHeadRemarks" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RegisteredRemarks" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TOD" Type="Boolean" />
+          <Property Name="LVC" Type="Boolean" />
+          <Property Name="IsConfirm" Type="Boolean" />
+          <Property Name="ILT" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CustomerPayment">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherRecievables" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="RecieptDate" Type="DateTime" Precision="3" />
+          <Property Name="ReferenceDocument" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="RegistrationId" />
+          </Key>
+          <Property Name="RegistrationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OracleDataBase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="WHT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Revenue">
+          <Key>
+            <PropertyRef Name="RevenueId" />
+          </Key>
+          <Property Name="RevenueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrencyExRate" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="YearlyTarget" Type="Int32" Nullable="false" />
+          <Property Name="HalfYearlyTarget" Type="Int32" Nullable="false" />
+          <Property Name="QuarterlyTarget" Type="Int32" Nullable="false" />
+          <Property Name="MonthlyTarget" Type="Int32" Nullable="false" />
+          <Property Name="YearlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="HalfYearlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="QuarterlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="MonthlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="TrainerInformation">
+          <Key>
+            <PropertyRef Name="TrianerId" />
+          </Key>
+          <Property Name="TrianerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Technology" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Profile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressLinkID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SeqNo" Type="Int16" Nullable="false" />
+          <Property Name="AddressType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StateName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CountryCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TelNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FaxNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WebSite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsBilling" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RegNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CompanyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddressID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyCode" />
+          </Key>
+          <Property Name="CompanyCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="AddressID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryCode" />
+          </Key>
+          <Property Name="CountryCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="BranchID" />
+            <PropertyRef Name="CustomerCode" />
+          </Key>
+          <Property Name="BranchID" Type="Int16" Nullable="false" />
+          <Property Name="CustomerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerType" Type="Int16" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CountryCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="PostCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FaxNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobilePhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserBranch">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BranchID" Type="Int16" Nullable="false" />
+          <Property Name="CompanyCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RoleRight">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+            <PropertyRef Name="SecurableItem" />
+          </Key>
+          <Property Name="RoleCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SecurableItem" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Securable">
+          <Key>
+            <PropertyRef Name="SecurableItem" />
+          </Key>
+          <Property Name="SecurableItem" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GroupID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActionType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" />
+          <Property Name="ParentSequence" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRight">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="SecurableItem" />
+            <PropertyRef Name="Permission" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SecurableItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Permission" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LogInStatus" Type="Boolean" Nullable="false" />
+          <Property Name="LastLogInOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RoleCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="DocumentNumberDetail">
+          <Key>
+            <PropertyRef Name="BranchID" />
+            <PropertyRef Name="DocumentKey" />
+            <PropertyRef Name="YearNo" />
+          </Key>
+          <Property Name="BranchID" Type="Int16" Nullable="false" />
+          <Property Name="DocumentKey" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YearNo" Type="Int16" Nullable="false" />
+          <Property Name="January" Type="Int64" Nullable="false" />
+          <Property Name="February" Type="Int64" Nullable="false" />
+          <Property Name="March" Type="Int64" Nullable="false" />
+          <Property Name="April" Type="Int64" Nullable="false" />
+          <Property Name="May" Type="Int64" Nullable="false" />
+          <Property Name="June" Type="Int64" Nullable="false" />
+          <Property Name="July" Type="Int64" Nullable="false" />
+          <Property Name="August" Type="Int64" Nullable="false" />
+          <Property Name="September" Type="Int64" Nullable="false" />
+          <Property Name="October" Type="Int64" Nullable="false" />
+          <Property Name="November" Type="Int64" Nullable="false" />
+          <Property Name="December" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentNumberHeader">
+          <Key>
+            <PropertyRef Name="BranchID" />
+            <PropertyRef Name="DocumentID" />
+            <PropertyRef Name="DocumentKey" />
+          </Key>
+          <Property Name="BranchID" Type="Int16" Nullable="false" />
+          <Property Name="DocumentID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DocumentKey" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DocumentPrefix" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumberLength" Type="Int16" Nullable="false" />
+          <Property Name="LastNumber" Type="Int16" Nullable="false" />
+          <Property Name="UseCompany" Type="Boolean" Nullable="false" />
+          <Property Name="UseBranch" Type="Boolean" Nullable="false" />
+          <Property Name="UseYear" Type="Boolean" Nullable="false" />
+          <Property Name="UseMonth" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="DB_9F30C5_edudevEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Lookups" EntityType="Self.Lookup" />
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="CourseDetails" EntityType="Self.CourseDetail" />
+          <EntitySet Name="CourseSalesMasters" EntityType="Self.CourseSalesMaster" />
+          <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayment" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Registrations" EntityType="Self.Registration" />
+          <EntitySet Name="Revenues" EntityType="Self.Revenue" />
+          <EntitySet Name="TrainerInformations" EntityType="Self.TrainerInformation" />
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Branches" EntityType="Self.Branch" />
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="UserBranches" EntityType="Self.UserBranch" />
+          <EntitySet Name="RoleRights" EntityType="Self.RoleRight" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Securables" EntityType="Self.Securable" />
+          <EntitySet Name="UserRights" EntityType="Self.UserRight" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="DocumentNumberDetails" EntityType="Self.DocumentNumberDetail" />
+          <EntitySet Name="DocumentNumberHeaders" EntityType="Self.DocumentNumberHeader" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_9F30C5_edudevModelStoreContainer" CdmEntityContainer="DB_9F30C5_edudevEntities">
+          <EntitySetMapping Name="Lookups">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Lookup">
+              <MappingFragment StoreEntitySet="Lookup">
+                <ScalarProperty Name="LookupID" ColumnName="LookupID" />
+                <ScalarProperty Name="LookupCode" ColumnName="LookupCode" />
+                <ScalarProperty Name="LookupDescription" ColumnName="LookupDescription" />
+                <ScalarProperty Name="LookupCategory" ColumnName="LookupCategory" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ISOCode" ColumnName="ISOCode" />
+                <ScalarProperty Name="MappingCode" ColumnName="MappingCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseDescription" ColumnName="CourseDescription" />
+                <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="AvailableSeats" ColumnName="AvailableSeats" />
+                <ScalarProperty Name="PublicPrice" ColumnName="PublicPrice" />
+                <ScalarProperty Name="PrivatePrice" ColumnName="PrivatePrice" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseDetails">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CourseDetail">
+              <MappingFragment StoreEntitySet="CourseDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="NoPax" ColumnName="NoPax" />
+                <ScalarProperty Name="LabRental" ColumnName="LabRental" />
+                <ScalarProperty Name="SalesRev" ColumnName="SalesRev" />
+                <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
+                <ScalarProperty Name="DeliveredBy" ColumnName="DeliveredBy" />
+                <ScalarProperty Name="Airfare" ColumnName="Airfare" />
+                <ScalarProperty Name="Hotel" ColumnName="Hotel" />
+                <ScalarProperty Name="TrainerFee" ColumnName="TrainerFee" />
+                <ScalarProperty Name="MISCLocal" ColumnName="MISCLocal" />
+                <ScalarProperty Name="RegionalExpenses" ColumnName="RegionalExpenses" />
+                <ScalarProperty Name="CourseMaterial" ColumnName="CourseMaterial" />
+                <ScalarProperty Name="TotalExp" ColumnName="TotalExp" />
+                <ScalarProperty Name="Profit" ColumnName="Profit" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="RegionInvoice" ColumnName="RegionInvoice" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseSalesMasters">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CourseSalesMaster">
+              <MappingFragment StoreEntitySet="CourseSalesMaster">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="MinimumReg" ColumnName="MinimumReg" />
+                <ScalarProperty Name="LeadsOnHead" ColumnName="LeadsOnHead" />
+                <ScalarProperty Name="Registered" ColumnName="Registered" />
+                <ScalarProperty Name="AvailableSeats" ColumnName="AvailableSeats" />
+                <ScalarProperty Name="RegClosingDate" ColumnName="RegClosingDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="LeadsOnHeadRemarks" ColumnName="LeadsOnHeadRemarks" />
+                <ScalarProperty Name="RegisteredRemarks" ColumnName="RegisteredRemarks" />
+                <ScalarProperty Name="TOD" ColumnName="TOD" />
+                <ScalarProperty Name="LVC" ColumnName="LVC" />
+                <ScalarProperty Name="IsConfirm" ColumnName="IsConfirm" />
+                <ScalarProperty Name="ILT" ColumnName="ILT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerPayments">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CustomerPayment">
+              <MappingFragment StoreEntitySet="CustomerPayments">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="InvoiceValue" ColumnName="InvoiceValue" />
+                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+                <ScalarProperty Name="OtherRecievables" ColumnName="OtherRecievables" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="RecieptDate" ColumnName="RecieptDate" />
+                <ScalarProperty Name="ReferenceDocument" ColumnName="ReferenceDocument" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registrations">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Registration">
+              <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="RegistrationId" ColumnName="RegistrationId" />
+                <ScalarProperty Name="OracleDataBase" ColumnName="OracleDataBase" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="WHT" ColumnName="WHT" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="Payment1" ColumnName="Payment1" />
+                <ScalarProperty Name="Payment2" ColumnName="Payment2" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Revenues">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Revenue">
+              <MappingFragment StoreEntitySet="Revenue">
+                <ScalarProperty Name="RevenueId" ColumnName="RevenueId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="CurrencyExRate" ColumnName="CurrencyExRate" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="YearlyTarget" ColumnName="YearlyTarget" />
+                <ScalarProperty Name="HalfYearlyTarget" ColumnName="HalfYearlyTarget" />
+                <ScalarProperty Name="QuarterlyTarget" ColumnName="QuarterlyTarget" />
+                <ScalarProperty Name="MonthlyTarget" ColumnName="MonthlyTarget" />
+                <ScalarProperty Name="YearlyTargetAmt" ColumnName="YearlyTargetAmt" />
+                <ScalarProperty Name="HalfYearlyTargetAmt" ColumnName="HalfYearlyTargetAmt" />
+                <ScalarProperty Name="QuarterlyTargetAmt" ColumnName="QuarterlyTargetAmt" />
+                <ScalarProperty Name="MonthlyTargetAmt" ColumnName="MonthlyTargetAmt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainerInformations">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainerInformation">
+              <MappingFragment StoreEntitySet="TrainerInformation">
+                <ScalarProperty Name="TrianerId" ColumnName="TrianerId" />
+                <ScalarProperty Name="Technology" ColumnName="Technology" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Profile" ColumnName="Profile" />
+                <ScalarProperty Name="TrainerRate" ColumnName="TrainerRate" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="AddressLinkID" ColumnName="AddressLinkID" />
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="Address4" ColumnName="Address4" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="TelNo" ColumnName="TelNo" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+                <ScalarProperty Name="IsBilling" ColumnName="IsBilling" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="RegNo" ColumnName="RegNo" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="RegNo" ColumnName="RegNo" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="MobilePhoneNumber" ColumnName="MobilePhoneNumber" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserBranches">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.UserBranch">
+              <MappingFragment StoreEntitySet="UserBranch">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleRights">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.RoleRight">
+              <MappingFragment StoreEntitySet="RoleRights">
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+                <ScalarProperty Name="SecurableItem" ColumnName="SecurableItem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Securables">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Securable">
+              <MappingFragment StoreEntitySet="Securables">
+                <ScalarProperty Name="SecurableItem" ColumnName="SecurableItem" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ActionType" ColumnName="ActionType" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="ParentSequence" ColumnName="ParentSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRights">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.UserRight">
+              <MappingFragment StoreEntitySet="UserRights">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SecurableItem" ColumnName="SecurableItem" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="LogInStatus" ColumnName="LogInStatus" />
+                <ScalarProperty Name="LastLogInOn" ColumnName="LastLogInOn" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentNumberDetails">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.DocumentNumberDetail">
+              <MappingFragment StoreEntitySet="DocumentNumberDetail">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="DocumentKey" ColumnName="DocumentKey" />
+                <ScalarProperty Name="YearNo" ColumnName="YearNo" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentNumberHeaders">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.DocumentNumberHeader">
+              <MappingFragment StoreEntitySet="DocumentNumberHeader">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+                <ScalarProperty Name="DocumentKey" ColumnName="DocumentKey" />
+                <ScalarProperty Name="DocumentPrefix" ColumnName="DocumentPrefix" />
+                <ScalarProperty Name="NumberLength" ColumnName="NumberLength" />
+                <ScalarProperty Name="LastNumber" ColumnName="LastNumber" />
+                <ScalarProperty Name="UseCompany" ColumnName="UseCompany" />
+                <ScalarProperty Name="UseBranch" ColumnName="UseBranch" />
+                <ScalarProperty Name="UseYear" ColumnName="UseYear" />
+                <ScalarProperty Name="UseMonth" ColumnName="UseMonth" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
