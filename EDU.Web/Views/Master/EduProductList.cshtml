@@ -106,6 +106,34 @@
                 $('#frmEduProduct').submit();
             }
         };
+        function ValidateByProductName() {
+            var def = $.Deferred();
+            $.ajax({
+                url: '@Url.Content("~/Master/IsEduProductExists?productName=")' + $('#ProductName').val(),
+                method: 'get',
+                contentType: 'text/html',
+                success: function (result) {
+                    def.resolve(result);
+                }
+            });
+            return def.promise();
+        };
+
+
+        function ValidateProductName(isBlur) {
+            var promise = ValidateByProductName();
+            $.when(promise).done(function (result) {
+                if (isBlur) {
+                    if (result == "True") {
+                        alert("Product already exists. Please re-enter new product.");
+                        $('#ProductName').val('');
+                    }
+                }
+                else {
+                    return result
+                }
+            });
+        };
 
     </script>
 }
