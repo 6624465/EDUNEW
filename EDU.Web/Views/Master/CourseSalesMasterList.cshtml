@@ -34,15 +34,15 @@
                         <th>Country</th>
                         <th>Product</th>
                         <th>Course</th>
-                        <th>No Of Days</th>
+                        <th style="text-align:center">No Of Days</th>
                         <th>Month</th>
-                        <th>Start Dt</th>
-                        <th>End Dt</th>
-                        <th>Min. Reg</th>
-                        <th>Leads on hand</th>
-                        <th>Registered</th>
-                        <th>Avl. Seats</th>
-                        <th>Reg. Closing Dt</th>
+                        <th style="text-align:center">Start Dt</th>
+                        <th style="text-align:center">End Dt</th>
+                        <th style="text-align:center">Min. Reg</th>
+                        <th style="text-align:center">Leads on hand</th>
+                        <th style="text-align:center">Registered</th>
+                        <th style="text-align:center">Avl. Seats</th>
+                        <th style="text-align:center">Reg. Closing Dt</th>
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
                             <th style="width: 10%;text-align:center;">#Action</th>
@@ -69,7 +69,7 @@
                                 else
                                 {
                                     <a style="cursor:pointer;text-decoration:underline;">
-                                        <span data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(Model.ElementAt(i).LeadsOnHeadRemarks)">@Model.ElementAt(i).LeadsOnHead</span>
+                                        <span  class="pop" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(Model.ElementAt(i).LeadsOnHeadRemarks)" data-original-title="" title="">@Model.ElementAt(i).LeadsOnHead</span>
                                     </a>
                                 }
 
@@ -82,7 +82,7 @@
                                 else
                                 {
                                     <a style="cursor:pointer;text-decoration:underline;">
-                                        <span data-toggle="popover" data-html="true" data-title="Registration Details" data-content="@CheckString(Model.ElementAt(i).RegisteredRemarks)">@Model.ElementAt(i).Registered</span>
+                                        <span  class="pop" data-toggle="popover" data-html="true" data-title="Registration Details" data-content="@CheckString(Model.ElementAt(i).RegisteredRemarks)">@Model.ElementAt(i).Registered</span>
                                     </a>
                                 }
 
@@ -94,6 +94,7 @@
                                 <td style="width: 10%;text-align:center;">
                                     <button class="btn btn-success waves-effect btn-xs" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + Model.ElementAt(i).Id)'"><i class="fa fa-pencil-square-o"></i></button>
                                     <button class="btn btn-danger waves-effect btn-xs"  onclick="DeleteCourseSalesMaster(@Model.ElementAt(i).Id)"><i class="fa fa-trash-o"></i></button>
+                                    
                                 </td>
                             }
                         </tr>
@@ -121,5 +122,21 @@
             }
 
         }
+
+   $(".pop").popover({ trigger: "manual" , html: true, animation:false})
+    .on("mouseenter", function () {
+        var _this = this;
+        $(this).popover("show");
+        $(".popover").on("mouseleave", function () {
+            $(_this).popover('hide');
+        });
+    }).on("mouseleave", function () {
+        var _this = this;
+        setTimeout(function () {
+            if (!$(".popover:hover").length) {
+                $(_this).popover("hide");
+            }
+        }, 300);
+    });
     </script>
     }
