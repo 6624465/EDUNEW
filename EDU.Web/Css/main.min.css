@@ -153,7 +153,7 @@ a.text-purple:hover {
   -webkit-transition: 0.2s ease-in-out;
   -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
-  border: none;
+  /*border: none;*/
   border-radius: 0!important;
   border-bottom: 1px solid #e0e0e0;
   position: relative;

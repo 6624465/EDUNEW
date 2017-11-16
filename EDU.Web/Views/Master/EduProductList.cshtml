@@ -46,6 +46,7 @@
 @section SectionScripts{
     <script type="text/javascript">
         $(function () {
+            debugger;
             $('#liEduProductList').addClass('active');
         });
 
@@ -64,6 +65,12 @@
                 }
             });
         }
+        function DeleteProductCategory(Id) {
+            if (confirm("Are you sure, do you want delete?")) {
+                $('#id').val(Id);
+                $('#frmDelete').submit();
+            }
+        }
         function EditEduProduct(Id) {
             $.ajax({
                 url: '@Url.Content("~/Master/EduProduct?Id=")' + Id,
@@ -79,6 +86,7 @@
             });
         }
 
+        debugger;
         $('#frmEduProduct').validate({
             rules: {
                 ProductName:

@@ -72,6 +72,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGridMvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGridMvc.1.0.0\lib\net40\WebGridMvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -100,6 +104,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Css\bootstrap-datetimepicker.css" />
+    <Content Include="Css\bootstrap-timepicker.css" />
     <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\c3.css" />
     <Content Include="Css\css.css" />
@@ -1513,8 +1519,11 @@
       <DependentUpon>EduEntity.edmx</DependentUpon>
       <LastGenOutput>EduEntity.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap1.min.css" />
+    <Content Include="Scripts\bootstrap1.min.js" />
     <Content Include="Scripts\Core\app.js" />
     <Content Include="Scripts\Core\bootstrap-rating.min.js" />
     <Content Include="Scripts\Core\c3.min.js" />
@@ -1544,8 +1553,11 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\webGrid.js" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -1649,6 +1661,7 @@
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
+    <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -1733,6 +1746,7 @@
     <Content Include="Views\Master\CourseSalesMasterList.cshtml" />
     <Content Include="Views\Master\CourseList.cshtml" />
     <Content Include="Views\Master\Course.cshtml" />
+    <Content Include="Views\Master\CourseSalesMaster.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

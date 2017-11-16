@@ -1,4 +1,5 @@
-﻿using EZY.EDU.BusinessFactory;
+﻿using EDU.Web.ViewModels.Master;
+using EZY.EDU.BusinessFactory;
 using EZY.EDU.Contract;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,9 @@ namespace EDU.Web.Controllers
             eduProduct.ProductDescription = eduProduct.ProductName;
 
             eduProduct.CreatedBy = USER_ID;
-            //eduProduct.CreatedOn = UTILITY.SINGAPORETIME;
+            eduProduct.CreatedOn = UTILITY.SINGAPORETIME;
             eduProduct.ModifiedBy = USER_ID;
-            //eduProduct.ModifiedOn = UTILITY.SINGAPORETIME;
+            eduProduct.ModifiedOn = UTILITY.SINGAPORETIME;
             if (!IsEduProductExists(eduProduct.ProductName))
             {
                 var result = new EduProductBO().SaveEduProduct(eduProduct);
@@ -93,12 +94,92 @@ namespace EDU.Web.Controllers
             }
         }
         [HttpGet]
+        public JsonResult GetCourse(int Id)
+        {
+            return Json(new CourseBO().GetCourse(new Course { Id = Id }), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult SaveCourse(Course course)
+        {
+            course.CourseDescription = course.CourseName;
+            course.CreatedBy = USER_ID;
+            course.CreatedOn = UTILITY.SINGAPORETIME;
+            course.ModifiedBy = USER_ID;
+            course.ModifiedOn = UTILITY.SINGAPORETIME;
+            course.AvailableSeats = 0;
+            var result = new CourseBO().SaveCouse(course);
+
+            return RedirectToAction("CourseList");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteEduCourse(int? Id)
+        {
+            var result = new CourseBO().DeleteEduCourse(new Course { Id = Id.Value });
+
+            var list = new CourseBO().GetList();
+            return View("CourseList", list);
+        }
+
+        [HttpGet]
+        public bool IsEduCourseExists(string courseName, string country, int product)
+        {
+            return new CourseBO().IsEduCourseExists(new Course { CourseName = courseName, Country = country, Product = product, });
+        }
+        #endregion
+        #region CourseSalesMaster
+        [HttpGet]
         public ViewResult CourseSalesMasterList()
         {
             return View("CourseSalesMasterList",
                 new CourseSalesMasterBO().GetList().AsEnumerable());
         }
+        [HttpGet]
+        public ViewResult CourseSalesMaster(int Id)
+        {
+            CourseSalesMaster courseSalesMaster = null;
+            var courseSalesMasterVm = new CourseSalesMasterVm
+            {
+                eduProductList = new EduProductBO().GetList().AsEnumerable(),
+                branchList = new BranchBO().GetList().AsEnumerable(),
+                monthList = GetMonthData(),
+                courseSalesMaster = courseSalesMaster
+            };
 
+            if (Id == -1)
+            {
+                courseSalesMaster = new CourseSalesMaster
+                {
+                    Id = Id
+                    //StartDate = UTILITY.SINGAPORETIME,
+                    //EndDate = UTILITY.SINGAPORETIME,
+                    //RegClosingDate = UTILITY.SINGAPORETIME.AddDays(-14)
+                };
+            }
+            else
+            {
+                courseSalesMaster = new CourseSalesMasterBO()
+                                            .GetCourseSalesMaster(new CourseSalesMaster { Id = Id });
+
+                courseSalesMasterVm.courseList = new CourseBO()
+                                                    .GetCoursesByProduct(courseSalesMaster.Product)
+                                                    .AsEnumerable();
+            }
+
+            courseSalesMasterVm.courseSalesMaster = courseSalesMaster;
+            return View("CourseSalesMaster", courseSalesMasterVm);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteCourseSalesMaster(int? Id)
+        {
+            var result = new CourseSalesMasterBO().DeleteCourseSalesMaster(new CourseSalesMaster { Id = Id.Value });
+
+            return View("CourseSalesMasterList",
+               new CourseSalesMasterBO().GetList().AsEnumerable());
+        }
         #endregion
     }
 }
