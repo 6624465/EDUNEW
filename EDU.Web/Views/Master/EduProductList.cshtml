@@ -37,6 +37,10 @@
         </div>
     </div>
 </div>
+@using (Html.BeginForm("DeleteEduProduct", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
+{
+    <input type="hidden" id="id" name="id" />
+}
 @using (Html.BeginForm("SaveEduProduct", "Master", FormMethod.Post, new { id = "frmEduProduct", name = "frmEduProduct" }))
 {
     <div id="myModal" class="modal fade" role="dialog">
