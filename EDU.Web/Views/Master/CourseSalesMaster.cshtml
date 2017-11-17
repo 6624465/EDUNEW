@@ -22,50 +22,77 @@
                             <!-- form horizontal acts as a row -->
                             <!-- normal control -->
                             <div class="row">
-                                <div class="col-md-2">
-                                    <label class="control-label">Country</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.courseSalesMaster.Country,
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Country</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.Country,
                                           new SelectList(Model.branchList, "BranchCode", "BranchName"),
                                        "Select Country",
-                                      new { @class = "form-control input-sm" })
+                                      new { @class = "form-control" })
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">Product</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.courseSalesMaster.Product,
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Product</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.Product,
                                        new SelectList(Model.eduProductList, "Id", "ProductName"),
                                           "Select Product",
-                             new { @class = "form-control input-sm", onchange = "ProductChange(this);" })
+                                        new { @class = "form-control", onchange = "ProductChange(this);" })
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">Course</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @if (Model.courseSalesMaster.Id == -1)
-                                    {
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Course</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @if (Model.courseSalesMaster.Id == -1)
+                                        {
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)" })
-                                    }
-                                    else
-                                    {
+                                new { @class = "form-control", disabled = "disabled", onchange = "CourseChange(this)" })
+                                        }
+                                        else
+                                        {
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                                  new SelectList(Model.courseList, "Id", "CourseName"),
                                              "Select Course",
                                         new { @class = "form-control input-sm", onchange = "CourseChange(this)" })
-                                    }
+                                        }
+                                    </div>
                                 </div>
                                 <div class="col-md-2">
 
                                 </div>
+
+                                @*<div class="col-md-4">
+                                    <div class="ui-radio ui-radio-primary">
+                                        <label class="ui-radio-inline">
+                                            <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
+                                            @Html.Label("LVC")
+                                        </label>
+                                        <label class="ui-radio-inline">
+                                            <input type="radio" name="rdoGroup" id="rdoTOD" title="TOD" checked="@Model.courseSalesMaster.TOD" onclick="todChange()" />
+                                            @Html.Label("TOD")
+                                        </label>
+                                        <label class="ui-radio-inline">
+                                            <input type="radio" name="rdoGroup" id="rdoILT" title="ILT" checked="@Model.courseSalesMaster.ILT" onclick="todChange()" />
+                                            @Html.Label("ILT")
+                                        </label>
+                                    </div>
+                                    @Html.HiddenFor(x => x.courseSalesMaster.LVC)
+                                    @Html.HiddenFor(x => x.courseSalesMaster.TOD)
+                                    @Html.HiddenFor(x => x.courseSalesMaster.ILT)
+                                </div>*@
+
                                 <div class="col-md-4">
                                     <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
                                     @Html.Label("LVC")
@@ -81,135 +108,149 @@
                                     @Html.HiddenFor(x => x.courseSalesMaster.ILT)
                                 </div>
                             </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">No Of Days</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.courseSalesMaster.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select NoOfDays ", new { @class = "form-control input-sm numCss", @disabled = "disabled" })
-                                </div>
-                                @*<div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.courseSalesMaster.NoOfDays, "{0:#.#}",
-                                        new { @class = "form-control input-sm numCss", @readonly = "readonly" })
-                                    </div>*@
-                                <div class="col-md-2">
-                                    <label class="control-label">Month</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.courseSalesMaster.Month,
-                        new SelectList(Model.monthList, "Value", "Name"),
-                        "Select Month",
-                        new { @class = "form-control input-sm", @disabled = "disabled" })
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">No Of Days</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select NoOfDays ", new { @class = "form-control input-sm numCss", @disabled = "disabled" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Month</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.Month,
+                                       new SelectList(Model.monthList, "Value", "Name"),
+                                       "Select Month",
+                                      new { @class = "form-control input-sm", @disabled = "disabled" })
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">Start Date</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="input-group date" id="StartDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, "{0:dd/MM/yyyy}",
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Start Date</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group date" id="StartDt">
+                                                @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, "{0:dd/MM/yyyy}",
+                                    new { @class = "form-control dtCss", required = "required" })
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">End Date</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group date" id="EndDt">
+                                                @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, "{0:dd/MM/yyyy}",
                                 new { @class = "form-control dtCss", required = "required" })
-                                            <span class="input-group-addon">
-                                                <span class="fa fa-calendar"></span>
-                                            </span>
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Min. Registrations</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control input-sm", onchange = "MinimumRegUser()" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Leads on hand</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.courseSalesMaster.LeadsOnHead, "{0:#.#}",
+                                    new { @class = "form-control input-sm numCss" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Registered</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.Registered, Enumerable.Range(0, 26).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Registered", new { @class = "form-control input-sm", onchange = "RegisteredUser()" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Leads on hand Details</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
+                                      new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Registration Details</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextAreaFor(x => x.courseSalesMaster.RegisteredRemarks,
+                                    new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Available Seats</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
+                                 new { @class = "form-control numCss", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Closing Date</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group date" id="RegClosingDt">
+                                                @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate,
+                                               new { @class = "form-control dtCss", required = "required" })
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="col-md-2">
+                                </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="rdoConfirmGroup" id="rdoOpen" title="Open" checked="@((Model.courseSalesMaster.IsConfirm==null && Model.courseSalesMaster.IsDrop==null && Model.courseSalesMaster.IsOpen==null)?true: Model.courseSalesMaster.IsOpen)" />
+                                        @Html.Label("Open")
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                        <input type="radio" name="rdoConfirmGroup" id="rdoDrop" title="Drop" checked="@Model.courseSalesMaster.IsDrop" />
+                                        @Html.Label("Drop")
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                        <input type="radio" name="rdoConfirmGroup" id="rdoConfirm" title="Confirm" checked="@Model.courseSalesMaster.IsConfirm" />
+                                        @Html.Label("Confirm")
 
-                                <div class="col-md-2">
-                                    <label class="control-label">End Date</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="input-group date" id="EndDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, "{0:dd/MM/yyyy}",
-                                new { @class = "form-control dtCss", required = "required" })
-                                            <span class="input-group-addon">
-                                                <span class="fa fa-calendar"></span>
-                                            </span>
-                                        </div>
+                                        @Html.HiddenFor(x => x.courseSalesMaster.IsOpen)
+                                        @Html.HiddenFor(x => x.courseSalesMaster.IsDrop)
+                                        @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)
+
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col-md-2" style="white-space:nowrap">
-                                    <label class="control-label">Min. Registrations</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control input-sm", onchange = "MinimumRegUser()" })
-                                </div>
-                                @*<div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.courseSalesMaster.MinimumReg, "{0:#.#}",
-                                        new { @class = "form-control input-sm numCss", onblur = "MinimumRegUser()" })
-                                    </div>*@
-                            </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">Leads on hand</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(x => x.courseSalesMaster.LeadsOnHead, "{0:#.#}",
-                        new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="control-label">Registered</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.courseSalesMaster.Registered, Enumerable.Range(0, 26).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Registered", new { @class = "form-control input-sm", onchange = "RegisteredUser()" })
-                                </div>
-                            </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">Leads on hand Details</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
-                        new { @class = "form-control input-sm" })
-                                </div>
-                                @*<div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.courseSalesMaster.Registered, "{0:#.#}",
-                                        new { @class = "form-control input-sm numCss", onblur = "RegisteredUser()" })
-                                    </div>*@
-                                <div class="col-md-2">
-                                    <label class="control-label">Registration Details</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextAreaFor(x => x.courseSalesMaster.RegisteredRemarks,
-                        new { @class = "form-control input-sm" })
-                                </div>
-                            </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">Available Seats</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
-                        new { @class = "form-control input-sm numCss", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row css20">
-                                <div class="col-md-2">
-                                    <label class="control-label">Closing Date</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="input-group date" id="RegClosingDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate,
-                                               new { @class = "form-control dtCss" ,required = "required" })
-                                            <span class="input-group-addon">
-                                                <span class="fa fa-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="checkbox" id="chkIsConfirm" title="IsConfirm" checked="@((Model.courseSalesMaster.IsConfirm==null)?false: Model.courseSalesMaster.IsConfirm)" />
+                                    @*<input type="checkbox" id="chkIsConfirm" title="IsConfirm" checked="@((Model.courseSalesMaster.IsConfirm==null)?false: Model.courseSalesMaster.IsConfirm)" />
                                     <label>Confirm</label>
-                                    @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)
+                                    @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)*@
                                 </div>
                             </div>
                             <div class="row">
@@ -245,33 +286,293 @@
         });
     });
 
-    function ProductChange(el) {
-        debugger;
-        if (el.value) {
-            $.ajax({
-                url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + el.value,
-                method: 'GET',
-                contentType: 'application/json',
-                success: function (data) {
-                    $('#courseSalesMaster_Course').empty();
-                    $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
-                    $('#courseSalesMaster_NoOfDays').val('');
-                    $.each(data, function (key, value) {
-                        $('#courseSalesMaster_Course').append($('<option></option>').val(value.Id).html(value.CourseName));
-                    });
-                    $('#courseSalesMaster_Course').removeAttr('disabled');
-                },
-                error: function (err) {
+      @if (Model.courseSalesMaster.Id != -1 && Model.courseSalesMaster.TOD.HasValue && Model.courseSalesMaster.TOD.Value) {
+        if(Model.courseSalesMaster.IsConfirm==true)
+        {
+            <text>
+                $('#courseSalesMaster_NoOfDays').attr('disabled', 'disabled');
+            </text>
 
-                }
-            });
         }
-        else {
-            $('#courseSalesMaster_Course').empty();
-            $('#courseSalesMaster_Course').attr('disabled', 'disabled');
-            $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
-            $('#courseSalesMaster_NoOfDays').val('');
+        else
+        {
+            <text>
+                $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
+            </text>
         }
     }
+            @if (Model.courseSalesMaster.Id != -1)
+    {
+        <text>
+    $('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
+
+        </text>
+    }
+    else
+    {
+        <text>
+   $('#EndDt').data("DateTimePicker").minDate(new Date());
+        </text>
+    }
+
+    $("#StartDt").on("dp.change", function (e) {
+        var d = $('#courseSalesMaster_StartDate').val();
+        var m = d.toString().split("/")[1];
+        var dmonth = parseInt(m);
+        $('#courseSalesMaster_Month').val(dmonth - 1);
+        $('#courseSalesMaster_EndDate').val('');
+        $('#EndDt').data("DateTimePicker").minDate(e.date);
+        //$('#courseSalesMaster_RegClosingDate').val(moment(e.date).subtract(14, 'days').format('DD/MM/YYYY'));
+    });
+
+    //$("#EndDt").on("dp.change", function (e) {
+    //    $('#StartDt').data("DateTimePicker").maxDate(e.date);
+    //});
+    });
+    function ConfirmAttrCoursesalesmaster() {
+            $('#courseSalesMaster_Country').attr('disabled', 'disabled');
+            $('#courseSalesMaster_Product').attr('disabled', 'disabled');
+            $('#courseSalesMaster_Course').attr('disabled', 'disabled');
+            $('#courseSalesMaster_NoOfDays').attr('disabled', 'disabled');
+            $('#courseSalesMaster_Month').attr('disabled', 'disabled');
+            $('#courseSalesMaster_StartDate').attr('disabled', 'disabled');
+            $('#courseSalesMaster_EndDate').attr('disabled', 'disabled');
+            $('#courseSalesMaster_MinimumReg').attr('disabled', 'disabled');
+            $('#courseSalesMaster_LeadsOnHead').attr('disabled', 'disabled');
+            $('#courseSalesMaster_LeadsOnHeadRemarks').attr('disabled', 'disabled');
+            $('#courseSalesMaster_AvailableSeats').attr('disabled', 'disabled');
+            $('#courseSalesMaster_RegClosingDate').attr('disabled', 'disabled');
+            $('#rdoLVC').attr('disabled', 'disabled');
+            $('#rdoTOD').attr('disabled', 'disabled');
+            $('#rdoILT').attr('disabled', 'disabled');
+
+            $('#rdoOpen').attr('disabled', 'disabled');
+            $('#rdoDrop').attr('disabled', 'disabled');
+            $('#rdoConfirm').attr('disabled', 'disabled');
+        }
+
+
+        @if(Model.courseSalesMaster.IsConfirm==true)
+        {
+            <text>
+                ConfirmAttrCoursesalesmaster();
+            </text>
+
+        }
+        function todChange() {
+            debugger;
+            $('#frmCourseDetail').valid();
+            if (!$('#rdoLVC').is(':checked') && !$('#rdoILT').is(':checked')) {
+                $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
+            }
+            else {
+                $('#courseSalesMaster_NoOfDays').attr('disabled', 'disabled');
+                CourseChangeWrapper($('#courseSalesMaster_Course').val());
+            }
+        }
+
+        $.validator.addMethod('validatelvctodsd', function () {
+            debugger;
+            if (!$('#rdoLVC').is(':checked') && !$('#rdoILT').is(':checked')) {
+                return true;
+            }
+            else
+                if ($('#courseSalesMaster_StartDate').val() == '')
+                    return false;
+                else
+                    return true;
+
+        }, 'Your error message!');
+
+        $.validator.addMethod('validatelvctoded', function () {
+            debugger;
+            if (!$('#rdoLVC').is(':checked') && !$('#rdoILT').is(':checked')) {
+                return true;
+            }
+            else
+                if ($('#courseSalesMaster_EndDate').val() == '')
+                    return false;
+                else
+                    return true;
+
+        }, 'Your error message!');
+
+        function SaveCourseSalesMaster() {
+            $('#courseSalesMaster_LVC').val($('#rdoLVC').is(':checked'));
+            $('#courseSalesMaster_TOD').val($('#rdoTOD').is(':checked'));
+            $('#courseSalesMaster_ILT').val($('#rdoILT').is(':checked'));
+
+            $('#courseSalesMaster_IsOpen').val($('#rdoOpen').is(':checked'));
+            $('#courseSalesMaster_IsDrop').val($('#rdoDrop').is(':checked'));
+            $('#courseSalesMaster_IsConfirm').val($('#rdoConfirm').is(':checked'));
+
+            if ($('#frmCourseDetail').valid()) {
+                $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
+                $('#courseSalesMaster_Month').removeAttr('disabled');
+                SaveRemoveatrr();
+                $('#frmCourseDetail').submit();
+            }
+        }
+
+        function SaveRemoveatrr()
+        {
+            $('#courseSalesMaster_Country').removeAttr('disabled');
+            $('#courseSalesMaster_Product').removeAttr('disabled');
+            $('#courseSalesMaster_Course').removeAttr('disabled');
+            $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
+            $('#courseSalesMaster_Month').removeAttr('disabled');
+            $('#courseSalesMaster_StartDate').removeAttr('disabled');
+            $('#courseSalesMaster_EndDate').removeAttr('disabled');
+            $('#courseSalesMaster_MinimumReg').removeAttr('disabled');
+            $('#courseSalesMaster_LeadsOnHead').removeAttr('disabled');
+            $('#courseSalesMaster_LeadsOnHeadRemarks').removeAttr('disabled');
+            $('#courseSalesMaster_AvailableSeats').removeAttr('disabled');
+            $('#courseSalesMaster_RegClosingDate').removeAttr('disabled');
+            $('#rdoTOD').removeAttr('disabled');
+            $('#rdoLVC').removeAttr('disabled');
+            $('#rdoILT').removeAttr('disabled');
+
+            $('#rdoOpen').removeAttr('disabled');
+            $('#rdoDrop').removeAttr('disabled');
+            $('#rdoConfirm').removeAttr('disabled');
+        }
+
+        $('#frmCourseDetail').validate({
+            rules: {
+                'courseSalesMaster.Country': {
+                    required: true
+                },
+                'courseSalesMaster.Product': {
+                    required: true
+                },
+                'courseSalesMaster.Course': {
+                    required: true
+                },
+                'courseSalesMaster.NoOfDays': {
+                    required: true
+                },
+                'courseSalesMaster.StartDate': {
+                    validatelvctodsd: true
+                },
+                'courseSalesMaster.EndDate': {
+                    validatelvctoded: true
+                },
+                'courseSalesMaster.RegClosingDate': {
+                    required: true
+                },
+                'courseSalesMaster.MinimumReg': {
+                    required: true
+                },
+                'courseSalesMaster.LeadsOnHead': {
+                    required: true
+                },
+                'courseSalesMaster.Registered': {
+                    required: true
+                },
+                'courseSalesMaster.AvailableSeats': {
+                    required: true
+                },
+                'courseSalesMaster.LeadsOnHeadRemarks': {
+                    required: true
+                },
+                'courseSalesMaster.RegisteredRemarks': {
+                    required: true
+                },
+            }
+        });
+
+        function ProductChange(el) {
+            if (el.value) {
+                $.ajax({
+                    url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + el.value,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        $('#courseSalesMaster_Course').empty();
+                        $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+                        $('#courseSalesMaster_NoOfDays').val('');
+                        $.each(data, function (key, value) {
+                            $('#courseSalesMaster_Course').append($('<option></option>').val(value.Id).html(value.CourseName));
+                        });
+                        $('#courseSalesMaster_Course').removeAttr('disabled');
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            }
+            else {
+                $('#courseSalesMaster_Course').empty();
+                $('#courseSalesMaster_Course').attr('disabled', 'disabled');
+                $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+                $('#courseSalesMaster_NoOfDays').val('');
+            }
+        }
+
+        function CourseChangeWrapper(val) {
+            if (val) {
+                $.ajax({
+                    url: '@Url.Content("~/Master/GetCourse?Id=")' + val,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        $('#courseSalesMaster_NoOfDays').val(data.NoOfDays);
+
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            }
+            else
+                $('#courseSalesMaster_NoOfDays').val('');
+        }
+
+        function CourseChange(el) {
+            debugger;
+            CourseChangeWrapper(el.value);
+        }
+
+        function MinimumRegUser() {
+            debugger;
+            if (!$('#courseSalesMaster_MinimumReg').val()) {
+                $('#courseSalesMaster_Registered').val('');
+                $('#courseSalesMaster_AvailableSeats').val('');
+            }
+            else {
+                if (parseInt($('#courseSalesMaster_MinimumReg').val()) < parseInt($('#courseSalesMaster_Registered').val())) {
+                    alert('Minimum registration is cannot be less than Registered');
+                    $('#courseSalesMaster_Registered').val('');
+                    $('#courseSalesMaster_AvailableSeats').val($('#courseSalesMaster_MinimumReg').val());
+                }
+                else {
+                    parseInt($('#courseSalesMaster_AvailableSeats').val(parseInt($('#courseSalesMaster_MinimumReg').val()) - ($('#courseSalesMaster_Registered').val() == '' ? 0 : parseInt($('#courseSalesMaster_Registered').val()))));
+                }
+            }
+
+        }
+
+        function RegisteredUser() {
+            debugger;
+            if ($('#courseSalesMaster_Registered').val()) {
+                if ($('#courseSalesMaster_MinimumReg').val() == '') {
+                    alert('Please enter minimum registrations before enter Registered.');
+                    $('#courseSalesMaster_Registered').val('');
+                    $('#courseSalesMaster_AvailableSeats').val($('#courseSalesMaster_MinimumReg').val());
+                }
+                else {
+                    if (parseInt($('#courseSalesMaster_MinimumReg').val()) < parseInt($('#courseSalesMaster_Registered').val())) {
+                        alert('Minimum registration is cannot be less than Registered');
+                        $('#courseSalesMaster_Registered').val('');
+                        $('#courseSalesMaster_AvailableSeats').val($('#courseSalesMaster_MinimumReg').val());
+                    }
+                    else {
+                        parseInt($('#courseSalesMaster_AvailableSeats').val(parseInt($('#courseSalesMaster_MinimumReg').val()) - ($('#courseSalesMaster_Registered').val() == '' ? 0 : parseInt($('#courseSalesMaster_Registered').val()))));
+                    }
+                }
+            }
+            else {
+                $('#courseSalesMaster_AvailableSeats').val('');
+            }
+        }
 </script>
-  
