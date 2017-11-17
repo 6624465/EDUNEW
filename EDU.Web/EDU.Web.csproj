@@ -1580,8 +1580,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HtmlHelpers\EncryptedActionParameterAttribute.cs" />
-    <Compile Include="HtmlHelpers\UrlEncryptionHelper.cs" />
+    <Compile Include="Helpers\EncryptedActionParameterAttribute.cs" />
+    <Compile Include="Helpers\UrlEncryptionHelper.cs" />
+    <Compile Include="Helpers\WebGridExtensions.cs" />
     <Compile Include="Models\CustomerPayment.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
