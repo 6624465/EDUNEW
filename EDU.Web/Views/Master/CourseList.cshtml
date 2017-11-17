@@ -9,7 +9,7 @@
         <div class="box-header">
             <h4 class="box-title"><i class="ion ion-ios-book"></i>&nbsp;Course List</h4>
             <div class="box-tools">
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" onclick="AddCourse()">Add New Course</button>
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" onclick="AddCourse()">Add New Course</button>
             </div>
         </div>
         <div class="box-body">
@@ -91,6 +91,7 @@
                 success: function (html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
+                    $('#CourseName, #Country, #Product').attr('disabled', 'disabled');
                 },
                 error: function (err) {
 
@@ -192,6 +193,36 @@
             if ($('#frmEduProduct').valid()) {
                 $('#frmEduProduct').submit();
             }
+        };
+
+        function ValidateByCourseName() {
+
+            var def = $.Deferred();
+            $.ajax({
+                url: '@Url.Content("~/Master/IsEduCourseExists?courseName=")' + $('#CourseName').val() + '&country=' + $('#Country').val() + '&product=' + $('#Product').val(),
+                method: 'get',
+                contentType: 'text/html',
+                success: function (result) {
+                    def.resolve(result);
+                }
+            });
+            return def.promise();
+        };
+
+
+        function ValidateCourseName(isBlur) {
+            var promise = ValidateByCourseName();
+            $.when(promise).done(function (result) {
+                if (isBlur) {
+                    if (result == "True") {
+                        alert("Course already exists with the combination of country and Product. Please re-enter new course.");
+                        $('#CourseName').val('');
+                    }
+                }
+                else {
+                    return result
+                }
+            });
         };
 </script>
 }
