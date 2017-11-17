@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="row">
+                    <div class="row" style="overflow-x: scroll; width: 100%">
                         @grid.GetHtml(
                                 columns: grid.Columns(
                                 grid.Column("CountryName", "Country", canSort: true),
@@ -109,26 +109,30 @@
                                 grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
-                                    @if (item.IsConfirm == true)
-                                    {
-                                        <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
-                                    }
-                                    else if (item.IsDrop == true)
-                                    {
-                                        <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                    }
-                                    else
-                                    {
-                                        <span class="text-green"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                    }
-                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                    {
-                                        <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                        <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                    }
-                                </text>, style: "action")),
-                                tableStyle: "table")
+                                    <div style='width:110px;'>
+                                        @if (item.IsConfirm == true)
+                                        {
+                                            <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
+                                        }
+                                        else if (item.IsDrop == true)
+                                        {
+                                            <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-green"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                        }
+
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                        {
+                                            <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        }
+                                    </div>
+                                </text>)),
+                    tableStyle: "table")
                     </div>
+
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
