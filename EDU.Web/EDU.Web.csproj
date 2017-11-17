@@ -1475,6 +1475,7 @@
     <Content Include="Css\perfect-scrollbar.css" />
     <Content Include="Css\sitecss.css" />
     <Content Include="Css\style.css" />
+    <Content Include="Css\style.min.css" />
     <Content Include="Css\waves.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1551,10 +1552,12 @@
       <DependentUpon>EduEntity.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\icheck.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\webGrid.js" />

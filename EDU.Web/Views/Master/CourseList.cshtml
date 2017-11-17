@@ -25,13 +25,13 @@
                     <div class="row">
                         @grid.GetHtml(
                                 columns: grid.Columns(
-                    grid.Column("ProductName", "Product", canSort: true),
-                    grid.Column("CourseName", "Course Name", canSort: true),
-                    grid.Column("NoOfDays", "No Of Days", canSort: true),
-                    grid.Column("CountryName", "Country", canSort: true),
-                    grid.Column("PublicPrice", "Public Price", canSort: true),
-                    grid.Column("PrivatePrice", "Private Price", canSort: true),
-                    grid.Column("", "#Action", canSort: false,
+                                grid.Column("ProductName", "Product", canSort: true),
+                                grid.Column("CourseName", "Course Name", canSort: true),
+                                grid.Column("NoOfDays", "No Of Days", canSort: true),
+                                grid.Column("CountryName", "Country", canSort: true),
+                                grid.Column("PublicPrice", "Public Price", canSort: true),
+                                grid.Column("PrivatePrice", "Private Price", canSort: true),
+                                grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")

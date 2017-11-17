@@ -18,102 +18,148 @@
         return remarks.Replace(System.Environment.NewLine, "<br/>");
     }
 }
+<style>
+    .popover {
+        color: black;
+        min-width: 500px;
+    }
 
+    .popover-title {
+        background-color: #F7F7F7;
+        border-bottom: 1px solid #EBEBEB;
+        border-radius: 5px 5px 0 0;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        margin: 0;
+        padding: 8px 14px;
+    }
+
+    .center {
+        text-align: center !important;
+    }
+
+    .action {
+        width: 50px;
+    }
+</style>
+@{
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    grid.Pager(WebGridPagerModes.All);
+}
 <div class="page">
-    <div class="box box-primary panel-hovered panel">
-        <div class="box-header">
-            <h4 class="box-title"><i class="ion ion-ios-book"></i>&nbsp;Regional Leads List</h4>
-            <div class="box-tools">
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=-1")'">Add New Regional Lead</button>
-            </div>
-        </div>
-        <div class="box-body">
-            <table class="table table-condensed table-bordered" id="tblProducts">
-                <thead>
-                    <tr>
-                        <th>Country</th>
-                        <th>Product</th>
-                        <th>Course</th>
-                        <th style="text-align:center">No Of Days</th>
-                        <th>Month</th>
-                        <th style="text-align:center">Start Dt</th>
-                        <th style="text-align:center">End Dt</th>
-                        <th style="text-align:center">Min. Reg</th>
-                        <th style="text-align:center">Leads on hand</th>
-                        <th style="text-align:center">Registered</th>
-                        <th style="text-align:center">Avl. Seats</th>
-                        <th style="text-align:center">Reg. Closing Dt</th>
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Regional Leads List</h4>
+                    <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <th style="width: 10%;text-align:center;">#Action</th>
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=-1")'"><i class="fa fa-plus"></i>Add New Regional Lead</button>
                         }
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (var i = 0; i < Model.Count(); i++)
-                    {
-                        <tr>
-                            <td>@Model.ElementAt(i).CountryName</td>
-                            <td>@Model.ElementAt(i).ProductName</td>
-                            <td>@Model.ElementAt(i).CourseName</td>
-                            <td align="center">@Model.ElementAt(i).NoOfDays</td>
-                            <td>@GetMonthById(Model.ElementAt(i).Month == null ? 0 : Model.ElementAt(i).Month.Value + 1)</td>
-                            <td align="center">@(@Model.ElementAt(i).StartDate == null ? null : Model.ElementAt(i).StartDate.Value.ToString("dd/MM/yyyy"))</td>
-                            <td align="center">@(Model.ElementAt(i).EndDate == null ? null : Model.ElementAt(i).EndDate.Value.ToString("dd/MM/yyyy"))</td>
-                            <td align="center">@Model.ElementAt(i).MinimumReg</td>
-                            <td align="center">
-                                @if (string.IsNullOrWhiteSpace(Model.ElementAt(i).LeadsOnHeadRemarks))
-                                {
-                                    <span>@Model.ElementAt(i).LeadsOnHead</span>
-                                }
-                                else
-                                {
-                                    <a style="cursor:pointer;text-decoration:underline;">
-                                        <span  class="pop" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(Model.ElementAt(i).LeadsOnHeadRemarks)" data-original-title="" title="">@Model.ElementAt(i).LeadsOnHead</span>
-                                    </a>
-                                }
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        @grid.GetHtml(
+                                columns: grid.Columns(
+                                grid.Column("CountryName", "Country", canSort: true),
+                                grid.Column("ProductName", "Product", canSort: true),
+                                grid.Column("CourseName", "Course", canSort: true),
+                                grid.Column("NoOfDays", "No Of Days", canSort: true, style: "center"),
+                                grid.Column("Month", "Month", format: @<text> @GetMonthById(item.Month == null ? 0 : item.Month + 1) </text>),
+                                grid.Column("StartDate", "Start Dt", format: @<text> @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy")) </text>, style: "center"),
+                                grid.Column("EndDate", "End Dt", format: @<text> @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy")) </text>, style: "center"),
+                                grid.Column("MinimumReg", "Min. Reg", canSort: true, style: "center"),
 
-                            </td>
-                            <td align="center">
-                                @if (string.IsNullOrWhiteSpace(Model.ElementAt(i).RegisteredRemarks))
-                                {
-                                    <span>@Model.ElementAt(i).RegisteredRemarks</span>
-                                }
-                                else
-                                {
-                                    <a style="cursor:pointer;text-decoration:underline;">
-                                        <span  class="pop" data-toggle="popover" data-html="true" data-title="Registration Details" data-content="@CheckString(Model.ElementAt(i).RegisteredRemarks)">@Model.ElementAt(i).Registered</span>
-                                    </a>
-                                }
+                                grid.Column("LeadsOnHead", "Leads on hand",
+                                format:
+                                @<text>
+                                    @if (string.IsNullOrWhiteSpace(item.LeadsOnHeadRemarks))
+                                    {
+                                        <span>@item.LeadsOnHead</span>
+                                    }
+                                    else
+                                    {
+                                        <a style="cursor:pointer;text-decoration:underline;">
+                                            <span class="pop" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
+                                        </a>
+                                    }
+                                </text>, style: "center"),
 
-                            </td>
-                            <td align="center">@Model.ElementAt(i).AvailableSeats</td>
-                            <td align="center">@Model.ElementAt(i).RegClosingDate.ToString("dd/MM/yyyy")</td>
-                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                            {
-                                <td style="width: 10%;text-align:center;">
-                                    <button class="btn btn-success waves-effect btn-xs" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + Model.ElementAt(i).Id)'"><i class="fa fa-pencil-square-o"></i></button>
-                                    <button class="btn btn-danger waves-effect btn-xs"  onclick="DeleteCourseSalesMaster(@Model.ElementAt(i).Id)"><i class="fa fa-trash-o"></i></button>
-                                    
-                                </td>
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                                grid.Column("Registered", "Registered",
+                                format:
+                                @<text>
+                                    @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
+                                    {
+                                        <span>@item.Registered</span>
+                                    }
+                                    else
+                                    {
+                                        <a style="cursor:pointer;text-decoration:underline;">
+                                            <span class="pop" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.RegisteredRemarks)" data-original-title="" title="">@item.Registered</span>
+                                        </a>
+                                    }
+                                </text>, style: "center"),
+
+                                grid.Column("AvailableSeats", "Avl. Seats", canSort: true, style: "center"),
+                                grid.Column("RegClosingDate", "Reg. Closing Dt.", format: @<text> @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy")) </text>, style: "center"),
+
+                                grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    @if (item.IsConfirm == true)
+                                    {
+                                        <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
+                                    }
+                                    else if (item.IsDrop == true)
+                                    {
+                                        <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-green"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                    }
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                        <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                    }
+                                </text>, style: "action")),
+                                tableStyle: "table")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+</div>
+
+
 @using (Html.BeginForm("DeleteCourseSalesMaster", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
 {
     <input type="hidden" id="id" name="id" />
 }
 @section SectionScripts{
+
     <script type="text/javascript">
-        $(function()
-        {
-            $('liRegionalLeads').addClass('active')
-        })
+        $(function () {
+            $('[data-toggle="popover"]').popover({
+                placement: 'top',
+                trigger: 'hover'
+            });
+
+            $('#tblCourseSalesMaster').DataTable({
+                responsive: true
+            });
+        });
+
         function DeleteCourseSalesMaster(Id) {
 
             if (confirm("Are you sure, do you want delete?")) {
@@ -123,20 +169,20 @@
 
         }
 
-   $(".pop").popover({ trigger: "manual" , html: true, animation:false})
-    .on("mouseenter", function () {
-        var _this = this;
-        $(this).popover("show");
-        $(".popover").on("mouseleave", function () {
-            $(_this).popover('hide');
-        });
-    }).on("mouseleave", function () {
-        var _this = this;
-        setTimeout(function () {
-            if (!$(".popover:hover").length) {
-                $(_this).popover("hide");
-            }
-        }, 300);
-    });
+        $(".pop").popover({ trigger: "manual", html: true, animation: false })
+            .on("mouseenter", function () {
+                var _this = this;
+                $(this).popover("show");
+                $(".popover").on("mouseleave", function () {
+                    $(_this).popover('hide');
+                });
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        $(_this).popover("hide");
+                    }
+                }, 300);
+            });
     </script>
-    }
+}
