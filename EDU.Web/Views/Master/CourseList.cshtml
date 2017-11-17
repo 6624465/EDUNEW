@@ -3,52 +3,52 @@
     ViewBag.Title = "CourseList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    grid.Pager(WebGridPagerModes.All);
+}
 <div class="page">
-    <div class="box box-primary panel-hovered panel">
-        <div class="box-header">
-            <h4 class="box-title"><i class="ion ion-ios-book"></i>&nbsp;Course List</h4>
-            <div class="box-tools">
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" onclick="AddCourse()"><i class="fa fa-plus"></i>Add New Course</button>
-            </div>
-        </div>
-        <div class="box-body">
-            <table class="table table-condensed table-bordered" id="tblProducts">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Course Name</th>
-                        <th style="text-align:center">No Of Days</th>
-                        <th>Country</th>
-                        <th style="text-align:center">Public Price</th>
-                        <th style="text-align:center">Private Price</th>
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Course List</h4>
+                    <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <th>#Action</th>
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddCourse()"><i class="fa fa-plus"></i>Add New Course</button>
+                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
                         }
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (var i = 0; i < Model.Count(); i++)
-                    {
-                        <tr>
-                            <td>@Model.ElementAt(i).ProductName</td>
-                            <td>@Model.ElementAt(i).CourseName</td>
-                            <td align="center">@Model.ElementAt(i).NoOfDays</td>
-                            <td>@Model.ElementAt(i).CountryName</td>
-                            <td align="center">@(Model.ElementAt(i).PublicPrice.ToString("0.00") == "0.00" ? "N/A" : Model.ElementAt(i).PublicPrice.ToString("0.00"))</td>
-                            <td align="center">@(Model.ElementAt(i).PrivatePrice.ToString("0.00") == "0.00" ? "N/A" : Model.ElementAt(i).PrivatePrice.ToString("0.00"))</td>
-                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                            {
-                                <td>
-                                    <button class="btn btn-success waves-effect btn-xs" onclick="EditCourse(@Model.ElementAt(i).Id)"><i class="fa fa-pencil-square-o"></i></button>
-                                    <button class="btn btn-danger waves-effect btn-xs" onclick="DeleteEduCourse(@Model.ElementAt(i).Id)"><i class="fa fa-trash-o"></i></button>
-                                </td>
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        @grid.GetHtml(
+                                columns: grid.Columns(
+                    grid.Column("ProductName", "Product", canSort: true),
+                    grid.Column("CourseName", "Course Name", canSort: true),
+                    grid.Column("NoOfDays", "No Of Days", canSort: true),
+                    grid.Column("CountryName", "Country", canSort: true),
+                    grid.Column("PublicPrice", "Public Price", canSort: true),
+                    grid.Column("PrivatePrice", "Private Price", canSort: true),
+                    grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                        <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                    }
+                                </text>)),
+                                tableStyle: "table")
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -224,5 +224,27 @@
                 }
             });
         };
-</script>
+    </script>
 }
+<style>
+    .Grid-Footer > td {
+        padding-top: 10px;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+        .Grid-Footer > td > a {
+            background: #fff;
+            display: inline-block;
+            border-radius: 1px;
+            padding: 6px 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid #eeeeee;
+        }
+
+            .Grid-Footer > td > a:hover {
+                color: #3f51b5;
+                text-decoration: none;
+            }
+</style>
