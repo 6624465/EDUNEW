@@ -1,0 +1,256 @@
+﻿@model IEnumerable<EDU.Web.Models.Revenue>
+@{
+    ViewBag.Title = "RevenueList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .input-xs {
+        display: block;
+        width: 75%;
+        height: 25px;
+        font-size: 14px !important;
+        color: #000;
+        font-weight: 600;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+    }
+
+    table {
+        border: 1px solid lightgray;
+    }
+
+    .tdheight {
+        min-height: 25px !important;
+    }
+</style>
+<form name="frmRevenue" id="frmRevenue">
+    <section class="content">
+        <div class="box box-dnex">
+            <div class="box-header with-border">
+                <div class="row">
+                    <section class="content-header">
+                        <ol class="breadcrumb">
+                            <li><a href='@Url.Content("~/Home/Education")'><i class="fa fa-dashboard"></i> Home</a></li>
+                            <li class="active">Revenue</li>
+                        </ol>
+                    </section>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        @Html.DropDownListFor(x => x.FirstOrDefault().Country,
+     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
+     "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                    </div>
+                    <div class="col-md-1">
+                        @Html.DropDownListFor(x => x.FirstOrDefault().CurrencyCode,
+     new SelectList((List<EZY.EDU.Contract.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
+     "Select Currency", new { @class = "form-control input-sm" })
+                    </div>
+                    @*<div class="col-md-2">
+                            <label class="control-label">CONVERSION RATE</label>
+                        </div>*@
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.FirstOrDefault().CurrencyExRate, "{0:#.#}",
+           new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row css10">
+                    <div class="col-md-6">
+                        @{
+                            var grid = new WebGrid(Model);
+                        }
+                        <div id="gridContent">
+                            @grid.GetHtml(
+                                     tableStyle: "table table-striped",
+                                     mode: WebGridPagerModes.All,
+                                     columns:
+                                         grid.Columns(
+                                         grid.Column("ProductName", "Product Name", format: @<text>  <span class="display-mode">@item.ProductName </span> <label id="lblProductName" class="edit-mode">@item.ProductName</label> </text>, style: ""),
+                                         grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> <label id="lblYearlyTarget">@(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "")</label> </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "")" class="edit-mode numCss input-xs" /> </text>, style: ""),
+                                         grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text>  <span class="display-mode">@(item.HalfYearlyTarget > 0 ? item.HalfYearlyTarget.ToString("0.00") : "") </span> <label id="lblHalfYearlyTarget" class="edit-mode">@(item.HalfYearlyTarget > 0 ? item.HalfYearlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
+                                         grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  <span class="display-mode">@(item.QuarterlyTarget > 0 ? item.QuarterlyTarget.ToString("0.00") : "") </span> <label id="lblQuarterlyTarget" class="edit-mode">@(item.QuarterlyTarget > 0 ? item.QuarterlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
+                                         grid.Column("MonthlyTarget", "Monthly", format: @<text>  <span class="display-mode">@(item.MonthlyTarget > 0 ? item.MonthlyTarget.ToString("0.00") : "") </span> <label id="lblMonthlyTarget" class="edit-mode">@(item.MonthlyTarget > 0 ? item.MonthlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
+                                         grid.Column("Action", format: @<text>
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                {
+                                                    <button type="button" class="edit-user display-mode btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></button>
+                                                }
+                                                <button type="button" class="save-user edit-mode btn btn-success btn-xs" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o"></i></button>
+                                                <button type="button" class="cancel-user edit-mode btn btn-default btn-xs"><i class="fa fa-times"></i></button>
+                                        </text>, style: "col3Width", canSort: false)
+                                        ))
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <table class="table table-striped" id="tblProductRevenue">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Yearly Target</th>
+                                    <th>Half yearly</th>
+                                    <th>Quarterly</th>
+                                    <th>Monthly</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (var i = 0; i < Model.Count(); i++)
+                                {
+                                    <tr style="height: 39.5px;">
+                                        <td>@Model.ElementAt(i).ProductName</td>
+                                        <td>@(Model.ElementAt(i).YearlyTargetAmt > 0 ? Model.ElementAt(i).YearlyTargetAmt.ToString("0.00") : "")</td>
+                                        <td>@(Model.ElementAt(i).HalfYearlyTargetAmt > 0 ? Model.ElementAt(i).HalfYearlyTargetAmt.ToString("0.00") : "")</td>
+                                        <td>@(Model.ElementAt(i).QuarterlyTargetAmt > 0 ? Model.ElementAt(i).QuarterlyTargetAmt.ToString("0.00") : "")</td>
+                                        <td>@(Model.ElementAt(i).MonthlyTargetAmt > 0 ? Model.ElementAt(i).MonthlyTargetAmt.ToString("0.00") : "")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row css10">
+                    <div class="col-md-12">
+                       @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                       {
+                            <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
+                       }
+                    </div>
+                </div>
+            </div>
+            </div>
+    </section>
+</form>
+
+@section SectionScripts {
+    <script type="text/javascript">
+        debugger;
+        $(function () {
+            debugger;
+            $('#liRevenueList').addClass('active');
+        });
+
+    $('#frmRevenue').validate({
+        rules: {
+            'Country': {
+                required: true
+            },
+            'CurrencyCode': {
+                required: true
+            },
+            'CurrencyExRate': {
+                required: true
+            },
+            'YearlyTarget': {
+                required: true
+            }
+        }
+    });
+
+        function updateRevenueInfoByExRate() {
+            if ($('#frmRevenue').valid()) {
+                var Revenue =
+                    {
+                        "CurrencyExRate": $('#CurrencyExRate').val(),
+                        "Country": $('#Country').val(),
+                        "CurrencyCode": $('#CurrencyCode').val(),
+                        "Year": 2017
+                    };
+                $.ajax({
+                    url: '@Url.Content("~/Revenue/updateRevenueInfoByExRate/")',
+                    data: JSON.stringify(Revenue),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+    var Product = null;
+    var ProductName = null;
+    var RevenueId = null;
+    var Year = null;
+
+    function SaveRevenue(revenueId, product, year, productName)
+    {
+         Product = product;
+         ProductName = productName;
+         RevenueId = revenueId;
+         Year = year;
+    }
+    function CountryChange(el) {
+        if (el.value) {
+            window.location = '@Url.Action("RevenueList", "Revenue", new { country = "", year="" })' + '?country=' + el.value + '&year=' + 2017;
+                @*$.ajax({
+                    url: '@Url.Content("~/Revenue/GetCurrency?Id=")' + el.value,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        debugger;
+                        $("#CurrencyCode").val(data);
+                    },
+                    error: function (err) {
+                    }
+                });*@
+            }
+        else
+            {
+                $("#CurrencyCode").val('');
+            }
+    };
+
+    $(function () {
+
+        $("#CurrencyCode").val('@Model.FirstOrDefault().CurrencyCode');
+
+        $('.edit-mode').hide();
+        $('.edit-user, .cancel-user').on('click', function () {
+            var tr = $(this).parents('tr:first');
+            tr.find('.edit-mode, .display-mode').toggle();
+        });
+
+        $('.save-user').on('click', function () {
+            if ($('#frmRevenue').valid()) {
+            var tr = $(this).parents('tr:first');
+
+            //var Product = tr.find("#hdnProduct").val();
+            //var ProductName = tr.find("#hdnProductName").val();
+            var YearlyTarget = tr.find("#YearlyTarget").val();
+            //var RevenueId = tr.find("#hdnRevenueId").val();
+            //var Year = tr.find("#hdnYear").val();
+
+            tr.find('.edit-mode, .display-mode').toggle();
+            var Revenue =
+                {
+                    "RevenueId": RevenueId,
+                    "Product": Product,
+                    "ProductName": ProductName,
+                    "YearlyTarget": YearlyTarget,
+                    "CurrencyExRate": $('#CurrencyExRate').val(),
+                    "Country": $('#Country').val(),
+                    "CountryName": $("#Country option:selected").text(),
+                    "CurrencyCode": $('#CurrencyCode').val(),
+                    "Year": Year
+                };
+            $.ajax({
+                url: '@Url.Content("~/Revenue/SaveRevenueInfo/")',
+                data: JSON.stringify(Revenue),
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert(data);
+                    location.reload(true);
+                }
+            });
+        }
+        });
+    })
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "RevenueList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section seccss{
+    <link href="@Url.Content("~/Css/dataTables.bootstrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/dataTables.responsive.css")" rel="stylesheet" />
+}
+<section class="content">
+    <div class="box box-dnex">
+        <div class="box-header with-border">
+            <div class="row">
+                <section class="content-header">
+                    @*<ol class="breadcrumb">
+                        <li><a href='@Url.Content("~/Home/Education")'><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href='@Url.Content("~/Trainer/TrainersList")'>Trainers List</a></li>
+                    </ol>*@
+                </section>
+            </div>
+            <div class="box-tools">
+                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                {
+                    <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Revenue/Index?Id=-1")'">
+                        <i class="fa fa-plus"></i>&nbsp;Add New Revenue
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="row" style="margin-top:10px;">
+            <div class="col-md-12">
+                <table class="table table-striped" id="tblTrainer">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Country</th>
+                            <th>Yearly Target</th>
+                            <th>Half yearly</th>
+                            <th>Quarterly</th>
+                            <th>Monthly</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model.ElementAt(i).Product</td>
+                                <td>@Model.ElementAt(i).Country</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="location.href ='@Url.Content("~/Trainer/Index?Id=" + Model.ElementAt(i).TrianerId)'">
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                            onclick="DeleteTrainer(@Model.ElementAt(i).TrianerId)">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        </div>
+</section>
+
