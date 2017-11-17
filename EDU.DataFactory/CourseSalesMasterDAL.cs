@@ -27,7 +27,7 @@ namespace EZY.EDU.DataFactory
                 .Build(), Obj.limit, Obj.offset, Obj.sortColumn, Obj.sortType).ToList();
         }
 
-        public bool Save<T>(T item) where T : IContract
+        public Int32 Save<T>(T item) where T : IContract
         {
             var result = 0;
 
@@ -64,8 +64,19 @@ namespace EZY.EDU.DataFactory
                 db.AddInParameter(savecommand, "RegisteredRemarks ", System.Data.DbType.String, courseSalesMaster.RegisteredRemarks);
                 db.AddInParameter(savecommand, "TOD", System.Data.DbType.Boolean, courseSalesMaster.TOD);
                 db.AddInParameter(savecommand, "LVC", System.Data.DbType.Boolean, courseSalesMaster.LVC);
+                db.AddInParameter(savecommand, "ILT", System.Data.DbType.Boolean, courseSalesMaster.ILT);
+                db.AddInParameter(savecommand, "IsOpen", System.Data.DbType.Boolean, courseSalesMaster.IsOpen == null ? false : courseSalesMaster.IsOpen);
+                db.AddInParameter(savecommand, "IsDrop", System.Data.DbType.Boolean, courseSalesMaster.IsDrop == null ? false : courseSalesMaster.IsDrop);
+                db.AddInParameter(savecommand, "IsConfirm", System.Data.DbType.Boolean, courseSalesMaster.IsConfirm == null ? false : courseSalesMaster.IsConfirm);
+                db.AddInParameter(savecommand, "ConfirmOrDropDate", System.Data.DbType.DateTime, (courseSalesMaster.IsOpen == null || courseSalesMaster.IsOpen == false) ? courseSalesMaster.ConfirmOrDropDate : null);
+                db.AddOutParameter(savecommand, "NewId", System.Data.DbType.String, 50);
 
                 result = db.ExecuteNonQuery(savecommand, transaction);
+
+                if (result != 0)
+                {
+                    courseSalesMaster.Id = Convert.ToInt32(savecommand.Parameters["@NewId"].Value);
+                }
 
                 transaction.Commit();
 
@@ -76,7 +87,7 @@ namespace EZY.EDU.DataFactory
                 throw;
             }
 
-            return (result > 0 ? true : false);
+            return courseSalesMaster.Id;
 
         }
 
@@ -119,5 +130,37 @@ namespace EZY.EDU.DataFactory
                                                     item.Id).FirstOrDefault();
             return courseSalesMasterItem;
         }
+
+
+        //public bool Confirm<T>(T item) where T : IContract
+        //{
+        //    var result = false;
+        //    var courseSalesMaster = (CourseSalesMaster)(object)item;
+
+        //    var connnection = db.CreateConnection();
+        //    connnection.Open();
+
+        //    var transaction = connnection.BeginTransaction();
+
+        //    try
+        //    {
+        //        var confirmCommand = db.GetStoredProcCommand(DBRoutine.CONFIRMEDUCOURSESALESMASTER);
+
+        //        db.AddInParameter(confirmCommand, "Id", System.Data.DbType.Int32, courseSalesMaster.Id);
+        //        db.AddInParameter(confirmCommand, "Registered", System.Data.DbType.Int16, courseSalesMaster.Registered);
+        //        db.AddInParameter(confirmCommand, "RegisteredRemarks", System.Data.DbType.Int32, courseSalesMaster.RegisteredRemarks);
+        //        result = Convert.ToBoolean(db.ExecuteNonQuery(confirmCommand, transaction));
+
+        //        transaction.Commit();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        transaction.Rollback();
+        //        throw ex;
+        //    }
+
+        //    return result;
+        //}
     }
 }

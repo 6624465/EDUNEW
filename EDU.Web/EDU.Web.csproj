@@ -1558,7 +1558,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\webGrid.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -1576,44 +1578,6 @@
     </Compile>
     <Compile Include="HtmlHelpers\EncryptedActionParameterAttribute.cs" />
     <Compile Include="HtmlHelpers\UrlEncryptionHelper.cs" />
-    <Compile Include="Models\Address.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Branch.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Company.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Country.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Course.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CourseDetail.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CourseSalesMaster.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CustomerPayment.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DocumentNumberDetail.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DocumentNumberHeader.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EduEntity.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EduEntity.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EduEntity.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1624,37 +1588,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EduEntity.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Lookup.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Product.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Registration.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Revenue.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Role.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RoleRight.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Securable.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TrainerInformation.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserBranch.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserRight.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

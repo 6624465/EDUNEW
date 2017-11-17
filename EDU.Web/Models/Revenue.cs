@@ -15,15 +15,17 @@ namespace EDU.Web.Models
     public partial class Revenue
     {
         public int RevenueId { get; set; }
-        public string Country { get; set; }
+        public short Country { get; set; }
+        public string CountryName { get; set; }
         public int Product { get; set; }
+        public string ProductName { get; set; }
         public string CurrencyCode { get; set; }
         public decimal CurrencyExRate { get; set; }
         public int Year { get; set; }
-        public int YearlyTarget { get; set; }
-        public int HalfYearlyTarget { get; set; }
-        public int QuarterlyTarget { get; set; }
-        public int MonthlyTarget { get; set; }
+        public decimal YearlyTarget { get; set; }
+        public decimal HalfYearlyTarget { get; set; }
+        public decimal QuarterlyTarget { get; set; }
+        public decimal MonthlyTarget { get; set; }
         public decimal YearlyTargetAmt { get; set; }
         public decimal HalfYearlyTargetAmt { get; set; }
         public decimal QuarterlyTargetAmt { get; set; }

@@ -22,7 +22,7 @@ namespace EZY.EDU.BusinessFactory
         }
 
 
-        public bool SaveCourseSalesMaster(CourseSalesMaster newItem)
+        public Int32 SaveCourseSalesMaster(CourseSalesMaster newItem)
         {
 
             return courseSalesMasterDAL.Save(newItem);
@@ -33,6 +33,10 @@ namespace EZY.EDU.BusinessFactory
         {
             return courseSalesMasterDAL.Delete(item);
         }
+        //public bool ConfirmCoureSalesMaster(CourseSalesMaster item)
+        //{
+        //    return courseSalesMasterDAL.Confirm(item);
+        //}
 
         public CourseSalesMaster GetCourseSalesMaster(CourseSalesMaster item)
         {
