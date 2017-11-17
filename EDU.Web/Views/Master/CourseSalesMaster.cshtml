@@ -65,7 +65,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                                  new SelectList(Model.courseList, "Id", "CourseName"),
                                              "Select Course",
-                                        new { @class = "form-control input-sm", onchange = "CourseChange(this)" })
+                                        new { @class = "form-control", onchange = "CourseChange(this)" })
                                         }
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
                                         <span class="pull-right">No Of Days</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select NoOfDays ", new { @class = "form-control input-sm numCss", @disabled = "disabled" })
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select NoOfDays ", new { @class = "form-control numCss", @disabled = "disabled" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Month</span>
@@ -123,7 +123,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Month,
                                        new SelectList(Model.monthList, "Value", "Name"),
                                        "Select Month",
-                                      new { @class = "form-control input-sm", @disabled = "disabled" })
+                                      new { @class = "form-control", @disabled = "disabled" })
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                         <span class="pull-right">Min. Registrations</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control input-sm", onchange = "MinimumRegUser()" })
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control", onchange = "MinimumRegUser()" })
                                     </div>
                                 </div>
                             </div>
@@ -176,13 +176,13 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextBoxFor(x => x.courseSalesMaster.LeadsOnHead, "{0:#.#}",
-                                    new { @class = "form-control input-sm numCss" })
+                                    new { @class = "form-control numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Registered</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.Registered, Enumerable.Range(0, 26).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Registered", new { @class = "form-control input-sm", onchange = "RegisteredUser()" })
+                                        @Html.DropDownListFor(x => x.courseSalesMaster.Registered, Enumerable.Range(0, 26).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Registered", new { @class = "form-control", onchange = "RegisteredUser()" })
                                     </div>
                                 </div>
                             </div>
