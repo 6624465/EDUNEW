@@ -63,6 +63,7 @@
                     debugger;
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
+                    $('#error').hide();
                 },
                 error: function (err) {
 
@@ -125,8 +126,14 @@
             $.when(promise).done(function (result) {
                 if (isBlur) {
                     if (result == "True") {
-                        alert("Product already exists. Please re-enter new product.");
+                        debugger;
+                        $('#error').show();
+                        //alert("Product already exists. Please re-enter new product.");
                         $('#ProductName').val('');
+                    }
+                    else
+                    {
+                        $('#error').hide();
                     }
                 }
                 else {
