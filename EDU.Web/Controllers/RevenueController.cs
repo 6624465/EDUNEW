@@ -1,5 +1,4 @@
 ﻿using EDU.Web.Models;
-using EDU.Web.ViewModels.RevenueModel;
 using EZY.EDU.BusinessFactory;
 using EZY.EDU.Contract;
 using System;

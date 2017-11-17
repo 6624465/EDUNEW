@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DB_9F30C5_edudevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DB_9F30C5_edudevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CustomerPayments">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -92,10 +92,28 @@
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainerInformation" EntityType="Self.TrainerInformation" Schema="Edu" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_9F30C5_edudevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerPayment">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherRecievables" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="RecieptDate" Type="DateTime" Precision="3" />
+          <Property Name="ReferenceDocument" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
         <EntityType Name="Registration">
           <Key>
             <PropertyRef Name="RegistrationId" />
@@ -118,12 +136,32 @@
           <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
-        <EntityContainer Name="EducationEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Registrations" EntityType="Self.Registration" />
-          <EntitySet Name="TrainerInformations" EntityType="DB_9F30C5_edudevModel.TrainerInformation" />
-          <EntitySet Name="CustomerPayments" EntityType="DB_9F30C5_edudevModel.CustomerPayment" />
-          <EntitySet Name="Revenues" EntityType="DB_9F30C5_edudevModel.Revenue" />
-        </EntityContainer>
+        <EntityType Name="Revenue">
+          <Key>
+            <PropertyRef Name="RevenueId" />
+          </Key>
+          <Property Name="RevenueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="Int16" Nullable="false" />
+          <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrencyExRate" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="YearlyTarget" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="HalfYearlyTarget" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="QuarterlyTarget" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="MonthlyTarget" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="YearlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="HalfYearlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="QuarterlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="MonthlyTargetAmt" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
         <EntityType Name="TrainerInformation">
           <Key>
             <PropertyRef Name="TrianerId" />
@@ -140,59 +178,39 @@
           <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
-        <EntityType Name="CustomerPayment">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrderId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OtherRecievables" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="RecieptDate" Type="DateTime" Precision="3" />
-          <Property Name="ReferenceDocument" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="Revenue">
-          <Key>
-            <PropertyRef Name="RevenueId" />
-          </Key>
-          <Property Name="RevenueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Country" Type="Int16" Nullable="false" />
-          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Product" Type="Int32" Nullable="false" />
-          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CurrencyCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="CurrencyExRate" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="YearlyTarget" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="HalfYearlyTarget" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="QuarterlyTarget" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="MonthlyTarget" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="YearlyTargetAmt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="HalfYearlyTargetAmt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="QuarterlyTargetAmt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="MonthlyTargetAmt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayment" />
+          <EntitySet Name="Registrations" EntityType="Self.Registration" />
+          <EntitySet Name="Revenues" EntityType="Self.Revenue" />
+          <EntitySet Name="TrainerInformations" EntityType="Self.TrainerInformation" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DB_9F30C5_edudevModelStoreContainer" CdmEntityContainer="EducationEntities">
+        <EntityContainerMapping StorageEntityContainer="DB_9F30C5_edudevModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="CustomerPayments">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CustomerPayment">
+              <MappingFragment StoreEntitySet="CustomerPayments">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="InvoiceValue" ColumnName="InvoiceValue" />
+                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+                <ScalarProperty Name="OtherRecievables" ColumnName="OtherRecievables" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="RecieptDate" ColumnName="RecieptDate" />
+                <ScalarProperty Name="ReferenceDocument" ColumnName="ReferenceDocument" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Registrations">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Registration">
               <MappingFragment StoreEntitySet="Registration">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="RegistrationId" ColumnName="RegistrationId" />
                 <ScalarProperty Name="OracleDataBase" ColumnName="OracleDataBase" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
@@ -209,72 +227,55 @@
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TrainerInformations">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainerInformation">
-              <MappingFragment StoreEntitySet="TrainerInformation">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="TrainerRate" ColumnName="TrainerRate" />
-                <ScalarProperty Name="Profile" ColumnName="Profile" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Technology" ColumnName="Technology" />
-                <ScalarProperty Name="TrianerId" ColumnName="TrianerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomerPayments">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CustomerPayment">
-              <MappingFragment StoreEntitySet="CustomerPayments">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
-                <ScalarProperty Name="ReferenceDocument" ColumnName="ReferenceDocument" />
-                <ScalarProperty Name="RecieptDate" ColumnName="RecieptDate" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="OtherRecievables" ColumnName="OtherRecievables" />
-                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
-                <ScalarProperty Name="InvoiceValue" ColumnName="InvoiceValue" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Revenues">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Revenue">
               <MappingFragment StoreEntitySet="Revenue">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="MonthlyTargetAmt" ColumnName="MonthlyTargetAmt" />
-                <ScalarProperty Name="QuarterlyTargetAmt" ColumnName="QuarterlyTargetAmt" />
-                <ScalarProperty Name="HalfYearlyTargetAmt" ColumnName="HalfYearlyTargetAmt" />
-                <ScalarProperty Name="YearlyTargetAmt" ColumnName="YearlyTargetAmt" />
-                <ScalarProperty Name="MonthlyTarget" ColumnName="MonthlyTarget" />
-                <ScalarProperty Name="QuarterlyTarget" ColumnName="QuarterlyTarget" />
-                <ScalarProperty Name="HalfYearlyTarget" ColumnName="HalfYearlyTarget" />
-                <ScalarProperty Name="YearlyTarget" ColumnName="YearlyTarget" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="CurrencyExRate" ColumnName="CurrencyExRate" />
-                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Product" ColumnName="Product" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="RevenueId" ColumnName="RevenueId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="CurrencyExRate" ColumnName="CurrencyExRate" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="YearlyTarget" ColumnName="YearlyTarget" />
+                <ScalarProperty Name="HalfYearlyTarget" ColumnName="HalfYearlyTarget" />
+                <ScalarProperty Name="QuarterlyTarget" ColumnName="QuarterlyTarget" />
+                <ScalarProperty Name="MonthlyTarget" ColumnName="MonthlyTarget" />
+                <ScalarProperty Name="YearlyTargetAmt" ColumnName="YearlyTargetAmt" />
+                <ScalarProperty Name="HalfYearlyTargetAmt" ColumnName="HalfYearlyTargetAmt" />
+                <ScalarProperty Name="QuarterlyTargetAmt" ColumnName="QuarterlyTargetAmt" />
+                <ScalarProperty Name="MonthlyTargetAmt" ColumnName="MonthlyTargetAmt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <EntitySetMapping Name="TrainerInformations">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainerInformation">
+              <MappingFragment StoreEntitySet="TrainerInformation">
+                <ScalarProperty Name="TrianerId" ColumnName="TrianerId" />
+                <ScalarProperty Name="Technology" ColumnName="Technology" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Profile" ColumnName="Profile" />
+                <ScalarProperty Name="TrainerRate" ColumnName="TrainerRate" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

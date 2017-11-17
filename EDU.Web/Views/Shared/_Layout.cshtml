@@ -3,55 +3,31 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR</title>
-    @*<script src="@Url.Content("~/Scripts/Core/sitescript.js")"></script>*@
+    <title>EDUCATION</title>
     <link rel="stylesheet" href="@Url.Content("~/Css/ionicons-2.0.1/css/ionicons.css")">
     <link rel="stylesheet" href="@Url.Content("~/Css/font-awesome-4.7.0/css/font-awesome.css")">
+    @*<link rel="stylesheet" href="@Url.Content("~/Css/c3.css")">*@
+    <link href="@Url.Content("~/Css/skins/flat/_all.css")" rel="stylesheet" />
 
+    <link href="@Url.Content("~/Css/skins/flat/green.css")" rel="stylesheet" />
     <!-- Plugins -->
-    <link rel="stylesheet" href="@Url.Content("~/Css/c3.css")">
+
     <link rel="stylesheet" href="@Url.Content("~/Css/waves.css")">
     <link rel="stylesheet" href="@Url.Content("~/Css/perfect-scrollbar.css")">
     <!-- Css/Less Stylesheets -->
     <link href="@Url.Content("~/Css/bootstrap.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Css/bootstrap-datetimepicker.css")" rel="stylesheet" />
     <link rel="stylesheet" href="@Url.Content("~/Css/main.min.css")">
-    <link rel="stylesheet" href="@Url.Content("~/Css/sitecss.css")">
-    @*<link href="@Url.Content("~/Scripts/bootstrap1.min.css")" rel="stylesheet" />
-    <script src="@Url.Content("~/Scripts/bootstrap1.min.js")"></script>*@
+    <link href="@Url.Content("~/Css/sitecss.css")" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/jquery-2.2.3.min.js")"></script>
-    <style>
-        .input-sm {
-            font-size: 15px;
-        }
-
-        .css10 {
+    <style type="text/css">
+        .icheckbox_flat {
             margin-top: 10px;
         }
-
-        .css20 {
-            margin-top: 20px;
-        }
-
-        .css5 {
-            margin-top: 5px;
-        }
-         label.error {
-            display: none !important;
-        }
-          input[type=text].error, input[type=password].error, textarea.error, select.error {
-            /*border-color: #F44336;*/
-            border-bottom-color: #F44336;
-            /*border-color: #a94442;*/
-            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-            box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
-            border-bottom-width: 1px;
-        }  
     </style>
-
-    @RenderSection("SectionStyles", false)
+    @RenderSection("Styles", false)
 </head>
-<body id="app" class="app off-canvas">
+<body id="app" class="app off-canvas ">
 
     <!-- header -->
     <header class="site-head" id="site-head">
@@ -79,7 +55,7 @@
                         <li><a href="javascript:;"><span class="ion ion-settings">&nbsp;&nbsp;</span>Settings</a></li>
                         <li class="divider"></li>
                         <li><a href="javascript:;"><span class="ion ion-lock-combination">&nbsp;&nbsp;</span>Lock Screen</a></li>*@
-                    <li><a href="javascript:;"><span class="ion ion-power">&nbsp;&nbsp;</span>Logout</a></li>
+                    <li><a href="@Url.Content("~/Layout/LogOut")"><span class="ion ion-power">&nbsp;&nbsp;</span>LogOut</a></li>
                 </ul>
             </li>
             <!-- #end profile-drop -->

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace EDU.Web.Controllers
 {
-    [WebSsnFilter]
+    [SessionFilter]
     public class LayoutController : BaseController
     {
         [ChildActionOnly]

@@ -1511,8 +1511,8 @@
     <Content Include="Images\VIETNAM.png" />
     <Content Include="Models\EduEntity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EduEntity.Context.cs</LastGenOutput>
       <DependentUpon>EduEntity.edmx</DependentUpon>
+      <LastGenOutput>EduEntity.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\EduEntity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1572,12 +1572,24 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\RevenueController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\EncryptedActionParameterAttribute.cs" />
     <Compile Include="HtmlHelpers\UrlEncryptionHelper.cs" />
+    <Compile Include="Models\CustomerPayment.cs">
+      <DependentUpon>EduEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EduEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EduEntity.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EduEntity.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1602,6 +1614,7 @@
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
+    <Compile Include="ViewModels\RevenueModel\RevenueVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

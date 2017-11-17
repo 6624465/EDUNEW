@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="95e0de2ca056438d994d635bdbc1df03" Name="Diagram1" ZoomLevel="85">
-        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.Registration" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.TrainerInformation" Width="1.5" PointX="2.625" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.CustomerPayment" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.Revenue" Width="1.5" PointX="3.375" PointY="5.75" />
+      <Diagram DiagramId="5785c3b37bdf445b8e230514632aacc9" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.CustomerPayment" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.Registration" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.Revenue" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.TrainerInformation" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

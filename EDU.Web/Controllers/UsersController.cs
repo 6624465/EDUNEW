@@ -9,7 +9,7 @@ using EZY.EDU.BusinessFactory;
 
 namespace EDU.Web.Controllers
 {
-    [WebSsnFilter]
+    [SessionFilter]
     public class UsersController : BaseController
     {
         [HttpGet]

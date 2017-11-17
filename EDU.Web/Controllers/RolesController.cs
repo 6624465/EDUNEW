@@ -40,7 +40,7 @@ namespace EDU.Web.Controllers
         public bool hasRight { get; set; }
     }
 
-    [WebSsnFilter]
+    [SessionFilter]
     public class RolesController : BaseController
     {
 
