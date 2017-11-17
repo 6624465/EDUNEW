@@ -6,100 +6,95 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">@ViewBag.Title</h4>
         </div>
-            <div class="modal-body" id="ProductCategoryModalBody">
-                @Html.HiddenFor(x => x.Id)
-                @Html.HiddenFor(x => x.IsActive)
-                <div class="row" style="margin-top:10px;">
-                    <div class="col-md-3">
-                        <label class="control-label pull-right">Country</label>
-                    </div>
+        <div class="modal-body" id="ProductCategoryModalBody">
+
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.IsActive)
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <span class="pull-right">Country</span>
+                    </label>
                     <div class="col-md-4">
                         @Html.DropDownListFor(x => x.Country,
                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchCode", "BranchName"),
-                    "Select Country", new { @class = "form-control input-sm" })
+                    "Select Country", new { @class = "form-control" })
                     </div>
                 </div>
-                <div class="row" style="margin-top:10px;">
-                    <div class="col-md-3">
-                        <label class="control-label pull-right">Product</label>
-                    </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <span class="pull-right">Product</span>
+                    </label>
                     <div class="col-md-4">
                         @Html.DropDownListFor(x => x.Product,
                     new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
-                    "Select Product", new { @class = "form-control input-sm" })
+                    "Select Product", new { @class = "form-control" })
                     </div>
                 </div>
-                <div class="row" style="margin-top:10px;">
-                    <div class="col-md-3">
-                        <label class="control-label pull-right">Course Name</label>
-                    </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <span class="pull-right">Course Name</span>
+                    </label>
                     <div class="col-md-8">
                         @Html.TextAreaFor(x => x.CourseName,
-                    new { @class = "form-control input-sm", placeholder = "Course Name", onblur = "ValidateCourseName(true)" })
+                    new { @class = "form-control", placeholder = "Course Name", onblur = "ValidateCourseName(true)" })
                     </div>
                     @Html.HiddenFor(x => x.Id)
                 </div>
-                <br />
-                @*<div class="row">
-                <div class="col-md-3">
-                    <label class="control-label pull-right">Course Description</label>
-                </div>
-                <div class="col-md-8">
-                    @Html.TextAreaFor(x => x.CourseDescription,
-                    new { @class = "form-control input-sm", placeholder = "Course Description" })
-                </div>
             </div>
-            <br />*@
-                <div class="row">
-                    <div class="col-md-3">
-                        <label class="control-label pull-right">No. Of Days</label>
-                    </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <span class="pull-right">No. Of Days</span>
+                    </label>
                     <div class="col-md-4">
-                        @Html.DropDownListFor(x => x.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select", new { @class = "form-control input-sm" })
-                    </div>
-                    @*<div class="col-md-8">
-                    @Html.TextBoxFor(x => x.NoOfDays, "{0:#.#}",
-                    new { @class = "form-control input-sm numCss", placeholder = "No Of Days" })
-                </div>*@
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-3">
-                        <label class="control-label pull-right">Public Price</label>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.TextBoxFor(x => x.PublicPrice,
-                    new { @class = "form-control input-sm decimalCss", placeholder = "Public Price" })
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-3">
-                        <label class="control-label pull-right">Private Price</label>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.TextBoxFor(x => x.PrivatePrice,
-                    new { @class = "form-control input-sm decimalCss", placeholder = "Private Price" })
+                        @Html.DropDownListFor(x => x.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select", new { @class = "form-control" })
                     </div>
                 </div>
             </div>
-     
-        <div class="modal-footer">
-            <button type="button" onclick="SaveCourse()" class="btn btn-success btn-frmt green btn-sm">
-                <i class="fa fa-floppy-o"></i>&nbsp;Save
-            </button>
-            <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <span class="pull-right">Public Price</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.PublicPrice,
+                    new { @class = "form-control decimalCss", placeholder = "Public Price" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <span class="pull-right">Private Price</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.PrivatePrice,
+                    new { @class = "form-control decimalCss", placeholder = "Private Price" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer css10">
+                <button type="button" onclick="SaveCourse()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            </div>
         </div>
     </div>
 
 </div>
 @*<script type="text/javascript">
-    @if(Model.Id != -1)
-    {
-        <text>
-    $(function () {
-        $('#CourseName, #Country, #Product').attr('disabled', 'disabled');
-    });
-        </text>
-    }
-</script>*@
+        @if(Model.Id != -1)
+        {
+            <text>
+        $(function () {
+            $('#CourseName, #Country, #Product').attr('disabled', 'disabled');
+        });
+            </text>
+        }
+    </script>*@

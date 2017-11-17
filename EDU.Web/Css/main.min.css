@@ -179,7 +179,9 @@ a.text-purple:hover {
   box-shadow: none!important;
 }
 label {
-  font-weight: 500;
+  
+  margin-top: 11px;
+  font-weight:bold;
 }
 @media (min-width: 768px) {
   .form-inline .form-group > [class],
@@ -3305,7 +3307,7 @@ fieldset[disabled] .btn-youtube.active {
 .ui-toggle-pink label > input + i {
   background-color: #e91e63;
 }
-[datepicker] {
+/*[datepicker] {
   border: none!important;
 }
 [datepicker],
@@ -3395,7 +3397,7 @@ fieldset[disabled] .btn-youtube.active {
   position: absolute;
   top: 0;
   z-index: 1000;
-}
+}*/
 .easypiechart {
   text-align: center;
   position: relative;

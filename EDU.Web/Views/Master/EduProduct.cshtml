@@ -9,22 +9,24 @@
         <div class="modal-body">
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.IsActive)
-            <div class="row" style="margin-top:10px;">
-                <div class="col-md-3">
-                    <label class="control-label pull-right">Product Name</label>
-                </div>
-                <div class="col-md-8">
-                    @Html.TextBoxFor(x => x.ProductName,
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        <span class="pull-right">Product Name</span>
+                    </label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.ProductName,
                     new
                     {
-                        @class = "form-control input-sm",
+                        @class = "form-control",
                         placeholder = "Product Name",
                         onblur = "ValidateProductName(true)"
                     })
-                    <label id="error" style="color:red">Product already exists. Please re-enter new product.</label>
+                        <label id="error" style="color:red">Product already exists. Please re-enter new product.</label>
+                    </div>
                 </div>
-            </div>
-            
+            </div>            
         </div>
         <div class="modal-footer">
             <button type="button" onclick="SaveEduProduct()" class="btn btn-success btn-frmt green btn-sm">

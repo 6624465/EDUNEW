@@ -352,11 +352,117 @@ body {
     background-color: #ffffff;
 }
 
-h4, .h4 {
-    font-size: 18px;
-    font-weight: bold;
+.main-container .nav-wrap .site-nav .nav-list li .inner-drop{
+    font-weight:bold;
+    text-decoration:none;
 }
 
-td {
+.panel-heading{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.input-group-addon {
+    padding: 3px 12px;
+}
+
+.form-control {
+    font-weight:bold;
+}
+
+.btn.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.table > thead > tr > th, .table > tbody > tr > td, .table > tfoot > tr > td {
+    vertical-align: middle;
+    padding-left: 22px;
+    padding-right: 22px;
     font-weight: bold;
+}
+/*#app {
+            width: 400px;
+            height: 300px;
+            margin: 50px auto 0 auto;
+            position: relative;
+            overflow: auto;
+        }*/
+
+/*#content {
+            background: url('https://noraesae.github.io/perfect-scrollbar/azusa.jpg') top left no-repeat;
+            width: 1280px;
+            height: 720px;
+        }*/
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 20px;
+    border-radius: 10px;
+    background: rgb(236, 240, 245);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(255,0,0,0.4);
+    }
+
+.css10 {
+    margin-top: 10px;
+}
+
+.css5 {
+    margin-top: 5px;
+}
+
+.app .off-canvas {
+    background-color: rgba(255, 255, 255, .15);
+}
+
+label.error {
+    display: none !important;
+}
+
+input[type=text].error, input[type=password].error, textarea.error, select.error {
+    /*border-color: #F44336;*/
+    border-bottom-color: #F44336;
+    /*border-color: #a94442;*/
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+    border-bottom-width: 1px;
+}
+
+/*.has-error .form-control {
+            border-color: #a94442;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        }*/
+
+.table tfoot {
+    display: none;
+}
+
+.class_checkbox {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    background: url(../images/blue.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+.bootstrap-datetimepicker-widget table td.active.today:before {
+    border-bottom-color: #fff;
 }
