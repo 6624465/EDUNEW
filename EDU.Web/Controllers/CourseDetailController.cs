@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace EDU.Web.Controllers
 {
-    [WebSsnFilter]
+    [SessionFilter]
     public class CourseDetailController : BaseController
     {
         [HttpGet]
