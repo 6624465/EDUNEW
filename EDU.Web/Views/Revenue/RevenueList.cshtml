@@ -3,27 +3,6 @@
     ViewBag.Title = "RevenueList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .input-xs {
-        display: block;
-        width: 75%;
-        height: 25px;
-        font-size: 14px !important;
-        color: #000;
-        font-weight: 600;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-    }
-
-    table {
-        border: 1px solid lightgray;
-    }
-
-    .tdheight {
-        min-height: 25px !important;
-    }
-</style>
 <form name="frmRevenue" id="frmRevenue">
     <section class="content">
         <div class="box box-dnex">
@@ -42,20 +21,20 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
                         @Html.DropDownListFor(x => x.FirstOrDefault().Country,
-     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-     "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                             new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
+                             "Select Country", new { @class = "form-control", onchange = "CountryChange(this);" })
                     </div>
                     <div class="col-md-1">
                         @Html.DropDownListFor(x => x.FirstOrDefault().CurrencyCode,
-     new SelectList((List<EZY.EDU.Contract.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
-     "Select Currency", new { @class = "form-control input-sm" })
+                             new SelectList((List<EZY.EDU.Contract.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
+                             "Select Currency", new { @class = "form-control" })
                     </div>
                     @*<div class="col-md-2">
                             <label class="control-label">CONVERSION RATE</label>
                         </div>*@
                     <div class="col-md-2">
                         @Html.TextBoxFor(x => x.FirstOrDefault().CurrencyExRate, "{0:#.#}",
-           new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
+           new { placeholder = "CONVERSION RATE", @class = "form-control numCss" })
                     </div>
                     <div class="col-md-3"></div>
                 </div>
@@ -71,17 +50,17 @@
                                      columns:
                                          grid.Columns(
                                          grid.Column("ProductName", "Product Name", format: @<text>  <span class="display-mode">@item.ProductName </span> <label id="lblProductName" class="edit-mode">@item.ProductName</label> </text>, style: ""),
-                                         grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> <label id="lblYearlyTarget">@(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "")</label> </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "")" class="edit-mode numCss input-xs" /> </text>, style: ""),
+                                         grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> <label id="lblYearlyTarget">@(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "")</label> </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "")" class="edit-mode numCss" /> </text>, style: ""),
                                          grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text>  <span class="display-mode">@(item.HalfYearlyTarget > 0 ? item.HalfYearlyTarget.ToString("0.00") : "") </span> <label id="lblHalfYearlyTarget" class="edit-mode">@(item.HalfYearlyTarget > 0 ? item.HalfYearlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
                                          grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  <span class="display-mode">@(item.QuarterlyTarget > 0 ? item.QuarterlyTarget.ToString("0.00") : "") </span> <label id="lblQuarterlyTarget" class="edit-mode">@(item.QuarterlyTarget > 0 ? item.QuarterlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
                                          grid.Column("MonthlyTarget", "Monthly", format: @<text>  <span class="display-mode">@(item.MonthlyTarget > 0 ? item.MonthlyTarget.ToString("0.00") : "") </span> <label id="lblMonthlyTarget" class="edit-mode">@(item.MonthlyTarget > 0 ? item.MonthlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
                                          grid.Column("Action", format: @<text>
-                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                            <button type="button" class="edit-user display-mode btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></button>
+                                                    <button type="button" class="edit-user display-mode btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></button>
                                                 }
-                                <button type="button" class="save-user edit-mode btn btn-success btn-xs" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="cancel-user edit-mode btn btn-default btn-xs"><i class="fa fa-times"></i></button>
+                                                <button type="button" class="save-user edit-mode btn btn-success btn-xs" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o"></i></button>
+                                                <button type="button" class="cancel-user edit-mode btn btn-default btn-xs"><i class="fa fa-times"></i></button>
                                         </text>, style: "col3Width", canSort: false)
                                         ))
                         </div>
@@ -95,7 +74,7 @@
                     </div>
                     <div class="col-md-12 css10">
                         @{
-                        var grid1 = new WebGrid(Model);
+                            var grid1 = new WebGrid(Model);
                         }
                         <div id="gridContent">
                             @grid1.GetHtml(

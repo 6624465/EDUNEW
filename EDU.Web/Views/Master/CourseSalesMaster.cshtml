@@ -162,7 +162,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control", onchange = "MinimumRegUser()" })
                                     </div>
                                     <div class="col-md-2 control-label">
-                                        <label  class="pull-right">Revenue</label>
+                                        <label class="pull-right">Revenue</label>
                                     </div>
                                     <div class="col-md-4">
                                         @Html.TextBoxFor(x => x.courseSalesMaster.Revenue, "{0:#.#}",
@@ -261,9 +261,6 @@
                                         @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)
 
                                     </div>
-                                    @*<input type="checkbox" id="chkIsConfirm" title="IsConfirm" checked="@((Model.courseSalesMaster.IsConfirm==null)?false: Model.courseSalesMaster.IsConfirm)" />
-                                        <label>Confirm</label>
-                                        @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)*@
                                 </div>
                             </div>
                             <div class="row">
@@ -271,8 +268,6 @@
                                     <div class="text-center">
                                         <button type="button" onclick="SaveCourseSalesMaster()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                         <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Master/CourseSalesMasterList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
-                                        @*<button type="button" id="confirmBtn" onclick="ConfirmCourseSalesMaster(@Model.courseSalesMaster.Id,@Model.courseSalesMaster.Registered,@Model.courseSalesMaster.RegisteredRemarks)" class="btn btn-success btn-sm">&nbsp;Confirm</button>*@
-
                                     </div>
                                 </div>
                             </div>
@@ -287,61 +282,73 @@
 
 @section SectionScripts{
     <script type="text/javascript">
-    $(function () {
-        $('.dtCss').datetimepicker({
-            icons: {
-                time: 'fa fa-clock-o',
-                date: 'fa fa-calendar',
-                up: 'fa fa-arrow-up',
-                down: 'fa fa-arrow-down'
-            },
-            format: 'DD/MM/YYYY'
-        });
-    });
+        $(function () {
+            $('#StartDt, #RegClosingDt').datetimepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down'
+                },
+                minDate: new Date(),
+                format: 'DD/MM/YYYY'
+            });
 
-      @if (Model.courseSalesMaster.Id != -1 && Model.courseSalesMaster.TOD.HasValue && Model.courseSalesMaster.TOD.Value) {
-        if(Model.courseSalesMaster.IsConfirm==true)
-        {
-            <text>
-                $('#courseSalesMaster_NoOfDays').attr('disabled', 'disabled');
-            </text>
+            $('#EndDt').datetimepicker({
+                useCurrent: false, //Important! See issue #1075
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down'
+                },
+                format: 'DD/MM/YYYY'
+            });
 
-        }
-        else
-        {
-            <text>
-                $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
-            </text>
-        }
-    }
+
+            @if (Model.courseSalesMaster.Id != -1 && Model.courseSalesMaster.TOD.HasValue && Model.courseSalesMaster.TOD.Value) {
+               if(Model.courseSalesMaster.IsConfirm==true)
+                {
+                    <text>
+                        $('#courseSalesMaster_NoOfDays').attr('disabled', 'disabled');
+                    </text>
+
+                }
+                else
+                {
+                    <text>
+                        $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
+                    </text>
+                }
+            }
             @if (Model.courseSalesMaster.Id != -1)
-    {
-        <text>
-   // $('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
+            {
+                <text>
+            $('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
 
-        </text>
-    }
-    else
-    {
-        <text>
-   //$('#EndDt').data("DateTimePicker").minDate(new Date());
-        </text>
-    }
-    debugger;
-    $("#StartDt").one("dp.change", function (e) {
-        debugger;
-        var d = $('#courseSalesMaster_StartDate').val();
-        var m = d.toString().split("/")[1];
-        var dmonth = parseInt(m);
-        $('#courseSalesMaster_Month').val(dmonth - 1);
-        $('#courseSalesMaster_EndDate').val('');
-        $('#EndDt').data("DateTimePicker").minDate(e.date);
+            </text>
+            }
+            else
+            {
+                 <text>
+            $('#EndDt').data("DateTimePicker").minDate(new Date());
+            </text>
+            }
 
-    });
+            $("#StartDt").on("dp.change", function (e) {
+                var d = $('#courseSalesMaster_StartDate').val();
+                var m = d.toString().split("/")[1];
+                var dmonth = parseInt(m);
+                $('#courseSalesMaster_Month').val(dmonth - 1);
+                $('#courseSalesMaster_EndDate').val('');
+                $('#EndDt').data("DateTimePicker").minDate(e.date);
+                //$('#courseSalesMaster_RegClosingDate').val(moment(e.date).subtract(14, 'days').format('DD/MM/YYYY'));
+            });
 
-    $("#EndDt").on("dp.change", function (e) {
-        $('#StartDt').data("DateTimePicker").maxDate(e.date);
-    });
+            //$("#EndDt").on("dp.change", function (e) {
+            //    $('#StartDt').data("DateTimePicker").maxDate(e.date);
+            //});
+        });
 
     function ConfirmAttrCoursesalesmaster() {
             $('#courseSalesMaster_Country').attr('disabled', 'disabled');
