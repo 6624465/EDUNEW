@@ -109,7 +109,7 @@
                                         else
                                         {
                                             <a style="cursor:pointer;text-decoration:underline;">
-                                                <span class="pop" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
+                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
                                             </a>
                                         }
                                     </div>
@@ -125,8 +125,9 @@
                                     else
                                     {
                                         <a style="cursor:pointer;text-decoration:underline;">
-                                            <span class="pop" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.RegisteredRemarks)" data-original-title="" title="">@item.Registered</span>
-                                        </a>
+                                            <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.RegisteredRemarks)"
+                                                  onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
+                                            </a>
                                     }
                                 </text>, canSort: true, style: "center"),
 
@@ -145,7 +146,7 @@
                                         @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
                                     </div>
                                 </text>, style: "center"),
-                                
+
                                 grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
@@ -172,9 +173,6 @@
                                 </text>)),
                                 tableStyle: "table")
                     </div>
-
-
-
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -192,32 +190,7 @@
     <input type="hidden" id="id" name="id" />
 }
 @section SectionScripts{
-
     <script type="text/javascript">
-        $(function () {
-            $(".pop").popover({ trigger: "manual", html: true, animation: false })
-                .on("mouseenter", function () {
-                    var _this = this;
-                    $(this).popover("show");
-                    $(".popover").on("mouseleave", function () {
-                        $(_this).popover('hide');
-                    });
-                }).on("mouseleave", function () {
-                    var _this = this;
-                    setTimeout(function () {
-                        if (!$(".popover:hover").length) {
-                            $(_this).popover("hide");
-                        }
-                    }, 300);
-                });
-            //$('#tblCourseSalesMaster').DataTable({
-            //    responsive: true,
-            //    drawCallback: function () {
-            //        alert('DataTables has redrawn the table');
-            //    }
-            //});
-        });
-
         function DeleteCourseSalesMaster(Id) {
             if (confirm("Are you sure, do you want delete?")) {
                 $('#id').val(Id);
@@ -225,9 +198,12 @@
             }
         }
 
-        
-            //.drawCallback("load",function () {
-            //    alert('DataTables has redrawn the table');
-            //});
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            $(el).popover("show");
+        }
     </script>
 }
