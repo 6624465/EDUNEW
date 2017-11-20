@@ -1,0 +1,98 @@
+﻿@model IEnumerable<EDU.Web.Models.Registration>
+@{
+    ViewBag.Title = "Registrations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link href="@Url.Content("~/Css/dataTables.bootstrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/dataTables.responsive.css")" rel="stylesheet" />
+}
+
+@{
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    grid.Pager(WebGridPagerModes.All);
+}
+<div class="page">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Registrations List</h4>
+                    <div class="box-tools">
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="location.href = '@Url.Content("~/Registration/Registration?Id=-1")'"><i class="fa fa-plus"></i>New Registration</button>
+                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
+                        }
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row" style="overflow-x: scroll; width: 100%">
+                        <div class="row">
+                            @grid.GetHtml(
+                                columns: grid.Columns(
+                    grid.Column("OracleDataBase", "OracleDataBase", canSort: true),
+                    grid.Column("Amount", "Amount", canSort: true),
+                    grid.Column("WHT", "WHT", canSort: true),
+                    grid.Column("VAT", "VAT/TAX", canSort: true),
+                    grid.Column("Payment1", "Payment1", canSort: true),
+                    grid.Column("Payment2", "Payment2", canSort: true),
+                    grid.Column("Balance", "Balance", canSort: true),
+                    grid.Column("Email", "Email", canSort: true),
+                    grid.Column("Contact", "Contact", canSort: true),
+                    grid.Column("CompanyName", "CompanyName", canSort: true),
+                    grid.Column("Product", "Product", canSort: true),
+                    grid.Column("CourseName", "CourseName", canSort: true),
+                    grid.Column("StartDate", "StartDate", canSort: true),
+                    grid.Column("EndDate", "EndDate", canSort: true),
+                     grid.Column("TrainerName", "TrainerName", canSort: true),
+                    //grid.Column("CountryName", "#Action", canSort: true),
+                    grid.Column("", "#Action", canSort: false,
+                                format:
+                            @<text>
+                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                            <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" +@item.RegistrationId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                            <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                    }
+                            </text>)),
+                                tableStyle: "table")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section SectionScripts{
+    <script type="text/javascript">
+        $('#tblRegistration').DataTable();
+
+        function DeleteRegistration(id) {
+
+            if (confirm("Are you sure, You want to delete")) {
+                $.ajax({
+                    url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (data) {
+
+                        alert("Deleted Successfully");
+                        if (data) {
+                            location.reload();
+                        }
+                    },
+                    error: function (e) {
+
+                    }
+                });
+            }
+        }
+    </script>
+
+}
