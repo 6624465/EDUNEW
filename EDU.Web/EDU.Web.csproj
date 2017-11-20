@@ -1479,13 +1479,6 @@
     <Content Include="Css\waves.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Images\1.jpg" />
-    <Content Include="Images\2.jpg" />
-    <Content Include="Images\3.jpg" />
-    <Content Include="Images\4.jpg" />
-    <Content Include="Images\5.jpg" />
-    <Content Include="Images\6.jpg" />
-    <Content Include="Images\7.jpg" />
     <Content Include="Images\admin.jpg" />
     <Content Include="Images\ban.png" />
     <Content Include="Images\bg.png" />
@@ -1496,6 +1489,7 @@
     <Content Include="Images\ezy-corporation-logo.png" />
     <Content Include="Images\HKG.png" />
     <Content Include="Images\icons.png" />
+    <Content Include="Images\india.png" />
     <Content Include="Images\laos.png" />
     <Content Include="Images\myn.png" />
     <Content Include="Images\pak.png" />
@@ -1551,6 +1545,7 @@
     <Content Include="Models\EduEntity.edmx.diagram">
       <DependentUpon>EduEntity.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\icheck.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
