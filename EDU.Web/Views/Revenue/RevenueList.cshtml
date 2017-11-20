@@ -60,7 +60,7 @@
                     <div class="col-md-3"></div>
                 </div>
                 <div class="row css10">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         @{
                             var grid = new WebGrid(Model);
                         }
@@ -76,53 +76,48 @@
                                          grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  <span class="display-mode">@(item.QuarterlyTarget > 0 ? item.QuarterlyTarget.ToString("0.00") : "") </span> <label id="lblQuarterlyTarget" class="edit-mode">@(item.QuarterlyTarget > 0 ? item.QuarterlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
                                          grid.Column("MonthlyTarget", "Monthly", format: @<text>  <span class="display-mode">@(item.MonthlyTarget > 0 ? item.MonthlyTarget.ToString("0.00") : "") </span> <label id="lblMonthlyTarget" class="edit-mode">@(item.MonthlyTarget > 0 ? item.MonthlyTarget.ToString("0.00") : "")</label> </text>, style: ""),
                                          grid.Column("Action", format: @<text>
-                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                                                    <button type="button" class="edit-user display-mode btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" class="edit-user display-mode btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></button>
                                                 }
-                                                <button type="button" class="save-user edit-mode btn btn-success btn-xs" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o"></i></button>
-                                                <button type="button" class="cancel-user edit-mode btn btn-default btn-xs"><i class="fa fa-times"></i></button>
+                                <button type="button" class="save-user edit-mode btn btn-success btn-xs" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="cancel-user edit-mode btn btn-default btn-xs"><i class="fa fa-times"></i></button>
                                         </text>, style: "col3Width", canSort: false)
                                         ))
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <table class="table table-striped" id="tblProductRevenue">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Yearly Target</th>
-                                    <th>Half yearly</th>
-                                    <th>Quarterly</th>
-                                    <th>Monthly</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (var i = 0; i < Model.Count(); i++)
-                                {
-                                    <tr style="height: 39.5px;">
-                                        <td>@Model.ElementAt(i).ProductName</td>
-                                        <td>@(Model.ElementAt(i).YearlyTargetAmt > 0 ? Model.ElementAt(i).YearlyTargetAmt.ToString("0.00") : "")</td>
-                                        <td>@(Model.ElementAt(i).HalfYearlyTargetAmt > 0 ? Model.ElementAt(i).HalfYearlyTargetAmt.ToString("0.00") : "")</td>
-                                        <td>@(Model.ElementAt(i).QuarterlyTargetAmt > 0 ? Model.ElementAt(i).QuarterlyTargetAmt.ToString("0.00") : "")</td>
-                                        <td>@(Model.ElementAt(i).MonthlyTargetAmt > 0 ? Model.ElementAt(i).MonthlyTargetAmt.ToString("0.00") : "")</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row css10">
-                    <div class="col-md-12">
-                       @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                       {
+                    <div class="col-md-12 css10">
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
                             <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
-                       }
+                        }
+                    </div>
+                    <div class="col-md-12 css10">
+                        @{
+                        var grid1 = new WebGrid(Model);
+                        }
+                        <div id="gridContent">
+                            @grid1.GetHtml(
+                                     tableStyle: "table table-striped",
+                                     mode: WebGridPagerModes.All,
+                                     columns:
+                                         grid1.Columns(
+                                         grid1.Column("ProductName", "Product Name", format: @<text> @item.ProductName</text>, style: ""),
+                                         grid1.Column("YearlyTargetAmt", "Yearly Target", format: @<text> @(item.YearlyTargetAmt > 0 ? item.YearlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
+                                         grid1.Column("HalfYearlyTargetAmt", "Half Yearly", format: @<text> @(item.HalfYearlyTargetAmt > 0 ? item.HalfYearlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
+                                         grid1.Column("QuarterlyTargetAmt", "Quarterly", format: @<text> @(item.QuarterlyTargetAmt > 0 ? item.QuarterlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
+                                         grid1.Column("MonthlyTargetAmt", "Monthly", format: @<text> @(item.MonthlyTargetAmt > 0 ? item.MonthlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
+                                         grid1.Column("", format: @<text>
+                                        </text>, style: "col3Width", canSort: false)
+                                        ))
+                        </div>
+
                     </div>
                 </div>
+
             </div>
-            </div>
+        </div>
     </section>
 </form>
 
