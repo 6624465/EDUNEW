@@ -133,28 +133,22 @@
                                         <span class="pull-right">Start Date</span>
                                     </label>
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="input-group date" id="StartDt">
-                                                @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, "{0:dd/MM/yyyy}",
-                                    new { @class = "form-control dtCss" })
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-calendar"></span>
-                                                </span>
-                                            </div>
+                                        <div class="input-group date" id="StartDt">
+                                            @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, new { @class = "form-control dtCss" })
+                                            <span class="input-group-addon">
+                                                <i class="ion ion-calendar"></i>
+                                            </span>
                                         </div>
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">End Date</span>
                                     </label>
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="input-group date" id="EndDt">
-                                                @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, "{0:dd/MM/yyyy}",
-                                new { @class = "form-control dtCss"})
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-calendar"></span>
-                                                </span>
-                                            </div>
+                                        <div class="input-group date" id="EndDt">
+                                            @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, new { @class = "form-control dtCss" })
+                                            <span class="input-group-addon">
+                                                <i class="ion ion-calendar"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -221,6 +215,18 @@
                                         <span class="pull-right">Closing Date</span>
                                     </label>
                                     <div class="col-md-4">
+                                        <div class="input-group date" id="RegClosingDt">
+                                            @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate, new { @class = "form-control dtCss" })
+                                            <span class="input-group-addon">
+                                                <i class="ion ion-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    @*<label class="col-md-2 control-label">
+                                        <span class="pull-right">Closing Date</span>
+                                    </label>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="input-group date" id="RegClosingDt">
                                                 @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate,
@@ -230,7 +236,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*@
                                 <div class="col-md-2">
                                 </div>
                                     <div class="col-md-4">
@@ -275,7 +281,6 @@
 @section SectionScripts{
 <script type="text/javascript">
     $(function () {
-        debugger;
         $('.dtCss').datetimepicker({
             icons: {
                 time: 'fa fa-clock-o',
@@ -305,31 +310,32 @@
             @if (Model.courseSalesMaster.Id != -1)
     {
         <text>
-    //$('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
+   // $('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
 
         </text>
     }
     else
     {
         <text>
-  // $('#EndDt').data("DateTimePicker").minDate(new Date());
+   //$('#EndDt').data("DateTimePicker").minDate(new Date());
         </text>
     }
-
-    //$("#StartDt").on("dp.change", function (e) {
-    //    var d = $('#courseSalesMaster_StartDate').val();
-    //    var m = d.toString().split("/")[1];
-    //    var dmonth = parseInt(m);
-    //    $('#courseSalesMaster_Month').val(dmonth - 1);
-    //    $('#courseSalesMaster_EndDate').val('');
-    //    $('#EndDt').data("DateTimePicker").minDate(e.date);
+    debugger;
+    $("#StartDt").one("dp.change", function (e) {
+        debugger;
+        var d = $('#courseSalesMaster_StartDate').val();
+        var m = d.toString().split("/")[1];
+        var dmonth = parseInt(m);
+        $('#courseSalesMaster_Month').val(dmonth - 1);
+        $('#courseSalesMaster_EndDate').val('');
+        $('#EndDt').data("DateTimePicker").minDate(e.date);
         
-    //});
+    });
 
-    //$("#EndDt").on("dp.change", function (e) {
-    //    $('#StartDt').data("DateTimePicker").maxDate(e.date);
-    //});
-    //});
+    $("#EndDt").on("dp.change", function (e) {
+        $('#StartDt').data("DateTimePicker").maxDate(e.date);
+    });
+  
     function ConfirmAttrCoursesalesmaster() {
             $('#courseSalesMaster_Country').attr('disabled', 'disabled');
             $('#courseSalesMaster_Product').attr('disabled', 'disabled');

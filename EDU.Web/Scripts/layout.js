@@ -108,11 +108,5 @@
         }
     });
 
-    $('input').iCheck({
-        checkboxClass: 'icheckbox_flat',
-        radioClass: 'iradio_flat',
-        increaseArea: '20%' // optional
-    });
-
     /* JS Utility Functions */
 });
