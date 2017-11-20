@@ -52,6 +52,7 @@ namespace EZY.EDU.Contract
         public bool? IsDrop { get; set; }
         public bool? IsConfirm { get; set; }
         public DateTime? ConfirmOrDropDate { get; set; }
+        public decimal? Revenue { get; set; }
     }
 
     public class CourseSalesMasterViewModel : IContract
@@ -100,5 +101,6 @@ namespace EZY.EDU.Contract
         public bool? IsDrop { get; set; }
         public bool? IsConfirm { get; set; }
         public DateTime? ConfirmOrDropDate { get; set; }
+        public decimal? Revenue { get; set; }
     }
 }

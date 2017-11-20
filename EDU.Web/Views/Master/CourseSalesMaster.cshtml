@@ -43,7 +43,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Product,
                                        new SelectList(Model.eduProductList, "Id", "ProductName"),
                                           "Select Product",
-                                        new { @class = "form-control", onchange = "ProductChange(this);"})
+                                        new { @class = "form-control", onchange = "ProductChange(this);" })
                                     </div>
                                 </div>
                             </div>
@@ -55,14 +55,14 @@
                                     <div class="col-md-4">
                                         @if (Model.courseSalesMaster.Id == -1)
                                         {
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.Course,
+                                            @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
                                 new { @class = "form-control", disabled = "disabled", onchange = "CourseChange(this)" })
                                         }
                                         else
                                         {
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.Course,
+                                            @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                                  new SelectList(Model.courseList, "Id", "CourseName"),
                                              "Select Course",
                                         new { @class = "form-control", onchange = "CourseChange(this)" })
@@ -74,24 +74,24 @@
                                 </div>
 
                                 @*<div class="col-md-4">
-                                    <div class="ui-radio ui-radio-primary">
-                                        <label class="ui-radio-inline">
-                                            <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
-                                            @Html.Label("LVC")
-                                        </label>
-                                        <label class="ui-radio-inline">
-                                            <input type="radio" name="rdoGroup" id="rdoTOD" title="TOD" checked="@Model.courseSalesMaster.TOD" onclick="todChange()" />
-                                            @Html.Label("TOD")
-                                        </label>
-                                        <label class="ui-radio-inline">
-                                            <input type="radio" name="rdoGroup" id="rdoILT" title="ILT" checked="@Model.courseSalesMaster.ILT" onclick="todChange()" />
-                                            @Html.Label("ILT")
-                                        </label>
-                                    </div>
-                                    @Html.HiddenFor(x => x.courseSalesMaster.LVC)
-                                    @Html.HiddenFor(x => x.courseSalesMaster.TOD)
-                                    @Html.HiddenFor(x => x.courseSalesMaster.ILT)
-                                </div>*@
+                                        <div class="ui-radio ui-radio-primary">
+                                            <label class="ui-radio-inline">
+                                                <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
+                                                @Html.Label("LVC")
+                                            </label>
+                                            <label class="ui-radio-inline">
+                                                <input type="radio" name="rdoGroup" id="rdoTOD" title="TOD" checked="@Model.courseSalesMaster.TOD" onclick="todChange()" />
+                                                @Html.Label("TOD")
+                                            </label>
+                                            <label class="ui-radio-inline">
+                                                <input type="radio" name="rdoGroup" id="rdoILT" title="ILT" checked="@Model.courseSalesMaster.ILT" onclick="todChange()" />
+                                                @Html.Label("ILT")
+                                            </label>
+                                        </div>
+                                        @Html.HiddenFor(x => x.courseSalesMaster.LVC)
+                                        @Html.HiddenFor(x => x.courseSalesMaster.TOD)
+                                        @Html.HiddenFor(x => x.courseSalesMaster.ILT)
+                                    </div>*@
 
                                 <div class="col-md-4">
                                     <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
@@ -161,6 +161,13 @@
                                     <div class="col-md-4">
                                         @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control", onchange = "MinimumRegUser()" })
                                     </div>
+                                    <div class="col-md-2">
+                                        <label class="control-label">Revenue</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.courseSalesMaster.Revenue, "{0:#.#}",
+                        new { @class = "form-control input-sm decimalCss" })
+                                    </div>
                                 </div>
                             </div>
                             <div class="row css10">
@@ -187,7 +194,7 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
-                                      new { @class = "form-control"})
+                                      new { @class = "form-control" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Registration Details</span>
@@ -197,14 +204,14 @@
                                     new { @class = "form-control" })
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                             <div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Available Seats</span>
                                     </label>
                                     <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
+                                        @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
                                  new { @class = "form-control numCss", @readonly = "readonly" })
                                     </div>
                                 </div>
@@ -224,21 +231,21 @@
                                     </div>
 
                                     @*<label class="col-md-2 control-label">
-                                        <span class="pull-right">Closing Date</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="input-group date" id="RegClosingDt">
-                                                @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate,
-                                               new { @class = "form-control dtCss" })
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-calendar"></span>
-                                                </span>
+                                            <span class="pull-right">Closing Date</span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="input-group date" id="RegClosingDt">
+                                                    @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate,
+                                                   new { @class = "form-control dtCss" })
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>*@
-                                <div class="col-md-2">
-                                </div>
+                                        </div>*@
+                                    <div class="col-md-2">
+                                    </div>
                                     <div class="col-md-4">
                                         <input type="radio" name="rdoConfirmGroup" id="rdoOpen" title="Open" checked="@((Model.courseSalesMaster.IsConfirm==null && Model.courseSalesMaster.IsDrop==null && Model.courseSalesMaster.IsOpen==null)?true: Model.courseSalesMaster.IsOpen)" />
                                         @Html.Label("Open")
@@ -255,8 +262,8 @@
 
                                     </div>
                                     @*<input type="checkbox" id="chkIsConfirm" title="IsConfirm" checked="@((Model.courseSalesMaster.IsConfirm==null)?false: Model.courseSalesMaster.IsConfirm)" />
-                                    <label>Confirm</label>
-                                    @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)*@
+                                        <label>Confirm</label>
+                                        @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)*@
                                 </div>
                             </div>
                             <div class="row">
@@ -279,7 +286,7 @@
 
 
 @section SectionScripts{
-<script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
         $('.dtCss').datetimepicker({
             icons: {
@@ -329,13 +336,13 @@
         $('#courseSalesMaster_Month').val(dmonth - 1);
         $('#courseSalesMaster_EndDate').val('');
         $('#EndDt').data("DateTimePicker").minDate(e.date);
-        
+
     });
 
     $("#EndDt").on("dp.change", function (e) {
         $('#StartDt').data("DateTimePicker").maxDate(e.date);
     });
-  
+
     function ConfirmAttrCoursesalesmaster() {
             $('#courseSalesMaster_Country').attr('disabled', 'disabled');
             $('#courseSalesMaster_Product').attr('disabled', 'disabled');
@@ -582,6 +589,6 @@
                 $('#courseSalesMaster_AvailableSeats').val('');
             }
         }
-</script>
+    </script>
 
 }

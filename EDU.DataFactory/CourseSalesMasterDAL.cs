@@ -69,6 +69,7 @@ namespace EZY.EDU.DataFactory
                 db.AddInParameter(savecommand, "IsDrop", System.Data.DbType.Boolean, courseSalesMaster.IsDrop == null ? false : courseSalesMaster.IsDrop);
                 db.AddInParameter(savecommand, "IsConfirm", System.Data.DbType.Boolean, courseSalesMaster.IsConfirm == null ? false : courseSalesMaster.IsConfirm);
                 db.AddInParameter(savecommand, "ConfirmOrDropDate", System.Data.DbType.DateTime, (courseSalesMaster.IsOpen == null || courseSalesMaster.IsOpen == false) ? courseSalesMaster.ConfirmOrDropDate : null);
+                db.AddInParameter(savecommand, "Revenue", System.Data.DbType.Decimal, courseSalesMaster.Revenue);
                 db.AddOutParameter(savecommand, "NewId", System.Data.DbType.String, 50);
 
                 result = db.ExecuteNonQuery(savecommand, transaction);
