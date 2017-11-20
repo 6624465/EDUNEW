@@ -52,7 +52,7 @@
                             @<text>
                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
-                            <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" +@item.RegistrationId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                            <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" +item.RegistrationId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                             <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                     }
                             </text>)),
