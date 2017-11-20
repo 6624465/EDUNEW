@@ -195,23 +195,20 @@
 
     <script type="text/javascript">
         $(function () {
-            $('[data-toggle="popover"]').popover({
-                placement: 'top',
-                trigger: 'hover'
-            });
 
-            $('#tblCourseSalesMaster').DataTable({
-                responsive: true
-            });
+            //$('#tblCourseSalesMaster').DataTable({
+            //    responsive: true,
+            //    drawCallback: function () {
+            //        alert('DataTables has redrawn the table');
+            //    }
+            //});
         });
 
         function DeleteCourseSalesMaster(Id) {
-
             if (confirm("Are you sure, do you want delete?")) {
                 $('#id').val(Id);
                 $('#frmDelete').submit();
             }
-
         }
 
         $(".pop").popover({ trigger: "manual", html: true, animation: false })
@@ -229,5 +226,8 @@
                     }
                 }, 300);
             });
+            //.drawCallback("load",function () {
+            //    alert('DataTables has redrawn the table');
+            //});
     </script>
 }
