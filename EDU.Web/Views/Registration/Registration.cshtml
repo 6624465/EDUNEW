@@ -1,0 +1,245 @@
+﻿@model  EDU.Web.Models.Registration
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page page-forms-elements">
+  
+    @using (Html.BeginForm("Registration", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration" }))
+    {
+        @Html.HiddenFor(x => x.RegistrationId)
+        <div class="page-wrap">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default panel-hovered panel-stacked mb30">
+                        <div class="panel-heading">Registration</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Oracle DataBase</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.OracleDataBase, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Amount</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">WHT</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.WHT, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">VAT/TAX</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.VAT, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Payment1</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Payment2</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Payment2, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Balance</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Balance, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Email</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Contact</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">CompanyName</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.CompanyName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Product</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Product, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">CourseName</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.CourseName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Start Date</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group date" id="StartDt">
+                                                @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control" })
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">End Date</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group date" id="EndDt">
+                                                @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control input-sm dtCss" })
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Trainer Name</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.TrainerName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <button type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        @*<button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Master/CourseSalesMasterList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section SectionScripts {
+    <script src="@Url.Content("~/Scripts/moment.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-datetimepicker.js")"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $('#StartDt,#EndDt').datetimepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down'
+                },
+                //minDate: new Date(),
+                format: 'DD/MM/YYYY'
+            });
+        });
+
+        function SaveRegistration() {
+            if ($('#frmRegistration').valid()) {
+                $('#frmRegistration').submit();
+            }
+        }
+        $('#frmRegistration').validate({
+            rules: {
+                'OracleDataBase': {
+                    required: true
+                },
+                'Amount': {
+                    required: true
+                },
+                'WHT': {
+                    required: true
+                },
+                'TAX': {
+                    required: true
+                },
+                'Payment1': {
+                    required: true
+                },
+                'Payment2': {
+                    required: true
+                },
+                'Email': {
+                    required: true,
+                    email: true
+                },
+                'CompanyName': {
+                    required: true
+                },
+                'Product': {
+                    required: true
+                },
+                'CourseName': {
+                    required: true
+                },
+                'StartDate': {
+                    required: true
+                },
+                'EndDate': {
+                    required: true
+                },
+                'TrainerName': {
+                    required: true
+                }
+                ,
+                'Balance': {
+                    required: true
+                },
+                'Contact': {
+                    required: true
+                }
+            }
+        });
+
+    </script>
+}

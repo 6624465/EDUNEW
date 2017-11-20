@@ -1573,6 +1573,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RevenueController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -1703,6 +1704,8 @@
     <Content Include="Views\Revenue\Index.cshtml" />
     <Content Include="Views\Revenue\RevenueList.cshtml" />
     <Content Include="Views\Revenue\RevenueList1.cshtml" />
+    <Content Include="Views\Registration\GetRegistrationList.cshtml" />
+    <Content Include="Views\Registration\Registration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
