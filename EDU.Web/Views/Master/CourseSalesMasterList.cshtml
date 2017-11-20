@@ -68,9 +68,9 @@
                                 grid.Column("ProductName", "Product", canSort: true),
                                 grid.Column("CourseName", "Course", canSort: true),
                                 grid.Column("NoOfDays", "No Of Days", canSort: true, style: "center"),
-                                grid.Column("Month", "Month", format: @<text> @GetMonthById(item.Month == null ? 0 : item.Month + 1) </text>),
-                                grid.Column("StartDate", "Start Dt", format: @<text> @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy")) </text>, style: "center"),
-                                grid.Column("EndDate", "End Dt", format: @<text> @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy")) </text>, style: "center"),
+                                grid.Column("Month", "Month", format: @<text> @GetMonthById(item.Month == null ? 0 : item.Month + 1) </text>, canSort: true),
+                                grid.Column("StartDate", "Start Dt", format: @<text> @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                                grid.Column("EndDate", "End Dt", format: @<text> @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                                 grid.Column("MinimumReg", "Min. Reg", canSort: true, style: "center"),
 
                                 grid.Column("LeadsOnHead", "Leads on hand",
@@ -86,8 +86,8 @@
                                             <span class="pop" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
                                         </a>
                                     }
-                                </text>, style: "center"),
-
+                                </text>, canSort: true, style: "center"),
+                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue >0 ? item.Revenue.ToString("0.00") : "N/A") </text>, canSort: true, style: "center"),
                                 grid.Column("Registered", "Registered",
                                 format:
                                 @<text>
@@ -101,10 +101,10 @@
                                             <span class="pop" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.RegisteredRemarks)" data-original-title="" title="">@item.Registered</span>
                                         </a>
                                     }
-                                </text>, style: "center"),
+                                </text>, canSort: true, style: "center"),
 
                                 grid.Column("AvailableSeats", "Avl. Seats", canSort: true, style: "center"),
-                                grid.Column("RegClosingDate", "Reg. Closing Dt.", format: @<text> @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy")) </text>, style: "center"),
+                                grid.Column("RegClosingDate", "Reg. Closing Dt.", format: @<text> @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
 
                                 grid.Column("", "#Action", canSort: false,
                                 format:
@@ -120,7 +120,7 @@
                                         }
                                         else
                                         {
-                                            <span class="text-green"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                            <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
                                         }
 
                                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
