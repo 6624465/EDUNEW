@@ -50,10 +50,10 @@
                                      columns:
                                          grid.Columns(
                                          grid.Column("ProductName", "Product Name", format: @<text>  @item.ProductName  </text>, style: ""),
-                                         grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> @(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "") </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ? item.YearlyTarget.ToString("0.00") : "")" class="edit-mode numCss" /> </text>, style: ""),
-                                         grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text>  @(item.HalfYearlyTarget > 0 ? item.HalfYearlyTarget.ToString("0.00") : "")  </text>, style: ""),
-                                         grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  @(item.QuarterlyTarget > 0 ? item.QuarterlyTarget.ToString("0.00") : "")   </text>, style: ""),
-                                         grid.Column("MonthlyTarget", "Monthly", format: @<text>  @(item.MonthlyTarget > 0 ? item.MonthlyTarget.ToString("0.00") : "")   </text>, style: ""),
+                                         grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> @(item.YearlyTarget > 0 ? Convert.ToInt64(item.YearlyTarget): "") </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt32(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: ""),
+                                         grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text>  @(item.HalfYearlyTarget > 0 ? Convert.ToInt64(item.HalfYearlyTarget): "")  </text>, style: ""),
+                                         grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  @(item.QuarterlyTarget > 0 ? Convert.ToInt64(item.QuarterlyTarget): "")   </text>, style: ""),
+                                         grid.Column("MonthlyTarget", "Monthly", format: @<text>  @(item.MonthlyTarget > 0 ?Convert.ToInt64(item.MonthlyTarget): "")   </text>, style: ""),
                                          grid.Column("Action", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
@@ -83,10 +83,10 @@
                                      columns:
                                          grid1.Columns(
                                          grid1.Column("ProductName", "Product Name", format: @<text> @item.ProductName</text>, style: ""),
-                                         grid1.Column("YearlyTargetAmt", "Yearly Target", format: @<text> @(item.YearlyTargetAmt > 0 ? item.YearlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
-                                         grid1.Column("HalfYearlyTargetAmt", "Half Yearly", format: @<text> @(item.HalfYearlyTargetAmt > 0 ? item.HalfYearlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
-                                         grid1.Column("QuarterlyTargetAmt", "Quarterly", format: @<text> @(item.QuarterlyTargetAmt > 0 ? item.QuarterlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
-                                         grid1.Column("MonthlyTargetAmt", "Monthly", format: @<text> @(item.MonthlyTargetAmt > 0 ? item.MonthlyTargetAmt.ToString("0.00") : "")</text>, style: ""),
+                                         grid1.Column("YearlyTargetAmt", "Yearly Target", format: @<text> @(item.YearlyTargetAmt > 0 ?Convert.ToInt64(item.YearlyTargetAmt) : "")</text>, style: ""),
+                                         grid1.Column("HalfYearlyTargetAmt", "Half Yearly", format: @<text> @(item.HalfYearlyTargetAmt > 0 ? Convert.ToInt64(item.HalfYearlyTargetAmt): "")</text>, style: ""),
+                                         grid1.Column("QuarterlyTargetAmt", "Quarterly", format: @<text> @(item.QuarterlyTargetAmt > 0 ? Convert.ToInt64(item.QuarterlyTargetAmt): "")</text>, style: ""),
+                                         grid1.Column("MonthlyTargetAmt", "Monthly", format: @<text> @(item.MonthlyTargetAmt > 0 ? Convert.ToInt64(item.MonthlyTargetAmt): "")</text>, style: ""),
                                          grid1.Column("", format: @<text>
                                         </text>, style: "col3Width", canSort: false)
                                         ))
