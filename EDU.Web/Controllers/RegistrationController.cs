@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace EDU.Web.Controllers
 {
+    [SessionFilter]
     public class RegistrationController : Controller
     {
         EducationEntities dbContext = new EducationEntities();

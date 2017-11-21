@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace EDU.Web.Controllers
 {
+    [SessionFilter]
     public class RevenueController : BaseController
     {
         EducationEntities dbContext = new EducationEntities();
