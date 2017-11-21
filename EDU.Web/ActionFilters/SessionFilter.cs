@@ -17,6 +17,7 @@ namespace EDU.Web
                     if (!filterContext.HttpContext.Request.IsAjaxRequest())
                     {
                         filterContext.Result = new RedirectResult("~/Account/Index");
+                        return;
                     }
                     else
                     {
