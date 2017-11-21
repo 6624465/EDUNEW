@@ -1,0 +1,86 @@
+﻿@model IEnumerable<EDU.Web.Models.TrainerInformation>
+@{
+    ViewBag.Title = "TrainersList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    grid.Pager(WebGridPagerModes.All);
+}
+<div class="page">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Trainers List</h4>
+                    <div class="box-tools">
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="location.href = '@Url.Content("~/Trainer/Index?Id=-1")'"><i class="fa fa-plus"></i>Add New Trainer</button>
+                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
+                        }
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        @grid.GetHtml(
+                                columns: grid.Columns(
+                    grid.Column("TrainerName", "TrainerName", canSort: true),
+                    grid.Column("Technology", "Technology", canSort: true),
+                    grid.Column("Country", "Country", canSort: true),
+                    grid.Column("Profile", "Profile", canSort: true),
+                    grid.Column("TrainerRate", "TrainerRate", canSort: true),
+                    grid.Column("VendorName", "VendorName", canSort: true),
+                    grid.Column("Address", "Address", canSort: true),
+                    grid.Column("Contact", "Contact", canSort: true),
+                    grid.Column("Remarks", "Remarks", canSort: true),
+                    grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                        <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Index?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                    }
+                                </text>)),
+                                tableStyle: "table")
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section SectionScripts{
+    <script type="text/javascript">
+        //$(function () {
+        //    $('#tblTrainer').DataTable();
+        //});
+
+
+        function DeleteTrainer(id) {
+            if (confirm("Are you sure, You want to delete")) {
+                $.ajax({
+                    url: '@Url.Content("~/Trainer/DeleteTrainer?Id=")' + id,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (data) {
+
+                        alert("Deleted Successfully");
+                        if (data) {
+                            location.reload();
+                        }
+                    },
+                    error: function (e) {
+
+                    }
+                });
+            }
+        }
+    </script>
+
+}

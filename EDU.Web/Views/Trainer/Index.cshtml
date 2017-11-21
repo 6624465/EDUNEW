@@ -1,0 +1,148 @@
+﻿@model EDU.Web.ViewModels.Trainer.TrainerVM
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page page-forms-elements">
+
+    @using (Html.BeginForm("SaveTrainer", "Trainer", FormMethod.Post, new { id = "frmTrainer", name = "frmTrainer", enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(x => x.TrainerInformation.TrianerId)
+        <div class="page-wrap">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default panel-hovered panel-stacked mb30">
+                        <div class="panel-heading">Trainer</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Trainer Name</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                       @Html.TextBoxFor(x => x.TrainerInformation.TrainerName, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Technology</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.TrainerInformation.Technology, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Country</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => x.TrainerInformation.Country, new SelectList(Model.countryList, "CountryCode", "CountryName"), "Select Country", new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Profile</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.TrainerInformation.Profile, new { type = "file", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Trainer Rate</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.TrainerInformation.TrainerRate, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Vendor Name</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.TrainerInformation.VendorName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Address</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextAreaFor(x => x.TrainerInformation.Address, new { @class = "form-control input-sm" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Contact</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.TrainerInformation.Contact, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Remarks</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextAreaFor(x => x.TrainerInformation.Remarks, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <button type="button" onclick="SaveTrainer()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Trainer/TrainersList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@section SectionScripts {
+    <script type="text/javascript">
+        $(function () {
+
+        });
+        function SaveTrainer() {
+            debugger;
+            if ($('#frmTrainer').valid()) {
+                $('#frmTrainer').submit();
+            }
+        }
+        $('#frmTrainer').validate({
+            rules: {
+                'TrainerInformation.TrainerName': {
+                    required: true
+                },
+                'TrainerInformation.Technology': {
+                    required: true
+                },
+                'TrainerInformation.Country': {
+                    required: true
+                },
+                'TrainerInformation.Profile': {
+                    required: true
+                },
+                'TrainerInformation.TrainerRate': {
+                    required: true
+                },
+                'TrainerInformation.VendorName': {
+                    required: true
+                },
+                'TrainerInformation.Address': {
+                    required: true
+                },
+                'TrainerInformation.Contact': {
+                    required: true
+                }
+            }
+        });
+    </script>
+}

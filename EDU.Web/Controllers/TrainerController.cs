@@ -74,8 +74,14 @@ namespace EDU.Web.Controllers
                 {
                     ti.Profile = TrainerInfo.TrainerInformation.Profile.FileName;
                     string fileName = Path.GetFileName(TrainerInfo.TrainerInformation.Profile.FileName);
-                    string path = Path.Combine(Server.MapPath("~/FileUploads"), ti.Profile);
-                    TrainerInfo.TrainerInformation.Profile.SaveAs(path);
+                    string path = Server.MapPath("~/FileUploads");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    string filePath = Path.Combine(Server.MapPath("~/FileUploads"), ti.Profile);
+                   
+                    TrainerInfo.TrainerInformation.Profile.SaveAs(filePath);
 
                 }
                 ti.Remarks = TrainerInfo.TrainerInformation.Remarks;

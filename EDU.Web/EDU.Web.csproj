@@ -1576,6 +1576,7 @@
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RevenueController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1616,6 +1617,7 @@
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
     <Compile Include="ViewModels\RevenueModel\RevenueVM.cs" />
+    <Compile Include="ViewModels\Trainer\TrainerVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -1706,6 +1708,8 @@
     <Content Include="Views\Revenue\RevenueList1.cshtml" />
     <Content Include="Views\Registration\GetRegistrationList.cshtml" />
     <Content Include="Views\Registration\Registration.cshtml" />
+    <Content Include="Views\Trainer\TrainersList.cshtml" />
+    <Content Include="Views\Trainer\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
