@@ -29,7 +29,7 @@
                     grid.Column("Technology", "Technology", canSort: true),
                     grid.Column("Country", "Country", canSort: true),
                     grid.Column("Profile", "Profile", canSort: true),
-                    grid.Column("TrainerRate", "TrainerRate", canSort: true),
+                    grid.Column("TrainerRate", "TrainerRate", format:(item)=>new HtmlString("$"+Convert.ToString(item.TrainerRate)), canSort: true),
                     grid.Column("VendorName", "VendorName", canSort: true),
                     grid.Column("Address", "Address", canSort: true),
                     grid.Column("Contact", "Contact", canSort: true),
