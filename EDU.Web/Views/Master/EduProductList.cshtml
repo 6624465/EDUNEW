@@ -30,8 +30,8 @@
                                 @<text>
                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
-                                        <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="EditEduProduct(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                        <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteProductCategory(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditEduProduct(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteProductCategory(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                     }
                                 </text>)),
                                 tableStyle: "table")
@@ -160,7 +160,7 @@
 <style>
     .center {
     margin: auto;
-    width: 40%;
+    width: 35%;
     border: 3px solid gray;
     padding: 10px;
     border-radius: 20px;
