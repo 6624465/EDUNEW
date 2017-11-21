@@ -1,4 +1,4 @@
-﻿@model EDU.Web.ViewModels.Trainer.TrainerVM
+﻿@model EDU.Web.Models.TrainerInformation
 @{
     ViewBag.Title = "Trainer";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +8,8 @@
 
     @using (Html.BeginForm("SaveTrainer", "Trainer", FormMethod.Post, new { id = "frmTrainer", name = "frmTrainer", enctype = "multipart/form-data" }))
     {
-        @Html.HiddenFor(x => x.TrainerInformation.TrianerId)
+        @Html.HiddenFor(x => x.TrianerId)
+        @Html.HiddenFor(x => x.CountryName)
         <div class="page-wrap">
             <div class="row">
                 <div class="col-md-12">
@@ -21,13 +22,13 @@
                                         <span class="pull-right">Trainer Name</span>
                                     </label>
                                     <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.TrainerInformation.TrainerName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.TrainerName, new { @class = "form-control" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Technology</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerInformation.Technology, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.Technology, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -37,13 +38,15 @@
                                         <span class="pull-right">Country</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.TrainerInformation.Country, new SelectList(Model.countryList, "CountryCode", "CountryName"), "Select Country", new { @class = "form-control" })
+                                        @Html.DropDownListFor(x => x.Country,
+                                        new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
+                                        "Select Country", new { @class = "form-control", onchange = "CountryChange();" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Profile</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x =>  x.TrainerInformation.Profile, new { type = "file", @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.Profile, new { type = "file", @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -53,13 +56,13 @@
                                         <span class="pull-right">Trainer Rate</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerInformation.TrainerRate, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.TrainerRate, new { @class = "form-control" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Vendor Name</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerInformation.VendorName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -69,13 +72,13 @@
                                         <span class="pull-right">Address</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.TrainerInformation.Address, new { @class = "form-control input-sm" })
+                                        @Html.TextAreaFor(x => x.Address, new { @class = "form-control input-sm" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Contact</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerInformation.Contact, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +88,7 @@
                                         <span class="pull-right">Remarks</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.TrainerInformation.Remarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -107,39 +110,42 @@
 </div>
 @section SectionScripts {
     <script type="text/javascript">
-        $(function () {
-
-        });
+        function CountryChange() {
+            debugger;
+            $('#CountryName').val($("#Country option:selected").text());
+        }
         function SaveTrainer() {
             debugger;
             if ($('#frmTrainer').valid()) {
+                debugger;
+                //$('#CountryName').val($("#Country option:selected").text());
                 $('#frmTrainer').submit();
             }
         }
         $('#frmTrainer').validate({
             rules: {
-                'TrainerInformation.TrainerName': {
+                TrainerName: {
                     required: true
                 },
-                'TrainerInformation.Technology': {
+                Technology: {
                     required: true
                 },
-                'TrainerInformation.Country': {
+                Country: {
                     required: true
                 },
-                'TrainerInformation.Profile': {
+                Profile: {
                     required: true
                 },
-                'TrainerInformation.TrainerRate': {
+                TrainerRate: {
                     required: true
                 },
-                'TrainerInformation.VendorName': {
+                VendorName: {
                     required: true
                 },
-                'TrainerInformation.Address': {
+                Address: {
                     required: true
                 },
-                'TrainerInformation.Contact': {
+                Contact: {
                     required: true
                 }
             }

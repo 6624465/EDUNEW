@@ -1,9 +1,10 @@
 ﻿using EDU.Web.Models;
 using EDU.Web.ViewModels.Master;
-using EDU.Web.ViewModels.Trainer;
+//using EDU.Web.ViewModels.Trainer;
 using EZY.EDU.BusinessFactory;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,7 @@ using System.Web.Mvc;
 
 namespace EDU.Web.Controllers
 {
-    public class TrainerController : Controller
+    public class TrainerController : BaseController
     {
         EducationEntities dbContext = new EducationEntities();
 
@@ -21,96 +22,64 @@ namespace EDU.Web.Controllers
             TrainerInformation TrainerInfo = dbContext.TrainerInformations.
                 Where(x => x.TrianerId == Id && x.IsActive == true).FirstOrDefault();
 
+            ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
             if (TrainerInfo == null)
             {
-                var trainerVM = new TrainerVM()
-                {
-                    countryList = new CountryBO().GetList().AsEnumerable()
-                };
-                trainerVM.TrainerInformation = new TrainerInformationVM()
-                {
-                    TrianerId = Id
-                };
-                return View(trainerVM);
+                TrainerInfo = new TrainerInformation();
+                TrainerInfo.TrianerId = -1;
+
+                return View(TrainerInfo);
             }
             else
             {
-                var trainerVM = new TrainerVM()
-                {
-
-                    countryList = new CountryBO().GetList().AsEnumerable()
-                };
-                trainerVM.TrainerInformation = new TrainerInformationVM()
-                {
-
-
-                    TrainerName = TrainerInfo.TrainerName,
-                    Address = TrainerInfo.Address,
-                    Contact = TrainerInfo.Contact,
-                    Country = TrainerInfo.Country,
-                    TrianerId = TrainerInfo.TrianerId,
-                    // Profile = "~/FileUploads/" + TrainerInfo.Profile,
-                    Remarks = TrainerInfo.Remarks,
-                    Technology = TrainerInfo.Technology,
-                    TrainerRate = TrainerInfo.TrainerRate,
-                    VendorName = TrainerInfo.VendorName,
-                };
-
-                return View(trainerVM);
+                return View(TrainerInfo);
             }
         }
 
         [HttpPost]
-        public ActionResult SaveTrainer(TrainerVM TrainerInfo)
+        public ActionResult SaveTrainer(TrainerInformation TrainerInfo)
         {
-            if (TrainerInfo.TrainerInformation.TrianerId == -1)
+            try
             {
-                TrainerInformation ti = new TrainerInformation();
 
-                ti.TrainerName = TrainerInfo.TrainerInformation.TrainerName;
-                ti.Address = TrainerInfo.TrainerInformation.Address;
-                ti.Contact = TrainerInfo.TrainerInformation.Contact;
-                ti.Country = TrainerInfo.TrainerInformation.Country;
-                if (TrainerInfo.TrainerInformation.Profile.ContentLength > 0)
+                if (TrainerInfo.TrianerId == -1)
                 {
-                    ti.Profile = TrainerInfo.TrainerInformation.Profile.FileName;
-                    string fileName = Path.GetFileName(TrainerInfo.TrainerInformation.Profile.FileName);
-                    string path = Server.MapPath("~/FileUploads");
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    string filePath = Path.Combine(Server.MapPath("~/FileUploads"), ti.Profile);
-                   
-                    TrainerInfo.TrainerInformation.Profile.SaveAs(filePath);
+                    //TrainerInfo.CreatedBy = USER_ID;
+                    //TrainerInfo.CreatedOn = UTILITY.SINGAPORETIME;
+                    TrainerInfo.IsActive = true;
+                    TrainerInfo.CountryName = "";
 
+                    dbContext.TrainerInformations.Add(TrainerInfo);
                 }
-                ti.Remarks = TrainerInfo.TrainerInformation.Remarks;
-                ti.Technology = TrainerInfo.TrainerInformation.Technology;
-                ti.TrainerRate = TrainerInfo.TrainerInformation.TrainerRate;
-                ti.VendorName = TrainerInfo.TrainerInformation.VendorName;
-                ti.IsActive = true;
-                dbContext.TrainerInformations.Add(ti);
+
+                else
+                {
+                    TrainerInformation trainerInfoDetail = dbContext.TrainerInformations.
+                        Where(x => x.TrianerId == TrainerInfo.TrianerId).FirstOrDefault();
+
+                    trainerInfoDetail.Technology = TrainerInfo.Technology;
+                    trainerInfoDetail.Country = TrainerInfo.Country;
+                    trainerInfoDetail.CountryName = TrainerInfo.CountryName ?? "";
+                    trainerInfoDetail.Profile = TrainerInfo.Profile;
+                    trainerInfoDetail.TrainerRate = TrainerInfo.TrainerRate;
+                    trainerInfoDetail.VendorName = TrainerInfo.VendorName;
+                    trainerInfoDetail.Address = TrainerInfo.Address;
+                    trainerInfoDetail.Contact = TrainerInfo.Contact;
+                    trainerInfoDetail.Remarks = TrainerInfo.Remarks;
+                    trainerInfoDetail.TrainerName = TrainerInfo.TrainerName;
+
+                    trainerInfoDetail.IsActive = true;
+
+                    //trainerInfoDetail.ModifiedBy = USER_ID;
+                    //trainerInfoDetail.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                    dbContext.Entry(trainerInfoDetail).State = EntityState.Modified;
+                }
                 dbContext.SaveChanges();
             }
-
-            else
+            catch (Exception ex)
             {
-                TrainerInformation trainerInfoDetail = dbContext.TrainerInformations.
-                    Where(x => x.TrianerId == TrainerInfo.TrainerInformation.TrianerId).FirstOrDefault();
-                if (trainerInfoDetail != null)
-                {
-                    trainerInfoDetail.TrainerName = TrainerInfo.TrainerInformation.TrainerName;
-                    trainerInfoDetail.Address = TrainerInfo.TrainerInformation.Address;
-                    trainerInfoDetail.Contact = TrainerInfo.TrainerInformation.Contact;
-                    trainerInfoDetail.Country = TrainerInfo.TrainerInformation.Country;
-                    trainerInfoDetail.Profile = TrainerInfo.TrainerInformation.Profile.FileName;
-                    trainerInfoDetail.Remarks = TrainerInfo.TrainerInformation.Remarks;
-                    trainerInfoDetail.Technology = TrainerInfo.TrainerInformation.Technology;
-                    trainerInfoDetail.TrainerRate = TrainerInfo.TrainerInformation.TrainerRate;
-                    trainerInfoDetail.VendorName = TrainerInfo.TrainerInformation.VendorName;
-                }
-                dbContext.SaveChanges();
+                throw ex;
             }
             return RedirectToAction("TrainersList");
         }
@@ -119,12 +88,6 @@ namespace EDU.Web.Controllers
         public ActionResult TrainersList()
         {
             List<TrainerInformation> trainerList = dbContext.TrainerInformations.Where(x => x.IsActive == true).ToList();
-            foreach (TrainerInformation ti in trainerList)
-            {
-                ti.Profile = "~/FileUploads/"+ti.Profile;
-                var countryList = new CountryBO().GetList().AsEnumerable();
-                ti.Country = countryList.Where(x => x.CountryCode == ti.Country).FirstOrDefault().CountryName;
-            }
             return View(trainerList);
         }
 

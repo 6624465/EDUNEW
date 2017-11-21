@@ -16,7 +16,8 @@ namespace EDU.Web.Models
     {
         public int TrianerId { get; set; }
         public string Technology { get; set; }
-        public string Country { get; set; }
+        public short Country { get; set; }
+        public string CountryName { get; set; }
         public string Profile { get; set; }
         public Nullable<decimal> TrainerRate { get; set; }
         public string VendorName { get; set; }

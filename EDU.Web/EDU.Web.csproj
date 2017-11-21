@@ -1617,7 +1617,6 @@
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
     <Compile Include="ViewModels\RevenueModel\RevenueVM.cs" />
-    <Compile Include="ViewModels\Trainer\TrainerVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -1719,6 +1718,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ViewModels\Trainer\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EDU.BusinessFactory\EDU.BusinessFactory.csproj">
