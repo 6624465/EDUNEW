@@ -29,8 +29,8 @@
                     grid.Column("CourseName", "Course Name", canSort: true),
                     grid.Column("NoOfDays", "No Of Days", canSort: true),
                     grid.Column("CountryName", "Country", canSort: true),
-                    grid.Column("PublicPrice", "Public Price", format: @<text>  <span class="display-mode">@(item.PublicPrice > 0 ? item.PublicPrice.ToString("0.00") : "N/A") </span> </text>, style: "", canSort: true),
-                    grid.Column("PrivatePrice", "Private Price", format: @<text>  <span class="display-mode">@(item.PrivatePrice > 0 ? item.PrivatePrice.ToString("0.00") : "N/A") </span> </text>, style: "", canSort: true),
+                    grid.Column("PublicPrice", "Public Price", format: @<text>  <span class="display-mode">@(item.PublicPrice > 0 ? Convert.ToInt32(item.PublicPrice): "N/A") </span> </text>, style: "", canSort: true),
+                    grid.Column("PrivatePrice", "Private Price", format: @<text>  <span class="display-mode">@(item.PrivatePrice > 0 ? Convert.ToInt32(item.PrivatePrice): "N/A") </span> </text>, style: "", canSort: true),
                     grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
