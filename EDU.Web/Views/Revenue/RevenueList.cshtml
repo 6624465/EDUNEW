@@ -5,7 +5,13 @@
 }
 <style>
     .alignright {
-    text-align:right !important;
+        text-align: right !important;
+    }
+
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        font-weight:bold !important;
     }
 </style>
 <form name="frmRevenue" id="frmRevenue">
@@ -55,10 +61,10 @@
                                      columns:
                                          grid.Columns(
                                          grid.Column("ProductName", "Product Name", format: @<text>  @item.ProductName  </text>, style: ""),
-                                         grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> @(item.YearlyTarget > 0 ? Convert.ToInt64(item.YearlyTarget): "") </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt32(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: ""),
-                                         grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text>  @(item.HalfYearlyTarget > 0 ? Convert.ToInt64(item.HalfYearlyTarget): "")  </text>, style: ""),
-                                         grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  @(item.QuarterlyTarget > 0 ? Convert.ToInt64(item.QuarterlyTarget): "")   </text>, style: ""),
-                                         grid.Column("MonthlyTarget", "Monthly", format: @<text>  @(item.MonthlyTarget > 0 ?Convert.ToInt64(item.MonthlyTarget): "")   </text>, style: ""),
+                                         grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> @(item.YearlyTarget > 0 ? Convert.ToInt64(item.YearlyTarget) : "") </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt32(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: "YearlyTarget"),
+                                         grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text> <span class="display-mode"> @(item.HalfYearlyTarget > 0 ? Convert.ToInt64(item.HalfYearlyTarget) : "")</span>  </text>, style: "HalfYearlyTarget"),
+                                         grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  <span class="display-mode">@(item.QuarterlyTarget > 0 ? Convert.ToInt64(item.QuarterlyTarget) : "")</span>   </text>, style: "QuarterlyTarget"),
+                                         grid.Column("MonthlyTarget", "Monthly", format: @<text> <span class="display-mode"> @(item.MonthlyTarget > 0 ? Convert.ToInt64(item.MonthlyTarget) : "")  </span> </text>, style: "MonthlyTarget"),
                                          grid.Column("Action", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
@@ -68,7 +74,7 @@
                                                 <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
                                         </text>, style: "col3Width", canSort: false)
                                         ))
-                        </div>
+</div>
                     </div>
 
                     <div class="col-md-12 css10">
@@ -81,17 +87,17 @@
                         @{
                             var grid1 = new WebGrid(Model);
                         }
-                        <div id="gridContent">
+                        <div id="gridContent1">
                             @grid1.GetHtml(
                                      tableStyle: "table table-striped",
                                      mode: WebGridPagerModes.All,
                                      columns:
                                          grid1.Columns(
                                          grid1.Column("ProductName", "Product Name", format: @<text> @item.ProductName</text>, style: ""),
-                                         grid1.Column("YearlyTargetAmt", "Yearly Target", format: @<text> @(item.YearlyTargetAmt > 0 ?Convert.ToInt64(item.YearlyTargetAmt) : "")</text>, style: ""),
-                                         grid1.Column("HalfYearlyTargetAmt", "Half Yearly", format: @<text> @(item.HalfYearlyTargetAmt > 0 ? Convert.ToInt64(item.HalfYearlyTargetAmt): "")</text>, style: ""),
-                                         grid1.Column("QuarterlyTargetAmt", "Quarterly", format: @<text> @(item.QuarterlyTargetAmt > 0 ? Convert.ToInt64(item.QuarterlyTargetAmt): "")</text>, style: ""),
-                                         grid1.Column("MonthlyTargetAmt", "Monthly", format: @<text> @(item.MonthlyTargetAmt > 0 ? Convert.ToInt64(item.MonthlyTargetAmt): "")</text>, style: ""),
+                                         grid1.Column("YearlyTargetAmt", "Yearly Target", format: @<text> @(item.YearlyTargetAmt > 0 ? Convert.ToInt64(item.YearlyTargetAmt) : "")</text>, style: "YearlyTargetAmt"),
+                                         grid1.Column("HalfYearlyTargetAmt", "Half Yearly", format: @<text> @(item.HalfYearlyTargetAmt > 0 ? Convert.ToInt64(item.HalfYearlyTargetAmt) : "")</text>, style: "HalfYearlyTargetAmt"),
+                                         grid1.Column("QuarterlyTargetAmt", "Quarterly", format: @<text> @(item.QuarterlyTargetAmt > 0 ? Convert.ToInt64(item.QuarterlyTargetAmt) : "")</text>, style: "QuarterlyTargetAmt"),
+                                         grid1.Column("MonthlyTargetAmt", "Monthly", format: @<text> @(item.MonthlyTargetAmt > 0 ? Convert.ToInt64(item.MonthlyTargetAmt) : "")</text>, style: "MonthlyTargetAmt"),
                                          grid1.Column("", format: @<text>
                                         </text>, style: "col3Width", canSort: false)
                                         ))
@@ -106,12 +112,48 @@
 </form>
 
 @section SectionScripts {
+
     <script type="text/javascript">
-        debugger;
-        $(function () {
-            debugger;
-            $('#liRevenueList').addClass('active');
+        $(document).ready(function () {
+            var totalyt = 0;
+            var totalhyt = 0;
+            var totalqyt = 0;
+            var totalmt = 0;
+            $('#gridContent .YearlyTarget').each(function () {
+                totalyt = totalyt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent .HalfYearlyTarget').each(function () {
+                totalhyt = totalhyt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent .QuarterlyTarget').each(function () {
+                totalqyt = totalqyt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent .MonthlyTarget').each(function () {
+                totalmt = totalmt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent tbody').append('<tr class="bordertop"><td><b>Summary</b></td><td><b>' + totalyt + '</b></td><td><b>' + totalhyt + '</b></td><td><b>' + totalqyt + '</b></td><td><b>' + totalmt + '</b></td><td></td></tr>');
+
+            var totalytamt = 0;
+            var totalhytamt = 0;
+            var totalqytamt = 0;
+            var totalmtamt = 0;
+            $('#gridContent1 .YearlyTargetAmt').each(function () {
+                totalytamt = totalytamt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent1 .HalfYearlyTargetAmt').each(function () {
+                totalhytamt = totalhytamt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent1 .QuarterlyTargetAmt').each(function () {
+                totalqytamt = totalqytamt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent1 .MonthlyTargetAmt').each(function () {
+                totalmtamt = totalmtamt + parseInt($(this)[0].innerText.toLocaleString());
+            });
+            $('#gridContent1 tbody').append('<tr class="bordertop"><td><b>Summary</b></td><td><b>' + totalytamt + '</b></td><td><b>' + totalhytamt + '</b></td><td><b>' + totalqytamt + '</b></td><td><b>' + totalmtamt + '</b></td></tr>');
         });
+    </script>
+
+    <script type="text/javascript">
 
     $('#frmRevenue').validate({
         rules: {
