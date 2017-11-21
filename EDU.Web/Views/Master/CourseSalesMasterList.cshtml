@@ -114,7 +114,7 @@
                                         }
                                     </div>
                                 </text>, canSort: true, style: "center"),
-                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ? item.Revenue.ToString("0.00") : "N/A") </text>, canSort: true, style: "center"),
+                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ?Convert.ToInt32(item.Revenue): "N/A") </text>, canSort: true, style: "center"),
                                 grid.Column("Registered", "Registered",
                                 format:
                                 @<text>
