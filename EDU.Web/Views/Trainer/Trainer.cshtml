@@ -1,6 +1,6 @@
 ﻿@model EDU.Web.ViewModels.Trainer.TrainerVM
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Trainer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -43,7 +43,7 @@
                                         <span class="pull-right">Profile</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerInformation.Profile, new { type = "file", @class = "form-control" })
+                                        @Html.TextBoxFor(x =>  x.TrainerInformation.Profile, new { type = "file", @class = "form-control" })
                                     </div>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@ namespace EDU.Web.Controllers
         EducationEntities dbContext = new EducationEntities();
 
         // GET: Trainer
-        public ActionResult Index(int Id = -1)
+        public ActionResult Trainer(int Id = -1)
         {
             TrainerInformation TrainerInfo = dbContext.TrainerInformations.
                 Where(x => x.TrianerId == Id && x.IsActive == true).FirstOrDefault();
@@ -60,6 +60,7 @@ namespace EDU.Web.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult SaveTrainer(TrainerVM TrainerInfo)
         {
             if (TrainerInfo.TrainerInformation.TrianerId == -1)
