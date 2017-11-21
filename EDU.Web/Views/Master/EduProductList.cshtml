@@ -7,7 +7,10 @@
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
-            <div class="box" id="grid">
+
+            <div class="row" style="margin-top:20px;">
+            </div>
+            <div class="box center" id="grid">
                 <div class="box-header">
                     <h4>Education Product List</h4>
                     <div class="box-tools">
@@ -39,6 +42,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
             </div>
         </div>
     </div>
@@ -111,8 +116,7 @@
         })
         function SaveEduProduct() {
             debugger;
-            if ($('#frmEduProduct').valid())
-            {
+            if ($('#frmEduProduct').valid()) {
                 $('#frmEduProduct').submit();
             }
         };
@@ -140,8 +144,7 @@
                         //alert("Product already exists. Please re-enter new product.");
                         $('#ProductName').val('');
                     }
-                    else
-                    {
+                    else {
                         $('#error').hide();
                     }
                 }
@@ -155,24 +158,32 @@
 }
 
 <style>
+    .center {
+    margin: auto;
+    width: 40%;
+    border: 3px solid gray;
+    padding: 10px;
+    border-radius: 20px;
+}
+
     .Grid-Footer > td {
         padding-top: 10px;
         text-align: right;
         margin-bottom: 10px;
     }
 
-    .Grid-Footer > td > a {
-        background: #fff;
-        display: inline-block;
-        border-radius: 1px;
-        padding: 6px 12px;
-        font-size: 16px;
-        cursor: pointer;
-        border: 2px solid #eeeeee;
-    }
+        .Grid-Footer > td > a {
+            background: #fff;
+            display: inline-block;
+            border-radius: 1px;
+            padding: 6px 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid #eeeeee;
+        }
 
-    .Grid-Footer > td > a:hover {
-        color: #3f51b5;
-        text-decoration: none;
-    }
+            .Grid-Footer > td > a:hover {
+                color: #3f51b5;
+                text-decoration: none;
+            }
 </style>
