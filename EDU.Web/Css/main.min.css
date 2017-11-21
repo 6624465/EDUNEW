@@ -3801,12 +3801,12 @@ fieldset[disabled] .btn-youtube.active {
   }
 }
 .site-head {
-  z-index: 1030;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  background: #3f51b5;
-  -webkit-transition: 0.25s ease-in;
-  -o-transition: 0.25s ease-in;
-  transition: 0.25s ease-in;
+    z-index: 1030;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    background: #D73925;
+    -webkit-transition: 0.25s ease-in;
+    -o-transition: 0.25s ease-in;
+    transition: 0.25s ease-in;
 }
 .site-head ul.left-elems,
 .site-head ul.right-elems {
@@ -4058,18 +4058,18 @@ fieldset[disabled] .btn-youtube.active {
   }
 }
 .main-container .nav-wrap .nav-head {
-  height: 55px;
-  display: table;
-  overflow: hidden;
-  width: 65px;
-  position: fixed;
-  padding-left: 22px;
-  z-index: 1000;
-  -webkit-transition: 0.25s ease-in;
-  -o-transition: 0.25s ease-in;
-  transition: 0.25s ease-in;
-  background: #303f9f;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    height: 55px;
+    display: table;
+    overflow: hidden;
+    width: 65px;
+    position: fixed;
+    padding-left: 22px;
+    z-index: 1000;
+    -webkit-transition: 0.25s ease-in;
+    -o-transition: 0.25s ease-in;
+    transition: 0.25s ease-in;
+    background: #DB4C3A;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 .main-container .nav-wrap .nav-head .site-logo {
   color: #fff;
@@ -4509,10 +4509,10 @@ fieldset[disabled] .btn-youtube.active {
   background: #ffe927;
 }
 .app.theme-seven .site-head {
-  background: #f44336;
+    background: #f44336;
 }
 .app.theme-seven .main-container .nav-wrap .nav-head {
-  background: #d32f2f;
+    background: #d32f2f;
 }
 .page.page-email .compose-btn {
   position: fixed;

@@ -5,10 +5,6 @@
 }
 
 <div class="page page-forms-elements">
-    <ol class="breadcrumb breadcrumb-small">
-        <li>Forms</li>
-        <li class="active"><a href="forms.elements.html">Elements</a></li>
-    </ol>
     @using (Html.BeginForm("CoureSalesMaster", "Master", FormMethod.Post, new { id = "frmCourseDetail", name = "frmCourseDetail" }))
     {
         @Html.HiddenFor(x => x.courseSalesMaster.Id)
