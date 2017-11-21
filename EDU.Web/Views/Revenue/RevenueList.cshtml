@@ -11,7 +11,11 @@
     .bordertop {
         border-top: 2px solid gray !important;
         border-bottom: 2px solid gray !important;
-        font-weight:bold !important;
+        color: #D73925;
+        font-family: 'Bebas Neue'
+    }
+    .bold {
+        
     }
 </style>
 <form name="frmRevenue" id="frmRevenue">
@@ -131,7 +135,7 @@
             $('#gridContent .MonthlyTarget').each(function () {
                 totalmt = totalmt + parseInt($(this)[0].innerText.toLocaleString());
             });
-            $('#gridContent tbody').append('<tr class="bordertop"><td><b>Summary</b></td><td><b>' + totalyt + '</b></td><td><b>' + totalhyt + '</b></td><td><b>' + totalqyt + '</b></td><td><b>' + totalmt + '</b></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td>' + totalyt + '</td><td>' + totalhyt + '</td><td>' + totalqyt + '</td><td>' + totalmt + '</td></tr>');
 
             var totalytamt = 0;
             var totalhytamt = 0;
