@@ -137,7 +137,7 @@ namespace EDU.Web.Controllers
 
         #region TrainerConfirmation
         // GET: Trainer
-        public ActionResult TrainerConfirmation(int Id = -1)
+        public PartialViewResult TrainerConfirmation(int Id = -1)
         {
             TrainingConfirmation TrainingConfInfo = dbContext.TrainingConfirmations.
                 Where(x => x.TrainingConfirmationID == Id && x.IsActive == true).FirstOrDefault();
@@ -151,11 +151,11 @@ namespace EDU.Web.Controllers
                 TrainingConfInfo = new TrainingConfirmation();
                 TrainingConfInfo.TrainingConfirmationID = -1;
 
-                return View(TrainingConfInfo);
+                return PartialView(TrainingConfInfo);
             }
             else
             {
-                return View(TrainingConfInfo);
+                return PartialView(TrainingConfInfo);
             }
         }
 
