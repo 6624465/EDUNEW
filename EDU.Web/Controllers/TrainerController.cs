@@ -47,7 +47,6 @@ namespace EDU.Web.Controllers
                     TrainerInfo.CreatedBy = USER_ID;
                     TrainerInfo.CreatedOn = UTILITY.SINGAPORETIME;
                     TrainerInfo.IsActive = true;
-                    TrainerInfo.CountryName = "";
 
                     dbContext.TrainerInformations.Add(TrainerInfo);
                 }
