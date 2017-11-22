@@ -154,7 +154,7 @@
                                         @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
                                     </div>
                                 </text>, style: "center"),
-                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ? Convert.ToInt32(item.Revenue) : "N/A") </text>, canSort: true, style: "center Revenue"),
+                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ? Convert.ToInt32(item.Revenue) : "0") </text>, canSort: true, style: "center Revenue"),
                                 grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
