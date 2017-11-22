@@ -53,8 +53,7 @@
     }
 </style>
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid",
-            ajaxUpdateCallback: "callBack");
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
 }
 <div class="page">
@@ -201,14 +200,15 @@
 @section SectionScripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            debugger;
             var totalleadsonhand = @ViewData["totalleadsonhand"].ToString();
             var totalrevenue = @ViewData["totalrevenue"].ToString();
             debugger;
 
             $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="center">' + totalrevenue + '</td><td>');
         });
+</script>
 
+<script type="text/javascript">
         function DeleteCourseSalesMaster(Id) {
             if (confirm("Are you sure, do you want delete?")) {
                 $('#id').val(Id);
@@ -223,5 +223,5 @@
         function mouseover(el) {
             $(el).popover("show");
         }
-    </script>
+</script>
 }
