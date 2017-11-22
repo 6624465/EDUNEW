@@ -1619,7 +1619,7 @@
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
-    <Compile Include="ViewModels\RevenueModel\RevenueVM.cs" />
+    <Compile Include="ViewModels\Trainer\TrainingConfirmationVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -1723,7 +1723,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\Trainer\" />
+    <Folder Include="ViewModels\RevenueModel\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EDU.BusinessFactory\EDU.BusinessFactory.csproj">
