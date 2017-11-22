@@ -47,7 +47,18 @@ namespace EDU.Web.Controllers
                     TrainerInfo.CreatedBy = USER_ID;
                     TrainerInfo.CreatedOn = UTILITY.SINGAPORETIME;
                     TrainerInfo.IsActive = true;
+                     if(TrainerInfo.FileName.ContentLength>0)
+                    {
+                        string path = Server.MapPath("~/Uploads/" + TrainerInfo.TrianerId + "/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
 
+                        TrainerInfo.FileName.SaveAs(path+TrainerInfo.FileName.FileName);
+
+                    }
+                    TrainerInfo.Profile =TrainerInfo.FileName.FileName;
                     dbContext.TrainerInformations.Add(TrainerInfo);
                 }
 
@@ -59,6 +70,18 @@ namespace EDU.Web.Controllers
                     trainerInfoDetail.Technology = TrainerInfo.Technology;
                     trainerInfoDetail.Country = TrainerInfo.Country;
                     trainerInfoDetail.CountryName = TrainerInfo.CountryName ?? "";
+                    if (TrainerInfo.FileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/" + TrainerInfo.TrianerId + "/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        TrainerInfo.FileName.SaveAs(path + TrainerInfo.FileName.FileName);
+
+                    }
+                    TrainerInfo.Profile = TrainerInfo.FileName.FileName;
                     trainerInfoDetail.Profile = TrainerInfo.Profile;
                     trainerInfoDetail.TrainerRate = TrainerInfo.TrainerRate;
                     trainerInfoDetail.VendorName = TrainerInfo.VendorName;

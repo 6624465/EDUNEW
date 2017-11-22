@@ -19,6 +19,7 @@ namespace EDU.Web.Models
         public short Country { get; set; }
         public string CountryName { get; set; }
         public string Profile { get; set; }
+        public System.Web.HttpPostedFileBase FileName { get; set; }
         public Nullable<decimal> TrainerRate { get; set; }
         public string VendorName { get; set; }
         public string Address { get; set; }
