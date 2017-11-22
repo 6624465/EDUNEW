@@ -1,79 +1,21 @@
-﻿@model <EDU.Web.Models.TrainingConfirmation>
+﻿@model EDU.Web.Models.TrainingConfirmation
 @{
     ViewBag.Title = "TrainerConfirmation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">@ViewBag.Title</h4>
+            <h4 class="modal-title">TrainerConfirmation</h4>
         </div>
         <div class="modal-body" id="ProductCategoryModalBody">
-            @Html.HiddenFor(x => x.Id)
-            @Html.HiddenFor(x => x.IsActive)
-            <div class="row">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Product</span>
-                    </label>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(x => x.Product,
-                    new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
-                    "Select Product", new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Course Name</span>
-                    </label>
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(x => x.CourseName,
-                    new { @class = "form-control", placeholder = "Course Name", onblur = "ValidateCourseName(true)" })
-                    </div>
-                    @Html.HiddenFor(x => x.Id)
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Number of Students</span>
-                    </label>
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(x => x.CourseName,
-                    new { @class = "form-control", placeholder = "Course Name", onblur = "ValidateCourseName(true)" })
-                    </div>
-                    @Html.HiddenFor(x => x.Id)
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Type</span>
-                    </label>
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(x => x.CourseName,
-                    new { @class = "form-control", placeholder = "Course Name", onblur = "ValidateCourseName(true)" })
-                    </div>
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(x => x.CourseName,
-                    new { @class = "form-control", placeholder = "Course Name", onblur = "ValidateCourseName(true)" })
-                    </div>
-                    @Html.HiddenFor(x => x.Id)
-                </div>
 
-            </div>
-
-            <div class="modal-footer css10">
-                <button type="button" onclick="SaveTrainerConfirmation()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
-                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
-            </div>
+          
+        </div>
         </div>
     </div>
-</div>
+
 
 
