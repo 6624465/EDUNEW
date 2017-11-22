@@ -6,7 +6,7 @@ body {
 }
 body {
   letter-spacing: .5px;
-  background: #efefef;
+  /*background: #efefef;*/
 }
 *:focus {
   outline: none!important;
@@ -4327,6 +4327,7 @@ fieldset[disabled] .btn-youtube.active {
 }
 .page {
   padding: 15px;
+  background-color:white !important;
 }
 @media (max-width: 320px) {
   .page .row > [class^='col'] {

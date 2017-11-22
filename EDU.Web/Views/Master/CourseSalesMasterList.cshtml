@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "CourseSalesMasterList";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //var totalleadsonhand = (Int64)ViewData["totalleadsonhand"];
+    //var totalrevenue = (Int64)ViewData["totalrevenue"];
 }
 @functions {
     public string GetMonthById(int id)
@@ -19,6 +22,12 @@
     }
 }
 <style>
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        color: #D73925;
+        font-family: 'Bebas Neue'
+    }
     .popover {
         color: black;
         min-width: 500px;
@@ -44,7 +53,8 @@
     }
 </style>
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid",
+            ajaxUpdateCallback: "callBack");
     grid.Pager(WebGridPagerModes.All);
 }
 <div class="page">
@@ -61,8 +71,8 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="row" style="overflow-x: scroll; width: 100%">
-                        @grid.GetHtml(
+                    <div class="row" style="overflow-x: scroll; width: 100%"  id="gridContent">
+                            @grid.GetHtml(
                                 columns: grid.Columns(
                                 grid.Column("CountryName", "Country", canSort: true),
                                 grid.Column("ProductName", "Product Name", canSort: true,
@@ -113,7 +123,7 @@
                                             </a>
                                         }
                                     </div>
-                                </text>, canSort: true, style: "center"),
+                                </text>, canSort: true, style: "center LeadsOnHead"),
                                 grid.Column("Registered", "Registered",
                                 format:
                                 @<text>
@@ -145,7 +155,7 @@
                                         @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
                                     </div>
                                 </text>, style: "center"),
-                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ? Convert.ToInt32(item.Revenue) : "N/A") </text>, canSort: true, style: "center"),
+                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ? Convert.ToInt32(item.Revenue) : "N/A") </text>, canSort: true, style: "center Revenue"),
                                 grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
@@ -171,7 +181,7 @@
                                     </div>
                                 </text>)),
                                 tableStyle: "table")
-                    </div>
+                        </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -190,6 +200,15 @@
 }
 @section SectionScripts{
     <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            var totalleadsonhand = @ViewData["totalleadsonhand"].ToString();
+            var totalrevenue = @ViewData["totalrevenue"].ToString();
+            debugger;
+
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="center">' + totalrevenue + '</td><td>');
+        });
+
         function DeleteCourseSalesMaster(Id) {
             if (confirm("Are you sure, do you want delete?")) {
                 $('#id').val(Id);
