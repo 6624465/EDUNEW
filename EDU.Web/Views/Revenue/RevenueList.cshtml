@@ -21,6 +21,7 @@
     #gridContent th:nth-child(6), th:nth-child(7), th:nth-child(8), th:nth-child(9) {
         text-align: right !important;
     }
+
     #gridContent1 th:nth-child(6), th:nth-child(7), th:nth-child(8), th:nth-child(9) {
         text-align: right !important;
     }
@@ -77,7 +78,7 @@
                                         grid.Column("QuarterlyTargetAmt", header: "", format: @<input type="hidden" name="QuarterlyTargetAmt" value="@item.QuarterlyTargetAmt" />, style: "width0"),
                                         grid.Column("MonthlyTargetAmt", header: "", format: @<input type="hidden" name="MonthlyTargetAmt" value="@item.MonthlyTargetAmt" />, style: "width0"),
                                         grid.Column("ProductName", "Product Name", format: @<text>  @item.ProductName  </text>, style: ""),
-                                        grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> @(item.YearlyTarget > 0 ? Convert.ToInt64(item.YearlyTarget) : "") </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt32(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: "YearlyTarget alignright"),
+                                        grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> @(item.YearlyTarget > 0 ? Convert.ToInt64(item.YearlyTarget) : "") </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt64(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: "YearlyTarget alignright"),
                                         grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text> <span class="display-mode"> @(item.HalfYearlyTarget > 0 ? Convert.ToInt64(item.HalfYearlyTarget) : "")</span>  </text>, style: "HalfYearlyTarget alignright"),
                                         grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  <span class="display-mode">@(item.QuarterlyTarget > 0 ? Convert.ToInt64(item.QuarterlyTarget) : "")</span>   </text>, style: "QuarterlyTarget alignright"),
                                         grid.Column("MonthlyTarget", "Monthly", format: @<text> <span class="display-mode"> @(item.MonthlyTarget > 0 ? Convert.ToInt64(item.MonthlyTarget) : "")  </span> </text>, style: "MonthlyTarget alignright"),
@@ -150,17 +151,18 @@
             var totalhyt = 0;
             var totalqyt = 0;
             var totalmt = 0;
+            debugger;
             $('#gridContent .YearlyTarget').each(function () {
-                totalyt = totalyt + parseInt($(this)[0].innerText.toLocaleString());
+                totalyt = totalyt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent .HalfYearlyTarget').each(function () {
-                totalhyt = totalhyt + parseInt($(this)[0].innerText.toLocaleString());
+                totalhyt = totalhyt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent .QuarterlyTarget').each(function () {
-                totalqyt = totalqyt + parseInt($(this)[0].innerText.toLocaleString());
+                totalqyt = totalqyt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent .MonthlyTarget').each(function () {
-                totalmt = totalmt + parseInt($(this)[0].innerText.toLocaleString());
+                totalmt = totalmt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + totalyt + '</td><td class="alignright">' + totalhyt + '</td><td class="alignright">' + totalqyt + '</td><td  class="alignright">' + totalmt + '</td></tr>');
 
@@ -169,16 +171,16 @@
             var totalqytamt = 0;
             var totalmtamt = 0;
             $('#gridContent1 .YearlyTargetAmt').each(function () {
-                totalytamt = totalytamt + parseInt($(this)[0].innerText.toLocaleString());
+                totalytamt = totalytamt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent1 .HalfYearlyTargetAmt').each(function () {
-                totalhytamt = totalhytamt + parseInt($(this)[0].innerText.toLocaleString());
+                totalhytamt = totalhytamt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent1 .QuarterlyTargetAmt').each(function () {
-                totalqytamt = totalqytamt + parseInt($(this)[0].innerText.toLocaleString());
+                totalqytamt = totalqytamt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent1 .MonthlyTargetAmt').each(function () {
-                totalmtamt = totalmtamt + parseInt($(this)[0].innerText.toLocaleString());
+                totalmtamt = totalmtamt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
             $('#gridContent1 tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + totalytamt + '</td><td class="alignright">' + totalhytamt + '</td><td class="alignright">' + totalqytamt + '</td><td class="alignright">' + totalmtamt + '</td></tr>');
         });
