@@ -44,8 +44,8 @@ namespace EDU.Web.Controllers
 
                 if (TrainerInfo.TrianerId == -1)
                 {
-                    //TrainerInfo.CreatedBy = USER_ID;
-                    //TrainerInfo.CreatedOn = UTILITY.SINGAPORETIME;
+                    TrainerInfo.CreatedBy = USER_ID;
+                    TrainerInfo.CreatedOn = UTILITY.SINGAPORETIME;
                     TrainerInfo.IsActive = true;
                     TrainerInfo.CountryName = "";
 
@@ -70,8 +70,8 @@ namespace EDU.Web.Controllers
 
                     trainerInfoDetail.IsActive = true;
 
-                    //trainerInfoDetail.ModifiedBy = USER_ID;
-                    //trainerInfoDetail.ModifiedOn = UTILITY.SINGAPORETIME;
+                    trainerInfoDetail.ModifiedBy = USER_ID;
+                    trainerInfoDetail.ModifiedOn = UTILITY.SINGAPORETIME;
 
                     dbContext.Entry(trainerInfoDetail).State = EntityState.Modified;
                 }

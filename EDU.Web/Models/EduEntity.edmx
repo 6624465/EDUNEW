@@ -86,6 +86,10 @@
           <Property Name="Remarks" Type="nvarchar(max)" />
           <Property Name="TrainerName" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
         <EntityContainer Name="DB_9F30C5_edudevModelStoreContainer">
           <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayments" Schema="Edu" store:Type="Tables" />
@@ -184,6 +188,10 @@
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -262,6 +270,10 @@
           <EntitySetMapping Name="TrainerInformations">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainerInformation">
               <MappingFragment StoreEntitySet="TrainerInformation">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />

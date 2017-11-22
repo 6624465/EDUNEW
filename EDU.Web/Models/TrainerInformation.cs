@@ -26,5 +26,9 @@ namespace EDU.Web.Models
         public string Remarks { get; set; }
         public string TrainerName { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedOn { get; set; }
     }
 }
