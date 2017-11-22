@@ -17,6 +17,8 @@ namespace EDU.Web.Controllers
     {
         EducationEntities dbContext = new EducationEntities();
 
+
+        #region TrainerInformation
         // GET: Trainer
         public ActionResult Trainer(int Id = -1)
         {
@@ -129,5 +131,96 @@ namespace EDU.Web.Controllers
             }
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+
+        #region TrainerConfirmation
+        // GET: Trainer
+        public ActionResult TrainerConfirmation(int Id = -1)
+        {
+            TrainingConfirmation TrainingConfInfo = dbContext.TrainingConfirmations.
+                Where(x => x.TrainingConfirmationID == Id && x.IsActive == true).FirstOrDefault();
+
+            ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+
+            if (TrainingConfInfo == null)
+            {
+                TrainingConfInfo = new TrainingConfirmation();
+                TrainingConfInfo.TrainingConfirmationID = -1;
+
+                return View(TrainingConfInfo);
+            }
+            else
+            {
+                return View(TrainingConfInfo);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveTrainingConfirmation(TrainingConfirmation TrainerConfInfo)
+        {
+            try
+            {
+
+                if (TrainerConfInfo.TrainingConfirmationID == -1)
+                {
+                    TrainerConfInfo.CreatedBy = USER_ID;
+                    TrainerConfInfo.CreatedOn = UTILITY.SINGAPORETIME;
+                    TrainerConfInfo.IsActive = true;
+
+                    dbContext.TrainingConfirmations.Add(TrainerConfInfo);
+                }
+
+                else
+                {
+                    TrainingConfirmation traininfConfDetail = dbContext.TrainingConfirmations.
+                        Where(x => x.TrainingConfirmationID == TrainerConfInfo.TrainingConfirmationID).FirstOrDefault();
+
+                    traininfConfDetail.Product = TrainerConfInfo.Product;
+                    traininfConfDetail.Course = TrainerConfInfo.Course;
+                    traininfConfDetail.TotalNoOfDays = TrainerConfInfo.TotalNoOfDays;
+                    traininfConfDetail.NoOfStudents = TrainerConfInfo.NoOfStudents;
+                    traininfConfDetail.Private = TrainerConfInfo.Private;
+                    traininfConfDetail.Public = TrainerConfInfo.Public;
+                    traininfConfDetail.StartDate = TrainerConfInfo.StartDate;
+                    traininfConfDetail.EndDate = TrainerConfInfo.EndDate;
+
+                    traininfConfDetail.IsActive = true;
+
+                    traininfConfDetail.ModifiedBy = USER_ID;
+                    traininfConfDetail.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                    dbContext.Entry(traininfConfDetail).State = EntityState.Modified;
+                }
+                dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction("TrainingConfirmationList");
+        }
+
+        [HttpGet]
+        public ActionResult TrainingConfirmationList()
+        {
+            List<TrainingConfirmation> trainingConfList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+            return View(trainingConfList);
+        }
+
+
+        [HttpPost]
+        public JsonResult DeletetrainingConf(int Id)
+        {
+            TrainingConfirmation trainingConfDetail = dbContext.TrainingConfirmations.
+                   Where(x => x.TrainingConfirmationID == Id).FirstOrDefault();
+            if (trainingConfDetail != null)
+            {
+                trainingConfDetail.IsActive = false;
+                dbContext.SaveChanges();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

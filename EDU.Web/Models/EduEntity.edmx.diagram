@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.Registration" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.Revenue" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.TrainerInformation" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" Width="1.5" PointX="3.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

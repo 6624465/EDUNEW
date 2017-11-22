@@ -91,11 +91,31 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="TrainingConfirmation">
+          <Key>
+            <PropertyRef Name="TrainingConfirmationID" />
+          </Key>
+          <Property Name="TrainingConfirmationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product" Type="int" Nullable="false" />
+          <Property Name="Course" Type="int" Nullable="false" />
+          <Property Name="TotalNoOfDays" Type="smallint" Nullable="false" />
+          <Property Name="NoOfStudents" Type="smallint" Nullable="false" />
+          <Property Name="Private" Type="bit" Nullable="false" />
+          <Property Name="Public" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
         <EntityContainer Name="DB_9F30C5_edudevModelStoreContainer">
           <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayments" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Registration" EntityType="Self.Registration" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainerInformation" EntityType="Self.TrainerInformation" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="TrainingConfirmation" EntityType="Self.TrainingConfirmation" Schema="Edu" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -171,6 +191,7 @@
           <EntitySet Name="Registrations" EntityType="Self.Registration" />
           <EntitySet Name="Revenues" EntityType="Self.Revenue" />
           <EntitySet Name="TrainerInformations" EntityType="DB_9F30C5_edudevModel.TrainerInformation" />
+          <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -188,6 +209,25 @@
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TrainingConfirmation">
+          <Key>
+            <PropertyRef Name="TrainingConfirmationID" />
+          </Key>
+          <Property Name="TrainingConfirmationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="Course" Type="Int32" Nullable="false" />
+          <Property Name="TotalNoOfDays" Type="Int16" Nullable="false" />
+          <Property Name="NoOfStudents" Type="Int16" Nullable="false" />
+          <Property Name="Private" Type="Boolean" Nullable="false" />
+          <Property Name="Public" Type="Boolean" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -286,6 +326,26 @@
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Technology" ColumnName="Technology" />
                 <ScalarProperty Name="TrianerId" ColumnName="TrianerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainingConfirmations">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainingConfirmation">
+              <MappingFragment StoreEntitySet="TrainingConfirmation">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Public" ColumnName="Public" />
+                <ScalarProperty Name="Private" ColumnName="Private" />
+                <ScalarProperty Name="NoOfStudents" ColumnName="NoOfStudents" />
+                <ScalarProperty Name="TotalNoOfDays" ColumnName="TotalNoOfDays" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

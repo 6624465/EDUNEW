@@ -29,5 +29,6 @@ namespace EDU.Web.Models
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<Revenue> Revenues { get; set; }
         public virtual DbSet<TrainerInformation> TrainerInformations { get; set; }
+        public virtual DbSet<TrainingConfirmation> TrainingConfirmations { get; set; }
     }
 }
