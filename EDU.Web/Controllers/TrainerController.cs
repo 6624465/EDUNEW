@@ -142,7 +142,9 @@ namespace EDU.Web.Controllers
             TrainingConfirmation TrainingConfInfo = dbContext.TrainingConfirmations.
                 Where(x => x.TrainingConfirmationID == Id && x.IsActive == true).FirstOrDefault();
 
-            ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+            ViewData["ProductData"] = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
+            ViewData["CourseData"] = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
+            ViewData["TrainerData"] = dbContext.TrainerInformations.Where(x => x.IsActive == true).ToList();
 
             if (TrainingConfInfo == null)
             {
@@ -216,7 +218,7 @@ namespace EDU.Web.Controllers
                 trainingConfirmationVM.Product = item.Product;
                 trainingConfirmationVM.Course = item.Course;
                 trainingConfirmationVM.ProductName = new EduProductBO().GetList().Where(x => x.Id == item.Product).FirstOrDefault().ProductName;
-                trainingConfirmationVM.CourseName = new CourseBO().GetList().Where(x=>x.Id==item.Course).FirstOrDefault().CourseName;
+                trainingConfirmationVM.CourseName = new CourseBO().GetList().Where(x => x.Id == item.Course).FirstOrDefault().CourseName;
                 trainingConfirmationVM.TotalNoOfDays = item.TotalNoOfDays;
                 trainingConfirmationVM.NoOfStudents = item.NoOfStudents;
                 trainingConfirmationVM.Private = item.Private;
@@ -224,11 +226,11 @@ namespace EDU.Web.Controllers
                 trainingConfirmationVM.StartDate = item.StartDate;
                 trainingConfirmationVM.EndDate = item.EndDate;
                 trainingConfirmationVM.TrianerId = item.TrianerId;
-                trainingConfirmationVM.TrianerName = dbContext.TrainerInformations.Where(x=>x.TrianerId==item.TrianerId).FirstOrDefault().TrainerName;
+                trainingConfirmationVM.TrianerName = dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault().TrainerName;
 
                 list.Add(trainingConfirmationVM);
             }
-            
+
 
             return View(list);
         }
