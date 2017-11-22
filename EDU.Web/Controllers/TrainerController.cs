@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace EDU.Web.Controllers
 {
+    [SessionFilter]
     public class TrainerController : BaseController
     {
         EducationEntities dbContext = new EducationEntities();
