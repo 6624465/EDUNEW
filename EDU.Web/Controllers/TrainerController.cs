@@ -1,5 +1,6 @@
 ﻿using EDU.Web.Models;
 using EDU.Web.ViewModels.Master;
+using EDU.Web.ViewModels.Trainer;
 //using EDU.Web.ViewModels.Trainer;
 using EZY.EDU.BusinessFactory;
 using System;
@@ -62,7 +63,7 @@ namespace EDU.Web.Controllers
 
                     }
                     else
-                    TrainerInfo.Profile = null;
+                        TrainerInfo.Profile = null;
                     dbContext.TrainerInformations.Add(TrainerInfo);
                 }
 
@@ -86,7 +87,7 @@ namespace EDU.Web.Controllers
 
                     }
                     else
-                    TrainerInfo.Profile = null;
+                        TrainerInfo.Profile = null;
                     trainerInfoDetail.Profile = TrainerInfo.Profile;
                     trainerInfoDetail.TrainerRate = TrainerInfo.TrainerRate;
                     trainerInfoDetail.VendorName = TrainerInfo.VendorName;
@@ -184,6 +185,7 @@ namespace EDU.Web.Controllers
                     traininfConfDetail.Public = TrainerConfInfo.Public;
                     traininfConfDetail.StartDate = TrainerConfInfo.StartDate;
                     traininfConfDetail.EndDate = TrainerConfInfo.EndDate;
+                    traininfConfDetail.TrianerId = TrainerConfInfo.TrianerId;
 
                     traininfConfDetail.IsActive = true;
 
@@ -205,7 +207,30 @@ namespace EDU.Web.Controllers
         public ActionResult TrainingConfirmationList()
         {
             List<TrainingConfirmation> trainingConfList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
-            return View(trainingConfList);
+
+            List<TrainingConfirmationVM> list = new List<TrainingConfirmationVM>();
+            foreach (var item in trainingConfList)
+            {
+                TrainingConfirmationVM trainingConfirmationVM = new TrainingConfirmationVM();
+                trainingConfirmationVM.TrainingConfirmationID = item.TrainingConfirmationID;
+                trainingConfirmationVM.Product = item.Product;
+                trainingConfirmationVM.Course = item.Course;
+                trainingConfirmationVM.ProductName = new EduProductBO().GetList().Where(x => x.Id == item.Product).FirstOrDefault().ProductName;
+                trainingConfirmationVM.CourseName = new CourseBO().GetList().Where(x=>x.Id==item.Course).FirstOrDefault().CourseName;
+                trainingConfirmationVM.TotalNoOfDays = item.TotalNoOfDays;
+                trainingConfirmationVM.NoOfStudents = item.NoOfStudents;
+                trainingConfirmationVM.Private = item.Private;
+                trainingConfirmationVM.Public = item.Public;
+                trainingConfirmationVM.StartDate = item.StartDate;
+                trainingConfirmationVM.EndDate = item.EndDate;
+                trainingConfirmationVM.TrianerId = item.TrianerId;
+                trainingConfirmationVM.TrianerName = dbContext.TrainerInformations.Where(x=>x.TrianerId==item.TrianerId).FirstOrDefault().TrainerName;
+
+                list.Add(trainingConfirmationVM);
+            }
+            
+
+            return View(list);
         }
 
 
