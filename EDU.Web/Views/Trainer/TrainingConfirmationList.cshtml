@@ -1,0 +1,94 @@
+﻿@model IEnumerable<EDU.Web.Models.TrainingConfirmation>
+
+@{
+    ViewBag.Title = "TrainingConfirmationList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    grid.Pager(WebGridPagerModes.All);
+}
+<div class="page">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Training ConfirmationList List</h4>
+                    <div class="box-tools">
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="location.href = '@Url.Content("~/Trainer/TrainerConfirmation?Id=-1")'"><i class="fa fa-plus"></i>Add New Course</button>
+                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
+                        }
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        @grid.GetHtml(
+                                columns: grid.Columns(
+                    grid.Column("ProductName", "Product", canSort: true),
+                    grid.Column("CourseName", "Course Name", canSort: true),
+                    grid.Column("NoOfStudents", "No Of Students", canSort: true),
+                    grid.Column("StartDate", "StartDate", canSort: true),
+                    grid.Column("EndDate", "EndDate", canSort: true),
+                    grid.Column("EndDate", "EndDate", canSort: true),
+                    grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainerConfirmation(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                    }
+                                </text>)),
+                                tableStyle: "table")
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("DeleteTrainerConfirmation", "Trainer", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
+{
+    <input type="hidden" id="id" name="id" />
+}
+@using (Html.BeginForm("SaveTrainerConfirmation", "Trainer", FormMethod.Post, new { id = "frmCourse", name = "frmCourse" }))
+{
+    <div id="myModal" class="modal fade" role="dialog">
+
+    </div>
+}
+@section SectionScripts{
+    <script type="text/javascript">
+        function EditTrainerConfirmation(Id)
+        {
+            $.ajax({
+                url: '@Url.Content("~/Trainer/TrainerConfirmation?Id=")' + Id,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+
+                }
+            })
+        }
+
+        function DeleteTrainerConfirmation(Id)
+        {
+            if (confirm("Are you sure, do you want delete?")) {
+                $('#id').val(Id);
+                $('#frmDelete').submit();
+            }
+        }
+    </script>
+
+}
