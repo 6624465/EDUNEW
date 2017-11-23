@@ -11,15 +11,12 @@
 }
 
 @functions {
-    public string TypeColumn(bool? isPrivate, bool? isPublic)
+    public string TypeColumn(bool isPrivate, bool isPublic)
     {
-        if(isPrivate.HasValue)
+        if(isPrivate)
             return "Private";
-        else if(isPublic.HasValue)
+        else 
             return "Public";
-
-        return "";
-
     }
         }
 <div class="page">
@@ -44,7 +41,7 @@
                     grid.Column("ProductName", "Product", canSort: true),
                     grid.Column("CourseName", "Course Name", canSort: true),
                     grid.Column("NoOfStudents", "No Of Students", canSort: true),
-                    grid.Column("", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>
+                    grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>
                              , canSort: true),
                     grid.Column("StartDate", "StartDate", format:@<text> @item.StartDate.ToString("MM/dd/yyyy")</text>, canSort: true),
                     grid.Column("EndDate", "EndDate", format:@<text> @item.EndDate.ToString("MM/dd/yyyy")</text>, canSort: true),
@@ -54,8 +51,8 @@
                                 @<text>
                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
-                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.TrainingConfirmationID)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainerConfirmation(@item.TrainingConfirmationID)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainerConfirmation(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                     }
                                 </text>)),
                                 tableStyle: "table")
