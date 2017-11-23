@@ -14,7 +14,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Order No</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", placeholder = "Order No", @disabled="disabled" })
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Product</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Product,
                     new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
                     "Select Product", new { @class = "form-control" })
@@ -36,7 +36,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Course Name</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Course,
                     new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
                     "Select Course", new { @class = "form-control" })
@@ -48,7 +48,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Number of Students</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         @Html.TextBoxFor(x => x.NoOfStudents, new { @class = "form-control numCss", placeholder = "Number of Students" })
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Type</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="radio" name="type" id="rdoPrivate" title="Private" checked="@Model.Private" />
                         @Html.Label("Private")&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="type" id="rdoPublic" title="Public" checked="@Model.Public" />
@@ -77,7 +77,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Start Date</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="input-group date" id="StartDt">
                             @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control dtCss" })
                             <span class="input-group-addon">
@@ -92,7 +92,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">End Date</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="input-group date" id="StartDt">
                             @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control dtCss" })
                             <span class="input-group-addon">
@@ -107,7 +107,7 @@
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Total # of days</span>
                     </label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         @Html.TextBoxFor(x => x.TotalNoOfDays, new { @class = "form-control numCss", placeholder = "Total # of days" })
                     </div>
                 </div>
