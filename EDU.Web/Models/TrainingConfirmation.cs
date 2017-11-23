@@ -14,7 +14,8 @@ namespace EDU.Web.Models
     
     public partial class TrainingConfirmation
     {
-        public int TrainingConfirmationID { get; set; }
+        public int Id { get; set; }
+        public string TrainingConfirmationID { get; set; }
         public int Product { get; set; }
         public int Course { get; set; }
         public short TotalNoOfDays { get; set; }

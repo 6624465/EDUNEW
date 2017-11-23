@@ -140,7 +140,7 @@ namespace EDU.Web.Controllers
         public PartialViewResult TrainerConfirmation(int Id = -1)
         {
             TrainingConfirmation TrainingConfInfo = dbContext.TrainingConfirmations.
-                Where(x => x.TrainingConfirmationID == Id && x.IsActive == true).FirstOrDefault();
+                Where(x => x.Id == Id && x.IsActive == true).FirstOrDefault();
 
             ViewData["ProductData"] = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
             ViewData["CourseData"] = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
@@ -149,7 +149,7 @@ namespace EDU.Web.Controllers
             if (TrainingConfInfo == null)
             {
                 TrainingConfInfo = new TrainingConfirmation();
-                TrainingConfInfo.TrainingConfirmationID = -1;
+                TrainingConfInfo.Id = -1;
 
                 return PartialView(TrainingConfInfo);
             }
@@ -165,7 +165,7 @@ namespace EDU.Web.Controllers
             try
             {
 
-                if (TrainerConfInfo.TrainingConfirmationID == -1)
+                if (TrainerConfInfo.Id == -1)
                 {
                     TrainerConfInfo.CreatedBy = USER_ID;
                     TrainerConfInfo.CreatedOn = UTILITY.SINGAPORETIME;
@@ -214,6 +214,7 @@ namespace EDU.Web.Controllers
             foreach (var item in trainingConfList)
             {
                 TrainingConfirmationVM trainingConfirmationVM = new TrainingConfirmationVM();
+                trainingConfirmationVM.Id = item.Id;
                 trainingConfirmationVM.TrainingConfirmationID = item.TrainingConfirmationID;
                 trainingConfirmationVM.Product = item.Product;
                 trainingConfirmationVM.Course = item.Course;
@@ -240,7 +241,7 @@ namespace EDU.Web.Controllers
         public ActionResult DeletetrainingConf(int Id)
         {
             TrainingConfirmation trainingConfDetail = dbContext.TrainingConfirmations.
-                   Where(x => x.TrainingConfirmationID == Id).FirstOrDefault();
+                   Where(x => x.Id == Id).FirstOrDefault();
             if (trainingConfDetail != null)
             {
                 trainingConfDetail.IsActive = false;

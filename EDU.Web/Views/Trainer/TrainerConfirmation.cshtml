@@ -6,6 +6,7 @@
             <h4 class="modal-title">TrainerConfirmation</h4>
         </div>
         <div class="modal-body" id="TrainerConfirmationModalBody">
+            @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.TrainingConfirmationID)
             @Html.HiddenFor(x => x.IsActive)
             <div class="row css10">

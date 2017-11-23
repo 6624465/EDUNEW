@@ -7,7 +7,8 @@ namespace EDU.Web.ViewModels.Trainer
 {
     public class TrainingConfirmationVM
     {
-        public int TrainingConfirmationID { get; set; }
+        public int Id { get; set; }
+        public string TrainingConfirmationID { get; set; }
         public int Product { get; set; }
         public string ProductName { get; set; }
         public int Course { get; set; }

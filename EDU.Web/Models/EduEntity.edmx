@@ -93,9 +93,10 @@
         </EntityType>
         <EntityType Name="TrainingConfirmation">
           <Key>
-            <PropertyRef Name="TrainingConfirmationID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="TrainingConfirmationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingConfirmationID" Type="varchar" MaxLength="12" StoreGeneratedPattern="Computed" />
           <Property Name="Product" Type="int" Nullable="false" />
           <Property Name="Course" Type="int" Nullable="false" />
           <Property Name="TotalNoOfDays" Type="smallint" Nullable="false" />
@@ -217,9 +218,10 @@
         </EntityType>
         <EntityType Name="TrainingConfirmation">
           <Key>
-            <PropertyRef Name="TrainingConfirmationID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="TrainingConfirmationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingConfirmationID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Product" Type="Int32" Nullable="false" />
           <Property Name="Course" Type="Int32" Nullable="false" />
           <Property Name="TotalNoOfDays" Type="Int16" Nullable="false" />
@@ -349,6 +351,7 @@
                 <ScalarProperty Name="Course" ColumnName="Course" />
                 <ScalarProperty Name="Product" ColumnName="Product" />
                 <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

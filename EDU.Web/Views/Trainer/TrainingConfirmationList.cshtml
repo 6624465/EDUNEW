@@ -40,6 +40,7 @@
                     <div class="row">
                         @grid.GetHtml(
                                 columns: grid.Columns(
+                    grid.Column("TrainingConfirmationID", "Order No.", canSort: true),
                     grid.Column("ProductName", "Product", canSort: true),
                     grid.Column("CourseName", "Course Name", canSort: true),
                     grid.Column("NoOfStudents", "No Of Students", canSort: true),
