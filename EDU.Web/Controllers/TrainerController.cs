@@ -247,8 +247,8 @@ namespace EDU.Web.Controllers
                 trainingConfDetail.IsActive = false;
                 dbContext.SaveChanges();
             }
-            List<TrainingConfirmationVM> list = new List<TrainingConfirmationVM>();
-            return View("TrainingConfirmationList", list);
+            //List<TrainingConfirmationVM> list = new List<TrainingConfirmationVM>();
+            return RedirectToAction("TrainingConfirmationList");
         }
         #endregion
     }
