@@ -17,6 +17,7 @@
             return "Private";
         else if(isPublic)
             return "Public";
+        return "";
     }
         }
 <div class="page">
@@ -41,7 +42,7 @@
                     grid.Column("ProductName", "Product", canSort: true),
                     grid.Column("CourseName", "Course Name", canSort: true),
                     grid.Column("NoOfStudents", "No Of Students", canSort: true),
-                    grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>
+                    grid.Column("", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>
                              , canSort: true),
                     grid.Column("StartDate", "StartDate", format:@<text> @item.StartDate.ToString("MM/dd/yyyy")</text>, canSort: true),
                     grid.Column("EndDate", "EndDate", format:@<text> @item.EndDate.ToString("MM/dd/yyyy")</text>, canSort: true),
