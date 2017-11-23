@@ -9,6 +9,19 @@
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
     grid.Pager(WebGridPagerModes.All);
 }
+
+@functions {
+    public string TypeColumn(bool? isPrivate, bool? isPublic)
+    {
+        if(isPrivate.HasValue)
+            return "Private";
+        else if(isPublic.HasValue)
+            return "Public";
+
+        return "";
+
+    }
+        }
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -30,8 +43,10 @@
                     grid.Column("ProductName", "Product", canSort: true),
                     grid.Column("CourseName", "Course Name", canSort: true),
                     grid.Column("NoOfStudents", "No Of Students", canSort: true),
-                    grid.Column("StartDate", "StartDate", canSort: true),
-                    grid.Column("EndDate", "EndDate", canSort: true),
+                    grid.Column("", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>
+                             , canSort: true),
+                    grid.Column("StartDate", "StartDate", format:@<text> @item.StartDate.ToString("MM/dd/yyyy")</text>, canSort: true),
+                    grid.Column("EndDate", "EndDate", format:@<text> @item.EndDate.ToString("MM/dd/yyyy")</text>, canSort: true),
                     grid.Column("TotalNoOfDays", "Total # of days", canSort: true),
                     grid.Column("", "#Action", canSort: false,
                                 format:
@@ -104,8 +119,9 @@
         }
 
         function SaveTrainingConfirmation() {
-            debugger;
             if ($('#frmTrainerConfirmation').valid()) {
+                $('#Private').val($('#rdoPrivate').is(':checked'));
+                $('#Public').val($('#rdoPublic').is(':checked'));
                 $('#frmTrainerConfirmation').submit();
             }
         }

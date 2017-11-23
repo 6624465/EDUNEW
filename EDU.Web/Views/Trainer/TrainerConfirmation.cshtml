@@ -48,10 +48,16 @@
                         <span class="pull-right">Type</span>
                     </label>
                     <div class="col-md-4">
-                        <label>Private</label>&nbsp;&nbsp;
+                        <input type="radio" name="type" id="rdoPrivate" title="Private" checked="@Model.Private" />
+                        @Html.Label("Private")&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="type" id="rdoPublic" title="Public" checked="@Model.Public" />
+                        @Html.Label("Public")
+                        @Html.HiddenFor(x =>x.Private)
+                        @Html.HiddenFor(x =>x.Public)
+                        @*<label>Private</label>&nbsp;&nbsp;
                         @Html.CheckBoxFor(x => x.Private, new { name = "type" })
                         <label>Public</label>&nbsp;&nbsp;
-                        @Html.CheckBoxFor(x => x.Public, new { name = "type" })
+                        @Html.CheckBoxFor(x => x.Public, new { name = "type" })*@
                     </div>
                 </div>
             </div>
