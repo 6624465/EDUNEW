@@ -226,7 +226,7 @@ namespace EDU.Web.Controllers
                 trainingConfirmationVM.StartDate = item.StartDate;
                 trainingConfirmationVM.EndDate = item.EndDate;
                 trainingConfirmationVM.TrianerId = item.TrianerId;
-                trainingConfirmationVM.TrianerName = dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault().TrainerName;
+                trainingConfirmationVM.TrianerName = dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault() != null ? dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault().TrainerName : "";
 
                 list.Add(trainingConfirmationVM);
             }
@@ -237,7 +237,7 @@ namespace EDU.Web.Controllers
 
 
         [HttpPost]
-        public JsonResult DeletetrainingConf(int Id)
+        public ActionResult DeletetrainingConf(int Id)
         {
             TrainingConfirmation trainingConfDetail = dbContext.TrainingConfirmations.
                    Where(x => x.TrainingConfirmationID == Id).FirstOrDefault();
@@ -246,7 +246,8 @@ namespace EDU.Web.Controllers
                 trainingConfDetail.IsActive = false;
                 dbContext.SaveChanges();
             }
-            return Json(true, JsonRequestBehavior.AllowGet);
+            List<TrainingConfirmationVM> list = new List<TrainingConfirmationVM>();
+            return View("TrainingConfirmationList", list);
         }
         #endregion
     }

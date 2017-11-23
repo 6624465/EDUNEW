@@ -1,9 +1,4 @@
 ﻿@model EDU.Web.Models.TrainingConfirmation
-@{
-    ViewBag.Title = "TrainerConfirmation";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -11,8 +6,8 @@
             <h4 class="modal-title">TrainerConfirmation</h4>
         </div>
         <div class="modal-body" id="TrainerConfirmationModalBody">
-            @Html.HiddenFor(x=>x.TrainingConfirmationID)
-            @Html.HiddenFor(x=>x.IsActive)
+            @Html.HiddenFor(x => x.TrainingConfirmationID)
+            @Html.HiddenFor(x => x.IsActive)
             <div class="row css10">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
@@ -25,10 +20,113 @@
                     </div>
                 </div>
             </div>
-
-        </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Course Name</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(x => x.Course,
+                    new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
+                    "Select Course", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Number of Students</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.NoOfStudents, new { @class = "form-control numCss", placeholder = "Number of Students" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Type</span>
+                    </label>
+                    <div class="col-md-4">
+                        <label>Private</label>&nbsp;&nbsp;
+                        @Html.CheckBoxFor(x => x.Private, new { name = "type" })
+                        <label>Public</label>&nbsp;&nbsp;
+                        @Html.CheckBoxFor(x => x.Public, new { name = "type" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Start Date</span>
+                    </label>
+                    <div class="col-md-4">
+                        <div class="input-group date" id="StartDt">
+                            @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control dtCss" })
+                            <span class="input-group-addon">
+                                <i class="ion ion-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">End Date</span>
+                    </label>
+                    <div class="col-md-4">
+                        <div class="input-group date" id="StartDt">
+                            @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control dtCss" })
+                            <span class="input-group-addon">
+                                <i class="ion ion-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Total # of days</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.TotalNoOfDays, new { @class = "form-control numCss", placeholder = "Total # of days" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer css10">
+                <button type="button" onclick="SaveTrainingConfirmation()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
+                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            </div>
         </div>
     </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#StartDt, #RegClosingDt').datetimepicker({
+            icons: {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-arrow-up',
+                down: 'fa fa-arrow-down'
+            },
+            minDate: new Date(),
+            format: 'DD/MM/YYYY'
+        });
+
+        $('#EndDt').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            icons: {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-arrow-up',
+                down: 'fa fa-arrow-down'
+            },
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script>
 
 
 
