@@ -43,20 +43,20 @@ namespace EDU.Web.Controllers
                 Registration regObj = dbContext.Registrations.Where(x => x.RegistrationId == registration.RegistrationId).FirstOrDefault();
                 if (regObj != null)
                 {
-                    regObj.OracleDataBase = registration.OracleDataBase;
-                    regObj.Payment1 = registration.Payment1;
-                    regObj.Payment2 = registration.Payment2;
-                    regObj.Product = registration.Product;
-                    regObj.StartDate = registration.StartDate;
-                    regObj.TrainerName = registration.TrainerName;
-                    regObj.Email = registration.Email;
-                    regObj.Amount = registration.Amount;
-                    regObj.Balance = registration.Balance;
-                    regObj.CompanyName = registration.CompanyName;
-                    regObj.Contact = registration.Contact;
-                    regObj.CourseName = registration.CourseName;
-                    regObj.VAT = registration.VAT;
-                    regObj.WHT = registration.WHT;
+                    //regObj.OracleDataBase = registration.OracleDataBase;
+                    //regObj.Payment1 = registration.Payment1;
+                    //regObj.Payment2 = registration.Payment2;
+                    //regObj.Product = registration.Product;
+                    //regObj.StartDate = registration.StartDate;
+                    //regObj.TrainerName = registration.TrainerName;
+                    //regObj.Email = registration.Email;
+                    //regObj.Amount = registration.Amount;
+                    //regObj.Balance = registration.Balance;
+                    //regObj.CompanyName = registration.CompanyName;
+                    //regObj.Contact = registration.Contact;
+                    //regObj.CourseName = registration.CourseName;
+                    //regObj.VAT = registration.VAT;
+                    //regObj.WHT = registration.WHT;
                     //regObj. = registration.CompanyName;
                 }
                 dbContext.SaveChanges();
