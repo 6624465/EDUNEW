@@ -150,7 +150,7 @@ namespace EDU.Web.Controllers
             {
                 TrainingConfInfo = new TrainingConfirmation();
                 TrainingConfInfo.Id = -1;
-
+                TrainingConfInfo.Public = true;
                 return PartialView(TrainingConfInfo);
             }
             else

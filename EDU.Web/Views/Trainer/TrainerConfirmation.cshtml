@@ -9,6 +9,16 @@
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.TrainingConfirmationID)
             @Html.HiddenFor(x => x.IsActive)
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Order No</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", placeholder = "Order No", @disabled="disabled" })
+                    </div>
+                </div>
+            </div>
             <div class="row css10">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
