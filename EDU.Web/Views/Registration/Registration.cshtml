@@ -63,7 +63,7 @@
                                         <span class="pull-right">Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", onblur="calculateamounts()" })
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                         <span class="pull-right">WHT</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss",onblur= "ValidateWHTPercent()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
@@ -82,7 +82,7 @@
                                         <span class="pull-right">VAT/TAX</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss",onblur= "ValidateVATPercent()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control" ,@disabled="disabled"})
@@ -201,7 +201,7 @@
                                 <div class="col-md-12">
                                     <div class="text-center">
                                         <button type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                        @*<button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Master/CourseSalesMasterList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;*@
+                                        <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Registration/GetRegistrationList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -228,6 +228,10 @@
                 //minDate: new Date(),
                 format: 'DD/MM/YYYY'
             });
+
+            $('#WHTPercent').attr('disabled', 'disabled');
+            $('#VATPercent').attr('disabled', 'disabled');
+            $('#OtherDeductionsAmount').attr('disabled', 'disabled');
         });
 
         function SaveRegistration() {
@@ -237,22 +241,10 @@
         }
         $('#frmRegistration').validate({
             rules: {
-                'OracleDataBase': {
+                'StudentName': {
                     required: true
                 },
                 'Amount': {
-                    required: true
-                },
-                'WHT': {
-                    required: true
-                },
-                'TAX': {
-                    required: true
-                },
-                'Payment1': {
-                    required: true
-                },
-                'Payment2': {
                     required: true
                 },
                 'Email': {
@@ -262,30 +254,45 @@
                 'CompanyName': {
                     required: true
                 },
-                'Product': {
-                    required: true
-                },
-                'CourseName': {
-                    required: true
-                },
-                'StartDate': {
-                    required: true
-                },
-                'EndDate': {
-                    required: true
-                },
-                'TrainerName': {
-                    required: true
-                }
-                ,
-                'Balance': {
-                    required: true
-                },
                 'Contact': {
                     required: true
                 }
             }
         });
+
+        function calculateamounts()
+        {
+            var result =parseInt($('#Amount').val());
+            if (result != null && !isNaN(result)&& result!=0)
+            {
+                $('#WHTPercent').removeAttr('disabled', 'disabled');
+                $('#VATPercent').removeAttr('disabled', 'disabled');
+                $('#OtherDeductionsAmount').removeAttr('disabled', 'disabled');
+            }
+            else
+            {
+                $('#WHTPercent').attr('disabled', 'disabled');
+                $('#VATPercent').attr('disabled', 'disabled');
+                $('#OtherDeductionsAmount').attr('disabled', 'disabled');
+            }
+        }
+
+        function ValidateWHTPercent()
+        {
+            var percent =parseInt($('#WHTPercent').val());
+            if(percent>100)
+            {
+                alert("WHTPercent can not greater than 100");
+                $('#WHTPercent').val('');
+            }
+        }
+        function ValidateVATPercent() {
+            var percent = parseInt($('#VATPercent').val());
+            if (percent > 100) {
+                alert("WHTPercent can not greater than 100");
+                $('#VATPercent').val('');
+            }
+        }
 
     </script>
 }
