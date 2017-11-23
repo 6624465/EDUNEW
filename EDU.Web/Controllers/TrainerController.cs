@@ -60,13 +60,13 @@ namespace EDU.Web.Controllers
                         }
 
                         TrainerInfo.FileName.SaveAs(path + TrainerInfo.FileName.FileName);
-
+                        TrainerInfo.Profile = TrainerInfo.FileName.FileName;
                     }
                     else
                         TrainerInfo.Profile = null;
+
                     dbContext.TrainerInformations.Add(TrainerInfo);
                 }
-
                 else
                 {
                     TrainerInformation trainerInfoDetail = dbContext.TrainerInformations.
@@ -84,7 +84,7 @@ namespace EDU.Web.Controllers
                         }
 
                         TrainerInfo.FileName.SaveAs(path + TrainerInfo.FileName.FileName);
-
+                        TrainerInfo.Profile = TrainerInfo.FileName.FileName;
                     }
                     else
                         TrainerInfo.Profile = null;
