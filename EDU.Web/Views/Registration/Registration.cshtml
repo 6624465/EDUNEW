@@ -3,9 +3,17 @@
     ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    var listItems = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "Select Payment Type",   Value = "0", Selected=true},
+                                           new SelectListItem {Text = "CASH",   Value = "1"},
+                                           new SelectListItem {Text = "CHEQUE", Value = "2"},
+                                           new SelectListItem {Text = "BANK TRANSFER", Value = "3"}
+                                       };
+}
 <div class="page page-forms-elements">
-  
+
     @using (Html.BeginForm("Registration", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration" }))
     {
         @Html.HiddenFor(x => x.RegistrationId)
@@ -15,19 +23,47 @@
                     <div class="panel panel-default panel-hovered panel-stacked mb30">
                         <div class="panel-heading">Registration</div>
                         <div class="panel-body">
+
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Oracle DataBase</span>
+                                        <span class="pull-right">Student Name</span>
                                     </label>
                                     <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.OracleDataBase, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.StudentName, new { @class = "form-control" })
                                     </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Email ID</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @type = "email" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Contact </span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control"})
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Company</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.CompanyName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row css10">
+                                <div class="form-group">
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss" })
                                     </div>
                                 </div>
                             </div>
@@ -36,14 +72,46 @@
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">WHT</span>
                                     </label>
-                                    <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.WHT, new { @class = "form-control" })
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">VAT/TAX</span>
                                     </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control" ,@disabled="disabled"})
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Other Deductions</span>
+                                    </label>
                                     <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.VAT, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, new { @class = "form-control numCss" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Total Amount</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.TotalAmount, new { @class = "form-control numCss" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Balance Amount</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(x => x.BalanceAmount, new { @class = "form-control numCss" })
                                     </div>
                                 </div>
                             </div>
@@ -52,105 +120,83 @@
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment1</span>
                                     </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control" })
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control numCss" })
                                     </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Payment Type</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x=>x.Payment1Type, listItems,string.Empty ,new { @class="form-control"})
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Payment1 Date</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date" id="StartDt">
+                                            @Html.TextBoxFor(x => x.Payment1Date, new { @class = "form-control dtCss" })
+                                            <span class="input-group-addon">
+                                                <i class="ion ion-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment2</span>
                                     </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Payment2, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Balance</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Balance, new { @class = "form-control" })
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.Payment2, new { @class = "form-control numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Email</span>
+                                        <span class="pull-right">Payment Type</span>
                                     </label>
-                                    <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Payment2Type, listItems, string.Empty, new { @class = "form-control" })
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Contact</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control" })
-                                    </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">CompanyName</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.CompanyName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Product</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Product, new { @class = "form-control" })
-                                    </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">CourseName</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.CourseName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Start Date</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="input-group date" id="StartDt">
-                                                @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control" })
+                                        <label class="col-md-2 control-label">
+                                            <span class="pull-right">Payment2 Date</span>
+                                        </label>
+                                        <div class="col-md-2">
+                                            <div class="input-group date" id="StartDt2">
+                                                @Html.TextBoxFor(x => x.Payment2Date, new { @class = "form-control dtCss" })
                                                 <span class="input-group-addon">
-                                                    <span class="fa fa-calendar"></span>
+                                                    <i class="ion ion-calendar"></i>
                                                 </span>
                                             </div>
                                         </div>
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Payment3</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.Payment3, new { @class = "form-control numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">End Date</span>
+                                        <span class="pull-right">Payment Type</span>
                                     </label>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="input-group date" id="EndDt">
-                                                @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control input-sm dtCss" })
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-calendar"></span>
-                                                </span>
-                                            </div>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Payment3Type, listItems, string.Empty, new { @class = "form-control" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Payment3 Date</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date" id="StartDt3">
+                                            @Html.TextBoxFor(x => x.Payment3Date, new { @class = "form-control dtCss" })
+                                            <span class="input-group-addon">
+                                                <i class="ion ion-calendar"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Trainer Name</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                       @Html.TextBoxFor(x => x.TrainerName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
@@ -172,7 +218,7 @@
     <script type="text/javascript">
 
         $(function () {
-            $('#StartDt,#EndDt').datetimepicker({
+            $('#StartDt,#StartDt2,#StartDt3').datetimepicker({
                 icons: {
                     time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
