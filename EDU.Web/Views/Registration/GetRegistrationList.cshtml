@@ -31,22 +31,22 @@
                         <div class="row">
                             @grid.GetHtml(
                                 columns: grid.Columns(
-                    grid.Column("OracleDataBase", "OracleDataBase", canSort: true),
+                    grid.Column("StudentName", "Student Name", canSort: true),
                     grid.Column("Amount", "Amount", canSort: true),
-                    grid.Column("WHT", "WHT", canSort: true),
-                    grid.Column("VAT", "VAT/TAX", canSort: true),
+                    grid.Column("WHTPercent", "WHT", canSort: true),
+                    grid.Column("VATPercent", "VAT/TAX", canSort: true),
                     grid.Column("Payment1", "Payment1", canSort: true),
                     grid.Column("Payment2", "Payment2", canSort: true),
-                    grid.Column("Balance", "Balance", canSort: true),
+                    grid.Column("BalanceAmount", "Balance", canSort: true),
                     grid.Column("Email", "Email", canSort: true),
                     grid.Column("Contact", "Contact", canSort: true),
-                    grid.Column("CompanyName", "CompanyName", canSort: true),
-                    grid.Column("Product", "Product", canSort: true),
-                    grid.Column("CourseName", "CourseName", canSort: true),
-                    grid.Column("StartDate", "StartDate", canSort: true),
-                    grid.Column("EndDate", "EndDate", canSort: true),
-                     grid.Column("TrainerName", "TrainerName", canSort: true),
-                    //grid.Column("CountryName", "#Action", canSort: true),
+                    grid.Column("CompanyName", "Company Name", canSort: true),
+                    //grid.Column("Product", "Product", canSort: true),
+                    //grid.Column("CourseName", "CourseName", canSort: true),
+                    //grid.Column("StartDate", "StartDate", canSort: true),
+                    //grid.Column("EndDate", "EndDate", canSort: true),
+                    //grid.Column("TrainerName", "TrainerName", canSort: true),
+
                     grid.Column("", "#Action", canSort: false,
                                 format:
                             @<text>
