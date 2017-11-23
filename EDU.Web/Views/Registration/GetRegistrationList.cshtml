@@ -1,18 +1,14 @@
-﻿@model IEnumerable<EDU.Web.Models.Registration>
+﻿@model IEnumerable<EDU.Web.ViewModels.Registration.RegistrationVM>
 @{
     ViewBag.Title = "Registrations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section Styles{
-    <link href="@Url.Content("~/Css/dataTables.bootstrap.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Css/dataTables.responsive.css")" rel="stylesheet" />
-}
 
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
 }
-<div class="page">
+<div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
             <div class="box" id="grid">
@@ -27,7 +23,84 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="row" style="overflow-x: scroll; width: 100%">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span>Event No.</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().TrainingConfirmationID,
+                             new SelectList((List<EDU.Web.Models.TrainingConfirmation>)ViewData["TrainingConfirmationData"], "TrainingConfirmationID", "TrainingConfirmationID"),
+                             "Select Event No.", new { @class = "form-control", onchange = "CountryChange(this);" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span>Product</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>Product</b>
+                            </div>
+                            <label class="col-md-1 control-label">
+                                <span>Course</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>Course</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span>No of Students</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>No of Students</b>
+                            </div>
+                            <label class="col-md-1 control-label">
+                                <span>Type</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>Type</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span>Start Date</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>Satrt Date</b>
+                            </div>
+                            <label class="col-md-1 control-label">
+                                <span>End Date</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>End Date</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span>Total # of days</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>Total # of days</b>
+                            </div>
+                            <label class="col-md-1 control-label">
+                                <span>Trainer Name</span>
+                            </label>
+                            <div class="col-md-3">
+                                <b>Trainer Name</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row css10" style="overflow-x: scroll; width: 100%">
                         <div class="row">
                             @grid.GetHtml(
                                 columns: grid.Columns(
@@ -37,25 +110,26 @@
                     grid.Column("VATPercent", "VAT/TAX", canSort: true),
                     grid.Column("Payment1", "Payment1", canSort: true),
                     grid.Column("Payment2", "Payment2", canSort: true),
+                    grid.Column("Payment3", "Payment3", canSort: true),
                     grid.Column("BalanceAmount", "Balance", canSort: true),
                     grid.Column("Email", "Email", canSort: true),
                     grid.Column("Contact", "Contact", canSort: true),
                     grid.Column("CompanyName", "Company Name", canSort: true),
                     //grid.Column("Product", "Product", canSort: true),
                     //grid.Column("CourseName", "CourseName", canSort: true),
-                    //grid.Column("StartDate", "StartDate", canSort: true),
-                    //grid.Column("EndDate", "EndDate", canSort: true),
-                    //grid.Column("TrainerName", "TrainerName", canSort: true),
+                    grid.Column("StartDate", "StartDate", canSort: true),
+                    grid.Column("EndDate", "EndDate", canSort: true),
+                    grid.Column("TrainerName", "TrainerName", canSort: true),
 
                     grid.Column("", "#Action", canSort: false,
                                 format:
-                            @<text>
-                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                @<text>
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
-                            <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" +item.RegistrationId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                            <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" +item.RegistrationId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                     }
-                            </text>)),
+                                </text>)),
                                 tableStyle: "table")
                         </div>
                     </div>
@@ -71,7 +145,6 @@
 </div>
 @section SectionScripts{
     <script type="text/javascript">
-        $('#tblRegistration').DataTable();
 
         function DeleteRegistration(id) {
 

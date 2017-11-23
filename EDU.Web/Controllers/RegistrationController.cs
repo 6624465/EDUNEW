@@ -18,6 +18,8 @@ namespace EDU.Web.Controllers
         public ActionResult GetRegistrationList()
         {
             //List<Registration> registrationList = dbContext.Registrations.Where(x=>x.IsActive==true).ToList();
+            var product = new EduProductBO().GetList().ToList();
+            var course = new CourseBO().GetList().ToList();
 
             var results = dbContext.Registrations
                             .GroupJoin(dbContext.TrainingConfirmations,
@@ -56,12 +58,14 @@ namespace EDU.Web.Controllers
                                 ModifiedBy = x.A.ModifiedBy,
                                 ModifiedOn = x.A.ModifiedOn,
                                 IsActive = x.A.IsActive,
-                                ProductName = new EduProductBO().GetList().Where(p=>p.Id== x.B.FirstOrDefault().Product).FirstOrDefault().ProductName,
-                                CourseName = new CourseBO().GetList().Where(c => c.Id == x.B.FirstOrDefault().Course).FirstOrDefault().CountryName,
+                                //ProductName = product.Where(p=>p.Id== x.B.FirstOrDefault().Product).FirstOrDefault().ProductName,
+                                //CourseName = course.Where(c => c.Id == x.B.FirstOrDefault().Course).FirstOrDefault().CountryName,
                                 StartDate = x.B.FirstOrDefault().StartDate.Value,
                                 EndDate = x.B.FirstOrDefault().EndDate.Value,
                                 TrainerName = dbContext.TrainerInformations.Where(t=>t.TrianerId==x.B.FirstOrDefault().TrianerId).FirstOrDefault().TrainerName
-                            }).AsQueryable();
+                            }).AsEnumerable();
+
+            ViewData["TrainingConfirmationData"] = dbContext.TrainingConfirmations.Where(x=>x.IsActive==true).ToList();
 
             return View(results);
         }
