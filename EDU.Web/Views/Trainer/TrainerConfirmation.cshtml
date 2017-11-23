@@ -49,7 +49,7 @@
                         <span class="pull-right">Number of Students</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.NoOfStudents, new { @class = "form-control numCss", placeholder = "Number of Students" })
+                        @Html.TextBoxFor(x => x.NoOfStudents, "{0:#.#}", new { @class = "form-control numCss", placeholder = "Number of Students" })
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                         <span class="pull-right">Total # of days</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.TotalNoOfDays, new { @class = "form-control numCss", placeholder = "Total # of days" })
+                        @Html.TextBoxFor(x => x.TotalNoOfDays, "{0:#.#}", new { @class = "form-control numCss", placeholder = "Total # of days"})
                     </div>
                 </div>
             </div>
@@ -142,6 +142,7 @@
             },
             format: 'DD/MM/YYYY'
         });
+       
     });
 </script>
 
