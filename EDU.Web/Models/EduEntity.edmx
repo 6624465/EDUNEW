@@ -27,22 +27,34 @@
             <PropertyRef Name="RegistrationId" />
           </Key>
           <Property Name="RegistrationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OracleDataBase" Type="nvarchar" MaxLength="50" />
-          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="WHT" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Payment1" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Payment2" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="StudentName" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="Contact" Type="nvarchar" MaxLength="20" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="250" />
-          <Property Name="Product" Type="nvarchar" MaxLength="50" />
-          <Property Name="CourseName" Type="nvarchar" MaxLength="50" />
-          <Property Name="StartDate" Type="datetime" />
-          <Property Name="EndDate" Type="datetime" />
-          <Property Name="TrainerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="WHTPercent" Type="smallint" />
+          <Property Name="VATPercent" Type="smallint" />
+          <Property Name="WHTAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="VATAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OtherDeductionsAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment1" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment3" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment1Date" Type="datetime" />
+          <Property Name="Payment2Date" Type="datetime" />
+          <Property Name="Payment3Date" Type="datetime" />
+          <Property Name="Payment1Type" Type="smallint" />
+          <Property Name="Payment2Type" Type="smallint" />
+          <Property Name="Payment3Type" Type="smallint" />
+          <Property Name="CheckNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
         <EntityType Name="Revenue">
           <Key>
@@ -140,28 +152,6 @@
           <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
-        <EntityType Name="Registration">
-          <Key>
-            <PropertyRef Name="RegistrationId" />
-          </Key>
-          <Property Name="RegistrationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OracleDataBase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="WHT" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Payment1" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Payment2" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Product" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
         <EntityType Name="Revenue">
           <Key>
             <PropertyRef Name="RevenueId" />
@@ -190,10 +180,10 @@
         </EntityType>
         <EntityContainer Name="EducationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayment" />
-          <EntitySet Name="Registrations" EntityType="Self.Registration" />
           <EntitySet Name="Revenues" EntityType="Self.Revenue" />
           <EntitySet Name="TrainerInformations" EntityType="DB_9F30C5_edudevModel.TrainerInformation" />
           <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
+          <EntitySet Name="Registrations" EntityType="DB_9F30C5_edudevModel.Registration" />
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -237,6 +227,40 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="RegistrationId" />
+          </Key>
+          <Property Name="RegistrationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="WHTPercent" Type="Int16" />
+          <Property Name="VATPercent" Type="Int16" />
+          <Property Name="WHTAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VATAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherDeductionsAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment3" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment1Date" Type="DateTime" Precision="3" />
+          <Property Name="Payment2Date" Type="DateTime" Precision="3" />
+          <Property Name="Payment3Date" Type="DateTime" Precision="3" />
+          <Property Name="Payment1Type" Type="Int16" />
+          <Property Name="Payment2Type" Type="Int16" />
+          <Property Name="Payment3Type" Type="Int16" />
+          <Property Name="CheckNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainingConfirmationID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -257,29 +281,6 @@
                 <ScalarProperty Name="RecieptDate" ColumnName="RecieptDate" />
                 <ScalarProperty Name="ReferenceDocument" ColumnName="ReferenceDocument" />
                 <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Registrations">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Registration">
-              <MappingFragment StoreEntitySet="Registration">
-                <ScalarProperty Name="RegistrationId" ColumnName="RegistrationId" />
-                <ScalarProperty Name="OracleDataBase" ColumnName="OracleDataBase" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="WHT" ColumnName="WHT" />
-                <ScalarProperty Name="VAT" ColumnName="VAT" />
-                <ScalarProperty Name="Payment1" ColumnName="Payment1" />
-                <ScalarProperty Name="Payment2" ColumnName="Payment2" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Product" ColumnName="Product" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="TrainerName" ColumnName="TrainerName" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -352,6 +353,41 @@
                 <ScalarProperty Name="Product" ColumnName="Product" />
                 <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registrations">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Registration">
+              <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
+                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+                <ScalarProperty Name="CheckNo" ColumnName="CheckNo" />
+                <ScalarProperty Name="Payment3Type" ColumnName="Payment3Type" />
+                <ScalarProperty Name="Payment2Type" ColumnName="Payment2Type" />
+                <ScalarProperty Name="Payment1Type" ColumnName="Payment1Type" />
+                <ScalarProperty Name="Payment3Date" ColumnName="Payment3Date" />
+                <ScalarProperty Name="Payment2Date" ColumnName="Payment2Date" />
+                <ScalarProperty Name="Payment1Date" ColumnName="Payment1Date" />
+                <ScalarProperty Name="Payment3" ColumnName="Payment3" />
+                <ScalarProperty Name="Payment2" ColumnName="Payment2" />
+                <ScalarProperty Name="Payment1" ColumnName="Payment1" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="OtherDeductionsAmount" ColumnName="OtherDeductionsAmount" />
+                <ScalarProperty Name="VATAmount" ColumnName="VATAmount" />
+                <ScalarProperty Name="WHTAmount" ColumnName="WHTAmount" />
+                <ScalarProperty Name="VATPercent" ColumnName="VATPercent" />
+                <ScalarProperty Name="WHTPercent" ColumnName="WHTPercent" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="RegistrationId" ColumnName="RegistrationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
