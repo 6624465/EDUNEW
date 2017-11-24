@@ -9,6 +9,14 @@
     WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
 }
+<style>
+    .center {
+        margin: auto;
+        width: 100%;
+        border: 1px solid gray;
+        border-radius: 20px;
+    }
+</style>
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -37,39 +45,44 @@
                             </div>
                         </div>
                     </div>
-                    <div id="TrainingDetails">
-                        <div class="row css10">
-                            <div class="col-md-4 col-md-offset-2">
-                                <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                    <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
+                        <div class="center">
+                            <div class="row css10">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-2">
-                                <label class="control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-2">
-                                <label class="control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-2">
-                                <label class="control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
-                            </div>
-                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
                     </div>
                     <div class="row css10" style="overflow-x: scroll; width: 100%">
                         <div class="row">
@@ -111,18 +124,21 @@
 </div>
 @section SectionScripts{
     <script type="text/javascript">
-        $(function()
-        {
+        $(function () {
             $('#TrainingDetails').hide();
-            $('#addbtn').attr('disabled','disabled');
-
-        })
+            $('#addbtn').attr('disabled', 'disabled');
+            var trid = $('#TrainingConfirmationID').val();
+            if (trid != null && trid != '') {
+                $('#TrainingDetails').show();
+                $('#addbtn').removeAttr('disabled', 'disabled');
+            }
+        });
 
         function ChangeEventID(el) {
             if (el.value) {
                 $('#eventid').val(el.value);
-                $('#TrainingDetails').show();
-                $('#addbtn').removeAttr('disabled', 'disabled');
+                //$('#TrainingDetails').show();
+                //$('#addbtn').removeAttr('disabled', 'disabled');
                 window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
             }
             else {
