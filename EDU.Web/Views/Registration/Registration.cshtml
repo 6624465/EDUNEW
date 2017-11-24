@@ -64,7 +64,7 @@
                                         <span class="pull-right">Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", onblur= "CalculateamountDisabled()" })
+                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", onkeyup = "CalculateamountDisabled()" })
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                         <span class="pull-right">WHT</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss",onblur= "ValidateWHTPercent();ValidateWHTAmountPercent()" })
+                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
@@ -83,7 +83,7 @@
                                         <span class="pull-right">VAT/TAX</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss",onblur= "ValidateVATPercent();ValidateVATAmountPercent()" })
+                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss", onkeyup = "ValidateVATPercent();ValidateVATAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control" ,@disabled="disabled"})
@@ -96,7 +96,7 @@
                                         <span class="pull-right">Other Deductions</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, new { @class = "form-control numCss", onblur = "CalTotalAmount()" })
+                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, new { @class = "form-control numCss", onkeyup = "CalTotalAmount()" })
                                     </div>
                                 </div>
                             </div>
@@ -274,6 +274,12 @@
             }
             else
             {
+                $('#WHTPercent').val(''); 
+                $('#TotalAmount').val('');
+                $('#VATPercent').val('');
+                $('#OtherDeductionsAmount').val('');
+                $('#WHTAmount').val('');
+                $('#VATAmount').val('');
                 $('#WHTPercent').attr('disabled', 'disabled');
                 $('#VATPercent').attr('disabled', 'disabled');
                 $('#OtherDeductionsAmount').attr('disabled', 'disabled');
