@@ -244,8 +244,23 @@
             var trid = $('#TrainingConfirmationID').val();            
             window.location = '@Url.Content("~/Registration/RegistrationList")'+"?trainingConfirmationID=" + trid ;
         };
+
+        function RemoveDisabledFields()
+        {
+            $('#WHTAmount').removeAttr('disabled', 'disabled');
+            $('#VATAmount').removeAttr('disabled', 'disabled');
+            $('#WHTPercent').removeAttr('disabled', 'disabled');
+            $('#VATPercent').removeAttr('disabled', 'disabled');
+            $('#OtherDeductionsAmount').removeAttr('disabled', 'disabled');
+            $('#Payment1').removeAttr('disabled', 'disabled');
+            $('#Payment2').removeAttr('disabled', 'disabled');
+            $('#Payment3').removeAttr('disabled', 'disabled');
+            $('#TotalAmount').removeAttr('disabled', 'disabled');
+            $('#BalanceAmount').removeAttr('disabled', 'disabled');
+        }
         function SaveRegistration() {
             if ($('#frmRegistration').valid()) {
+                RemoveDisabledFields();
                 $('#frmRegistration').submit();
             }
         }
