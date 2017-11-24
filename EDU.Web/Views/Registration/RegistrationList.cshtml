@@ -124,8 +124,11 @@
         function navigatetoDetail() {
             @*location.href = '@Url.Content("~/Registration/Registration?Id=-1&TrainingConfirmationID=" + $('#eventid').val())'*@
             var trid = $('#TrainingConfirmationID').val();
+            debugger;
             //window.location = '@Url.Action("Registration", "Registration", new { Id ="", trainingConfirmationID = ""})' + 'Id=-1/trainingConfirmationID=' + trid;
-            window.location = '@Url.Content("~/Registration/Registration?Id=-1&TrainingConfirmationID=")' + trid;
+
+
+            window.location = '@Url.Content("~/Registration/Registration")'+"?Id=-1&trainingConfirmationID=" + trid ;
         };
             function DeleteRegistration(id) {
 
