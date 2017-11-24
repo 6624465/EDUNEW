@@ -3,6 +3,7 @@ using EDU.Web.ViewModels.Registration;
 using EZY.EDU.BusinessFactory;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,71 +16,75 @@ namespace EDU.Web.Controllers
         EducationEntities dbContext = new EducationEntities();
 
         [HttpGet]
-        public ActionResult GetRegistrationList()
+        public ActionResult RegistrationList(string trainingConfirmationID)
         {
-            //List<Registration> registrationList = dbContext.Registrations.Where(x=>x.IsActive==true).ToList();
-            var product = new EduProductBO().GetList().ToList();
-            var course = new CourseBO().GetList().ToList();
+            RegistrationVM result = new RegistrationVM();
+            try
+            {
+                List<TrainingConfirmation> tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+                List<Registration> List = GetList(trainingConfirmationID);
+                TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
 
-            var results = dbContext.Registrations
-                            .GroupJoin(dbContext.TrainingConfirmations,
-                                            a => new { a.TrainingConfirmationID },
-                                            b => new { b.TrainingConfirmationID },
-                                        (a, b) => new { A = a, B = b.DefaultIfEmpty() })
-                            .Where(x => x.A.IsActive == true)
-                            .Select(x => new RegistrationVM()
-                            {
-                                RegistrationId = x.A.RegistrationId,
-                                StudentName = x.A.StudentName,
-                                Email = x.A.Email,
-                                Contact = x.A.Contact,
-                                CompanyName = x.A.CompanyName,
-                                Amount = x.A.Amount,
-                                WHTPercent = x.A.WHTPercent,
-                                VATPercent = x.A.VATPercent,
-                                WHTAmount = x.A.WHTAmount,
-                                VATAmount = x.A.VATAmount,
-                                OtherDeductionsAmount = x.A.OtherDeductionsAmount,
-                                TotalAmount = x.A.TotalAmount,
-                                Payment1 = x.A.Payment1,
-                                Payment2 = x.A.Payment2,
-                                Payment3 = x.A.Payment3,
-                                Payment1Date = x.A.Payment1Date,
-                                Payment2Date = x.A.Payment2Date,
-                                Payment3Date = x.A.Payment3Date,
-                                Payment1Type = x.A.Payment1Type,
-                                Payment2Type = x.A.Payment2Type,
-                                Payment3Type = x.A.Payment3Type,
-                                CheckNo = x.A.CheckNo,
-                                BalanceAmount = x.A.BalanceAmount,
-                                TrainingConfirmationID = x.A.TrainingConfirmationID,
-                                CreatedBy = x.A.CreatedBy,
-                                CreatedOn = x.A.CreatedOn,
-                                ModifiedBy = x.A.ModifiedBy,
-                                ModifiedOn = x.A.ModifiedOn,
-                                IsActive = x.A.IsActive,
-                                //ProductName = product.Where(p=>p.Id== x.B.FirstOrDefault().Product).FirstOrDefault().ProductName,
-                                //CourseName = course.Where(c => c.Id == x.B.FirstOrDefault().Course).FirstOrDefault().CountryName,
-                                StartDate = x.B.FirstOrDefault().StartDate.Value,
-                                EndDate = x.B.FirstOrDefault().EndDate.Value,
-                                TrainerName = dbContext.TrainerInformations.Where(t=>t.TrianerId==x.B.FirstOrDefault().TrianerId).FirstOrDefault().TrainerName
-                            }).AsEnumerable();
 
-            ViewData["TrainingConfirmationData"] = dbContext.TrainingConfirmations.Where(x=>x.IsActive==true).ToList();
+                TrainingConfirmDtl tcd = new TrainingConfirmDtl();
+                if (tcdtl != null)
+                {
+                    string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName;
+                    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault().CourseName;
+                    tcd = new TrainingConfirmDtl()
+                    {
+                        Id = tcdtl.Id,
+                        TrainingConfirmationID = tcdtl.TrainingConfirmationID,
+                        Product = tcdtl.Product,
+                        Course = tcdtl.Course,
+                        TotalNoOfDays = tcdtl.TotalNoOfDays,
+                        NoOfStudents = tcdtl.NoOfStudents,
+                        Private = tcdtl.Private,
+                        Public = tcdtl.Public,
+                        StartDate = tcdtl.StartDate,
+                        EndDate = tcdtl.EndDate,
+                        TrianerId = tcdtl.TrianerId,
+                        IsActive = tcdtl.IsActive,
+                        CreatedBy = tcdtl.CreatedBy,
+                        CreatedOn = tcdtl.CreatedOn,
+                        ModifiedBy = tcdtl.ModifiedBy,
+                        ModifiedOn = tcdtl.ModifiedOn,
+                        ProductName = productName,
+                        CourseName = courseName,
+                        TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
+                    };
+                }
 
-            return View(results);
+                result.registration = List;
+                result.trainingconf = tc;
+                result.trainingconfDetail = tcd;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return View(result);
         }
 
-        public ActionResult Registration(int Id=-1)
+        private List<Registration> GetList(string trainingConfirmationID)
         {
-            Registration registration = dbContext.Registrations.Where(x => x.RegistrationId == Id && x.IsActive == true).FirstOrDefault();
+            List<Registration> registrationList = dbContext.Registrations.Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).ToList();
+            return registrationList;
+        }
+
+        public ActionResult Registration(int Id, string trainingConfirmationID)
+        {
+            Registration registration = dbContext.Registrations.Where(x => x.RegistrationId == Id && x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
             if (registration == null)
             {
                 registration = new Registration();
                 registration.RegistrationId = Id;
+                registration.TrainingConfirmationID = trainingConfirmationID;
             }
             return View(registration);
         }
+
         [HttpPost]
         public ActionResult Registration(Registration registration)
         {
@@ -112,7 +117,7 @@ namespace EDU.Web.Controllers
                 }
                 dbContext.SaveChanges();
             }
-            return RedirectToAction("GetRegistrationList");
+            return RedirectToAction("RegistrationList");
         }
 
         [HttpPost]

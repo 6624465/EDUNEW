@@ -1,0 +1,152 @@
+﻿
+@model EDU.Web.ViewModels.Registration.RegistrationVM
+@{
+    ViewBag.Title = "Registrations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.All);
+}
+<div class="page page-forms-elements">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Registrations List</h4>
+                    <div class="box-tools">
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-plus"></i>New Registration</button>
+                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
+                        }
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label col-md-offset-2">
+                                <span>Event No.</span>
+                            </label>
+                            <div class="col-md-2">
+                                <input type="hidden" id="eventid" name="eventid" />
+                                @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
+                                 new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
+                                 "Select Event No.", new { @class = "form-control", onchange = "ChangeEventID(this);" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row css10">
+                        <div class="col-md-4 col-md-offset-2">
+                            <label class=" control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                        </div>
+                        <div class="col-md-4">
+                            <label class=" control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2">
+                            <label class=" control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
+                        </div>
+                        <div class="col-md-4">
+                            <label class=" control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2">
+                            <label class=" control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                        </div>
+                        <div class="col-md-4">
+                            <label class=" control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2">
+                            <label class=" control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
+                        </div>
+                        <div class="col-md-4">
+                            <label class=" control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
+                        </div>
+                    </div>
+
+                    <div class="row css10" style="overflow-x: scroll; width: 100%">
+                        <div class="row">
+                            @grid.GetHtml(
+                                    columns: grid.Columns(
+                        grid.Column("StudentName", "Student Name", canSort: true),
+                        grid.Column("Amount", "Amount", canSort: true),
+                        grid.Column("WHTPercent", "WHT", canSort: true),
+                        grid.Column("VATPercent", "VAT/TAX", canSort: true),
+                        grid.Column("Payment1", "Payment 1", canSort: true),
+                        grid.Column("Payment2", "Payment 2", canSort: true),
+                        grid.Column("Payment3", "Payment 3", canSort: true),
+                        grid.Column("BalanceAmount", "Balance", canSort: true),
+                        grid.Column("Email", "Email", canSort: true),
+                        grid.Column("Contact", "Contact", canSort: true),
+                        grid.Column("CompanyName", "Company Name", canSort: true),
+
+                        grid.Column("", "#Action", canSort: false,
+                                    format:
+                                    @<text>
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                        {
+                                            <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" +item.RegistrationId+ "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        }
+                                    </text>)),
+                                    tableStyle: "table")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section SectionScripts{
+    <script type="text/javascript">
+        function ChangeEventID(el) {
+            if (el.value) {
+                $('#eventid').val(el.value);
+                window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+            }
+            else {
+                //$("#CurrencyCode").val('');
+            }
+        };
+
+        function navigatetoDetail() {
+            @*location.href = '@Url.Content("~/Registration/Registration?Id=-1&TrainingConfirmationID=" + $('#eventid').val())'*@
+            var trid = $('#TrainingConfirmationID').val();
+            //window.location = '@Url.Action("Registration", "Registration", new { Id ="", trainingConfirmationID = ""})' + 'Id=-1/trainingConfirmationID=' + trid;
+            window.location = '@Url.Content("~/Registration/Registration?Id=-1&TrainingConfirmationID=")' + trid;
+        };
+            function DeleteRegistration(id) {
+
+                if (confirm("Are you sure, You want to delete")) {
+                    $.ajax({
+                        url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        success: function (data) {
+
+                            alert("Deleted Successfully");
+                            if (data) {
+                                location.reload();
+                            }
+                        },
+                        error: function (e) {
+
+                        }
+                    });
+                }
+            }
+    </script>
+
+}
