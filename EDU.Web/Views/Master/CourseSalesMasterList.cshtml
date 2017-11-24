@@ -134,36 +134,36 @@
                                     </div>
                                 </text>, canSort: true, style: "center LeadsOnHead"),
                                 grid.Column("Registered", "Registered",
-                                format:
-                                @<text>
-                                    @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
-                                    {
-                                        <span>@item.Registered</span>
-                                    }
-                                    else
-                                    {
-                                        <a style="cursor:pointer;text-decoration:underline;">
-                                            <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.RegisteredRemarks)"
-                                                  onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
-                                            </a>
-                                    }
-                                </text>, canSort: true, style: "center"),
+                                        format:
+                                        @<text>
+                                            @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
+                                            {
+                                                <span>@item.Registered</span>
+                                            }
+                                            else
+                                            {
+                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.RegisteredRemarks)"
+                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
+                                                    </a>
+                                            }
+                                        </text>, canSort: true, style: "center"),
 
                                 grid.Column("AvailableSeats", "Avl. Seats", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:70px;'>
-                                        @item.AvailableSeats
-                                    </div>
-                                </text>, style: "center"),
+                                        format:
+                                        @<text>
+                                            <div style='width:70px;'>
+                                                @item.AvailableSeats
+                                            </div>
+                                        </text>, style: "center"),
 
                                 grid.Column("RegClosingDate", "Reg. Closing Dt.", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
-                                    </div>
-                                </text>, style: "center"),
+                                        format:
+                                        @<text>
+                                            <div style='width:110px;'>
+                                                @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
+                                            </div>
+                                        </text>, style: "center"),
                                 grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ? Convert.ToInt32(item.Revenue) : "0") </text>, canSort: true, style: "center Revenue"),
                                 grid.Column("", "#Action", canSort: false,
                                 format:

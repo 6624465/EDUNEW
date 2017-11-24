@@ -14,20 +14,55 @@
     var remainReg = Student - reg;
 }
 <style>
-    .center {
+    .centerbox {
         margin: auto;
         width: 100%;
         border: 1px solid gray;
         border-radius: 20px;
     }
+
+    .center {
+        text-align: center !important;
+    }
+
+    .right {
+        text-align: right !important;
+    }
+
+    .StudentName {
+        width: 150px;
+    }
 </style>
+@functions {
+    public string GetPaymentType(short id)
+    {
+        if (id == 1)
+            return "CASH";
+        else if (id == 2)
+            return "CHEQUE";
+        else if (id == 3)
+            return "BANK TRANSFER";
+        else
+            return "";
+    }
+    public string ConvertToInt64(decimal? data)
+    {
+        if (data != null)
+            return Convert.ToInt64(data.Value).ToString();
+        else
+            return null;
+    }
+}
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
             <div class="box" id="grid">
                 <div class="box-header">
-                    <div style="display:-webkit-inline-box"><h4>Registrations List</h4>&nbsp;&nbsp;(&nbsp;<label style="color:red;margin-top:14px">Pending Registrations :@remainReg</label>&nbsp;)</div>
-                    
+                    <div style="display:-webkit-inline-box">
+                        <h4> Registrations List</h4>
+                        &nbsp;&nbsp;(&nbsp;<label style="color:red;margin-top:14px"> Pending Registrations :@remainReg</label>&nbsp;)
+                    </div>
+
                     <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
@@ -52,7 +87,7 @@
                         </div>
                     </div>
                     <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
-                        <div class="center">
+                        <div class="centerbox">
                             <div class="row css10">
                                 <div class="col-md-5 col-md-offset-1">
                                     <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
@@ -91,43 +126,164 @@
                     <div class="row" style="margin-top:20px;">
                     </div>
                     <div class="row css10" style="overflow-x: scroll; width: 100%">
-                        @*<div class="row">*@
-                            @grid.GetHtml(
+                        @grid.GetHtml(
                                     columns: grid.Columns(
-                        grid.Column("StudentName", "Student Name", canSort: true),
-                        grid.Column("Amount", "Amount", format:item=>Convert.ToInt64(item.Amount) , canSort: true),
-                        grid.Column("WHTPercent", "WHT", format: (item) => new HtmlString(Convert.ToInt64(item.WHTPercent)+"%"), canSort: true),
-                        grid.Column("WHTAmount", "WHT Amount", format: item => Convert.ToInt64(item.WHTAmount), canSort: true),
-                        grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(Convert.ToInt64(item.VATPercent) + "%"), canSort: true),
-                        grid.Column("VATAmount", "VAT/TAX Amount", format: item => Convert.ToInt64(item.VATAmount), canSort: true),
-                        grid.Column("TotalAmount", "TotalAmount", format: item => Convert.ToInt64(item.TotalAmount), canSort: true),
-                        grid.Column("Payment1", "Payment 1", format: item => Convert.ToInt64(item.Payment1), canSort: true),
-                        grid.Column("Payment1Date", "Payment1 Date", format:@<text> @item.Payment1Date.ToString("MM/dd/yyyy")</text> , canSort: true),
-                        grid.Column("Payment1Type", "Payment1 Type",format:item=>Convert.ToString(item.Payment2), canSort: true),
-                        grid.Column("Payment2", "Payment 2", format: item => Convert.ToInt64(item.Payment2), canSort: true),
-                        grid.Column("Payment2Date", "Payment2 Date",format:@<text> @item.Payment2Date.ToString("MM/dd/yyyy")</text> , canSort: true),
-                        grid.Column("Payment2Type", "Payment2 Type", canSort: true),
-                        grid.Column("Payment3", "Payment 3", format: item => Convert.ToInt64(item.Payment3), canSort: true),
-                        grid.Column("Payment3Date", "Payment3 Date", format:@<text> @item.Payment3Date.ToString("MM/dd/yyyy")</text> , canSort: true),
-                        grid.Column("Payment3Type", "Payment3 Type", canSort: true),
-                        grid.Column("BalanceAmount", "Balance", format: item => Convert.ToInt64(item.BalanceAmount), canSort: true),
-                        grid.Column("CheckNo", "Check No", canSort: true),
-                       grid.Column("OtherDeductionsAmount","Other Deductions Amount",format: item => Convert.ToInt64(item.OtherDeductionsAmount), canSort: true),
-                        grid.Column("Email", "Email", canSort: true),
-                        grid.Column("Contact", "Contact", canSort: true),
-                        grid.Column("CompanyName", "Company Name", canSort: true),
-
-                        grid.Column("", "#Action", canSort: false,
-                                    format:
-                                    @<text>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" +item.RegistrationId+ "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </text>)),
-                                    tableStyle: "table")
-                        @*</div>*@
+                                            grid.Column("StudentName", "Student Name", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:150px;'>
+                                                            @(item.StudentName)
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Amount", "Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:50px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.Amount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("WHTPercent", "WHT", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:50px;'>
+                                                            <span class="center">
+                                                                @(new HtmlString(ConvertToInt64(item.WHTPercent) + "%"))
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("WHTAmount", "WHT Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:80px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.WHTAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(Convert.ToInt64(item.VATPercent) + "%"), canSort: true, style: "center"),
+                                            grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.VATAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                             grid.Column("TotalAmount", "Total Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:75px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.TotalAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Payment1", "Payment 1", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.Payment1)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Payment1Date", "Payment 1 Date", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            @item.Payment1Date.ToString("MM/dd/yyyy")
+                                                        </div>
+                                                    </text>, style: "center"),
+                                            grid.Column("Payment1Type", "Payment 1 Type", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            @GetPaymentType(item.Payment1Type == null ? 0 : item.Payment1Type)
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Payment2", "Payment 2", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.Payment2)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Payment2Date", "Payment 2 Date", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            @item.Payment2Date.ToString("MM/dd/yyyy")
+                                                        </div>
+                                                    </text>, style: "center"),
+                                            grid.Column("Payment2Type", "Payment 2 Type", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            @GetPaymentType(item.Payment2Type == null ? 0 : item.Payment2Type)
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Payment3", "Payment 3", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.Payment3)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Payment3Date", "Payment 3 Date", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            @item.Payment3Date.ToString("MM/dd/yyyy")
+                                                        </div>
+                                                    </text>, style: "center"),
+                                            grid.Column("Payment3Type", "Payment 3 Type", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            @GetPaymentType(item.Payment3Type == null ? 0 : item.Payment3Type)
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("BalanceAmount", "Balance", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.BalanceAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            //grid.Column("CheckNo", "CheckNo", canSort: true),
+                                            grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.OtherDeductionsAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Email", "Email", canSort: true),
+                                            grid.Column("Contact", "Contact", canSort: true),
+                                            grid.Column("CompanyName", "CompanyName", canSort: true),
+                                            grid.Column("", "#Action", canSort: false,
+                                                        format:
+                                                        @<text>
+                                                            <div style='width:80px;'>
+                                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                            {
+                                                                    <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                    <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                }
+                                                            </div>
+                                                        </text>)),
+                                                        tableStyle: "table")
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -139,19 +295,20 @@
         </div>
     </div>
 </div>
-@section SectionScripts{
+@section SectionScripts
+    {
     <script type="text/javascript">
         $(function () {
-
             $('#TrainingDetails').hide();
             $('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
             debugger;
-            if (trid != null && trid != '') {
-                $('#TrainingDetails').show();                
+            if (trid != null && trid != '')
+            {
+                $('#TrainingDetails').show();
 
                 @if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
-                {
+                    {
                     <text>$('#addbtn').attr('disabled', 'disabled');</text>
                 }
                 else
@@ -162,48 +319,34 @@
         });
 
         function ChangeEventID(el) {
-            if (el.value) {
                 $('#eventid').val(el.value);
-                //$('#TrainingDetails').show();
-                //$('#addbtn').removeAttr('disabled', 'disabled');
                 window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
-            }
-            else {
-                //$("#CurrencyCode").val('');
-            }
         };
 
         function navigatetoDetail() {
-            @*location.href = '@Url.Content("~/Registration/Registration?Id=-1&TrainingConfirmationID=" + $('#eventid').val())'*@
             var trid = $('#TrainingConfirmationID').val();
-            debugger;
-            //window.location = '@Url.Action("Registration", "Registration", new { Id ="", trainingConfirmationID = ""})' + 'Id=-1/trainingConfirmationID=' + trid;
-
-
             window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid;
         };
-        function DeleteRegistration(id) {
 
-            if (confirm("Are you sure, You want to delete")) {
+        function DeleteRegistration(id) {
+            if (confirm("Are you sure, You want to delete"))
+            {
                 $.ajax({
                     url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
                     type: 'POST',
                     contentType: 'application/json',
-                    success: function (data) {
-
+                    success: function(data) {
                         alert("Deleted Successfully");
-                        if (data) {
+                        if (data)
+                        {
                             location.reload();
                         }
                     },
-                    error: function (e) {
-
+                    error: function(e) {
                     }
                 });
             }
         }
-
-
     </script>
 
 }
