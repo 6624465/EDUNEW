@@ -8,8 +8,7 @@
 @{
     WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
-}
-@{ 
+
     var Student = Model.trainingconfDetail.NoOfStudents;
     var reg = Model.registration.Count();
     var remainReg = Student - reg;
@@ -32,6 +31,7 @@
                     <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
+
                             <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-plus"></i>New Registration</button>
                             // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
                         }
@@ -131,12 +131,22 @@
 @section SectionScripts{
     <script type="text/javascript">
         $(function () {
+
             $('#TrainingDetails').hide();
             $('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
+            debugger;
             if (trid != null && trid != '') {
-                $('#TrainingDetails').show();
-                $('#addbtn').removeAttr('disabled', 'disabled');
+                $('#TrainingDetails').show();                
+
+                @if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
+                {
+                    <text>$('#addbtn').attr('disabled', 'disabled');</text>
+                }
+                else
+                {
+                    <text>$('#addbtn').removeAttr('disabled', 'disabled');</text>
+                }
             }
         });
 
@@ -159,7 +169,7 @@
             //window.location = '@Url.Action("Registration", "Registration", new { Id ="", trainingConfirmationID = ""})' + 'Id=-1/trainingConfirmationID=' + trid;
 
 
-            window.location = '@Url.Content("~/Registration/Registration")'+"?Id=-1&trainingConfirmationID=" + trid ;
+            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid;
         };
         function DeleteRegistration(id) {
 
