@@ -122,7 +122,7 @@
                                         <span class="pull-right">Payment1</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control numCss",onkeyup="CalculateBalanceAmount()" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -149,7 +149,7 @@
                                         <span class="pull-right">Payment2</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment2, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.Payment2, new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -176,7 +176,7 @@
                                         <span class="pull-right">Payment3</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment3, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.Payment3, new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -289,10 +289,14 @@
                 $('#WHTPercent').attr('disabled', 'disabled');
                 $('#VATPercent').attr('disabled', 'disabled');
                 $('#OtherDeductionsAmount').attr('disabled', 'disabled');
+                $('#Payment1').attr('disabled', 'disabled');
+                $('#Payment2').attr('disabled', 'disabled');
+                $('#Payment3').attr('disabled', 'disabled');
             }
             ValidateWHTAmountPercent();
             ValidateVATAmountPercent();
             CalTotalAmount();
+            CalculateBalanceAmount();
         }
 
         function ValidateWHTPercent()
@@ -402,6 +406,38 @@
 
             }
           
+        }
+
+        function CalculateBalanceAmount()
+        {
+            debugger;
+            var Amount = parseInt($('#Amount').val());
+            var BalanceAmount = parseInt($('#BalanceAmount').val(Amount));
+            var Payment1 = parseInt($('#Payment1').val());
+            var Payment2 = parseInt($('#Payment2').val());
+            var Payment3 = parseInt($('#Payment3').val());
+            if (Amount && Payment1)
+            {
+                var p1 = Amount - Payment1;
+                parseInt($('#BalanceAmount').val(p1));
+            }
+            if (Amount && Payment2) {
+                var p2 = Amount - Payment2;
+                parseInt($('#BalanceAmount').val(p2));
+            }
+            if (Amount && Payment3) {
+                var p3 = Amount - Payment3;
+                parseInt($('#BalanceAmount').val(p3));
+            }
+            if (Amount && Payment1 && Payment2) {
+                var p = Amount - Payment1 - Payment2;
+                parseInt($('#BalanceAmount').val(p));
+            }
+            if (Amount && Payment1 && Payment2 && Payment3) {
+                var p = Amount - Payment1 - Payment2 - Payment3;
+                parseInt($('#BalanceAmount').val(p));
+            }
+
         }
 
 
