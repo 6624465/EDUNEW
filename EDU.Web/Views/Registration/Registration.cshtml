@@ -100,6 +100,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            
                             <div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
@@ -141,6 +143,19 @@
                                             </span>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div id="cheque1" class="row css10">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right"></span>
+                                </label>
+                                <div class="col-md-2">
+                                </div>
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">Cheque No</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.CheckNo, new { @class = "form-control numCss" })
                                 </div>
                             </div>
                             <div class="row css10">
@@ -238,6 +253,7 @@
             $('#Payment1').attr('disabled', 'disabled');
             $('#Payment2').attr('disabled', 'disabled');
             $('#Payment3').attr('disabled', 'disabled');
+            $('#cheque1').hide();
         });
 
         function navigatetoList() {
