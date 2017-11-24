@@ -13,13 +13,45 @@
 @functions {
     public string TypeColumn(bool isPrivate, bool isPublic)
     {
-        if(isPrivate)
+        if (isPrivate)
             return "Private";
-        else if(isPublic)
+        else if (isPublic)
             return "Public";
         return "";
     }
-        }
+}
+<style>
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        color: #D73925;
+        font-family: 'Bebas Neue'
+    }
+
+    .popover {
+        color: black;
+        min-width: 500px;
+    }
+
+    .popover-title {
+        background-color: #F7F7F7;
+        border-bottom: 1px solid #EBEBEB;
+        border-radius: 5px 5px 0 0;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        margin: 0;
+        padding: 8px 14px;
+    }
+
+    .center {
+        text-align: center !important;
+    }
+
+    .action {
+        width: 50px;
+    }
+</style>
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -39,14 +71,46 @@
                         @grid.GetHtml(
                                 columns: grid.Columns(
                     grid.Column("TrainingConfirmationID", "Order No.", canSort: true),
-                    grid.Column("ProductName", "Product", canSort: true),
-                    grid.Column("CourseName", "Course Name", canSort: true),
-                    grid.Column("NoOfStudents", "No Of Students", canSort: true),
-                    grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>
-                             , canSort: true),
+                   grid.Column("ProductName", "Product Name", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:110px;'>
+                                        @item.ProductName
+                                    </div>
+                                </text>),
+                    grid.Column("CourseName", "Course Name", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:140px;'>
+                                        @if (item.CourseName.ToString().Length > 20)
+                                        { <a style="cursor:pointer;text-decoration:underline;">
+                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Course Name" data-content="@(item.CourseName)" data-original-title="" title="">@item.CourseName.ToString().Substring(0, 20)...</span>
+                                        </a>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.CourseName</span>
+                                        }
+                                    </div>
+                                </text>),
+                    grid.Column("NoOfStudents", "No Of Students", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:100px;'>
+                                        @item.NoOfStudents
+                                    </div>
+                                </text>, style: "center"),
+                    grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>, canSort: true),
                     grid.Column("StartDate", "Start Date", format:@<text> @item.StartDate.ToString("MM/dd/yyyy")</text>, canSort: true),
                     grid.Column("EndDate", "End Date", format:@<text> @item.EndDate.ToString("MM/dd/yyyy")</text>, canSort: true),
-                    grid.Column("TotalNoOfDays", "Total # of days", canSort: true),
+                    grid.Column("TotalNoOfDays", "Total # of days", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:100px;'>
+                                        @item.TotalNoOfDays
+                                    </div>
+                                </text>, style: "center"),
+                    grid.Column("TrianerName", "Trianer Name", canSort: true),
                     grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
@@ -143,11 +207,21 @@
                 },
                 NoOfStudents: {
                     required: true
+                },
+                TrianerId: {
+                    required: true
                 }
 
             }
         })
 
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            $(el).popover("show");
+        }
     </script>
 
 }

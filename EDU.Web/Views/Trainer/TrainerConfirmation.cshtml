@@ -15,7 +15,7 @@
                         <span class="pull-right">Order No</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", placeholder = "Order No", @disabled="disabled" })
+                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", placeholder = "Order No", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Product,
                     new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
-                    "Select Product", new { @class = "form-control" })
+                    "Select Product", new { @class = "form-control", onchange = "ProductChange(this);" })
                     </div>
                 </div>
             </div>
@@ -37,9 +37,21 @@
                         <span class="pull-right">Course Name</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.DropDownListFor(x => x.Course,
+                        @if (Model.Id == -1)
+                        {
+                            @Html.DropDownListFor(x => x.Course,
+                                Enumerable.Empty<SelectListItem>(),
+                                "Select Course",
+                                new { @class = "form-control", disabled = "disabled" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(x => x.Course,
                     new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
                     "Select Course", new { @class = "form-control" })
+                        }
+
+
                     </div>
                 </div>
             </div>
@@ -63,12 +75,12 @@
                         @Html.Label("Private")&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="type" id="rdoPublic" title="Public" checked="@Model.Public" />
                         @Html.Label("Public")
-                        @Html.HiddenFor(x =>x.Private)
-                        @Html.HiddenFor(x =>x.Public)
+                        @Html.HiddenFor(x => x.Private)
+                        @Html.HiddenFor(x => x.Public)
                         @*<label>Private</label>&nbsp;&nbsp;
-                        @Html.CheckBoxFor(x => x.Private, new { name = "type" })
-                        <label>Public</label>&nbsp;&nbsp;
-                        @Html.CheckBoxFor(x => x.Public, new { name = "type" })*@
+                            @Html.CheckBoxFor(x => x.Private, new { name = "type" })
+                            <label>Public</label>&nbsp;&nbsp;
+                            @Html.CheckBoxFor(x => x.Public, new { name = "type" })*@
                     </div>
                 </div>
             </div>
@@ -108,7 +120,7 @@
                         <span class="pull-right">Total # of days</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.TotalNoOfDays, "{0:#.#}", new { @class = "form-control numCss", placeholder = "Total # of days"})
+                        @Html.TextBoxFor(x => x.TotalNoOfDays, "{0:#.#}", new { @class = "form-control numCss", placeholder = "Total # of days" })
                     </div>
                 </div>
             </div>
@@ -154,8 +166,37 @@
             },
             format: 'DD/MM/YYYY'
         });
-       
+
     });
+
+    function ProductChange(el) {
+
+        if (el.value) {
+            debugger;
+                $.ajax({
+                    url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + el.value,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        $('#Course').empty();
+                        $('#Course').append($('<option></option>').val('').html(''));
+                        $.each(data, function (key, value) {
+                            $('#Course').append($('<option></option>').val(value.Id).html(value.CourseName));
+                        });
+                        $('#Course').removeAttr('disabled');
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            }
+            else {
+                $('#Course').empty();
+                $('#Course').attr('disabled', 'disabled');
+                $('#Course').append($('<option></option>').val('').html(''));
+            }
+        }
+
 </script>
 
 
