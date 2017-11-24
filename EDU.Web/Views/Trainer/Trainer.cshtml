@@ -46,7 +46,7 @@
                                         <span class="pull-right">Profile</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control" })&nbsp;@Model.Profile
+                                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control",id= Profile })&nbsp;@Model.Profile
                                     </div>
                                 </div>
                             </div>
@@ -116,11 +116,17 @@
         }
         function SaveTrainer() {
             debugger;
-            if ($('#frmTrainer').valid()) {
-                debugger;
-                //$('#CountryName').val($("#Country option:selected").text());
-                $('#frmTrainer').submit();
+            var file = $('input[type=file]').val(); 
+            if(file && file!="" &&$('#frmTrainer').valid())
+            {
+                    debugger;
+                    //$('#CountryName').val($("#Country option:selected").text());
+                    $('#frmTrainer').submit();
             }
+            else{
+                alert("The file is required...")
+            }
+            
         }
         $('#frmTrainer').validate({
             rules: {
@@ -143,6 +149,10 @@
                     required: true
                 },
                 Contact: {
+                    required: true
+                }
+                ,
+                Profile: {
                     required: true
                 }
             }
