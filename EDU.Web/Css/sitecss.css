@@ -377,8 +377,8 @@ body {
 
 .table > thead > tr > th, .table > tbody > tr > td, .table > tfoot > tr > td {
     vertical-align: middle;
-    padding-left: 22px;
-    padding-right: 22px;
+    /*padding-left: 22px;
+    padding-right: 22px;*/
     font-weight: bold;
 }
 /*#app {

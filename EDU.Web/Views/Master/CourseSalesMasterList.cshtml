@@ -28,6 +28,7 @@
         color: #D73925;
         font-family: 'Bebas Neue'
     }
+
     .popover {
         color: black;
         min-width: 500px;
@@ -70,8 +71,8 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="row" style="overflow-x: scroll; width: 100%"  id="gridContent">
-                            @grid.GetHtml(
+                    <div class="row" style="overflow-x: scroll; width: 100%" id="gridContent">
+                        @grid.GetHtml(
                                 columns: grid.Columns(
                                 grid.Column("CountryName", "Country", canSort: true),
                                 grid.Column("ProductName", "Product Name", canSort: true,
@@ -84,8 +85,16 @@
                                     grid.Column("CourseName", "Course Name", canSort: true,
                                 format:
                                 @<text>
-                                    <div style='width:150px;'>
-                                        @item.CourseName
+                                    <div style='width:140px;'>
+                                        @if (item.CourseName.ToString().Length > 20)
+                                        { <a style="cursor:pointer;text-decoration:underline;">
+                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Course Name" data-content="@(item.CourseName)" data-original-title="" title="">@item.CourseName.ToString().Substring(0, 20)...</span>
+                                        </a>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.CourseName</span>
+                                        }
                                     </div>
                                 </text>),
                                 grid.Column("NoOfDays", "No Of Days", canSort: true,
@@ -180,7 +189,7 @@
                                     </div>
                                 </text>)),
                                 tableStyle: "table")
-                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -206,9 +215,9 @@
 
             $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="center">' + totalrevenue + '</td><td>');
         });
-</script>
+    </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
         function DeleteCourseSalesMaster(Id) {
             if (confirm("Are you sure, do you want delete?")) {
                 $('#id').val(Id);
@@ -223,5 +232,5 @@
         function mouseover(el) {
             $(el).popover("show");
         }
-</script>
+    </script>
 }
