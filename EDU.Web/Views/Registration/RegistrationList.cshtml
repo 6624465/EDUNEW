@@ -91,17 +91,28 @@
                     <div class="row" style="margin-top:20px;">
                     </div>
                     <div class="row css10" style="overflow-x: scroll; width: 100%">
-                        <div class="row">
+                        @*<div class="row">*@
                             @grid.GetHtml(
                                     columns: grid.Columns(
                         grid.Column("StudentName", "Student Name", canSort: true),
-                        grid.Column("Amount", "Amount", canSort: true),
-                        grid.Column("WHTPercent", "WHT", canSort: true),
-                        grid.Column("VATPercent", "VAT/TAX", canSort: true),
-                        grid.Column("Payment1", "Payment 1", canSort: true),
-                        grid.Column("Payment2", "Payment 2", canSort: true),
-                        grid.Column("Payment3", "Payment 3", canSort: true),
-                        grid.Column("BalanceAmount", "Balance", canSort: true),
+                        grid.Column("Amount", "Amount", format:item=>Convert.ToInt64(item.Amount) , canSort: true),
+                        grid.Column("WHTPercent", "WHT", format: (item) => new HtmlString(Convert.ToInt64(item.WHTPercent)+"%"), canSort: true),
+                        grid.Column("WHTAmount", "WHT Amount", format: item => Convert.ToInt64(item.WHTAmount), canSort: true),
+                        grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(Convert.ToInt64(item.VATPercent) + "%"), canSort: true),
+                        grid.Column("VATAmount", "VAT/TAX Amount", format: item => Convert.ToInt64(item.VATAmount), canSort: true),
+                        grid.Column("TotalAmount", "TotalAmount", format: item => Convert.ToInt64(item.TotalAmount), canSort: true),
+                        grid.Column("Payment1", "Payment 1", format: item => Convert.ToInt64(item.Payment1), canSort: true),
+                        grid.Column("Payment1Date", "Payment1 Date", format:@<text> @item.Payment1Date.ToString("MM/dd/yyyy")</text> , canSort: true),
+                        grid.Column("Payment1Type", "Payment1 Type",format:item=>Convert.ToString(item.Payment2), canSort: true),
+                        grid.Column("Payment2", "Payment 2", format: item => Convert.ToInt64(item.Payment2), canSort: true),
+                        grid.Column("Payment2Date", "Payment2 Date",format:@<text> @item.Payment2Date.ToString("MM/dd/yyyy")</text> , canSort: true),
+                        grid.Column("Payment2Type", "Payment2 Type", canSort: true),
+                        grid.Column("Payment3", "Payment 3", format: item => Convert.ToInt64(item.Payment3), canSort: true),
+                        grid.Column("Payment3Date", "Payment3 Date", format:@<text> @item.Payment3Date.ToString("MM/dd/yyyy")</text> , canSort: true),
+                        grid.Column("Payment3Type", "Payment3 Type", canSort: true),
+                        grid.Column("BalanceAmount", "Balance", format: item => Convert.ToInt64(item.BalanceAmount), canSort: true),
+                        grid.Column("CheckNo", "Check No", canSort: true),
+                       grid.Column("OtherDeductionsAmount","Other Deductions Amount",format: item => Convert.ToInt64(item.OtherDeductionsAmount), canSort: true),
                         grid.Column("Email", "Email", canSort: true),
                         grid.Column("Contact", "Contact", canSort: true),
                         grid.Column("CompanyName", "Company Name", canSort: true),
@@ -116,7 +127,7 @@
                                         }
                                     </text>)),
                                     tableStyle: "table")
-                        </div>
+                        @*</div>*@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
