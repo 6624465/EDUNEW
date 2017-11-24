@@ -63,7 +63,7 @@
                                         <span class="pull-right">Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", onblur="calculateamounts()" })
+                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", onblur= "CalculateamountDisabled()" })
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                         <span class="pull-right">WHT</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss",onblur= "ValidateWHTPercent()" })
+                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss",onblur= "ValidateWHTPercent();ValidateWHTAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
@@ -82,7 +82,7 @@
                                         <span class="pull-right">VAT/TAX</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss",onblur= "ValidateVATPercent()" })
+                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss",onblur= "ValidateVATPercent();ValidateVATAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control" ,@disabled="disabled"})
@@ -95,7 +95,7 @@
                                         <span class="pull-right">Other Deductions</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, new { @class = "form-control numCss", onblur = "CalTotalAmount()" })
                                     </div>
                                 </div>
                             </div>
@@ -232,6 +232,8 @@
             $('#WHTPercent').attr('disabled', 'disabled');
             $('#VATPercent').attr('disabled', 'disabled');
             $('#OtherDeductionsAmount').attr('disabled', 'disabled');
+            $('#TotalAmount').attr('disabled', 'disabled');
+            $('#BalanceAmount').attr('disabled', 'disabled');
         });
 
         function SaveRegistration() {
@@ -260,10 +262,10 @@
             }
         });
 
-        function calculateamounts()
+        function CalculateamountDisabled()
         {
-            var result =parseInt($('#Amount').val());
-            if (result != null && !isNaN(result)&& result!=0)
+            var Amount = parseInt($('#Amount').val());
+            if (Amount != null && !isNaN(Amount) && Amount != 0)
             {
                 $('#WHTPercent').removeAttr('disabled', 'disabled');
                 $('#VATPercent').removeAttr('disabled', 'disabled');
@@ -275,6 +277,9 @@
                 $('#VATPercent').attr('disabled', 'disabled');
                 $('#OtherDeductionsAmount').attr('disabled', 'disabled');
             }
+            ValidateWHTAmountPercent();
+            ValidateVATAmountPercent();
+            CalTotalAmount();
         }
 
         function ValidateWHTPercent()
@@ -285,6 +290,7 @@
                 alert("WHTPercent can not greater than 100");
                 $('#WHTPercent').val('');
             }
+            CalTotalAmount();
         }
         function ValidateVATPercent() {
             var percent = parseInt($('#VATPercent').val());
@@ -292,7 +298,100 @@
                 alert("WHTPercent can not greater than 100");
                 $('#VATPercent').val('');
             }
+            CalTotalAmount();
         }
+        function ValidateWHTAmountPercent()
+        {
+           
+            var Amount = parseInt($('#Amount').val());
+            var WHT = parseInt($('#WHTPercent').val());
+            if (!isNaN(WHT) && WHT!=0)
+            {
+                var WHTAmount = Amount * WHT / 100;
+                $('#WHTAmount').val(WHTAmount);
+            }
+            else
+            {
+                $('#WHTAmount').val('')
+            }
+            CalTotalAmount();
+        }
+
+        function ValidateVATAmountPercent()
+        {
+          
+            var Amount = parseInt($('#Amount').val());
+            var VAT = parseInt($('#VATPercent').val());
+            if (!isNaN(VAT) && VAT != 0) {
+                var VATAmount = Amount * VAT / 100;
+                $('#VATAmount').val(VATAmount);
+            }
+            else
+            {
+                $('#VATAmount').val('');
+            }
+            CalTotalAmount();
+        }
+
+        function CalTotalAmount()
+        {
+           
+            var Amount = parseInt($('#Amount').val());
+            var WHT = parseInt($('#WHTPercent').val());
+            var VAT = parseInt($('#VATPercent').val());
+            var OtherDeductionsAmount= parseInt($('#OtherDeductionsAmount').val());
+            if (Amount)
+            {
+                $('#TotalAmount').val(Amount);
+            }
+             if(Amount && WHT)
+            {
+                var WHTAmount = parseInt(Amount * WHT / 100);
+                var total = parseInt(Amount - WHTAmount);
+                $('#TotalAmount').val(total);
+            }
+            if (Amount && VAT)
+            {
+                var VATAmount =  parseInt(Amount * VAT / 100);
+                var total = parseInt(Amount + VATAmount);
+                $('#TotalAmount').val(total);
+            }
+           if (Amount && OtherDeductionsAmount)
+            {
+               var total = parseInt(Amount - OtherDeductionsAmount);
+                $('#TotalAmount').val(total);
+           }
+           if (Amount && OtherDeductionsAmount && WHT)
+           {
+               var WHTAmount = parseInt(Amount * WHT / 100);
+               var total =parseInt(Amount - (WHTAmount + OtherDeductionsAmount));
+               $('#TotalAmount').val(total);
+           }
+           if (Amount && OtherDeductionsAmount && VAT) {
+               var VATAmount = parseInt(Amount * VAT / 100);
+               var total =parseInt(Amount +VATAmount +-OtherDeductionsAmount);
+               $('#TotalAmount').val(total);
+           }
+            if(Amount && WHT&& VAT)
+            {
+                var WHTAmount = parseInt(Amount * WHT / 100);
+                var VATAmount = parseInt(Amount * VAT / 100);
+                var total = parseInt(Amount + VATAmount - WHTAmount);
+                $('#TotalAmount').val(total);
+
+            }
+           
+            if (Amount && WHT && VAT && OtherDeductionsAmount) {
+                var WHTAmount = parseInt(Amount * WHT / 100);
+                var VATAmount = parseInt(Amount * VAT / 100);
+                var total = parseInt(Amount + VATAmount - (WHTAmount + OtherDeductionsAmount));
+                $('#TotalAmount').val(total);
+
+            }
+          
+        }
+
+
 
     </script>
 }
