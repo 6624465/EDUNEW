@@ -18,7 +18,7 @@
                     <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-plus"></i>New Registration</button>
+                            <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-plus"></i>New Registration</button>
                             // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
                         }
                     </div>
@@ -37,40 +37,40 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row css10">
-                        <div class="col-md-4 col-md-offset-2">
-                            <label class=" control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                    <div id="TrainingDetails">
+                        <div class="row css10">
+                            <div class="col-md-4 col-md-offset-2">
+                                <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label class=" control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-2">
+                                <label class="control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-2">
+                                <label class="control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-2">
+                                <label class="control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-2">
-                            <label class=" control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
-                        </div>
-                        <div class="col-md-4">
-                            <label class=" control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-2">
-                            <label class=" control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
-                        </div>
-                        <div class="col-md-4">
-                            <label class=" control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-2">
-                            <label class=" control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
-                        </div>
-                        <div class="col-md-4">
-                            <label class=" control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
-                        </div>
-                    </div>
-
                     <div class="row css10" style="overflow-x: scroll; width: 100%">
                         <div class="row">
                             @grid.GetHtml(
@@ -111,9 +111,18 @@
 </div>
 @section SectionScripts{
     <script type="text/javascript">
+        $(function()
+        {
+            $('#TrainingDetails').hide();
+            $('#addbtn').attr('disabled','disabled');
+
+        })
+
         function ChangeEventID(el) {
             if (el.value) {
                 $('#eventid').val(el.value);
+                $('#TrainingDetails').show();
+                $('#addbtn').removeAttr('disabled', 'disabled');
                 window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
             }
             else {
@@ -127,26 +136,28 @@
             //window.location = '@Url.Action("Registration", "Registration", new { Id ="", trainingConfirmationID = ""})' + 'Id=-1/trainingConfirmationID=' + trid;
             window.location = '@Url.Content("~/Registration/Registration?Id=-1&TrainingConfirmationID=")' + trid;
         };
-            function DeleteRegistration(id) {
+        function DeleteRegistration(id) {
 
-                if (confirm("Are you sure, You want to delete")) {
-                    $.ajax({
-                        url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
-                        type: 'POST',
-                        contentType: 'application/json',
-                        success: function (data) {
+            if (confirm("Are you sure, You want to delete")) {
+                $.ajax({
+                    url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (data) {
 
-                            alert("Deleted Successfully");
-                            if (data) {
-                                location.reload();
-                            }
-                        },
-                        error: function (e) {
-
+                        alert("Deleted Successfully");
+                        if (data) {
+                            location.reload();
                         }
-                    });
-                }
+                    },
+                    error: function (e) {
+
+                    }
+                });
             }
+        }
+
+
     </script>
 
 }
