@@ -9,6 +9,11 @@
     WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
 }
+@{ 
+    var Student = Model.trainingconfDetail.NoOfStudents;
+    var reg = Model.registration.Count();
+    var remainReg = Student - reg;
+}
 <style>
     .center {
         margin: auto;
@@ -22,7 +27,8 @@
         <div class="panel panel-default">
             <div class="box" id="grid">
                 <div class="box-header">
-                    <h4>Registrations List</h4>
+                    <div style="display:-webkit-inline-box"><h4>Registrations List</h4>&nbsp;&nbsp;(&nbsp;<label style="color:red;margin-top:14px">Pending Registrations :@remainReg</label>&nbsp;)</div>
+                    
                     <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
