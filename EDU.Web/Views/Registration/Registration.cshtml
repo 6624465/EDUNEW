@@ -408,9 +408,53 @@
                 },
                 'Contact': {
                     required: true
+                } ,
+                'Payment1Type': {
+                    Payment1: true
+                },
+                'Payment1Date': {
+                    Payment1: true
+                },
+                'Payment2Type': {
+                    Payment2: true
+                },
+                'Payment2Date': {
+                    Payment2: true
+                },
+                'Payment3Type': {
+                    Payment3: true
+                },
+                'Payment3Date': {
+                    Payment3: true
                 }
             }
         });
+       
+        $.validator.addMethod("Payment1", function (Value, element) {
+            var payment1 =parseInt($('#Payment1').val());
+            if (payment1 && !isNaN(payment1)) {
+                return false
+            }
+            else return true;
+            
+        }, "");
+        $.validator.addMethod("Payment2", function (Value, element) {
+            var payment2 = parseInt($('#Payment2').val());
+            if (payment2 && !isNaN(payment2)) {
+                return false
+            }
+            else return true;
+
+        }, "");
+        $.validator.addMethod("Payment3", function (Value, element) {
+            var payment3 = parseInt($('#Payment3').val());
+            if (payment3 && !isNaN(payment3)) {
+                return false
+            }
+            else return true;
+
+        }, "");
+
 
         function CalculateamountDisabled() {
             var Amount = parseInt($('#Amount').val());
