@@ -64,7 +64,7 @@
                                         <span class="pull-right">Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", onkeyup = "CalculateamountDisabled()" })
+                                        @Html.TextBoxFor(x => x.Amount, "{0:#.#}" ,new { @class = "form-control numCss", onkeyup = "CalculateamountDisabled()" })
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +74,10 @@
                                         <span class="pull-right">WHT</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()" })
+                                        @Html.TextBoxFor(x => x.WHTPercent,  new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
+                                        @Html.TextBoxFor(x => x.WHTAmount, "{0:#.#}", new { @class = "form-control", @disabled = "disabled" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">VAT/TAX</span>
@@ -86,7 +86,7 @@
                                         @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss", onkeyup = "ValidateVATPercent();ValidateVATAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control" ,@disabled="disabled"})
+                                        @Html.TextBoxFor(x => x.VATAmount, "{0:#.#}", new { @class = "form-control" ,@disabled="disabled"})
                                     </div>
                                 </div>
                             </div>
@@ -96,25 +96,25 @@
                                         <span class="pull-right">Other Deductions</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, new { @class = "form-control numCss", onkeyup = "CalTotalAmount()" })
+                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalTotalAmount()" })
                                     </div>
                                 </div>
                             </div>
 
-                            
+
                             <div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Total Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TotalAmount, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TotalAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Balance Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.BalanceAmount, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.BalanceAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                 </div>
                             </div>
@@ -124,19 +124,19 @@
                                         <span class="pull-right">Payment 1</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control numCss",onkeyup="CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x=>x.Payment1Type, listItems,new { @class="form-control",onchange= "Payment1TypeChange(this)" })
+                                        @Html.DropDownListFor(x => x.Payment1Type, listItems, new { @class = "form-control", onchange = "Payment1TypeChange(this)" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment 1 Date</span>
                                     </label>
                                     <div class="col-md-2">
-                                        <div class="input-group date" id="StartDt"> 
+                                        <div class="input-group date" id="StartDt">
                                             @Html.TextBoxFor(x => x.Payment1Date, new { @class = "form-control dtCss" })
                                             <span class="input-group-addon">
                                                 <i class="ion ion-calendar"></i>
@@ -175,17 +175,17 @@
                                     <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.Payment2Type, listItems, new { @class = "form-control", onchange = "Payment2TypeChange(this)" })
                                     </div>
-                                        <label class="col-md-2 control-label">
-                                            <span class="pull-right">Payment 2 Date</span>
-                                        </label>
-                                        <div class="col-md-2">
-                                            <div class="input-group date" id="StartDt2">
-                                                @Html.TextBoxFor(x => x.Payment2Date, new { @class = "form-control dtCss" })
-                                                <span class="input-group-addon">
-                                                    <i class="ion ion-calendar"></i>
-                                                </span>
-                                            </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Payment 2 Date</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="input-group date" id="StartDt2">
+                                            @Html.TextBoxFor(x => x.Payment2Date, new { @class = "form-control dtCss" })
+                                            <span class="input-group-addon">
+                                                <i class="ion ion-calendar"></i>
+                                            </span>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                             <div id="cheque2" class="row css10">
@@ -296,67 +296,74 @@
                 if(Model.Payment1Type!=null && Model.Payment1Type.Value!=1)
                 {
                          <text>
-                         $('#lblbanktransfer').hide();
-                         $('#lblCheque').hide();
-                    @if(Model.Payment1Type.Value==2)
+            $('#lblbanktransfer').hide();
+            $('#lblCheque').hide();
+            @if(Model.Payment1Type.Value==2)
                     {
                         <text>
-                        $('#lblCheque').show();
-                        $('#cheque1').show();
-                         </text>
+            $('#lblCheque').show();
+            $('#cheque1').show();
+            </text>
                      }
-                     @if(Model.Payment1Type.Value==3)
+            @if(Model.Payment1Type.Value==3)
                      {
                          <text>
-                         $('#lblbanktransfer').show();
-                         $('#cheque1').show();
-                         </text>
+            $('#lblbanktransfer').show();
+            $('#cheque1').show();
+            </text>
                      }
-                      
-                         </text>
+
+            </text>
                 }
                 else if(Model.Payment2Type != null && Model.Payment2Type.Value!=1)
                 {
                          <text>
-                      $('#lblbanktransfer2').hide();
-                      $('#lblCheque2').hide();
-                    @if(Model.Payment1Type.Value==2)
+            $('#lblbanktransfer2').hide();
+            $('#lblCheque2').hide();
+            @if(Model.Payment1Type.Value==2)
                     {
                         <text>
-                        $('#lblCheque2').show();
-                        $('#cheque2').show();
-                        </text>
+            $('#lblCheque2').show();
+            $('#cheque2').show();
+            </text>
                     }
-                     @if(Model.Payment1Type.Value==3)
+            @if(Model.Payment1Type.Value==3)
                      {
                          <text>
-                         $('#lblbanktransfer2').show();
-                         $('#cheque2').show();
-                         </text>
+            $('#lblbanktransfer2').show();
+            $('#cheque2').show();
+            </text>
                      }
-                         </text>
+            </text>
                 }
                 else if(Model.Payment3Type != null && Model.Payment3Type.Value!=1)
                 {
                     <text>
-                        $('#lblbanktransfer3').hide();
-                       $('#lblCheque3').hide();
-                    @if(Model.Payment1Type.Value==2)
+            $('#lblbanktransfer3').hide();
+            $('#lblCheque3').hide();
+            @if(Model.Payment1Type.Value==2)
                     {
                         <text>
-                        $('#lblCheque3').show();
-                        $('#cheque3').show();
-                        </text>
+            $('#lblCheque3').show();
+            $('#cheque3').show();
+            </text>
                     }
-                     @if(Model.Payment1Type.Value==3)
+            @if(Model.Payment1Type.Value==3)
                      {
                          <text>
-                         $('#lblbanktransfer3').show();
-                         $('#cheque3').show();
-                         </text>
+            $('#lblbanktransfer3').show();
+            $('#cheque3').show();
+            </text>
                      }
             </text>
                 }
+
+            <text>
+            $('#Amount').attr('disabled', 'disabled')
+            $('#Payment1').removeAttr('disabled', 'disabled');
+            $('#Payment2').removeAttr('disabled', 'disabled');
+            $('#Payment3').removeAttr('disabled', 'disabled');
+            </text>
             }
         });
 
@@ -366,6 +373,7 @@
         };
 
         function RemoveDisabledFields() {
+            $('#Amount').removeAttr('disabled', 'disabled')
             $('#WHTAmount').removeAttr('disabled', 'disabled');
             $('#VATAmount').removeAttr('disabled', 'disabled');
             $('#WHTPercent').removeAttr('disabled', 'disabled');
@@ -400,9 +408,53 @@
                 },
                 'Contact': {
                     required: true
+                } ,
+                'Payment1Type': {
+                    Payment1: true
+                },
+                'Payment1Date': {
+                    Payment1: true
+                },
+                'Payment2Type': {
+                    Payment2: true
+                },
+                'Payment2Date': {
+                    Payment2: true
+                },
+                'Payment3Type': {
+                    Payment3: true
+                },
+                'Payment3Date': {
+                    Payment3: true
                 }
             }
         });
+       
+        $.validator.addMethod("Payment1", function (Value, element) {
+            var payment1 =parseInt($('#Payment1').val());
+            if (payment1 && !isNaN(payment1)) {
+                return false
+            }
+            else return true;
+            
+        }, "");
+        $.validator.addMethod("Payment2", function (Value, element) {
+            var payment2 = parseInt($('#Payment2').val());
+            if (payment2 && !isNaN(payment2)) {
+                return false
+            }
+            else return true;
+
+        }, "");
+        $.validator.addMethod("Payment3", function (Value, element) {
+            var payment3 = parseInt($('#Payment3').val());
+            if (payment3 && !isNaN(payment3)) {
+                return false
+            }
+            else return true;
+
+        }, "");
+
 
         function CalculateamountDisabled() {
             var Amount = parseInt($('#Amount').val());
@@ -415,6 +467,7 @@
                 $('#Payment3').removeAttr('disabled', 'disabled');
             }
             else {
+               
                 $('#WHTPercent').val('');
                 $('#TotalAmount').val('');
                 $('#VATPercent').val('');
@@ -462,6 +515,7 @@
                 $('#WHTAmount').val('')
             }
             CalTotalAmount();
+            CalculateBalanceAmount();
         }
 
         function ValidateVATAmountPercent() {
@@ -476,6 +530,7 @@
                 $('#VATAmount').val('');
             }
             CalTotalAmount();
+            CalculateBalanceAmount();
         }
 
         function CalTotalAmount() {
@@ -526,13 +581,16 @@
                 $('#TotalAmount').val(total);
 
             }
+            CalculateBalanceAmount();
 
         }
 
         function CalculateBalanceAmount() {
-            debugger;
             var TotalAmount = parseInt($('#TotalAmount').val());
             parseInt($('#BalanceAmount').val(TotalAmount));
+            if (isNaN(TotalAmount)) {
+                $('#BalanceAmount').val('')
+            }
             var BalanceAmount = TotalAmount;
             var Payment1 = parseInt($('#Payment1').val());
             var Payment2 = parseInt($('#Payment2').val());
@@ -557,12 +615,10 @@
                 var p = BalanceAmount - Payment1 - Payment2 - Payment3;
                 parseInt($('#BalanceAmount').val(p));
             }
-
         }
         function Payment1TypeChange(el) {
             $('#lblbanktransfer').hide();
             $('#lblCheque').hide();
-            debugger;
             if (el.value == "2") {
                 $('#ChequeNo1').val('');
                 $('#cheque1').show();
