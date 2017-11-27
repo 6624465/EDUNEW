@@ -47,7 +47,6 @@
           <Property Name="Payment1Type" Type="smallint" />
           <Property Name="Payment2Type" Type="smallint" />
           <Property Name="Payment3Type" Type="smallint" />
-          <Property Name="CheckNo" Type="nvarchar" MaxLength="50" />
           <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" />
@@ -55,6 +54,9 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ChequeNo1" Type="nvarchar" MaxLength="20" />
+          <Property Name="ChequeNo2" Type="nvarchar" MaxLength="20" />
+          <Property Name="ChequeNo3" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Revenue">
           <Key>
@@ -252,7 +254,6 @@
           <Property Name="Payment1Type" Type="Int16" />
           <Property Name="Payment2Type" Type="Int16" />
           <Property Name="Payment3Type" Type="Int16" />
-          <Property Name="CheckNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TrainingConfirmationID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
@@ -260,6 +261,9 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ChequeNo1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ChequeNo2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ChequeNo3" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -359,6 +363,9 @@
           <EntitySetMapping Name="Registrations">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Registration">
               <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="ChequeNo3" ColumnName="ChequeNo3" />
+                <ScalarProperty Name="ChequeNo2" ColumnName="ChequeNo2" />
+                <ScalarProperty Name="ChequeNo1" ColumnName="ChequeNo1" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -366,7 +373,6 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
                 <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
-                <ScalarProperty Name="CheckNo" ColumnName="CheckNo" />
                 <ScalarProperty Name="Payment3Type" ColumnName="Payment3Type" />
                 <ScalarProperty Name="Payment2Type" ColumnName="Payment2Type" />
                 <ScalarProperty Name="Payment1Type" ColumnName="Payment1Type" />

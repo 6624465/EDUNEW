@@ -35,7 +35,6 @@ namespace EDU.Web.Models
         public Nullable<short> Payment1Type { get; set; }
         public Nullable<short> Payment2Type { get; set; }
         public Nullable<short> Payment3Type { get; set; }
-        public string CheckNo { get; set; }
         public Nullable<decimal> BalanceAmount { get; set; }
         public string TrainingConfirmationID { get; set; }
         public Nullable<bool> IsActive { get; set; }
@@ -43,5 +42,8 @@ namespace EDU.Web.Models
         public System.DateTime CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public string ChequeNo1 { get; set; }
+        public string ChequeNo2 { get; set; }
+        public string ChequeNo3 { get; set; }
     }
 }
