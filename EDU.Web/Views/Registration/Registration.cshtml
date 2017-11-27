@@ -64,7 +64,7 @@
                                         <span class="pull-right">Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", onkeyup = "CalculateamountDisabled()" })
+                                        @Html.TextBoxFor(x => x.Amount, "{0:#.#}" ,new { @class = "form-control numCss", onkeyup = "CalculateamountDisabled()" })
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +74,10 @@
                                         <span class="pull-right">WHT</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()" })
+                                        @Html.TextBoxFor(x => x.WHTPercent,  new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
+                                        @Html.TextBoxFor(x => x.WHTAmount, "{0:#.#}", new { @class = "form-control", @disabled = "disabled" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">VAT/TAX</span>
@@ -86,7 +86,7 @@
                                         @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss", onkeyup = "ValidateVATPercent();ValidateVATAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control" ,@disabled="disabled"})
+                                        @Html.TextBoxFor(x => x.VATAmount, "{0:#.#}", new { @class = "form-control" ,@disabled="disabled"})
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                         <span class="pull-right">Other Deductions</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, new { @class = "form-control numCss", onkeyup = "CalTotalAmount()" })
+                                        @Html.TextBoxFor(x => x.OtherDeductionsAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalTotalAmount()" })
                                     </div>
                                 </div>
                             </div>
@@ -108,13 +108,13 @@
                                         <span class="pull-right">Total Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TotalAmount, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TotalAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Balance Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.BalanceAmount, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.BalanceAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                 </div>
                             </div>
@@ -415,6 +415,7 @@
                 $('#Payment3').removeAttr('disabled', 'disabled');
             }
             else {
+               
                 $('#WHTPercent').val('');
                 $('#TotalAmount').val('');
                 $('#VATPercent').val('');
@@ -557,7 +558,6 @@
                 var p = BalanceAmount - Payment1 - Payment2 - Payment3;
                 parseInt($('#BalanceAmount').val(p));
             }
-
         }
         function Payment1TypeChange(el) {
             $('#lblbanktransfer').hide();
