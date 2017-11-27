@@ -60,6 +60,40 @@ namespace EDU.Web.Controllers
                 result.trainingconf = tc;
                 result.trainingconfDetail = tcd;
 
+                long amounttotal = 0;
+                long whttotal = 0;
+                long vattotal = 0;
+                long sumamounttotal = 0;
+                long payment1total = 0;
+                long payment2total = 0;
+                long payment3total = 0;
+                long baltotal = 0;
+                long othertotal = 0;
+
+                foreach (var item in List)
+                {
+                    amounttotal += Convert.ToInt64(item.Amount == null ? 0 : item.Amount.Value);
+                    whttotal += Convert.ToInt64(item.WHTAmount == null ? 0 : item.WHTAmount.Value);
+                    vattotal += Convert.ToInt64(item.VATAmount == null ? 0 : item.VATAmount.Value);
+                    sumamounttotal += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+                    payment1total += Convert.ToInt64(item.Payment1 == null ? 0 : item.Payment1.Value);
+                    payment2total += Convert.ToInt64(item.Payment2 == null ? 0 : item.Payment2.Value);
+                    payment3total += Convert.ToInt64(item.Payment3 == null ? 0 : item.Payment3.Value);
+                    baltotal += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+                    othertotal += Convert.ToInt64(item.OtherDeductionsAmount == null ? 0 : item.OtherDeductionsAmount.Value);
+                }
+
+                List<string> summary = new List<string>();
+                summary.Add(amounttotal.ToString());
+                summary.Add(whttotal.ToString());
+                summary.Add(vattotal.ToString());
+                summary.Add(sumamounttotal.ToString());
+                summary.Add(payment1total.ToString());
+                summary.Add(payment2total.ToString());
+                summary.Add(payment3total.ToString());
+                summary.Add(baltotal.ToString());
+                summary.Add(othertotal.ToString());
+                ViewData["Summary"] = summary;
             }
             catch (Exception ex)
             {

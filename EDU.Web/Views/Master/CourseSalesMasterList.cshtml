@@ -86,7 +86,7 @@
                                 format:
                                 @<text>
                                     <div style='width:140px;'>
-                                        @if (item.CourseName !=null && item.CourseName.ToString().Length > 20)
+                                        @if (item.CourseName != null && item.CourseName.ToString().Length > 20)
                                         {
                                             <a style="cursor:pointer;text-decoration:underline;">
                                                 <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Course Name" data-content="@(item.CourseName)" data-original-title="" title="">@item.CourseName.ToString().Substring(0, 20)...</span>
@@ -216,9 +216,7 @@
 
             $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="center">' + totalrevenue + '</td><td>');
         });
-    </script>
 
-    <script type="text/javascript">
         function DeleteCourseSalesMaster(Id) {
             if (confirm("Are you sure, do you want delete?")) {
                 $('#id').val(Id);
