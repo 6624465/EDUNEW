@@ -355,7 +355,7 @@
                          $('#cheque3').show();
                          </text>
                      }
-                     </text>
+            </text>
                 }
             }
         });
@@ -531,29 +531,30 @@
 
         function CalculateBalanceAmount() {
             debugger;
-            var Amount = parseInt($('#Amount').val());
-            var BalanceAmount = parseInt($('#BalanceAmount').val(Amount));
+            var TotalAmount = parseInt($('#TotalAmount').val());
+            parseInt($('#BalanceAmount').val(TotalAmount));
+            var BalanceAmount = TotalAmount;
             var Payment1 = parseInt($('#Payment1').val());
             var Payment2 = parseInt($('#Payment2').val());
             var Payment3 = parseInt($('#Payment3').val());
-            if (Amount && Payment1) {
-                var p1 = Amount - Payment1;
+            if (BalanceAmount && Payment1) {
+                var p1 = BalanceAmount - Payment1;
                 parseInt($('#BalanceAmount').val(p1));
             }
-            if (Amount && Payment2) {
-                var p2 = Amount - Payment2;
+            if (BalanceAmount && Payment2) {
+                var p2 = BalanceAmount - Payment2;
                 parseInt($('#BalanceAmount').val(p2));
             }
-            if (Amount && Payment3) {
-                var p3 = Amount - Payment3;
+            if (BalanceAmount && Payment3) {
+                var p3 = BalanceAmount - Payment3;
                 parseInt($('#BalanceAmount').val(p3));
             }
-            if (Amount && Payment1 && Payment2) {
-                var p = Amount - Payment1 - Payment2;
+            if (BalanceAmount && Payment1 && Payment2) {
+                var p = BalanceAmount - Payment1 - Payment2;
                 parseInt($('#BalanceAmount').val(p));
             }
-            if (Amount && Payment1 && Payment2 && Payment3) {
-                var p = Amount - Payment1 - Payment2 - Payment3;
+            if (BalanceAmount && Payment1 && Payment2 && Payment3) {
+                var p = BalanceAmount - Payment1 - Payment2 - Payment3;
                 parseInt($('#BalanceAmount').val(p));
             }
 
