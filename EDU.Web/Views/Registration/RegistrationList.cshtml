@@ -93,7 +93,9 @@
                 <div class="box-header">
                     <div style="display:-webkit-inline-box">
                         <h4> Registrations List</h4>
-                        &nbsp;&nbsp;(&nbsp;<label style="color:red;margin-top:14px"> Pending Registrations :@remainReg</label>&nbsp;)
+                        <div id="prl">
+                            &nbsp;&nbsp;(&nbsp;<label style="color:red;margin-top:14px"> Pending Registrations :@remainReg</label>&nbsp;)
+                        </div>
                     </div>
 
                     <div class="box-tools">
@@ -349,12 +351,14 @@
         }
 
         $(function () {
+            $('#prl').hide();
             $('#TrainingDetails').hide();
             $('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
             debugger;
             if (trid != null && trid != '')
             {
+                $('#prl').show();
                 $('#TrainingDetails').show();
 
                 @if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
