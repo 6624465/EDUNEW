@@ -296,19 +296,65 @@
                 if(Model.Payment1Type!=null && Model.Payment1Type.Value!=1)
                 {
                          <text>
+                         $('#lblbanktransfer').hide();
+                         $('#lblCheque').hide();
+                    @if(Model.Payment1Type.Value==2)
+                    {
+                        <text>
+                        $('#lblCheque').show();
                         $('#cheque1').show();
+                         </text>
+                     }
+                     @if(Model.Payment1Type.Value==3)
+                     {
+                         <text>
+                         $('#lblbanktransfer').show();
+                         $('#cheque1').show();
+                         </text>
+                     }
+                      
                          </text>
                 }
                 else if(Model.Payment2Type != null && Model.Payment2Type.Value!=1)
                 {
                          <text>
+                      $('#lblbanktransfer2').hide();
+                      $('#lblCheque2').hide();
+                    @if(Model.Payment1Type.Value==2)
+                    {
+                        <text>
+                        $('#lblCheque2').show();
+                        $('#cheque2').show();
+                        </text>
+                    }
+                     @if(Model.Payment1Type.Value==3)
+                     {
+                         <text>
+                         $('#lblbanktransfer2').show();
                          $('#cheque2').show();
+                         </text>
+                     }
                          </text>
                 }
                 else if(Model.Payment3Type != null && Model.Payment3Type.Value!=1)
                 {
                     <text>
+                        $('#lblbanktransfer3').hide();
+                       $('#lblCheque3').hide();
+                    @if(Model.Payment1Type.Value==2)
+                    {
+                        <text>
+                        $('#lblCheque3').show();
+                        $('#cheque3').show();
+                        </text>
+                    }
+                     @if(Model.Payment1Type.Value==3)
+                     {
+                         <text>
+                         $('#lblbanktransfer3').show();
                          $('#cheque3').show();
+                         </text>
+                     }
                      </text>
                 }
             }

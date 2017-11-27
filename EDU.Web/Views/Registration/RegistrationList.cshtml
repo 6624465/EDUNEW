@@ -69,7 +69,7 @@
             return null;
     }
 
-    public string PaymentDetails(DateTime? date, short type, string no)
+    public string PaymentDetails(DateTime? date, short? type, string no)
     {
         if (type == 1)
             return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
@@ -77,11 +77,11 @@
         else if (type == 2)
             return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
                 "Payment Type : Cheque" + "</Br>" +
-                "Cheque No : " + no;
+                "Cheque No : " + no == null ? "" : no;
         else if (type == 3)
             return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
                 "Payment Type : Bank Transfer" + "</Br>" +
-                "Bank Transaction ID : " + no;
+                "Bank Transaction ID : " + no == null ? "" : no;
         else
             return "";
     }
@@ -353,8 +353,7 @@
             $('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
             debugger;
-            if (trid != null && trid != '')
-            {
+            if (trid != null && trid != '') {
                 $('#TrainingDetails').show();
                 $('#lblmsg').show();
                 @if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
@@ -369,8 +368,8 @@
         });
 
         function ChangeEventID(el) {
-                $('#eventid').val(el.value);
-                window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+            $('#eventid').val(el.value);
+            window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
         };
 
         function navigatetoDetail() {
@@ -379,20 +378,18 @@
         };
 
         function DeleteRegistration(id) {
-            if (confirm("Are you sure, You want to delete"))
-            {
+            if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
                     url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
                     type: 'POST',
                     contentType: 'application/json',
-                    success: function(data) {
+                    success: function (data) {
                         alert("Deleted Successfully");
-                        if (data)
-                        {
+                        if (data) {
                             location.reload();
                         }
                     },
-                    error: function(e) {
+                    error: function (e) {
                     }
                 });
             }
