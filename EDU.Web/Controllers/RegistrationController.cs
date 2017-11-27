@@ -123,7 +123,21 @@ namespace EDU.Web.Controllers
                     regObj.Payment1Type = registration.Payment1Type;
                     regObj.Payment2Type = registration.Payment2Type;
                     regObj.Payment3Type = registration.Payment3Type;
-                    regObj.CheckNo = registration.CheckNo;
+
+                    if (registration.Payment1Type == 2 || registration.Payment1Type == 3)
+                        regObj.ChequeNo1 = registration.ChequeNo1;
+                    else
+                        regObj.ChequeNo1 = "";
+                    if (registration.Payment2Type == 2 || registration.Payment2Type == 3)
+                        regObj.ChequeNo2 = registration.ChequeNo2;
+                    else
+                        regObj.ChequeNo2 = "";
+
+                    if (registration.Payment3Type == 2 || registration.Payment3Type == 3)
+                        regObj.ChequeNo3 = registration.ChequeNo3;
+                    else
+                        regObj.ChequeNo3 = "";
+
                     regObj.BalanceAmount = registration.BalanceAmount;
                     regObj.TrainingConfirmationID = registration.TrainingConfirmationID;
 
