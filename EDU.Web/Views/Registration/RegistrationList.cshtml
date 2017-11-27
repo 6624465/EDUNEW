@@ -194,7 +194,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
-                                                            @item.Payment1Date.ToString("MM/dd/yyyy")
+                                                            @(item.Payment1Date == null ? "" : item.Payment1Date.ToString("MM/dd/yyyy"))
                                                         </div>
                                                     </text>, style: "center"),
                                             grid.Column("Payment1Type", "Payment 1 Type", canSort: true,
@@ -217,7 +217,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
-                                                            @item.Payment2Date.ToString("MM/dd/yyyy")
+                                                            @(item.Payment2Date == null ? "" : item.Payment2Date.ToString("MM/dd/yyyy"))
                                                         </div>
                                                     </text>, style: "center"),
                                             grid.Column("Payment2Type", "Payment 2 Type", canSort: true,
@@ -240,7 +240,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
-                                                            @item.Payment3Date.ToString("MM/dd/yyyy")
+                                                            @(item.Payment3Date == null ? "" : item.Payment3Date.ToString("MM/dd/yyyy"))
                                                         </div>
                                                     </text>, style: "center"),
                                             grid.Column("Payment3Type", "Payment 3 Type", canSort: true,
