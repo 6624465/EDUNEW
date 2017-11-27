@@ -113,7 +113,7 @@
                                 format:
                                 @<text>
                                     <div style='width:60px;'>
-                                        @item.NoOfDays
+                                        @item.MinimumReg
                                     </div>
                                 </text>, style: "center"),
 
@@ -128,7 +128,7 @@
                                         else
                                         {
                                             <a style="cursor:pointer;text-decoration:underline;">
-                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
+                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
                                             </a>
                                         }
                                     </div>
@@ -143,7 +143,7 @@
                                             else
                                             {
                                                 <a style="cursor:pointer;text-decoration:underline;">
-                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@(item.RegisteredRemarks)"
+                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.RegisteredRemarks)"
                                                           onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
                                                     </a>
                                             }
