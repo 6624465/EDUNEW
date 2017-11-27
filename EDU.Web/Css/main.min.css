@@ -3307,6 +3307,15 @@ fieldset[disabled] .btn-youtube.active {
 .ui-toggle-pink label > input + i {
   background-color: #e91e63;
 }
+[datepicker] table > thead > tr > th .glyphicon-chevron-left:before,
+.datepicker table > thead > tr > th .glyphicon-chevron-left:before {
+    content: "«";
+}
+
+[datepicker] table > thead > tr > th .glyphicon-chevron-right:before,
+.datepicker table > thead > tr > th .glyphicon-chevron-right:before {
+    content: "»";
+}
 /*[datepicker] {
   border: none!important;
 }
