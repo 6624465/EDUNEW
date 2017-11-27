@@ -32,6 +32,22 @@
     .StudentName {
         width: 150px;
     }
+
+    .popover {
+        color: black;
+        min-width: 300px;
+    }
+
+    .popover-title {
+        background-color: #F7F7F7;
+        border-bottom: 1px solid #EBEBEB;
+        border-radius: 5px 5px 0 0;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        margin: 0;
+        padding: 8px 14px;
+    }
 </style>
 @functions {
     public string GetPaymentType(short id)
@@ -51,6 +67,23 @@
             return Convert.ToInt64(data.Value).ToString();
         else
             return null;
+    }
+
+    public string PaymentDetails(DateTime? date, short type, string no)
+    {
+        if (type == 1)
+            return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+                "Payment Type : Cash";
+        else if (type == 2)
+            return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+                "Payment Type : Cheque" + "</Br>" +
+                "Cheque No : " + no;
+        else if (type == 3)
+            return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+                "Payment Type : Bank Transfer" + "</Br>" +
+                "Bank Transaction ID : " + no;
+        else
+            return "";
     }
 }
 <div class="page page-forms-elements">
@@ -162,7 +195,7 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(Convert.ToInt64(item.VATPercent) + "%"), canSort: true, style: "center"),
+                                            grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(ConvertToInt64(item.VATPercent) + "%"), canSort: true, style: "center"),
                                             grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
                                                     format:
                                                     @<text>
@@ -186,11 +219,14 @@
                                                     @<text>
                                                         <div style='width:60px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.Payment1)
-                                                            </span>
-                                                        </div>
+                                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.CheckNo)"
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment1)</span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
                                                     </text>),
-                                            grid.Column("Payment1Date", "Payment 1 Date", canSort: true,
+                                        @*grid.Column("Payment1Date", "Payment 1 Date", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
@@ -203,53 +239,59 @@
                                                         <div style='width:100px;'>
                                                             @GetPaymentType(item.Payment1Type == null ? 0 : item.Payment1Type)
                                                         </div>
-                                                    </text>),
+                                                    </text>),*@
                                             grid.Column("Payment2", "Payment 2", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:60px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.Payment2)
-                                                            </span>
-                                                        </div>
+                                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.CheckNo)"
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment2)</span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
                                                     </text>),
-                                            grid.Column("Payment2Date", "Payment 2 Date", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            @(item.Payment2Date == null ? "" : item.Payment2Date.ToString("MM/dd/yyyy"))
-                                                        </div>
-                                                    </text>, style: "center"),
-                                            grid.Column("Payment2Type", "Payment 2 Type", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            @GetPaymentType(item.Payment2Type == null ? 0 : item.Payment2Type)
-                                                        </div>
-                                                    </text>),
+                        @*grid.Column("Payment2Date", "Payment 2 Date", canSort: true,
+                                    format:
+                                    @<text>
+                                        <div style='width:100px;'>
+                                            @(item.Payment2Date == null ? "" : item.Payment2Date.ToString("MM/dd/yyyy"))
+                                        </div>
+                                    </text>, style: "center"),
+                            grid.Column("Payment2Type", "Payment 2 Type", canSort: true,
+                                    format:
+                                    @<text>
+                                        <div style='width:100px;'>
+                                            @GetPaymentType(item.Payment2Type == null ? 0 : item.Payment2Type)
+                                        </div>
+                                    </text>),*@
                                             grid.Column("Payment3", "Payment 3", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:60px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.Payment3)
-                                                            </span>
-                                                        </div>
+                                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.CheckNo)"
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment3)</span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
                                                     </text>),
-                                            grid.Column("Payment3Date", "Payment 3 Date", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            @(item.Payment3Date == null ? "" : item.Payment3Date.ToString("MM/dd/yyyy"))
-                                                        </div>
-                                                    </text>, style: "center"),
-                                            grid.Column("Payment3Type", "Payment 3 Type", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            @GetPaymentType(item.Payment3Type == null ? 0 : item.Payment3Type)
-                                                        </div>
-                                                    </text>),
+                        @*grid.Column("Payment3Date", "Payment 3 Date", canSort: true,
+                                    format:
+                                    @<text>
+                                        <div style='width:100px;'>
+                                            @(item.Payment3Date == null ? "" : item.Payment3Date.ToString("MM/dd/yyyy"))
+                                        </div>
+                                    </text>, style: "center"),
+                            grid.Column("Payment3Type", "Payment 3 Type", canSort: true,
+                                    format:
+                                    @<text>
+                                        <div style='width:100px;'>
+                                            @GetPaymentType(item.Payment3Type == null ? 0 : item.Payment3Type)
+                                        </div>
+                                    </text>),*@
                                             grid.Column("BalanceAmount", "Balance", canSort: true,
                                                     format:
                                                     @<text>
@@ -259,7 +301,6 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            //grid.Column("CheckNo", "CheckNo", canSort: true),
                                             grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
                                                     format:
                                                     @<text>
@@ -298,6 +339,15 @@
 @section SectionScripts
     {
     <script type="text/javascript">
+
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            $(el).popover("show");
+        }
+
         $(function () {
             $('#TrainingDetails').hide();
             $('#addbtn').attr('disabled', 'disabled');
