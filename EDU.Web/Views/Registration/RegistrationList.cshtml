@@ -77,19 +77,22 @@
 
     public string PaymentDetails(DateTime? date, short? type, string no)
     {
-        if (type == 1)
-            return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+        string x = "";
+        if (type != null)
+        {
+            if (type == 1)
+                x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
                 "Payment Type : Cash";
-        else if (type == 2)
-            return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-                "Payment Type : Cheque" + "</Br>" +
-                "Cheque No : " + no == null ? "" : no;
-        else if (type == 3)
-            return "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-                "Payment Type : Bank Transfer" + "</Br>" +
-                "Bank Transaction ID : " + no == null ? "" : no;
-        else
-            return "";
+            else if (type == 2)
+                x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+                    "Payment Type : Cheque" + "</Br>" +
+                    "Cheque No : " + (no == null ? "" : no);
+            else if (type == 3)
+                x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+                    "Payment Type : Bank Transfer" + "</Br>" +
+                    "Transaction ID : " + (no == null ? "" : no);
+        }
+        return x;
     }
 }
 <div class="page page-forms-elements">
@@ -304,7 +307,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
-        @if (reg > 0)
+            @if (reg > 0)
         {
             <text>
                 $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + myArray[0] + '</span></td><td></td><td><span class="pull-right">' + myArray[1] + '</span></td><td></td><td><span class="pull-right">' + myArray[2] + '</span></td><td><span class="pull-right">' + myArray[3] + '</span></td><td><span class="pull-right">' + myArray[4] + '</span></td><td><span class="pull-right">' + myArray[5] + '</span></td><td><span class="pull-right">' + myArray[6] + '</span></td><td><span class="pull-right">' + myArray[7] + '</span></td><td><span class="pull-right">' + myArray[8] +'</span></td><td></td><td></td><td></td></tr>');
