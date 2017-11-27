@@ -211,8 +211,20 @@ namespace EDU.Web.Controllers
         {
             var result = new CourseSalesMasterBO().DeleteCourseSalesMaster(new CourseSalesMaster { Id = Id.Value });
 
-            return View("CourseSalesMasterList",
-               new CourseSalesMasterBO().GetList().AsEnumerable());
+            var list = new CourseSalesMasterBO().GetList();
+            var totalleadsonhand = 0;
+            long totalrevenue = 0;
+
+            foreach (var item in list)
+            {
+                totalleadsonhand += item.LeadsOnHead;
+                totalrevenue += Convert.ToInt64(item.Revenue == null ? 0 : item.Revenue.Value);
+            }
+
+            ViewData["totalleadsonhand"] = totalleadsonhand;
+            ViewData["totalrevenue"] = totalrevenue;
+
+            return View("CourseSalesMasterList", list.AsEnumerable());
         }
         #endregion
     }

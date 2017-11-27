@@ -29,10 +29,6 @@
         text-align: right !important;
     }
 
-    .StudentName {
-        width: 150px;
-    }
-
     .popover {
         color: black;
         min-width: 300px;
@@ -48,6 +44,14 @@
         margin: 0;
         padding: 8px 14px;
     }
+
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        color: #D73925;
+        font-family: 'Bebas Neue'
+    }
+
 </style>
 @functions {
     public string GetPaymentType(short id)
@@ -158,7 +162,7 @@
 
                     <div class="row" style="margin-top:20px;">
                     </div>
-                    <div class="row css10" style="overflow-x: scroll; width: 100%">
+                    <div class="row css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                         @grid.GetHtml(
                                     columns: grid.Columns(
                                             grid.Column("StudentName", "Student Name", canSort: true,
@@ -226,20 +230,6 @@
                                                                 </span>
                                                             </div>
                                                     </text>),
-                                        @*grid.Column("Payment1Date", "Payment 1 Date", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            @(item.Payment1Date == null ? "" : item.Payment1Date.ToString("MM/dd/yyyy"))
-                                                        </div>
-                                                    </text>, style: "center"),
-                                            grid.Column("Payment1Type", "Payment 1 Type", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            @GetPaymentType(item.Payment1Type == null ? 0 : item.Payment1Type)
-                                                        </div>
-                                                    </text>),*@
                                             grid.Column("Payment2", "Payment 2", canSort: true,
                                                     format:
                                                     @<text>
@@ -252,20 +242,6 @@
                                                                 </span>
                                                             </div>
                                                     </text>),
-                        @*grid.Column("Payment2Date", "Payment 2 Date", canSort: true,
-                                    format:
-                                    @<text>
-                                        <div style='width:100px;'>
-                                            @(item.Payment2Date == null ? "" : item.Payment2Date.ToString("MM/dd/yyyy"))
-                                        </div>
-                                    </text>, style: "center"),
-                            grid.Column("Payment2Type", "Payment 2 Type", canSort: true,
-                                    format:
-                                    @<text>
-                                        <div style='width:100px;'>
-                                            @GetPaymentType(item.Payment2Type == null ? 0 : item.Payment2Type)
-                                        </div>
-                                    </text>),*@
                                             grid.Column("Payment3", "Payment 3", canSort: true,
                                                     format:
                                                     @<text>
@@ -278,20 +254,6 @@
                                                                 </span>
                                                             </div>
                                                     </text>),
-                        @*grid.Column("Payment3Date", "Payment 3 Date", canSort: true,
-                                    format:
-                                    @<text>
-                                        <div style='width:100px;'>
-                                            @(item.Payment3Date == null ? "" : item.Payment3Date.ToString("MM/dd/yyyy"))
-                                        </div>
-                                    </text>, style: "center"),
-                            grid.Column("Payment3Type", "Payment 3 Type", canSort: true,
-                                    format:
-                                    @<text>
-                                        <div style='width:100px;'>
-                                            @GetPaymentType(item.Payment3Type == null ? 0 : item.Payment3Type)
-                                        </div>
-                                    </text>),*@
                                             grid.Column("BalanceAmount", "Balance", canSort: true,
                                                     format:
                                                     @<text>
@@ -339,6 +301,16 @@
 @section SectionScripts
     {
     <script type="text/javascript">
+
+        $(document).ready(function () {
+            debugger;
+
+            //var myArray = @ViewData["Summary"]; 
+            var totalleadsonhand = 0; @*@ViewData["totalleadsonhand"].ToString();*@
+            var totalrevenue = 0; @*@ViewData["totalrevenue"].ToString();*@
+
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + 0 + '</span></td><td></td><td><span class="pull-right">' + 0 + '</span></td><td></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 +'</span></td><td></td><td></td><td></td><td></td></tr>');
+        });
 
         function mouseleave(el) {
             $(el).popover("hide");
