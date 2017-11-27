@@ -20,6 +20,14 @@ namespace EDU.Web.Controllers
         public ActionResult RegistrationList(string trainingConfirmationID)
         {
             RegistrationVM result = new RegistrationVM();
+            result = getListData(trainingConfirmationID);
+            
+            return View(result);
+        }
+
+        private RegistrationVM getListData(string trainingConfirmationID)
+        {
+            RegistrationVM result = new RegistrationVM();
             try
             {
                 List<TrainingConfirmation> tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
@@ -79,8 +87,8 @@ namespace EDU.Web.Controllers
                     payment1total += Convert.ToInt64(item.Payment1 == null ? 0 : item.Payment1.Value);
                     payment2total += Convert.ToInt64(item.Payment2 == null ? 0 : item.Payment2.Value);
                     payment3total += Convert.ToInt64(item.Payment3 == null ? 0 : item.Payment3.Value);
-                    baltotal += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
                     othertotal += Convert.ToInt64(item.OtherDeductionsAmount == null ? 0 : item.OtherDeductionsAmount.Value);
+                    baltotal += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
                 }
 
                 List<string> summary = new List<string>();
@@ -91,15 +99,15 @@ namespace EDU.Web.Controllers
                 summary.Add(payment1total.ToString());
                 summary.Add(payment2total.ToString());
                 summary.Add(payment3total.ToString());
-                summary.Add(baltotal.ToString());
                 summary.Add(othertotal.ToString());
+                summary.Add(baltotal.ToString());
                 ViewData["Summary"] = summary;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return View(result);
+           return result;
         }
 
         private List<Registration> GetList(string trainingConfirmationID)
@@ -107,6 +115,8 @@ namespace EDU.Web.Controllers
             List<Registration> registrationList = dbContext.Registrations.Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).ToList();
             return registrationList;
         }
+
+
 
         public ActionResult Registration(int Id, string trainingConfirmationID)
         {

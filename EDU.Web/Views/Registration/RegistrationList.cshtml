@@ -1,4 +1,5 @@
-﻿
+﻿@using Newtonsoft.Json;
+
 @model EDU.Web.ViewModels.Registration.RegistrationVM
 @{
     ViewBag.Title = "Registrations";
@@ -12,6 +13,8 @@
     var Student = Model.trainingconfDetail.NoOfStudents;
     var reg = Model.registration.Count();
     var remainReg = Student - reg;
+
+    var myArray = (List<string>)ViewData["Summary"];
 }
 <style>
     .centerbox {
@@ -51,7 +54,6 @@
         color: #D73925;
         font-family: 'Bebas Neue'
     }
-
 </style>
 @functions {
     public string GetPaymentType(short id)
@@ -124,7 +126,7 @@
                     </div>
                     <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
                         <div class="centerbox">
-                            <div class="row css10">
+                            <div class="row">
                                 <div class="col-md-5 col-md-offset-1">
                                     <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
                                 </div>
@@ -161,7 +163,7 @@
 
                     <div class="row" style="margin-top:20px;">
                     </div>
-                    <div class="row css10" style="overflow-x: scroll; width: 100%" id="gridContent">
+                    <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                         @grid.GetHtml(
                                     columns: grid.Columns(
                                             grid.Column("StudentName", "Student Name", canSort: true,
@@ -253,21 +255,21 @@
                                                                 </span>
                                                             </div>
                                                     </text>),
-                                            grid.Column("BalanceAmount", "Balance", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:60px;'>
-                                                            <span class="pull-right">
-                                                                @ConvertToInt64(item.BalanceAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
                                             grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
                                                             <span class="pull-right">
                                                                 @ConvertToInt64(item.OtherDeductionsAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("BalanceAmount", "Balance", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.BalanceAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
@@ -300,15 +302,14 @@
 @section SectionScripts
     {
     <script type="text/javascript">
-
         $(document).ready(function () {
-            debugger;
-
-            //var myArray = @ViewData["Summary"]; 
-            var totalleadsonhand = 0; @*@ViewData["totalleadsonhand"].ToString();*@
-            var totalrevenue = 0; @*@ViewData["totalrevenue"].ToString();*@
-
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + 0 + '</span></td><td></td><td><span class="pull-right">' + 0 + '</span></td><td></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 + '</span></td><td><span class="pull-right">' + 0 +'</span></td><td></td><td></td><td></td><td></td></tr>');
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+        @if (reg > 0)
+        {
+            <text>
+                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + myArray[0] + '</span></td><td></td><td><span class="pull-right">' + myArray[1] + '</span></td><td></td><td><span class="pull-right">' + myArray[2] + '</span></td><td><span class="pull-right">' + myArray[3] + '</span></td><td><span class="pull-right">' + myArray[4] + '</span></td><td><span class="pull-right">' + myArray[5] + '</span></td><td><span class="pull-right">' + myArray[6] + '</span></td><td><span class="pull-right">' + myArray[7] + '</span></td><td><span class="pull-right">' + myArray[8] +'</span></td><td></td><td></td><td></td></tr>');
+            </text>
+            }
         });
 
         function mouseleave(el) {

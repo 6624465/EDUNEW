@@ -62,12 +62,11 @@
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
                             <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="TrainerConfirmation()"><i class="fa fa-plus"></i>Add Trainer Confirmation</button>
-                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
                         }
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="row" style="overflow-x: scroll; width: 100%">
+                    <div class="" style="overflow-x: scroll; width: 100%">
                         @grid.GetHtml(
                                 columns: grid.Columns(
                     grid.Column("TrainingConfirmationID", "Order No.", canSort: true),
