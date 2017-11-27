@@ -6,7 +6,7 @@
 @{
     var listItems = new List<SelectListItem>()
                                           {
-                                           new SelectListItem {Text = "Select Payment Type",   Value = "0", Selected=true},
+                                           new SelectListItem {Text = "Select Payment Type",   Value = "", Selected=true},
                                            new SelectListItem {Text = "CASH",   Value = "1"},
                                            new SelectListItem {Text = "CHEQUE", Value = "2"},
                                            new SelectListItem {Text = "BANK TRANSFER", Value = "3"}
@@ -130,7 +130,7 @@
                                         <span class="pull-right">Payment Type</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x=>x.Payment1Type, listItems,string.Empty ,new { @class="form-control",onchange= "Payment1TypeChange(this)" })
+                                        @Html.DropDownListFor(x=>x.Payment1Type, listItems,new { @class="form-control",onchange= "Payment1TypeChange(this)" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment1 Date</span>
@@ -151,11 +151,14 @@
                                 </label>
                                 <div class="col-md-2">
                                 </div>
-                                <label class="col-md-2 control-label">
+                                <label id="lblCheque" class="col-md-2 control-label">
                                     <span class="pull-right">Cheque No</span>
                                 </label>
+                                <label id="lblbanktransfer" class="col-md-2 control-label">
+                                    <span class="pull-right">Transaction Id</span>
+                                </label>
                                 <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.CheckNo, new { @class = "form-control numCss" })
+                                    @Html.TextBoxFor(x => x.ChequeNo1, new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="row css10">
@@ -170,7 +173,7 @@
                                         <span class="pull-right">Payment Type</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Payment2Type, listItems, string.Empty, new { @class = "form-control" })
+                                        @Html.DropDownListFor(x => x.Payment2Type, listItems, new { @class = "form-control", onchange = "Payment2TypeChange(this)" })
                                     </div>
                                         <label class="col-md-2 control-label">
                                             <span class="pull-right">Payment2 Date</span>
@@ -185,6 +188,22 @@
                                         </div>
                                 </div>
                             </div>
+                            <div id="cheque2" class="row css10">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right"></span>
+                                </label>
+                                <div class="col-md-2">
+                                </div>
+                                <label id="lblCheque2" class="col-md-2 control-label">
+                                    <span class="pull-right">Cheque No</span>
+                                </label>
+                                <label id="lblbanktransfer2" class="col-md-2 control-label">
+                                    <span class="pull-right">Transaction Id</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.ChequeNo2, new { @class = "form-control" })
+                                </div>
+                            </div>
                             <div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
@@ -197,7 +216,7 @@
                                         <span class="pull-right">Payment Type</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Payment3Type, listItems, string.Empty, new { @class = "form-control" })
+                                        @Html.DropDownListFor(x => x.Payment3Type, listItems, new { @class = "form-control", onchange = "Payment3TypeChange(this)" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment3 Date</span>
@@ -212,7 +231,22 @@
                                     </div>
                                 </div>
                             </div>
-                           
+                            <div id="cheque3" class="row css10">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right"></span>
+                                </label>
+                                <div class="col-md-2">
+                                </div>
+                                <label id="lblCheque3" class="col-md-2 control-label">
+                                    <span class="pull-right">Cheque No</span>
+                                </label>
+                                <label id="lblbanktransfer3" class="col-md-2 control-label">
+                                    <span class="pull-right">Transaction Id</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.ChequeNo3, new { @class = "form-control" })
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
@@ -254,25 +288,38 @@
             $('#Payment2').attr('disabled', 'disabled');
             $('#Payment3').attr('disabled', 'disabled');
             $('#cheque1').hide();
-           
+            $('#cheque2').hide();
+            $('#cheque3').hide();
+
             @if(Model.RegistrationId!=-1)
             {
-                if(Model.Payment1Type.Value!=1)
+                if(Model.Payment1Type!=null && Model.Payment1Type.Value!=1)
                 {
                          <text>
-                         $('#cheque1').show();
+                        $('#cheque1').show();
                          </text>
+                }
+                else if(Model.Payment2Type != null && Model.Payment2Type.Value!=1)
+                {
+                         <text>
+                         $('#cheque2').show();
+                         </text>
+                }
+                else if(Model.Payment3Type != null && Model.Payment3Type.Value!=1)
+                {
+                    <text>
+                         $('#cheque3').show();
+                     </text>
                 }
             }
         });
 
         function navigatetoList() {
-            var trid = $('#TrainingConfirmationID').val();            
-            window.location = '@Url.Content("~/Registration/RegistrationList")'+"?trainingConfirmationID=" + trid ;
+            var trid = $('#TrainingConfirmationID').val();
+            window.location = '@Url.Content("~/Registration/RegistrationList")' + "?trainingConfirmationID=" + trid;
         };
 
-        function RemoveDisabledFields()
-        {
+        function RemoveDisabledFields() {
             $('#WHTAmount').removeAttr('disabled', 'disabled');
             $('#VATAmount').removeAttr('disabled', 'disabled');
             $('#WHTPercent').removeAttr('disabled', 'disabled');
@@ -311,11 +358,9 @@
             }
         });
 
-        function CalculateamountDisabled()
-        {
+        function CalculateamountDisabled() {
             var Amount = parseInt($('#Amount').val());
-            if (Amount != null && !isNaN(Amount) && Amount != 0)
-            {
+            if (Amount != null && !isNaN(Amount) && Amount != 0) {
                 $('#WHTPercent').removeAttr('disabled', 'disabled');
                 $('#VATPercent').removeAttr('disabled', 'disabled');
                 $('#OtherDeductionsAmount').removeAttr('disabled', 'disabled');
@@ -323,8 +368,7 @@
                 $('#Payment2').removeAttr('disabled', 'disabled');
                 $('#Payment3').removeAttr('disabled', 'disabled');
             }
-            else
-            {
+            else {
                 $('#WHTPercent').val('');
                 $('#TotalAmount').val('');
                 $('#VATPercent').val('');
@@ -344,11 +388,9 @@
             CalculateBalanceAmount();
         }
 
-        function ValidateWHTPercent()
-        {
-            var percent =parseInt($('#WHTPercent').val());
-            if(percent>100)
-            {
+        function ValidateWHTPercent() {
+            var percent = parseInt($('#WHTPercent').val());
+            if (percent > 100) {
                 alert("WHTPercent can not greater than 100");
                 $('#WHTPercent').val('');
             }
@@ -362,25 +404,21 @@
             }
             CalTotalAmount();
         }
-        function ValidateWHTAmountPercent()
-        {
+        function ValidateWHTAmountPercent() {
 
             var Amount = parseInt($('#Amount').val());
             var WHT = parseInt($('#WHTPercent').val());
-            if (!isNaN(WHT) && WHT!=0)
-            {
+            if (!isNaN(WHT) && WHT != 0) {
                 var WHTAmount = Amount * WHT / 100;
                 $('#WHTAmount').val(WHTAmount);
             }
-            else
-            {
+            else {
                 $('#WHTAmount').val('')
             }
             CalTotalAmount();
         }
 
-        function ValidateVATAmountPercent()
-        {
+        function ValidateVATAmountPercent() {
 
             var Amount = parseInt($('#Amount').val());
             var VAT = parseInt($('#VATPercent').val());
@@ -388,54 +426,46 @@
                 var VATAmount = Amount * VAT / 100;
                 $('#VATAmount').val(VATAmount);
             }
-            else
-            {
+            else {
                 $('#VATAmount').val('');
             }
             CalTotalAmount();
         }
 
-        function CalTotalAmount()
-        {
+        function CalTotalAmount() {
 
             var Amount = parseInt($('#Amount').val());
             var WHT = parseInt($('#WHTPercent').val());
             var VAT = parseInt($('#VATPercent').val());
-            var OtherDeductionsAmount= parseInt($('#OtherDeductionsAmount').val());
-            if (Amount)
-            {
+            var OtherDeductionsAmount = parseInt($('#OtherDeductionsAmount').val());
+            if (Amount) {
                 $('#TotalAmount').val(Amount);
             }
-             if(Amount && WHT)
-            {
+            if (Amount && WHT) {
                 var WHTAmount = parseInt(Amount * WHT / 100);
                 var total = parseInt(Amount - WHTAmount);
                 $('#TotalAmount').val(total);
             }
-            if (Amount && VAT)
-            {
-                var VATAmount =  parseInt(Amount * VAT / 100);
+            if (Amount && VAT) {
+                var VATAmount = parseInt(Amount * VAT / 100);
                 var total = parseInt(Amount + VATAmount);
                 $('#TotalAmount').val(total);
             }
-           if (Amount && OtherDeductionsAmount)
-            {
-               var total = parseInt(Amount - OtherDeductionsAmount);
+            if (Amount && OtherDeductionsAmount) {
+                var total = parseInt(Amount - OtherDeductionsAmount);
                 $('#TotalAmount').val(total);
-           }
-           if (Amount && OtherDeductionsAmount && WHT)
-           {
-               var WHTAmount = parseInt(Amount * WHT / 100);
-               var total =parseInt(Amount - (WHTAmount + OtherDeductionsAmount));
-               $('#TotalAmount').val(total);
-           }
-           if (Amount && OtherDeductionsAmount && VAT) {
-               var VATAmount = parseInt(Amount * VAT / 100);
-               var total =parseInt(Amount +VATAmount +-OtherDeductionsAmount);
-               $('#TotalAmount').val(total);
-           }
-            if(Amount && WHT&& VAT)
-            {
+            }
+            if (Amount && OtherDeductionsAmount && WHT) {
+                var WHTAmount = parseInt(Amount * WHT / 100);
+                var total = parseInt(Amount - (WHTAmount + OtherDeductionsAmount));
+                $('#TotalAmount').val(total);
+            }
+            if (Amount && OtherDeductionsAmount && VAT) {
+                var VATAmount = parseInt(Amount * VAT / 100);
+                var total = parseInt(Amount + VATAmount + -OtherDeductionsAmount);
+                $('#TotalAmount').val(total);
+            }
+            if (Amount && WHT && VAT) {
                 var WHTAmount = parseInt(Amount * WHT / 100);
                 var VATAmount = parseInt(Amount * VAT / 100);
                 var total = parseInt(Amount + VATAmount - WHTAmount);
@@ -453,16 +483,14 @@
 
         }
 
-        function CalculateBalanceAmount()
-        {
+        function CalculateBalanceAmount() {
             debugger;
             var Amount = parseInt($('#Amount').val());
             var BalanceAmount = parseInt($('#BalanceAmount').val(Amount));
             var Payment1 = parseInt($('#Payment1').val());
             var Payment2 = parseInt($('#Payment2').val());
             var Payment3 = parseInt($('#Payment3').val());
-            if (Amount && Payment1)
-            {
+            if (Amount && Payment1) {
                 var p1 = Amount - Payment1;
                 parseInt($('#BalanceAmount').val(p1));
             }
@@ -484,15 +512,78 @@
             }
 
         }
-        function Payment1TypeChange(el)
-        {
+        function Payment1TypeChange(el) {
+            $('#lblbanktransfer').hide();
+            $('#lblCheque').hide();
             debugger;
-            if(el.value=="2")
-            {
+            if (el.value == "2") {
+                $('#ChequeNo1').val('');
                 $('#cheque1').show();
+                $('#lblCheque').show();
             }
-            else
+            else if (el.value == "3") {
+                $('#ChequeNo1').val('');
+                $('#cheque1').show();
+                $('#lblbanktransfer').show();
+
+            }
+            else if (el.value == "1") {
+                $('#ChequeNo1').val('');
                 $('#cheque1').hide();
+            }
+            else {
+                $('#ChequeNo1').val('');
+                $('#cheque1').hide();
+            }
+
+        }
+        function Payment2TypeChange(el) {
+            $('#lblbanktransfer2').hide();
+            $('#lblCheque2').hide();
+
+            if (el.value == "2") {
+                $('#ChequeNo2').val('');
+                $('#cheque2').show();
+                $('#lblCheque2').show();
+            }
+            else if (el.value == "3") {
+                $('#ChequeNo2').val('');
+                $('#cheque2').show();
+                $('#lblbanktransfer2').show();
+
+            }
+            else if (el.value == "1") {
+                $('#ChequeNo2').val('');
+                $('#cheque2').hide();
+            }
+            else {
+                $('#ChequeNo2').val('');
+                $('#cheque2').hide();
+            }
+        }
+        function Payment3TypeChange(el) {
+            $('#lblbanktransfer3').hide();
+            $('#lblCheque3').hide();
+
+            if (el.value == "2") {
+                $('#ChequeNo3').val('');
+                $('#cheque3').show();
+                $('#lblCheque3').show();
+            }
+            else if (el.value == "3") {
+                $('#ChequeNo3').val('');
+                $('#cheque3').show();
+                $('#lblbanktransfer3').show();
+
+            }
+            else if (el.value == "1") {
+                $('#ChequeNo3').val('');
+                $('#cheque3').hide();
+            }
+            else {
+                $('#ChequeNo3').val('');
+                $('#cheque3').hide();
+            }
         }
 
     </script>
