@@ -130,7 +130,7 @@
                                         <span class="pull-right">Payment Type</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x=>x.Payment1Type, listItems,string.Empty ,new { @class="form-control"})
+                                        @Html.DropDownListFor(x=>x.Payment1Type, listItems,string.Empty ,new { @class="form-control",onchange= "Payment1TypeChange(this)" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment1 Date</span>
@@ -254,6 +254,16 @@
             $('#Payment2').attr('disabled', 'disabled');
             $('#Payment3').attr('disabled', 'disabled');
             $('#cheque1').hide();
+           
+            @if(Model.RegistrationId!=-1)
+            {
+                if(Model.Payment1Type.Value!=1)
+                {
+                         <text>
+                         $('#cheque1').show();
+                         </text>
+                }
+            }
         });
 
         function navigatetoList() {
@@ -474,8 +484,16 @@
             }
 
         }
-
-
+        function Payment1TypeChange(el)
+        {
+            debugger;
+            if(el.value=="2")
+            {
+                $('#cheque1').show();
+            }
+            else
+                $('#cheque1').hide();
+        }
 
     </script>
 }
