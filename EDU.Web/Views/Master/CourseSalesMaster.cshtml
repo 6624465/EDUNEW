@@ -183,14 +183,15 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
-                                      new { @class = "form-control" })
+                                      new { @class = "form-control" , @style = "overflow-y: scroll" })
+                                     
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Registration Details</span>
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.courseSalesMaster.RegisteredRemarks,
-                                    new { @class = "form-control" })
+                                    new { @class = "form-control", @style = "overflow-y: scroll" })
                                     </div>
                                 </div>
                             </div>
@@ -573,6 +574,13 @@
             }
 
         }
+        $('#courseSalesMaster_LeadsOnHeadRemarks,#courseSalesMaster_RegisteredRemarks').keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                var s = $(this).val();
+                $(this).val(s+"\n");
+            }
+        })
 
         function RegisteredUser() {
             debugger;
@@ -597,6 +605,7 @@
                 $('#courseSalesMaster_AvailableSeats').val('');
             }
         }
+       
     </script>
 
 }
