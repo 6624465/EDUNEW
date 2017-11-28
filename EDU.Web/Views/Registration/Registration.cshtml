@@ -250,7 +250,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <button type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        <button id="btnSave" type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                         <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
@@ -313,47 +313,65 @@
                 </text>
                 }
 
-                if (Model.Payment2Type != null && Model.Payment2Type.Value != 1)
+                if (Model.Payment2Type != null )
                 {
-                <text>
-                    $('#lblbanktransfer2').hide();
-                    $('#lblCheque2').hide();
-                    @if (Model.Payment2Type.Value == 2)
+                    if (Model.Payment2Type.Value != 1)
                     {
                     <text>
-                        $('#lblCheque2').show();
-                        $('#cheque2').show();
+                        $('#lblbanktransfer2').hide();
+                        $('#lblCheque2').hide();
+                        @if (Model.Payment2Type.Value == 2)
+                        {
+                        <text>
+                            $('#lblCheque2').show();
+                            $('#cheque2').show();
+                        </text>
+                        }
+                        @if (Model.Payment2Type.Value == 3)
+                        {
+                        <text>
+                            $('#lblbanktransfer2').show();
+                            $('#cheque2').show();
+                        </text>
+                        }
                     </text>
                     }
-                    @if (Model.Payment2Type.Value == 3)
-                    {
-                    <text>
-                        $('#lblbanktransfer2').show();
-                        $('#cheque2').show();
-                    </text>
-                    }
-                </text>
                 }
-                if (Model.Payment3Type != null && Model.Payment3Type.Value != 1)
+                else
                 {
-                <text>
-                    $('#lblbanktransfer3').hide();
-                    $('#lblCheque3').hide();
-                    @if (Model.Payment3Type.Value == 2)
+                    <text>
+                            $('#Payment2Type').val('');
+                    </text>
+                }
+                if (Model.Payment3Type != null)
+                {
+                    if (Model.Payment3Type.Value != 1)
                     {
                     <text>
-                        $('#lblCheque3').show();
-                        $('#cheque3').show();
+                        $('#lblbanktransfer3').hide();
+                        $('#lblCheque3').hide();
+                        @if (Model.Payment3Type.Value == 2)
+                        {
+                        <text>
+                            $('#lblCheque3').show();
+                            $('#cheque3').show();
+                        </text>
+                        }
+                        @if (Model.Payment3Type.Value == 3)
+                        {
+                        <text>
+                            $('#lblbanktransfer3').show();
+                            $('#cheque3').show();
+                        </text>
+                        }
                     </text>
                     }
-                    @if (Model.Payment3Type.Value == 3)
-                    {
+                }
+                else
+                {
                     <text>
-                        $('#lblbanktransfer3').show();
-                        $('#cheque3').show();
+                            $('#Payment3Type').val('');
                     </text>
-                    }
-                </text>
                 }
 
             <text>
@@ -417,11 +435,15 @@
             $('#Payment2Date').removeAttr('disabled', 'disabled');
             $('#ChequeNo2').removeAttr('disabled', 'disabled');
             $('#Payment3').removeAttr('disabled', 'disabled');
+            $('#Payment3Type').removeAttr('disabled', 'disabled');
+            $('#Payment3Date').removeAttr('disabled', 'disabled');
+            $('#ChequeNo3').removeAttr('disabled', 'disabled');
             $('#TotalAmount').removeAttr('disabled', 'disabled');
             $('#BalanceAmount').removeAttr('disabled', 'disabled');
         }
         function SaveRegistration() {
             if ($('#frmRegistration').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 RemoveDisabledFields();
                 $('#frmRegistration').submit();
             }
@@ -435,7 +457,8 @@
                     required: true
                 },
                 'Email': {
-                    required: true
+                    required: true,
+                    email: true
                 },
                 'CompanyName': {
                     required: true
