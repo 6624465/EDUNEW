@@ -145,13 +145,7 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        @if (Model.Id != -1)
-        {
-            <text>
-                $('#Product').attr('disabled', 'disabled');
-                $('#Course').attr('disabled', 'disabled');
-            </text>
-        }
+
 
         $('#StartDt').datetimepicker({
             icons: {
@@ -179,6 +173,22 @@
             $('#EndDate').val('');
             $('#EndDt').data("DateTimePicker").minDate(e.date);
         });
+
+        @if (Model.Id != -1)
+        {
+            <text>
+            @if (Model.StartDate != null) {
+                            <text>
+                $('#StartDate').val('@Model.StartDate.Value.ToString("dd/MM/yyyy")');</text>
+            }
+            @if (Model.EndDate != null) {
+                        <text>
+                $('#EndDate').val('@Model.EndDate.Value.ToString("dd/MM/yyyy")');</text>
+            }
+                $('#Product').attr('disabled', 'disabled');
+                $('#Course').attr('disabled', 'disabled');
+            </text>
+        }
     });
 
     function ProductChange(el) {

@@ -100,8 +100,8 @@
                                     </div>
                                 </text>, style: "center"),
                     grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>, canSort: true),
-                    grid.Column("StartDate", "Start Date", format:@<text> @item.StartDate.ToString("MM/dd/yyyy")</text>, canSort: true),
-                    grid.Column("EndDate", "End Date", format:@<text> @item.EndDate.ToString("MM/dd/yyyy")</text>, canSort: true),
+                    grid.Column("StartDate", "Start Date", format:@<text> @item.StartDate.ToString("dd/MM/yyyy")</text>, canSort: true),
+                    grid.Column("EndDate", "End Date", format:@<text> @item.EndDate.ToString("dd/MM/yyyy")</text>, canSort: true),
                     grid.Column("TotalNoOfDays", "Total # of days", canSort: true,
                                 format:
                                 @<text>
