@@ -1710,9 +1710,7 @@
     <Content Include="Views\Master\CourseList.cshtml" />
     <Content Include="Views\Master\Course.cshtml" />
     <Content Include="Views\Master\CourseSalesMaster.cshtml" />
-    <Content Include="Views\Revenue\Index.cshtml" />
     <Content Include="Views\Revenue\RevenueList.cshtml" />
-    <Content Include="Views\Revenue\RevenueList1.cshtml" />
     <Content Include="Views\Registration\RegistrationList.cshtml" />
     <Content Include="Views\Registration\Registration.cshtml" />
     <Content Include="Views\Trainer\TrainersList.cshtml" />
