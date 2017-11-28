@@ -72,13 +72,13 @@
                                         <span class="pull-right">Address</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.Address, new { @class = "form-control input-sm" })
+                                        @Html.TextAreaFor(x => x.Address, new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Contact</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control numCss"})
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                         <span class="pull-right">Remarks</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @style = "overflow-y: scroll" })
                                     </div>
                                 </div>
                             </div>
@@ -110,6 +110,13 @@
 </div>
 @section SectionScripts {
     <script type="text/javascript">
+        $('#Address,#Remarks').keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                var s = $(this).val();
+                $(this).val(s + "\n");
+            }
+        })
         function CountryChange() {
             debugger;
             $('#CountryName').val($("#Country option:selected").text());
@@ -149,9 +156,9 @@
                     required: true
                 },
                 Contact: {
-                    required: true
-                }
-                ,
+                    required: true,
+                    maxlength: 12   
+                },
                 Profile: {
                     required: true
                 }

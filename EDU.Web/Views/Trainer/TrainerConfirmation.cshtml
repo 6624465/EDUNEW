@@ -105,7 +105,7 @@
                         <span class="pull-right">End Date</span>
                     </label>
                     <div class="col-md-6">
-                        <div class="input-group date" id="StartDt">
+                        <div class="input-group date" id="EndDt">
                             @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control dtCss" })
                             <span class="input-group-addon">
                                 <i class="ion ion-calendar"></i>
@@ -145,7 +145,15 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#StartDt, #RegClosingDt').datetimepicker({
+        @if (Model.Id != -1)
+        {
+            <text>
+                $('#Product').attr('disabled', 'disabled');
+                $('#Course').attr('disabled', 'disabled');
+            </text>
+        }
+
+        $('#StartDt').datetimepicker({
             icons: {
                 time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',
@@ -167,35 +175,38 @@
             format: 'DD/MM/YYYY'
         });
 
+        $("#StartDt").on("dp.change", function (e) {
+            $('#EndDate').val('');
+            $('#EndDt').data("DateTimePicker").minDate(e.date);
+        });
     });
 
     function ProductChange(el) {
-
         if (el.value) {
             debugger;
                 $.ajax({
                     url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + el.value,
-                    method: 'GET',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        $('#Course').empty();
-                        $('#Course').append($('<option></option>').val('').html(''));
-                        $.each(data, function (key, value) {
-                            $('#Course').append($('<option></option>').val(value.Id).html(value.CourseName));
-                        });
-                        $('#Course').removeAttr('disabled');
-                    },
-                    error: function (err) {
+                method: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    $('#Course').empty();
+                    $('#Course').append($('<option></option>').val('').html(''));
+                    $.each(data, function (key, value) {
+                        $('#Course').append($('<option></option>').val(value.Id).html(value.CourseName));
+                    });
+                    $('#Course').removeAttr('disabled');
+                },
+                error: function (err) {
 
-                    }
-                });
-            }
-            else {
-                $('#Course').empty();
-                $('#Course').attr('disabled', 'disabled');
-                $('#Course').append($('<option></option>').val('').html(''));
-            }
+                }
+            });
         }
+        else {
+            $('#Course').empty();
+            $('#Course').attr('disabled', 'disabled');
+            $('#Course').append($('<option></option>').val('').html(''));
+        }
+    }
 
 </script>
 

@@ -124,7 +124,7 @@
                                         <span class="pull-right">Payment 1</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment1, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment1, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('1')" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -167,7 +167,7 @@
                                         <span class="pull-right">Payment 2</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment2, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment2, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('2')" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -210,7 +210,7 @@
                                         <span class="pull-right">Payment 3</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment3, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment3, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('3')" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -565,7 +565,7 @@
             ValidateWHTAmountPercent();
             ValidateVATAmountPercent();
             CalTotalAmount();
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
         }
 
         function ValidateWHTPercent() {
@@ -596,7 +596,7 @@
                 $('#WHTAmount').val('')
             }
             CalTotalAmount();
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
         }
 
         function ValidateVATAmountPercent() {
@@ -611,7 +611,7 @@
                 $('#VATAmount').val('');
             }
             CalTotalAmount();
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
         }
 
         function CalTotalAmount() {
@@ -662,11 +662,11 @@
                 $('#TotalAmount').val(total);
 
             }
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
 
         }
 
-        function CalculateBalanceAmount() {
+        function CalculateBalanceAmount(type) {
             var TotalAmount = parseFloat($('#TotalAmount').val());
             parseInt($('#BalanceAmount').val(TotalAmount.toFixed()));
             if (isNaN(TotalAmount)) {
@@ -676,13 +676,14 @@
             var Payment1 = parseInt($('#Payment1').val());
             var Payment2 = parseInt($('#Payment2').val());
             var Payment3 = parseInt($('#Payment3').val());
-            if (BalanceAmount && Payment1) {
+            debugger;
+            if (BalanceAmount && Payment1 && (type == '1' || type=='')) {
                 $('#Payment1Date').removeAttr('disabled');
                 $('#Payment1Type').removeAttr('disabled');
                 var p1 = BalanceAmount - Payment1;
                 parseInt($('#BalanceAmount').val(p1));
             }
-            else {
+            else if (isNaN(Payment1)){
                 $('#Payment1Date').val('');
                 $('#Payment1Type').val('');
                 $('#ChequeNo1').val('');
@@ -690,13 +691,14 @@
                 $('#Payment1Date').attr('disabled', 'disabled');
                 $('#Payment1Type').attr('disabled', 'disabled');
             }
-            if (BalanceAmount && Payment2) {
+
+            if (BalanceAmount && Payment2 && (type == '2' || type=='')) {
                 $('#Payment2Date').removeAttr('disabled');
                 $('#Payment2Type').removeAttr('disabled');
                 var p2 = BalanceAmount - Payment2;
                 parseInt($('#BalanceAmount').val(p2));
             }
-            else {
+            else if (isNaN(Payment2)){
                 $('#Payment2Date').val('');
                 $('#Payment2Type').val('');
                 $('#ChequeNo2').val('');
@@ -704,13 +706,14 @@
                 $('#Payment2Date').attr('disabled', 'disabled');
                 $('#Payment2Type').attr('disabled', 'disabled');
             }
-            if (BalanceAmount && Payment3) {
+
+            if (BalanceAmount && Payment3 && (type == '3' || type=='')) {
                 $('#Payment3Date').removeAttr('disabled');
                 $('#Payment3Type').removeAttr('disabled');
                 var p3 = BalanceAmount - Payment3;
                 parseInt($('#BalanceAmount').val(p3));
             }
-            else {
+            else if (isNaN(Payment3)){
                 $('#Payment3Date').val('');
                 $('#Payment3Type').val('');
                 $('#ChequeNo3').val('');

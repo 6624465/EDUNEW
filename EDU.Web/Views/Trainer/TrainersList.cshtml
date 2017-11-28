@@ -7,6 +7,12 @@
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
     grid.Pager(WebGridPagerModes.All);
 }
+@functions {
+    public string CheckString(string remarks)
+    {
+        return remarks.Replace(System.Environment.NewLine, "<br/>");
+    }
+}
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -31,9 +37,40 @@
                     grid.Column("Profile", "Profile", canSort: true),
                     grid.Column("TrainerRate", "Trainer Rate", format: (item) => new HtmlString("$" + Convert.ToInt64(item.TrainerRate)), canSort: true),
                     grid.Column("VendorName", "Vendor Name", canSort: true),
-                    grid.Column("Address", "Address", canSort: true),
+
+                    grid.Column("Address", "Address", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:140px;'>
+                                        @if (item.Address != null && item.Address.ToString().Length > 20)
+                                        {
+                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Address" data-content="@CheckString(item.Address)" data-original-title="" title="">@item.Address.ToString().Substring(0, 20)...</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.Address</span>
+                                        }
+                                    </div>
+                                </text>),
                     grid.Column("Contact", "Contact", canSort: true),
-                    grid.Column("Remarks", "Remarks", canSort: true),
+                    grid.Column("Remarks", "Remarks", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:140px;'>
+                                        @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
+                                        {
+                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.Remarks</span>
+                                        }
+                                    </div>
+                                </text>),
                     grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
@@ -59,11 +96,6 @@
 </div>
 @section SectionScripts{
     <script type="text/javascript">
-        //$(function () {
-        //    $('#tblTrainer').DataTable();
-        //});
-
-
         function DeleteTrainer(id) {
             if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
@@ -71,17 +103,23 @@
                     type: 'POST',
                     contentType: 'application/json',
                     success: function (data) {
-
                         alert("Deleted Successfully");
                         if (data) {
                             location.reload();
                         }
                     },
                     error: function (e) {
-
                     }
                 });
             }
+        }
+
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            $(el).popover("show");
         }
     </script>
 

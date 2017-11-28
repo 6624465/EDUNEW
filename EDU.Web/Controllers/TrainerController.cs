@@ -218,8 +218,8 @@ namespace EDU.Web.Controllers
                 trainingConfirmationVM.TrainingConfirmationID = item.TrainingConfirmationID;
                 trainingConfirmationVM.Product = item.Product;
                 trainingConfirmationVM.Course = item.Course;
-                trainingConfirmationVM.ProductName = new EduProductBO().GetList().Where(x => x.Id == item.Product).FirstOrDefault().ProductName;
-                trainingConfirmationVM.CourseName = new CourseBO().GetList().Where(x => x.Id == item.Course).FirstOrDefault().CourseName;
+                trainingConfirmationVM.ProductName = new EduProductBO().GetList().Where(x => x.Id == item.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == item.Product).FirstOrDefault().ProductName : "";
+                trainingConfirmationVM.CourseName = new CourseBO().GetList().Where(x => x.Id == item.Course).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == item.Course).FirstOrDefault().CourseName : "";
                 trainingConfirmationVM.TotalNoOfDays = item.TotalNoOfDays;
                 trainingConfirmationVM.NoOfStudents = item.NoOfStudents;
                 trainingConfirmationVM.Private = item.Private;
