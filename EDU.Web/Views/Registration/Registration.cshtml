@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var Student = Model.Payment1Date;
 }
 @{
     var listItems = new List<SelectListItem>()
@@ -136,7 +137,7 @@
                                         <span class="pull-right">Payment 1 Date</span>
                                     </label>
                                     <div class="col-md-2">
-                                        <div class="input-group date" id="StartDt">
+                                        <div class="input-group date" id="Payment1Dt">
                                             @Html.TextBoxFor(x => x.Payment1Date, new { @class = "form-control dtCss" })
                                             <span class="input-group-addon">
                                                 <i class="ion ion-calendar"></i>
@@ -179,7 +180,7 @@
                                         <span class="pull-right">Payment 2 Date</span>
                                     </label>
                                     <div class="col-md-2">
-                                        <div class="input-group date" id="StartDt2">
+                                        <div class="input-group date" id="Payment2Dt">
                                             @Html.TextBoxFor(x => x.Payment2Date, new { @class = "form-control dtCss" })
                                             <span class="input-group-addon">
                                                 <i class="ion ion-calendar"></i>
@@ -222,7 +223,7 @@
                                         <span class="pull-right">Payment 3 Date</span>
                                     </label>
                                     <div class="col-md-2">
-                                        <div class="input-group date" id="StartDt3">
+                                        <div class="input-group date" id="Payment3Dt">
                                             @Html.TextBoxFor(x => x.Payment3Date, new { @class = "form-control dtCss" })
                                             <span class="input-group-addon">
                                                 <i class="ion ion-calendar"></i>
@@ -266,7 +267,7 @@
     <script type="text/javascript">
 
         $(function () {
-            $('#StartDt,#StartDt2,#StartDt3').datetimepicker({
+            $('#Payment1Dt,#Payment2Dt,#Payment3Dt').datetimepicker({
                 icons: {
                     time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
@@ -298,6 +299,27 @@
 
             @if (Model.RegistrationId != -1)
             {
+                if (Model.Payment1Date != null)
+                {
+                <text>
+                    $('#Payment1Date').val('@Model.Payment1Date.Value.ToString("dd/MM/yyyy")');
+                </text>
+                }
+
+                if (Model.Payment2Date != null)
+                {
+                <text>
+                    $('#Payment2Date').val('@Model.Payment2Date.Value.ToString("dd/MM/yyyy")');
+                </text>
+                }
+
+                if (Model.Payment3Date != null)
+                {
+                <text>
+                    $('#Payment3Date').val('@Model.Payment3Date.Value.ToString("dd/MM/yyyy")');
+                </text>
+                }
+
                 if (Model.Payment1Type != null && Model.Payment1Type.Value != 1)
                 {
                 <text>
@@ -472,7 +494,7 @@
                 },
                 'Contact': {
                     required: true,
-                    maxlength: 12   
+                    maxlength: 12
                 },
                 'Payment1Type': {
                     Payment1: true
