@@ -112,15 +112,15 @@ namespace EDU.Web.Controllers
         }
 
 
-        [HttpGet]
-        public JsonResult GetCurrency(Int16 Id)
-        {
-            var country = new BranchBO().GetList().Where(x => x.IsActive == true && x.BranchID == Id).FirstOrDefault();
-            var currencyCode = new LookupBO().GetList().Where(x => x.LookupCategory == "Currency" && x.MappingCode == country.BranchCode).FirstOrDefault();
+        //[HttpGet]
+        //public JsonResult GetCurrency(Int16 Id)
+        //{
+        //    var country = new BranchBO().GetList().Where(x => x.IsActive == true && x.BranchID == Id).FirstOrDefault();
+        //    var currencyCode = new LookupBO().GetList().Where(x => x.LookupCategory == "Currency" && x.MappingCode == country.BranchCode).FirstOrDefault();
 
-            return Json(currencyCode == null ? "" : currencyCode.LookupCode, JsonRequestBehavior.AllowGet);
+        //    return Json(currencyCode == null ? "" : currencyCode.LookupCode, JsonRequestBehavior.AllowGet);
 
-        }
+        //}
 
         [HttpGet]
         public ActionResult RevenueList(Int16 country, int year)
