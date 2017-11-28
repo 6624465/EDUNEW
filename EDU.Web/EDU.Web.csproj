@@ -1573,6 +1573,7 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseDetailController.cs" />
+    <Compile Include="Controllers\FinancialTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
@@ -1728,6 +1729,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ViewModels\RevenueModel\" />
+    <Folder Include="Views\FinancialTransaction\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EDU.BusinessFactory\EDU.BusinessFactory.csproj">
