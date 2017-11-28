@@ -21,7 +21,7 @@ namespace EDU.Web.Controllers
         {
             RegistrationVM result = new RegistrationVM();
             result = getListData(trainingConfirmationID);
-            
+
             return View(result);
         }
 
@@ -38,8 +38,8 @@ namespace EDU.Web.Controllers
                 TrainingConfirmDtl tcd = new TrainingConfirmDtl();
                 if (tcdtl != null)
                 {
-                    string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName;
-                    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault().CourseName;
+                    string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
+                    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault().CourseName : "";
                     tcd = new TrainingConfirmDtl()
                     {
                         Id = tcdtl.Id,
@@ -107,7 +107,7 @@ namespace EDU.Web.Controllers
             {
                 throw ex;
             }
-           return result;
+            return result;
         }
 
         private List<Registration> GetList(string trainingConfirmationID)

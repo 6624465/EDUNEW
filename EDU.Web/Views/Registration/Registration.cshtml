@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var Student = Model.Payment1Date;
 }
 @{
     var listItems = new List<SelectListItem>()
@@ -77,7 +78,7 @@
                                         @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTAmount, "{0:#.#}", new { @class = "form-control", @disabled = "disabled" })
+                                        @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">VAT/TAX</span>
@@ -86,7 +87,7 @@
                                         @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss", onkeyup = "ValidateVATPercent();ValidateVATAmountPercent()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.VATAmount, "{0:#.#}", new { @class = "form-control", @disabled = "disabled" })
+                                        @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control", @disabled = "disabled" })
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +109,7 @@
                                         <span class="pull-right">Total Amount</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TotalAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TotalAmount, new { @class = "form-control numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Balance Amount</span>
@@ -124,7 +125,7 @@
                                         <span class="pull-right">Payment 1</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment1, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment1, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('1')" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -136,7 +137,7 @@
                                         <span class="pull-right">Payment 1 Date</span>
                                     </label>
                                     <div class="col-md-2">
-                                        <div class="input-group date" id="StartDt">
+                                        <div class="input-group date" id="Payment1Dt">
                                             @Html.TextBoxFor(x => x.Payment1Date, new { @class = "form-control dtCss" })
                                             <span class="input-group-addon">
                                                 <i class="ion ion-calendar"></i>
@@ -167,7 +168,7 @@
                                         <span class="pull-right">Payment 2</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment2, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment2, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('2')" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -179,7 +180,7 @@
                                         <span class="pull-right">Payment 2 Date</span>
                                     </label>
                                     <div class="col-md-2">
-                                        <div class="input-group date" id="StartDt2">
+                                        <div class="input-group date" id="Payment2Dt">
                                             @Html.TextBoxFor(x => x.Payment2Date, new { @class = "form-control dtCss" })
                                             <span class="input-group-addon">
                                                 <i class="ion ion-calendar"></i>
@@ -210,7 +211,7 @@
                                         <span class="pull-right">Payment 3</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment3, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment3, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('3')" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -222,7 +223,7 @@
                                         <span class="pull-right">Payment 3 Date</span>
                                     </label>
                                     <div class="col-md-2">
-                                        <div class="input-group date" id="StartDt3">
+                                        <div class="input-group date" id="Payment3Dt">
                                             @Html.TextBoxFor(x => x.Payment3Date, new { @class = "form-control dtCss" })
                                             <span class="input-group-addon">
                                                 <i class="ion ion-calendar"></i>
@@ -266,14 +267,15 @@
     <script type="text/javascript">
 
         $(function () {
-            $('#StartDt,#StartDt2,#StartDt3').datetimepicker({
+            $('#Payment1Dt,#Payment2Dt,#Payment3Dt').datetimepicker({
                 icons: {
                     time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
                     up: 'fa fa-arrow-up',
                     down: 'fa fa-arrow-down'
                 },
-                //minDate: new Date(),
+                minDate: new Date(),
+                //maxDate: new Date(),
                 format: 'DD/MM/YYYY'
             });
 
@@ -285,32 +287,59 @@
             $('#Payment1').attr('disabled', 'disabled');
             $('#Payment2').attr('disabled', 'disabled');
             $('#Payment3').attr('disabled', 'disabled');
+            $('#Payment1Date').attr('disabled', 'disabled');
+            $('#Payment2Date').attr('disabled', 'disabled');
+            $('#Payment3Date').attr('disabled', 'disabled');
+            $('#Payment1Type').attr('disabled', 'disabled');
+            $('#Payment2Type').attr('disabled', 'disabled');
+            $('#Payment3Type').attr('disabled', 'disabled');
             $('#cheque1').hide();
             $('#cheque2').hide();
             $('#cheque3').hide();
 
             @if (Model.RegistrationId != -1)
             {
+                if (Model.Payment1Date != null)
+                {
+                <text>
+                    $('#Payment1Date').val('@Model.Payment1Date.Value.ToString("dd/MM/yyyy")');
+                </text>
+                }
+
+                if (Model.Payment2Date != null)
+                {
+                <text>
+                    $('#Payment2Date').val('@Model.Payment2Date.Value.ToString("dd/MM/yyyy")');
+                </text>
+                }
+
+                if (Model.Payment3Date != null)
+                {
+                <text>
+                    $('#Payment3Date').val('@Model.Payment3Date.Value.ToString("dd/MM/yyyy")');
+                </text>
+                }
+
                 if (Model.Payment1Type != null && Model.Payment1Type.Value != 1)
                 {
                 <text>
-                    $('#lblbanktransfer').hide();
-                    $('#lblCheque').hide();
-                    @if (Model.Payment1Type.Value == 2)
+            $('#lblbanktransfer').hide();
+            $('#lblCheque').hide();
+            @if (Model.Payment1Type.Value == 2)
                     {
                     <text>
-                        $('#lblCheque').show();
-                        $('#cheque1').show();
-                    </text>
+            $('#lblCheque').show();
+            $('#cheque1').show();
+            </text>
                     }
-                    @if (Model.Payment1Type.Value == 3)
+            @if (Model.Payment1Type.Value == 3)
                     {
                     <text>
-                        $('#lblbanktransfer').show();
-                        $('#cheque1').show();
-                    </text>
+            $('#lblbanktransfer').show();
+            $('#cheque1').show();
+            </text>
                     }
-                </text>
+            </text>
                 }
 
                 if (Model.Payment2Type != null )
@@ -318,96 +347,96 @@
                     if (Model.Payment2Type.Value != 1)
                     {
                     <text>
-                        $('#lblbanktransfer2').hide();
-                        $('#lblCheque2').hide();
-                        @if (Model.Payment2Type.Value == 2)
+            $('#lblbanktransfer2').hide();
+            $('#lblCheque2').hide();
+            @if (Model.Payment2Type.Value == 2)
                         {
                         <text>
-                            $('#lblCheque2').show();
-                            $('#cheque2').show();
-                        </text>
+            $('#lblCheque2').show();
+            $('#cheque2').show();
+            </text>
                         }
-                        @if (Model.Payment2Type.Value == 3)
+            @if (Model.Payment2Type.Value == 3)
                         {
                         <text>
-                            $('#lblbanktransfer2').show();
-                            $('#cheque2').show();
-                        </text>
+            $('#lblbanktransfer2').show();
+            $('#cheque2').show();
+            </text>
                         }
-                    </text>
+            </text>
                     }
                 }
                 else
                 {
                     <text>
-                            $('#Payment2Type').val('');
-                    </text>
+            $('#Payment2Type').val('');
+            </text>
                 }
                 if (Model.Payment3Type != null)
                 {
                     if (Model.Payment3Type.Value != 1)
                     {
                     <text>
-                        $('#lblbanktransfer3').hide();
-                        $('#lblCheque3').hide();
-                        @if (Model.Payment3Type.Value == 2)
+            $('#lblbanktransfer3').hide();
+            $('#lblCheque3').hide();
+            @if (Model.Payment3Type.Value == 2)
                         {
                         <text>
-                            $('#lblCheque3').show();
-                            $('#cheque3').show();
-                        </text>
+            $('#lblCheque3').show();
+            $('#cheque3').show();
+            </text>
                         }
-                        @if (Model.Payment3Type.Value == 3)
+            @if (Model.Payment3Type.Value == 3)
                         {
                         <text>
-                            $('#lblbanktransfer3').show();
-                            $('#cheque3').show();
-                        </text>
+            $('#lblbanktransfer3').show();
+            $('#cheque3').show();
+            </text>
                         }
-                    </text>
+            </text>
                     }
                 }
                 else
                 {
                     <text>
-                            $('#Payment3Type').val('');
-                    </text>
+            $('#Payment3Type').val('');
+            </text>
                 }
 
             <text>
-                $('#Amount').attr('disabled', 'disabled')
-                $('#Payment1').removeAttr('disabled', 'disabled');
-                $('#Payment2').removeAttr('disabled', 'disabled');
-                $('#Payment3').removeAttr('disabled', 'disabled');
+            $('#Amount').attr('disabled', 'disabled')
+            $('#Payment1').removeAttr('disabled');
+            $('#Payment2').removeAttr('disabled');
+            $('#Payment3').removeAttr('disabled');
 
-                @if (Model.Payment1 != null)
+            @if (Model.Payment1 != null)
                 {
                 <text>
-                $('#Payment1').attr('disabled', 'disabled');
-                $('#Payment1Type').attr('disabled', 'disabled');
-                $('#Payment1Date').attr('disabled', 'disabled');
-                $('#ChequeNo1').attr('disabled', 'disabled');
-                </text>
+            $('#Payment1').attr('disabled', 'disabled');
+            $('#Payment1Type').attr('disabled', 'disabled');
+            $('#Payment1Date').attr('disabled', 'disabled');
+            $('#ChequeNo1').attr('disabled', 'disabled');
+            </text>
                 }
 
-                @if(Model.Payment2 != null)
+            @if(Model.Payment2 != null)
                 {
                 <text>
-                $('#Payment2').attr('disabled', 'disabled');
-                $('#Payment2Type').attr('disabled', 'disabled');
-                $('#Payment2Date').attr('disabled', 'disabled');
-                $('#ChequeNo2').attr('disabled', 'disabled');
-                </text>
+            $('#Payment2').attr('disabled', 'disabled');
+            $('#Payment2Type').attr('disabled', 'disabled');
+            $('#Payment2Date').attr('disabled', 'disabled');
+            $('#ChequeNo2').attr('disabled', 'disabled');
+            </text>
                 }
 
-                @if(Model.Payment3!=null)
+            @if(Model.Payment3!=null)
                 {
                 <text>
-                $('#Payment3').attr('disabled', 'disabled');
-                $('#Payment3Type').attr('disabled', 'disabled');
-                $('#Payment3Date').attr('disabled', 'disabled');
-                $('#ChequeNo3').attr('disabled', 'disabled');
-                </text>
+            $('#Payment3').attr('disabled', 'disabled');
+            $('#Payment3Type').attr('disabled', 'disabled');
+            $('#Payment3Date').attr('disabled', 'disabled');
+            $('#ChequeNo3').attr('disabled', 'disabled');
+            </text>
                 }
             </text>
             }
@@ -420,26 +449,26 @@
         };
 
         function RemoveDisabledFields() {
-            $('#Amount').removeAttr('disabled', 'disabled')
-            $('#WHTAmount').removeAttr('disabled', 'disabled');
-            $('#VATAmount').removeAttr('disabled', 'disabled');
-            $('#WHTPercent').removeAttr('disabled', 'disabled');
-            $('#VATPercent').removeAttr('disabled', 'disabled');
-            $('#OtherDeductionsAmount').removeAttr('disabled', 'disabled');
-            $('#Payment1').removeAttr('disabled', 'disabled');
-            $('#Payment1Type').removeAttr('disabled', 'disabled');
-            $('#Payment1Date').removeAttr('disabled', 'disabled');
-            $('#ChequeNo1').removeAttr('disabled', 'disabled');
-            $('#Payment2').removeAttr('disabled', 'disabled');
-            $('#Payment2Type').removeAttr('disabled', 'disabled');
-            $('#Payment2Date').removeAttr('disabled', 'disabled');
-            $('#ChequeNo2').removeAttr('disabled', 'disabled');
-            $('#Payment3').removeAttr('disabled', 'disabled');
-            $('#Payment3Type').removeAttr('disabled', 'disabled');
-            $('#Payment3Date').removeAttr('disabled', 'disabled');
-            $('#ChequeNo3').removeAttr('disabled', 'disabled');
-            $('#TotalAmount').removeAttr('disabled', 'disabled');
-            $('#BalanceAmount').removeAttr('disabled', 'disabled');
+            $('#Amount').removeAttr('disabled')
+            $('#WHTAmount').removeAttr('disabled');
+            $('#VATAmount').removeAttr('disabled');
+            $('#WHTPercent').removeAttr('disabled');
+            $('#VATPercent').removeAttr('disabled');
+            $('#OtherDeductionsAmount').removeAttr('disabled');
+            $('#Payment1').removeAttr('disabled');
+            $('#Payment1Type').removeAttr('disabled');
+            $('#Payment1Date').removeAttr('disabled');
+            $('#ChequeNo1').removeAttr('disabled');
+            $('#Payment2').removeAttr('disabled');
+            $('#Payment2Type').removeAttr('disabled');
+            $('#Payment2Date').removeAttr('disabled');
+            $('#ChequeNo2').removeAttr('disabled');
+            $('#Payment3').removeAttr('disabled');
+            $('#Payment3Type').removeAttr('disabled');
+            $('#Payment3Date').removeAttr('disabled');
+            $('#ChequeNo3').removeAttr('disabled');
+            $('#TotalAmount').removeAttr('disabled');
+            $('#BalanceAmount').removeAttr('disabled');
         }
         function SaveRegistration() {
             if ($('#frmRegistration').valid()) {
@@ -464,7 +493,8 @@
                     required: true
                 },
                 'Contact': {
-                    required: true
+                    required: true,
+                    maxlength: 12
                 },
                 'Payment1Type': {
                     Payment1: true
@@ -483,6 +513,15 @@
                 },
                 'Payment3Date': {
                     Payment3: true
+                },
+                'ChequeNo1': {
+                    maxlength: 12
+                },
+                'ChequeNo2': {
+                    maxlength: 12
+                },
+                'ChequeNo3': {
+                    maxlength: 12
                 }
             }
         });
@@ -520,12 +559,18 @@
         function CalculateamountDisabled() {
             var Amount = parseInt($('#Amount').val());
             if (Amount != null && !isNaN(Amount) && Amount != 0) {
-                $('#WHTPercent').removeAttr('disabled', 'disabled');
-                $('#VATPercent').removeAttr('disabled', 'disabled');
-                $('#OtherDeductionsAmount').removeAttr('disabled', 'disabled');
-                $('#Payment1').removeAttr('disabled', 'disabled');
-                $('#Payment2').removeAttr('disabled', 'disabled');
-                $('#Payment3').removeAttr('disabled', 'disabled');
+                $('#WHTPercent').removeAttr('disabled');
+                $('#VATPercent').removeAttr('disabled');
+                $('#OtherDeductionsAmount').removeAttr('disabled');
+                $('#Payment1').removeAttr('disabled');
+                $('#Payment2').removeAttr('disabled');
+                $('#Payment3').removeAttr('disabled');
+                $('#Payment1Date').removeAttr('disabled');
+                $('#Payment2Date').removeAttr('disabled');
+                $('#Payment3Date').removeAttr('disabled');
+                $('#Payment1Type').removeAttr('disabled');
+                $('#Payment2Type').removeAttr('disabled');
+                $('#Payment3Type').removeAttr('disabled');
             }
             else {
 
@@ -545,7 +590,7 @@
             ValidateWHTAmountPercent();
             ValidateVATAmountPercent();
             CalTotalAmount();
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
         }
 
         function ValidateWHTPercent() {
@@ -576,7 +621,7 @@
                 $('#WHTAmount').val('')
             }
             CalTotalAmount();
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
         }
 
         function ValidateVATAmountPercent() {
@@ -591,82 +636,115 @@
                 $('#VATAmount').val('');
             }
             CalTotalAmount();
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
         }
 
         function CalTotalAmount() {
 
-            var Amount = parseInt($('#Amount').val());
+            var Amount = parseFloat($('#Amount').val());
             var WHT = parseInt($('#WHTPercent').val());
             var VAT = parseInt($('#VATPercent').val());
-            var OtherDeductionsAmount = parseInt($('#OtherDeductionsAmount').val());
+            var OtherDeductionsAmount = parseFloat($('#OtherDeductionsAmount').val());
             if (Amount) {
                 $('#TotalAmount').val(Amount);
             }
             if (Amount && WHT) {
-                var WHTAmount = parseInt(Amount * WHT / 100);
-                var total = parseInt(Amount - WHTAmount);
+                var WHTAmount = parseFloat(Amount * (WHT / 100));
+                var total = parseFloat(Amount - WHTAmount);
                 $('#TotalAmount').val(total);
             }
             if (Amount && VAT) {
-                var VATAmount = parseInt(Amount * VAT / 100);
-                var total = parseInt(Amount + VATAmount);
+                var VATAmount = parseFloat(Amount * (VAT / 100));
+                var total = parseFloat(Amount + VATAmount);
                 $('#TotalAmount').val(total);
             }
             if (Amount && OtherDeductionsAmount) {
-                var total = parseInt(Amount - OtherDeductionsAmount);
+                var total = parseFloat(Amount - OtherDeductionsAmount);
                 $('#TotalAmount').val(total);
             }
             if (Amount && OtherDeductionsAmount && WHT) {
-                var WHTAmount = parseInt(Amount * WHT / 100);
-                var total = parseInt(Amount - (WHTAmount + OtherDeductionsAmount));
+                var WHTAmount = parseFloat(Amount * (WHT / 100));
+                var total = parseFloat(Amount - (WHTAmount + OtherDeductionsAmount));
                 $('#TotalAmount').val(total);
             }
             if (Amount && OtherDeductionsAmount && VAT) {
-                var VATAmount = parseInt(Amount * VAT / 100);
-                var total = parseInt(Amount + VATAmount + -OtherDeductionsAmount);
+                var VATAmount = parseFloat(Amount * (VAT / 100));
+                var total = parseFloat(Amount + VATAmount - OtherDeductionsAmount);
                 $('#TotalAmount').val(total);
             }
             if (Amount && WHT && VAT) {
-                var WHTAmount = parseInt(Amount * WHT / 100);
-                var VATAmount = parseInt(Amount * VAT / 100);
-                var total = parseInt(Amount + VATAmount - WHTAmount);
+                var WHTAmount = parseFloat(Amount * (WHT / 100));
+                var VATAmount = parseFloat(Amount * (VAT / 100));
+                var total = parseFloat(Amount + VATAmount - WHTAmount);
                 $('#TotalAmount').val(total);
 
             }
 
             if (Amount && WHT && VAT && OtherDeductionsAmount) {
-                var WHTAmount = parseInt(Amount * WHT / 100);
-                var VATAmount = parseInt(Amount * VAT / 100);
-                var total = parseInt(Amount + VATAmount - (WHTAmount + OtherDeductionsAmount));
+                var WHTAmount = parseFloat(Amount * (WHT / 100));
+                var VATAmount = parseFloat(Amount * (VAT / 100));
+                var total = parseFloat(Amount + VATAmount - (WHTAmount + OtherDeductionsAmount));
                 $('#TotalAmount').val(total);
 
             }
-            CalculateBalanceAmount();
+            CalculateBalanceAmount('');
 
         }
 
-        function CalculateBalanceAmount() {
-            var TotalAmount = parseInt($('#TotalAmount').val());
-            parseInt($('#BalanceAmount').val(TotalAmount));
+        function CalculateBalanceAmount(type) {
+            var TotalAmount = parseFloat($('#TotalAmount').val());
+            parseInt($('#BalanceAmount').val(TotalAmount.toFixed()));
             if (isNaN(TotalAmount)) {
                 $('#BalanceAmount').val('')
             }
-            var BalanceAmount = TotalAmount;
+            var BalanceAmount = TotalAmount.toFixed();
             var Payment1 = parseInt($('#Payment1').val());
             var Payment2 = parseInt($('#Payment2').val());
             var Payment3 = parseInt($('#Payment3').val());
-            if (BalanceAmount && Payment1) {
+            debugger;
+            if (BalanceAmount && Payment1 && (type == '1' || type=='')) {
+                $('#Payment1Date').removeAttr('disabled');
+                $('#Payment1Type').removeAttr('disabled');
                 var p1 = BalanceAmount - Payment1;
                 parseInt($('#BalanceAmount').val(p1));
             }
-            if (BalanceAmount && Payment2) {
+            else if (isNaN(Payment1)){
+                $('#Payment1Date').val('');
+                $('#Payment1Type').val('');
+                $('#ChequeNo1').val('');
+                $('#cheque1').hide();
+                $('#Payment1Date').attr('disabled', 'disabled');
+                $('#Payment1Type').attr('disabled', 'disabled');
+            }
+
+            if (BalanceAmount && Payment2 && (type == '2' || type=='')) {
+                $('#Payment2Date').removeAttr('disabled');
+                $('#Payment2Type').removeAttr('disabled');
                 var p2 = BalanceAmount - Payment2;
                 parseInt($('#BalanceAmount').val(p2));
             }
-            if (BalanceAmount && Payment3) {
+            else if (isNaN(Payment2)){
+                $('#Payment2Date').val('');
+                $('#Payment2Type').val('');
+                $('#ChequeNo2').val('');
+                $('#cheque2').hide();
+                $('#Payment2Date').attr('disabled', 'disabled');
+                $('#Payment2Type').attr('disabled', 'disabled');
+            }
+
+            if (BalanceAmount && Payment3 && (type == '3' || type=='')) {
+                $('#Payment3Date').removeAttr('disabled');
+                $('#Payment3Type').removeAttr('disabled');
                 var p3 = BalanceAmount - Payment3;
                 parseInt($('#BalanceAmount').val(p3));
+            }
+            else if (isNaN(Payment3)){
+                $('#Payment3Date').val('');
+                $('#Payment3Type').val('');
+                $('#ChequeNo3').val('');
+                $('#cheque3').hide();
+                $('#Payment3Date').attr('disabled', 'disabled');
+                $('#Payment3Type').attr('disabled', 'disabled');
             }
             if (BalanceAmount && Payment1 && Payment2) {
                 var p = BalanceAmount - Payment1 - Payment2;

@@ -183,8 +183,8 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
-                                      new { @class = "form-control" , @style = "overflow-y: scroll" })
-                                     
+                                      new { @class = "form-control", @style = "overflow-y: scroll" })
+
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Registration Details</span>
@@ -321,7 +321,15 @@
             @if (Model.courseSalesMaster.Id != -1)
             {
                 <text>
-            $('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
+                        @if (Model.courseSalesMaster.StartDate != null) {
+                            <text>$('#courseSalesMaster_StartDate').val('@Model.courseSalesMaster.StartDate.Value.ToString("dd/MM/yyyy")');</text>
+                        }
+
+                     @if (Model.courseSalesMaster.EndDate != null) {
+                        <text>$('#courseSalesMaster_EndDate').val('@Model.courseSalesMaster.EndDate.Value.ToString("dd/MM/yyyy")');</text>
+                     }
+                    $('#courseSalesMaster_RegClosingDate').val('@Model.courseSalesMaster.RegClosingDate.Value.ToString("dd/MM/yyyy")');
+                    $('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
 
             </text>
             }
@@ -600,7 +608,7 @@
                 $('#courseSalesMaster_AvailableSeats').val('');
             }
         }
-       
+
     </script>
 
 }

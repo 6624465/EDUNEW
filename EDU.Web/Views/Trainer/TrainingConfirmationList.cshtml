@@ -81,7 +81,7 @@
                                 format:
                                 @<text>
                                     <div style='width:140px;'>
-                                        @if (item.CourseName.ToString().Length > 20)
+                                        @if (item.CourseName != null && item.CourseName.ToString().Length > 20)
                                         { <a style="cursor:pointer;text-decoration:underline;">
                                             <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Course Name" data-content="@(item.CourseName)" data-original-title="" title="">@item.CourseName.ToString().Substring(0, 20)...</span>
                                         </a>
@@ -100,8 +100,8 @@
                                     </div>
                                 </text>, style: "center"),
                     grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>, canSort: true),
-                    grid.Column("StartDate", "Start Date", format:@<text> @item.StartDate.ToString("MM/dd/yyyy")</text>, canSort: true),
-                    grid.Column("EndDate", "End Date", format:@<text> @item.EndDate.ToString("MM/dd/yyyy")</text>, canSort: true),
+                    grid.Column("StartDate", "Start Date", format:@<text> @item.StartDate.ToString("dd/MM/yyyy")</text>, canSort: true),
+                    grid.Column("EndDate", "End Date", format:@<text> @item.EndDate.ToString("dd/MM/yyyy")</text>, canSort: true),
                     grid.Column("TotalNoOfDays", "Total # of days", canSort: true,
                                 format:
                                 @<text>
