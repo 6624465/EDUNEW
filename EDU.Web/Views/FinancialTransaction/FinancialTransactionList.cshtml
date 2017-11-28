@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EDU.Web.Models.TrainingConfirmation>
+﻿@model EDU.Web.ViewModels.FinancialTransactionModel.FinancialTransactionVM
 
 @{
     ViewBag.Title = "FinancialTransactionList";
@@ -25,24 +25,25 @@
                             <span>Event No.</span>
                         </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(x => x.FirstOrDefault().TrainingConfirmationID,
-                                 new SelectList((List<EDU.Web.Models.TrainingConfirmation>)ViewData["TrainingConfirmation"], "TrainingConfirmationID", "TrainingConfirmationID"),
+                            <input type="hidden" id="eventid" name="eventid" />
+                            @Html.DropDownListFor(x => x.financialTransaction.TrainingConfirmationID,
+                                 new SelectList(Model.trainingConfirmationList, "TrainingConfirmationID", "TrainingConfirmationID"),
                                  "Select Event No.", new { @class = "form-control", onchange = "ChangeEventID(this);" })
                         </div>
                         <label class="col-md-1 control-label">
                             <span>Currency</span>
                         </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(x => x.FirstOrDefault().TrainingConfirmationID,
-                             new SelectList((List<EZY.EDU.Contract.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
+                            @Html.DropDownListFor(x => x.financialTransaction.CurrencyCode,
+                             new SelectList(Model.currencyList, "LookupCode", "LookupCode"),
                              "Select Currency", new { @class = "form-control" })
                         </div>
                         <label class="col-md-1 control-label">
                             <span>Country</span>
                         </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(x => x.FirstOrDefault().TrainingConfirmationID,
-                             new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
+                            @Html.DropDownListFor(x => x.financialTransaction.Country,
+                             new SelectList(Model.countryList, "BranchID", "BranchName"),
                              "Select Country", new { @class = "form-control", onchange = "CountryChange(this);" })
                         </div>
                     </div>
@@ -50,7 +51,7 @@
                 <div class="row css10">
                     <div class="col-md-12">
                         @{
-                            var grid = new WebGrid(Model);
+                            var grid = new WebGrid(Model.financialTransactionDetailList);
                         }
                         <div id="gridContent">
                             @grid.GetHtml(
@@ -58,10 +59,10 @@
                                      mode: WebGridPagerModes.All,
                                      columns:
                                         grid.Columns(
-                                        grid.Column("Product", "DESCRIPTION"),
-                                        grid.Column("Course", "AMOUNT", format: @<text> <span class="display-mode"> @(item.Course > 0 ? Convert.ToInt64(item.Course) : "") </span>  <input type="text" name="Course" id="Course" value="@(item.Course > 0 ?Convert.ToInt64(item.Course) : "")" class="edit-mode numCss" /> </text>, style: ""),
-                                        grid.Column("TotalNoOfDays", "Reference Doc", format: @<text> <span class="display-mode"> @(item.TotalNoOfDays > 0 ? Convert.ToInt64(item.TotalNoOfDays) : "") </span>  <input type="file" name="TotalNoOfDays" id="TotalNoOfDays" value="@(item.TotalNoOfDays > 0 ?Convert.ToInt64(item.TotalNoOfDays) : "")" class="edit-mode numCss" /> </text>, style: ""),
-                                        grid.Column("NoOfStudents", "REMARKS", format: @<text> <span class="display-mode"> @(item.NoOfStudents > 0 ? Convert.ToInt64(item.NoOfStudents) : "") </span>  <input type="text" name="NoOfStudents" id="NoOfStudents" value="@(item.NoOfStudents > 0 ?Convert.ToInt64(item.NoOfStudents) : "")" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("DESCRIPTION", "DESCRIPTION"),
+                                        grid.Column("Amount", "Amount", format: @<text> <span class="display-mode"> @(item.Amount !=null ? Convert.ToInt64(item.Amount) : null) </span>  <input type="text" name="Amount" id="Amount" value="@(item.Amount !=null ?Convert.ToInt64(item.Amount) : null)" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("ReferenceDoc", "Reference Doc", format: @<text> <span class="display-mode"> @(item.ReferenceDoc !=null ? item.ReferenceDoc : null) </span>  <input type="file" name="ReferenceDoc" id="ReferenceDoc" value="@(item.ReferenceDoc != null ?item.ReferenceDoc : null)" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("Remarks", "Remarks", format: @<text> <span class="display-mode"> @(item.Remarks !=null ? item.NoOfStudents : null) </span>  <input type="text" name="Remarks" id="Remarks" value="@(item.Remarks !=null ? item.Remarks : null)" class="edit-mode numCss" /> </text>, style: ""),
                                         grid.Column("", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
@@ -84,9 +85,12 @@
 </form>
 @section SectionScripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-           
-        });
+
+        function ChangeEventID(el) {
+            $('#eventid').val(el.value);
+            window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+        };
+
         $(function () {
             debugger;
             $('.edit-mode').hide();
@@ -97,10 +101,10 @@
 
             $('.save-user').on('click',function()
             {
-               
+
             })
         });
-       
+
         function SaveFinancialTransaction()
         {
 
