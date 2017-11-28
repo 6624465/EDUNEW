@@ -116,7 +116,7 @@ namespace EDU.Web.Controllers
         //public JsonResult GetCurrency(Int16 Id)
         //{
         //    var country = new BranchBO().GetList().Where(x => x.IsActive == true && x.BranchID == Id).FirstOrDefault();
-        //    var currencyCode = new LookupBO().GetList().Where(x => x.LookupCategory == "Currency" && x.MappingCode == country.BranchCode).FirstOrDefault();
+        //    var currencyCode = dbContext.Lookups.Where(x => x.LookupCategory == "Currency" && x.MappingCode == country.BranchCode).FirstOrDefault();
 
         //    return Json(currencyCode == null ? "" : currencyCode.LookupCode, JsonRequestBehavior.AllowGet);
 
@@ -135,10 +135,10 @@ namespace EDU.Web.Controllers
             var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
 
             ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
-            ViewData["CurrencyList"] = new LookupBO().GetList().Where(x => x.LookupCategory == "Currency").ToList();
+            ViewData["CurrencyList"] = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
 
             var countryrow = ((List<Branch>)ViewData["CountryData"]).Where(x => x.IsActive == true && x.BranchID == country).FirstOrDefault();
-            var currencyCode = ((List<Lookup>)ViewData["CurrencyList"]).Where(x => x.LookupCategory == "Currency" && x.MappingCode == countryrow.BranchCode).FirstOrDefault();
+            var currencyCode = ((List<EDU.Web.Models.Lookup>)ViewData["CurrencyList"]).Where(x => x.LookupCategory == "Currency" && x.MappingCode == countryrow.BranchCode).FirstOrDefault();
 
             foreach (EduProduct ep in productList)
             {

@@ -1606,6 +1606,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EduEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\FinancialTransaction.cs">
+      <DependentUpon>EduEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FinancialTransactionDetail.cs">
+      <DependentUpon>EduEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Lookup.cs">
+      <DependentUpon>EduEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Registration.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
@@ -1622,6 +1631,7 @@
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
+    <Compile Include="ViewModels\FinancialTransaction\FinancialTransactionVM.cs" />
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
     <Compile Include="ViewModels\Registration\RegistrationVM.cs" />
     <Compile Include="ViewModels\Trainer\TrainingConfirmationVM.cs" />
