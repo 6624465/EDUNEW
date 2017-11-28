@@ -8,7 +8,8 @@ using System.Web.Mvc;
 
 namespace EDU.Web.Controllers
 {
-    public class FinancialTransactionController : Controller
+    [SessionFilter]
+    public class FinancialTransactionController : BaseController
     {
         EducationEntities dbContext = new EducationEntities();
 
