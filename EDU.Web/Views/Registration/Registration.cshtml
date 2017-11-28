@@ -124,7 +124,7 @@
                                         <span class="pull-right">Payment 1</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment1, new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment1, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -167,7 +167,7 @@
                                         <span class="pull-right">Payment 2</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment2, new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment2, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
@@ -210,7 +210,7 @@
                                         <span class="pull-right">Payment 3</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.Payment3, new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
+                                        @Html.TextBoxFor(x => x.Payment3, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount()" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment Type</span>
