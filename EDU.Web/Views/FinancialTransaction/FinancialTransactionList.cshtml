@@ -157,6 +157,18 @@
             {
             $("#financialTransaction_CurrencyCode").val('');
             }
-    };
+        };
+        function CalculateLocalAmount()
+        {
+            debugger;
+            var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
+            var Amount = parseInt($('#Amount').val());
+            var result = currencyrate * Amount;
+            $('#LocalAmount').val(result);
+            if(isNaN(Amount))
+            {
+                $('#LocalAmount').val('');
+            }
+        }
     </script>
 }

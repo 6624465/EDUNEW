@@ -28,7 +28,7 @@
                         <span class="pull-right">Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", @placeholder = "Amount" })
+                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", @placeholder= "Amount", onkeyup="CalculateLocalAmount()" })
                     </div>
                 </div>
             </div>
@@ -68,5 +68,9 @@
             </div>
         </div>
     </div>
-
 </div>
+@section SectionScripts {
+    <script type="text/javascript">
+        
+    </script>
+}
