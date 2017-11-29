@@ -6,6 +6,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    var grid = new WebGrid(Model.financialTransactionDetailList);
+}
+<style>
+    .centerbox {
+        margin: auto;
+        width: 100%;
+        border: 1px solid gray;
+        border-radius: 20px;
+    }
+
+    .center {
+        text-align: center !important;
+    }
+
+    .right {
+        text-align: right !important;
+    }
+
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        color: #D73925;
+        font-family: 'Bebas Neue'
+    }
+</style>
+
 @using (Html.BeginForm("SaveFinancialTransaction", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancial", name = "frmFinancial", enctype = "multipart/form-data" }))
 {
     <div class="page page-forms-elements">
@@ -54,9 +81,6 @@
                         </div>
                         <div class="row css10">
                             <div class="col-md-12">
-                                @{
-                                    var grid = new WebGrid(Model.financialTransactionDetailList);
-                                }
                                 <div id="gridContent">
                                     @grid.GetHtml(
                                      tableStyle: "table table-striped",
@@ -69,11 +93,11 @@
                                         grid.Column("ReferenceDoc", "Reference Doc"),
                                         grid.Column("Remarks", "Remarks"),
                                         grid.Column("", format: @<text>
-                                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                            {
-                                                <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                        {
+                                            <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
-                                            }
+                                        }
                                         </text>, style: "col3Width", canSort: false)
                                         ))
                                 </div>
@@ -91,7 +115,7 @@
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
-                                    }
+}
 @section SectionScripts {
     <script type="text/javascript">
 
@@ -101,6 +125,18 @@
                 $('.btn_edit').removeAttr('disabled');
             else
                 $('.btn_edit').attr('disabled', 'disabled');
+
+
+            @if (Model.financialTransaction.FinancialTransactionId!=-1)
+            {
+            <text>
+                var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
+                var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
+            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="pull-right">' + gp + '</span></td><td></td><td></td><td></td></tr>'+
+                '<tr class="bordertop"><td>P&L</td><td><span class="pull-right">' + pl + '%</span></td><td></td><td></td><td></td></tr>');
+            </text>
+            }
+
         });
 
         function ChangeEventID(el) {
