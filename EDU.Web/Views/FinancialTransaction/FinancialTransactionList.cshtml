@@ -29,7 +29,7 @@
         border-top: 2px solid gray !important;
         border-bottom: 2px solid gray !important;
         color: #D73925;
-        font-family: 'Bebas Neue'
+        font-family: 'Bebas Neue';
     }
 </style>
 
@@ -93,11 +93,11 @@
                                         grid.Column("ReferenceDoc", "Reference Doc"),
                                         grid.Column("Remarks", "Remarks"),
                                         grid.Column("", format: @<text>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                            {
+                                                <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
-                                        }
+                                            }
                                         </text>, style: "col3Width", canSort: false)
                                         ))
                                 </div>
@@ -162,28 +162,30 @@
         }
 
         function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, description, financialTransactionDetailId) {
-            var currencyExRate = $('#financialTransaction_CurrencyExRate').val();
+            debugger;
+            if($('#frmFinancial').valid())
+            {
+                var currencyExRate = $('#financialTransaction_CurrencyExRate').val();
+                $.ajax({
+                    url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&description=" + description
+                                        + "&currencyExRate=" + currencyExRate + "&financialTransactionDetailId=" + financialTransactionDetailId,
+                    method: 'get',
+                    contentType: 'text/html',
+                    success: function (html) {
+                        $('#myModal').html(html);
+                        $('#myModal').modal('show');
+                        if (descriptionId == 1050)
+                            $('#Amount').attr('disabled', 'disabled');
+                        else
+                            $('#Amount').removeAttr('disabled');
+                        CalculateLocalAmount();
+                    },
+                    error: function (err) {
 
+                    }
+                });
+            }
 
-            $.ajax({
-                url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&description=" + description
-                                    + "&currencyExRate=" + currencyExRate + "&financialTransactionDetailId=" + financialTransactionDetailId,
-                method: 'get',
-                contentType: 'text/html',
-                success: function (html) {
-                    $('#myModal').html(html);
-                    $('#myModal').modal('show');
-                    if (descriptionId == 1050)
-                        $('#Amount').attr('disabled', 'disabled');
-                    else
-                        $('#Amount').removeAttr('disabled');
-                    CalculateLocalAmount();
-                },
-                error: function (err) {
-
-                }
-            });
-            
         }
 
         function CountryChange(el) {
@@ -214,5 +216,18 @@
                 $('#LocalAmount').val('');
             }
         }
+        $('#frmFinancial').validate({
+            rules: {
+                'financialTransaction.Country': {
+                    required: true
+                },
+                'financialTransaction.CurrencyCode': {
+                    required: true
+                },
+                'financialTransaction.CurrencyExRate': {
+                    required: true,
+                }
+            }
+        });
     </script>
 }
