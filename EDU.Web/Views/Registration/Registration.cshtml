@@ -746,9 +746,20 @@
                 $('#Payment3Date').attr('disabled', 'disabled');
                 $('#Payment3Type').attr('disabled', 'disabled');
             }
+           
             if (BalanceAmount && Payment1 && Payment2) {
                 var p = BalanceAmount - Payment1 - Payment2;
                 parseInt($('#BalanceAmount').val(p));
+            }
+            if (BalanceAmount && Payment1 && Payment3)
+            {
+                var p = BalanceAmount - Payment1 - Payment3;
+                parseInt($('#BalanceAmount').val(p))
+            }
+            if (BalanceAmount && Payment2 && Payment3)
+            {
+                var p = BalanceAmount - Payment2 - Payment3;
+                parseInt($('#BalanceAmount').val(p))
             }
             if (BalanceAmount && Payment1 && Payment2 && Payment3) {
                 var p = BalanceAmount - Payment1 - Payment2 - Payment3;
