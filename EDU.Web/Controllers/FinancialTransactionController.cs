@@ -87,13 +87,11 @@ namespace EDU.Web.Controllers
 
                 if (ftinfo.financialTransaction.FinancialTransactionId == -1)
                 {
-                    ftinfo.financialTransaction.CreatedBy = USER_ID;
-                    ftinfo.financialTransaction.CreatedOn = UTILITY.SINGAPORETIME;
-                    ftinfo.financialTransaction.IsActive = true;
-
-                    ftinfo.financialTransaction.GrossProfit = ftinfo.financialTransaction.GrossProfit;
-                    ftinfo.financialTransaction.ProfitAndLossPercent = ftinfo.financialTransaction.ProfitAndLossPercent;
-
+                    FinancialTransaction financialTransaction = new FinancialTransaction();
+                    financialTransaction = ftinfo.financialTransaction;
+                    financialTransaction.CreatedBy = USER_ID;
+                    financialTransaction.CreatedOn = UTILITY.SINGAPORETIME;
+                    financialTransaction.IsActive = true;
 
                     decimal grossprofit = 0;
                     decimal baseAmount = 0;
@@ -121,12 +119,12 @@ namespace EDU.Web.Controllers
                             grossprofit += dtl.Amount.Value;
                     }
 
-                    ftinfo.financialTransaction.GrossProfit = baseAmount - grossprofit;
-                    ftinfo.financialTransaction.ProfitAndLossPercent = ftinfo.financialTransaction.GrossProfit / 100;
+                    financialTransaction.GrossProfit = baseAmount - grossprofit;
+                    financialTransaction.ProfitAndLossPercent = financialTransaction.GrossProfit / 100;
 
-                    dbContext.FinancialTransactions.Add(ftinfo.financialTransaction);
+                    dbContext.FinancialTransactions.Add(financialTransaction);
 
-
+                    //Details Save
                     dtl.FinancialTransactionId = ftinfo.financialTransaction.FinancialTransactionId;
                     dtl.CreatedBy = USER_ID;
                     dtl.CreatedOn = UTILITY.SINGAPORETIME;
