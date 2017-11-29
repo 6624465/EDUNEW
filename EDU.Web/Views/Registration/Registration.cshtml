@@ -573,7 +573,6 @@
                 $('#Payment3Type').removeAttr('disabled');
             }
             else {
-
                 $('#WHTPercent').val('');
                 $('#TotalAmount').val('');
                 $('#VATPercent').val('');
@@ -694,9 +693,6 @@
         function CalculateBalanceAmount(type) {
             var TotalAmount = parseFloat($('#TotalAmount').val());
             parseInt($('#BalanceAmount').val(TotalAmount.toFixed()));
-            if (isNaN(TotalAmount)) {
-                $('#BalanceAmount').val('')
-            }
             var BalanceAmount = TotalAmount.toFixed();
             var Payment1 = parseInt($('#Payment1').val());
             var Payment2 = parseInt($('#Payment2').val());
@@ -715,6 +711,14 @@
                 $('#cheque1').hide();
                 $('#Payment1Date').attr('disabled', 'disabled');
                 $('#Payment1Type').attr('disabled', 'disabled');
+                if (BalanceAmount && Payment2) {
+                    var p1 = BalanceAmount - Payment2;
+                    parseInt($('#BalanceAmount').val(p1));
+                }
+                if (BalanceAmount && Payment3) {
+                    var p1 = BalanceAmount - Payment3;
+                    parseInt($('#BalanceAmount').val(p1));
+                }
             }
 
             if (BalanceAmount && Payment2 && (type == '2' || type=='')) {
@@ -730,6 +734,15 @@
                 $('#cheque2').hide();
                 $('#Payment2Date').attr('disabled', 'disabled');
                 $('#Payment2Type').attr('disabled', 'disabled');
+                if(BalanceAmount &&Payment1)
+                {
+                    var p1 = BalanceAmount - Payment1;
+                    parseInt($('#BalanceAmount').val(p1));
+                }
+                if (BalanceAmount && Payment3) {
+                    var p1 = BalanceAmount - Payment3;
+                    parseInt($('#BalanceAmount').val(p1));
+                }
             }
 
             if (BalanceAmount && Payment3 && (type == '3' || type=='')) {
@@ -745,15 +758,42 @@
                 $('#cheque3').hide();
                 $('#Payment3Date').attr('disabled', 'disabled');
                 $('#Payment3Type').attr('disabled', 'disabled');
+                if (BalanceAmount && Payment1) {
+                    var p1 = BalanceAmount - Payment1;
+                    parseInt($('#BalanceAmount').val(p1));
+                }
+                if (BalanceAmount && Payment2) {
+                    var p1 = BalanceAmount - Payment2;
+                    parseInt($('#BalanceAmount').val(p1));
+                }
             }
+           
             if (BalanceAmount && Payment1 && Payment2) {
                 var p = BalanceAmount - Payment1 - Payment2;
                 parseInt($('#BalanceAmount').val(p));
+            }
+            if (BalanceAmount && Payment1 && Payment3)
+            {
+                var p = BalanceAmount - Payment1 - Payment3;
+                parseInt($('#BalanceAmount').val(p))
+            }
+            if (BalanceAmount && Payment2 && Payment3)
+            {
+                var p = BalanceAmount - Payment2 - Payment3;
+                parseInt($('#BalanceAmount').val(p))
             }
             if (BalanceAmount && Payment1 && Payment2 && Payment3) {
                 var p = BalanceAmount - Payment1 - Payment2 - Payment3;
                 parseInt($('#BalanceAmount').val(p));
             }
+            if (isNaN(TotalAmount)) {
+                $('#BalanceAmount').val('');
+                $('#Payment1').val('');
+                $('#Payment2').val('');
+                $('#Payment3').val('');
+
+            }
+           
         }
         function Payment1TypeChange(el) {
             $('#lblbanktransfer').hide();

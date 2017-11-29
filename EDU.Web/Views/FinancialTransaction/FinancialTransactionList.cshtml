@@ -61,9 +61,9 @@
                                      columns:
                                         grid.Columns(
                                         grid.Column("DESCRIPTION", "DESCRIPTION"),
-                                        grid.Column("Amount", "Amount", format: @<text> <span class="display-mode"> @(item.Amount != null ? Convert.ToInt64(item.Amount) : null) </span>  <input type="text" name="Amount" id="Amount" value="@(item.Amount !=null ?Convert.ToInt64(item.Amount) : null)" class="edit-mode numCss" /> </text>, style: ""),
-                                        grid.Column("ReferenceDoc", "Reference Doc", format: @<text> <span class="display-mode"> @(item.ReferenceDoc != null ? item.ReferenceDoc : null) </span>  <input type="file" name="ReferenceDoc" id="ReferenceDoc" value="@(item.ReferenceDoc != null ?item.ReferenceDoc : null)" class="edit-mode numCss" /> </text>, style: ""),
-                                        grid.Column("Remarks", "Remarks", format: @<text> <span class="display-mode"> @(item.Remarks != null ? item.NoOfStudents : null) </span>  <input type="text" name="Remarks" id="Remarks" value="@(item.Remarks !=null ? item.Remarks : null)" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("Amount", "Amount", format: @<text> <span class="display-mode"> @(item.Amount !=null ? Convert.ToInt64(item.Amount) : null) </span>  <input type="text" name="Amount" id="Amount" value="@(item.Amount !=null ?Convert.ToInt64(item.Amount) : null)" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("ReferenceDoc", "Reference Doc", format: @<text> <span class="display-mode"> @(item.ReferenceDoc !=null ? item.ReferenceDoc : null) </span>  <input type="file" name="ReferenceDoc" id="ReferenceDoc" value="@(item.ReferenceDoc != null ?item.ReferenceDoc : null)" class="edit-mode" /> </text>, style: ""),
+                                        grid.Column("Remarks", "Remarks", format: @<text> <span class="display-mode"> @(item.Remarks !=null ? item.NoOfStudents : null) </span>  <textarea type="text" name="Remarks" id="Remarks" value="@(item.Remarks !=null ? item.Remarks : null)" class="edit-mode"></textarea> </text>, style: ""),
                                         grid.Column("", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
@@ -94,6 +94,7 @@
         @*$(function () {
             $('.edit-mode').hide();
             $('.edit-user, .cancel-user').on('click', function () {
+               
                 var tr = $(this).parents('tr:first');
                 tr.find('.edit-mode, .display-mode').toggle();
             });
