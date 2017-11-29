@@ -150,7 +150,7 @@
         }
 
         function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, description) {
-            var currencyExRate = 100;
+            var currencyExRate = $('#financialTransaction_CurrencyExRate').val();
             $.ajax({
                 url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&description=" + description + "&currencyExRate=" + currencyExRate,
                 method: 'get',
