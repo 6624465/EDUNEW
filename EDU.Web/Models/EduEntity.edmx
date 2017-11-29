@@ -244,6 +244,10 @@
           <EntitySet Name="Lookups" EntityType="DB_9F30C5_edudevModel.Lookup" />
           <EntitySet Name="FinancialTransactions" EntityType="DB_9F30C5_edudevModel.FinancialTransaction" />
           <EntitySet Name="FinancialTransactionDetails" EntityType="DB_9F30C5_edudevModel.FinancialTransactionDetail" />
+          <AssociationSet Name="FinancialTransactionFinancialTransactionDetail" Association="DB_9F30C5_edudevModel.FinancialTransactionFinancialTransactionDetail">
+            <End Role="FinancialTransaction" EntitySet="FinancialTransactions" />
+            <End Role="FinancialTransactionDetail" EntitySet="FinancialTransactionDetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -375,6 +379,18 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <Association Name="FinancialTransactionFinancialTransactionDetail">
+          <End Type="DB_9F30C5_edudevModel.FinancialTransaction" Role="FinancialTransaction" Multiplicity="1" />
+          <End Type="DB_9F30C5_edudevModel.FinancialTransactionDetail" Role="FinancialTransactionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinancialTransaction">
+              <PropertyRef Name="FinancialTransactionId" />
+            </Principal>
+            <Dependent Role="FinancialTransactionDetail">
+              <PropertyRef Name="FinancialTransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

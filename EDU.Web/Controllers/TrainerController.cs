@@ -51,6 +51,17 @@ namespace EDU.Web.Controllers
                     TrainerInfo.CreatedBy = USER_ID;
                     TrainerInfo.CreatedOn = UTILITY.SINGAPORETIME;
                     TrainerInfo.IsActive = true;
+
+                    if (TrainerInfo.FileName != null && TrainerInfo.FileName.ContentLength > 0)
+                    {
+                        TrainerInfo.Profile = TrainerInfo.FileName.FileName;
+                    }
+                    else
+                        TrainerInfo.Profile = null;
+
+                    dbContext.TrainerInformations.Add(TrainerInfo);
+                    dbContext.SaveChanges();
+
                     if (TrainerInfo.FileName != null && TrainerInfo.FileName.ContentLength > 0)
                     {
                         string path = Server.MapPath("~/Uploads/" + TrainerInfo.TrianerId + "/");
@@ -60,12 +71,7 @@ namespace EDU.Web.Controllers
                         }
 
                         TrainerInfo.FileName.SaveAs(path + TrainerInfo.FileName.FileName);
-                        TrainerInfo.Profile = TrainerInfo.FileName.FileName;
                     }
-                    else
-                        TrainerInfo.Profile = null;
-
-                    dbContext.TrainerInformations.Add(TrainerInfo);
                 }
                 else
                 {

@@ -31,6 +31,5 @@ namespace EDU.Web.Models
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public System.Web.HttpPostedFileBase FileName { get; set; }
-
     }
 }

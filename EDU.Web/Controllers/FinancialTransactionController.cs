@@ -41,14 +41,13 @@ namespace EDU.Web.Controllers
             financialTransactionVM.countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
             financialTransactionVM.trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
 
-
             var FinancialTransactionLookupList = dbContext.Lookups.Where(x => x.LookupCategory == "FinancialTransaction").ToList();
-
+            decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == trainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
 
             foreach (EDU.Web.Models.Lookup item in FinancialTransactionLookupList)
             {
                 if (financialTransactionVM.financialTransactionDetailList.Where(x => x.DescriptionId == item.LookupID).Count() == 0)
-                    financialTransactionVM.financialTransactionDetailList.Add(new FinancialTransactionDetail() { DescriptionId = item.LookupID, Description = item.LookupDescription, FinancialTransactionId = financialTransaction.FinancialTransactionId, TrainingConfirmationID = financialTransaction.TrainingConfirmationID, FinancialTransactionDetailId = -1 });
+                    financialTransactionVM.financialTransactionDetailList.Add(new FinancialTransactionDetail() { DescriptionId = item.LookupID, Description = item.LookupDescription, FinancialTransactionId = financialTransaction.FinancialTransactionId, TrainingConfirmationID = financialTransaction.TrainingConfirmationID, FinancialTransactionDetailId = -1, Amount = (item.LookupID == 1050 ? TotalAmount : null) });
             }
 
             return View(financialTransactionVM);
@@ -58,37 +57,40 @@ namespace EDU.Web.Controllers
         public PartialViewResult FinancialTransactionDetail(int financialTransactionId, string trainingConfirmationID, short? descriptionId, string description, decimal? currencyExRate, int financialTransactionDetailId)
         {
             ViewData["CurrencyExRate"] = currencyExRate;
+            decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == trainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
+
             if (financialTransactionId == -1)
             {
                 ViewBag.Title = "New Financial Transaction";
-                return PartialView(new FinancialTransactionDetail { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description });
+                return PartialView(new FinancialTransactionDetail { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1, Amount = (descriptionId == 1050 ? TotalAmount : null) });
             }
             else
             {
                 if (dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId).Count() > 0)
                 {
+                    FinancialTransactionDetail detailrow = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId).FirstOrDefault();
                     ViewBag.Title = "Update Financial Transaction";
-                    return PartialView(dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId));
+                    return PartialView(detailrow);
                 }
                 else
                 {
                     ViewBag.Title = "New Financial Transaction";
-                    return PartialView(new FinancialTransactionDetail { FinancialTransactionId = financialTransactionId, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1 });
+                    return PartialView(new FinancialTransactionDetail { FinancialTransactionId = financialTransactionId, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1, Amount = (descriptionId == 1050 ? TotalAmount : null) });
                 }
             }
         }
 
         [HttpPost]
-        public ActionResult SaveFinancialTransaction(FinancialTransactionVM ftinfo, FinancialTransactionDetail dtl)
+        public ActionResult SaveFinancialTransaction(FinancialTransactionVM ftvminfo, FinancialTransactionDetail dtl)
         {
             try
             {
                 FinancialTransactionDetail financialTransactiondtl = new FinancialTransactionDetail();
 
-                if (ftinfo.financialTransaction.FinancialTransactionId == -1)
+                if (ftvminfo.financialTransaction.FinancialTransactionId == -1)
                 {
                     FinancialTransaction financialTransaction = new FinancialTransaction();
-                    financialTransaction = ftinfo.financialTransaction;
+                    financialTransaction = ftvminfo.financialTransaction;
                     financialTransaction.CreatedBy = USER_ID;
                     financialTransaction.CreatedOn = UTILITY.SINGAPORETIME;
                     financialTransaction.IsActive = true;
@@ -99,13 +101,15 @@ namespace EDU.Web.Controllers
 
                     if (ftdtl.Count() > 0)
                     {
-
                         foreach (var item in ftdtl)
                         {
                             if (item.DescriptionId != dtl.DescriptionId)
                             {
                                 if (item.DescriptionId == 1050)
+                                {
                                     baseAmount = item.Amount.Value;
+                                    grossprofit += dtl.Amount.Value;
+                                }
                                 else
                                     grossprofit += item.Amount.Value;
                             }
@@ -120,7 +124,7 @@ namespace EDU.Web.Controllers
                     }
 
                     financialTransaction.GrossProfit = baseAmount - grossprofit;
-                    financialTransaction.ProfitAndLossPercent = financialTransaction.GrossProfit / 100;
+                    financialTransaction.ProfitAndLossPercent = (financialTransaction.GrossProfit / baseAmount) * 100;
 
                     dbContext.FinancialTransactions.Add(financialTransaction);
 
@@ -147,14 +151,13 @@ namespace EDU.Web.Controllers
                 }
                 else
                 {
-
                     FinancialTransaction financialTransaction = new FinancialTransaction();
                     financialTransaction = dbContext.FinancialTransactions.
-                       Where(x => x.FinancialTransactionId == ftinfo.financialTransaction.FinancialTransactionId).FirstOrDefault();
+                       Where(x => x.FinancialTransactionId == ftvminfo.financialTransaction.FinancialTransactionId).FirstOrDefault();
 
-                    financialTransaction.Country = ftinfo.financialTransaction.Country;
-                    financialTransaction.CurrencyCode = ftinfo.financialTransaction.CurrencyCode;
-                    financialTransaction.CurrencyExRate = ftinfo.financialTransaction.CurrencyExRate;
+                    financialTransaction.Country = ftvminfo.financialTransaction.Country;
+                    financialTransaction.CurrencyCode = ftvminfo.financialTransaction.CurrencyCode;
+                    financialTransaction.CurrencyExRate = ftvminfo.financialTransaction.CurrencyExRate;
                     financialTransaction.IsActive = true;
 
                     financialTransaction.ModifiedBy = USER_ID;
@@ -166,13 +169,15 @@ namespace EDU.Web.Controllers
 
                     if (ftdtl.Count() > 0)
                     {
-
                         foreach (var item in ftdtl)
                         {
                             if (item.DescriptionId != dtl.DescriptionId)
                             {
                                 if (item.DescriptionId == 1050)
+                                {
                                     baseAmount = item.Amount.Value;
+                                    grossprofit += dtl.Amount.Value;
+                                }
                                 else
                                     grossprofit += item.Amount.Value;
                             }
@@ -187,7 +192,7 @@ namespace EDU.Web.Controllers
                     }
 
                     financialTransaction.GrossProfit = baseAmount - grossprofit;
-                    financialTransaction.ProfitAndLossPercent = financialTransaction.GrossProfit / 100;
+                    financialTransaction.ProfitAndLossPercent = (financialTransaction.GrossProfit / baseAmount) * 100;
                     dbContext.Entry(financialTransaction).State = EntityState.Modified;
 
 
@@ -224,7 +229,7 @@ namespace EDU.Web.Controllers
                     else
                     {
 
-                        dtl.FinancialTransactionId = ftinfo.financialTransaction.FinancialTransactionId;
+                        dtl.FinancialTransactionId = ftvminfo.financialTransaction.FinancialTransactionId;
                         dtl.CreatedBy = USER_ID;
                         dtl.CreatedOn = UTILITY.SINGAPORETIME;
 
@@ -253,7 +258,7 @@ namespace EDU.Web.Controllers
                 throw ex;
             }
 
-            return RedirectToAction("FinancialTransactionList", new { trainingConfirmationID = ftinfo.financialTransaction.TrainingConfirmationID });
+            return RedirectToAction("FinancialTransactionList", new { trainingConfirmationID = ftvminfo.financialTransaction.TrainingConfirmationID });
         }
 
         [HttpGet]

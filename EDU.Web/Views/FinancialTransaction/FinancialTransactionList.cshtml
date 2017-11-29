@@ -65,6 +65,7 @@
                                         grid.Columns(
                                         grid.Column("DESCRIPTION", "DESCRIPTION"),
                                         grid.Column("Amount", "Amount"),
+                                        grid.Column("LocalAmount", "Local Amount"),
                                         grid.Column("ReferenceDoc", "Reference Doc"),
                                         grid.Column("Remarks", "Remarks"),
                                         grid.Column("", format: @<text>
@@ -90,7 +91,7 @@
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
-}
+                                    }
 @section SectionScripts {
     <script type="text/javascript">
 
@@ -113,6 +114,7 @@
             if ($('#frmFinancial').valid()) {
 
                 debugger;
+                $('#Amount').removeAttr('disabled');
                 $('#LocalAmount').removeAttr('disabled');
                 $('#frmFinancial').submit();
             }
@@ -125,8 +127,11 @@
 
         function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, description, financialTransactionDetailId) {
             var currencyExRate = $('#financialTransaction_CurrencyExRate').val();
+
+
             $.ajax({
-                url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&description=" + description + "&currencyExRate=" + currencyExRate + "&financialTransactionDetailId=" + financialTransactionDetailId,
+                url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&description=" + description
+                                    + "&currencyExRate=" + currencyExRate + "&financialTransactionDetailId=" + financialTransactionDetailId,
                 method: 'get',
                 contentType: 'text/html',
                 success: function (html) {
@@ -137,6 +142,10 @@
 
                 }
             });
+            if (descriptionId == 1050)
+                $('#Amount').attr('disabled', 'disabled');
+            else
+                $('#Amount').removeAttr('disabled');
         }
 
         function CountryChange(el) {
