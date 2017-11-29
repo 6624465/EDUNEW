@@ -573,7 +573,6 @@
                 $('#Payment3Type').removeAttr('disabled');
             }
             else {
-
                 $('#WHTPercent').val('');
                 $('#TotalAmount').val('');
                 $('#VATPercent').val('');
@@ -788,8 +787,13 @@
                 parseInt($('#BalanceAmount').val(p));
             }
             if (isNaN(TotalAmount)) {
-                $('#BalanceAmount').val('')
+                $('#BalanceAmount').val('');
+                $('#Payment1').val('');
+                $('#Payment2').val('');
+                $('#Payment3').val('');
+
             }
+           
         }
         function Payment1TypeChange(el) {
             $('#lblbanktransfer').hide();
