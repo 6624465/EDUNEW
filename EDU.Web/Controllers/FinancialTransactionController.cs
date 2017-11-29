@@ -5,6 +5,7 @@ using EZY.EDU.Contract;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -82,33 +83,171 @@ namespace EDU.Web.Controllers
         {
             try
             {
+                FinancialTransactionDetail financialTransactiondtl = new FinancialTransactionDetail();
+
                 if (ftinfo.financialTransaction.FinancialTransactionId == -1)
                 {
                     ftinfo.financialTransaction.CreatedBy = USER_ID;
                     ftinfo.financialTransaction.CreatedOn = UTILITY.SINGAPORETIME;
                     ftinfo.financialTransaction.IsActive = true;
+
+                    ftinfo.financialTransaction.GrossProfit = ftinfo.financialTransaction.GrossProfit;
+                    ftinfo.financialTransaction.ProfitAndLossPercent = ftinfo.financialTransaction.ProfitAndLossPercent;
+
+
+                    decimal grossprofit = 0;
+                    decimal baseAmount = 0;
+                    List<FinancialTransactionDetail> ftdtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == dtl.FinancialTransactionId && x.TrainingConfirmationID == dtl.TrainingConfirmationID).ToList();
+
+                    if (ftdtl.Count() > 0)
+                    {
+
+                        foreach (var item in ftdtl)
+                        {
+                            if (item.DescriptionId != dtl.DescriptionId)
+                            {
+                                if (item.DescriptionId == 1050)
+                                    baseAmount = item.Amount.Value;
+                                else
+                                    grossprofit += item.Amount.Value;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (dtl.DescriptionId == 1050)
+                            baseAmount = dtl.Amount.Value;
+                        else
+                            grossprofit += dtl.Amount.Value;
+                    }
+
+                    ftinfo.financialTransaction.GrossProfit = baseAmount - grossprofit;
+                    ftinfo.financialTransaction.ProfitAndLossPercent = ftinfo.financialTransaction.GrossProfit / 100;
+
                     dbContext.FinancialTransactions.Add(ftinfo.financialTransaction);
 
 
+                    dtl.FinancialTransactionId = ftinfo.financialTransaction.FinancialTransactionId;
+                    dtl.CreatedBy = USER_ID;
+                    dtl.CreatedOn = UTILITY.SINGAPORETIME;
+
+                    if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/" + dtl.DescriptionId + "/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        dtl.FileName.SaveAs(path + dtl.FileName.FileName);
+                        dtl.ReferenceDoc = dtl.FileName.FileName;
+                    }
+                    else
+                        dtl.ReferenceDoc = null;
+
+                    dbContext.FinancialTransactionDetails.Add(dtl);
                 }
                 else
                 {
-                    FinancialTransactionVM financialTransactionVM = new FinancialTransactionVM();
 
-                    financialTransactionVM.financialTransaction = dbContext.FinancialTransactions.
+                    FinancialTransaction financialTransaction = new FinancialTransaction();
+                    financialTransaction = dbContext.FinancialTransactions.
                        Where(x => x.FinancialTransactionId == ftinfo.financialTransaction.FinancialTransactionId).FirstOrDefault();
 
-                    financialTransactionVM.financialTransaction.Country = ftinfo.financialTransaction.Country;
-                    financialTransactionVM.financialTransaction.CurrencyCode = ftinfo.financialTransaction.CurrencyCode;
-                    financialTransactionVM.financialTransaction.CurrencyExRate = ftinfo.financialTransaction.CurrencyExRate;
-                    financialTransactionVM.financialTransaction.GrossProfit = ftinfo.financialTransaction.GrossProfit;
-                    financialTransactionVM.financialTransaction.ProfitAndLossPercent = ftinfo.financialTransaction.ProfitAndLossPercent;
-                    financialTransactionVM.financialTransaction.IsActive = true;
+                    financialTransaction.Country = ftinfo.financialTransaction.Country;
+                    financialTransaction.CurrencyCode = ftinfo.financialTransaction.CurrencyCode;
+                    financialTransaction.CurrencyExRate = ftinfo.financialTransaction.CurrencyExRate;
+                    financialTransaction.GrossProfit = ftinfo.financialTransaction.GrossProfit;
+                    financialTransaction.ProfitAndLossPercent = ftinfo.financialTransaction.ProfitAndLossPercent;
+                    financialTransaction.IsActive = true;
 
-                    financialTransactionVM.financialTransaction.ModifiedBy = USER_ID;
-                    financialTransactionVM.financialTransaction.ModifiedOn = UTILITY.SINGAPORETIME;
+                    financialTransaction.ModifiedBy = USER_ID;
+                    financialTransaction.ModifiedOn = UTILITY.SINGAPORETIME;
 
-                    dbContext.Entry(financialTransactionVM.financialTransaction).State = EntityState.Modified;
+                    decimal grossprofit = 0;
+                    decimal baseAmount = 0;
+                    List<FinancialTransactionDetail> ftdtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == dtl.FinancialTransactionId && x.TrainingConfirmationID == dtl.TrainingConfirmationID).ToList();
+
+                    if (ftdtl.Count() > 0)
+                    {
+
+                        foreach (var item in ftdtl)
+                        {
+                            if (item.DescriptionId != dtl.DescriptionId)
+                            {
+                                if (item.DescriptionId == 1050)
+                                    baseAmount = item.Amount.Value;
+                                else
+                                    grossprofit += item.Amount.Value;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (dtl.DescriptionId == 1050)
+                            baseAmount = dtl.Amount.Value;
+                        else
+                            grossprofit += dtl.Amount.Value;
+                    }
+
+                    financialTransaction.GrossProfit = baseAmount - grossprofit;
+                    financialTransaction.ProfitAndLossPercent = financialTransaction.GrossProfit / 100;
+
+
+
+                    dbContext.Entry(financialTransaction).State = EntityState.Modified;
+
+                    financialTransactiondtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == dtl.FinancialTransactionId && x.TrainingConfirmationID == dtl.TrainingConfirmationID && x.DescriptionId == dtl.DescriptionId).FirstOrDefault();
+                    if (financialTransactiondtl != null)
+                    {
+                        financialTransactiondtl.Amount = dtl.Amount;
+                        financialTransactiondtl.LocalAmount = dtl.LocalAmount;
+                        financialTransactiondtl.Remarks = dtl.Remarks;
+                        financialTransactiondtl.ReferenceDoc = dtl.ReferenceDoc;
+
+                        financialTransactiondtl.ModifiedBy = USER_ID;
+                        financialTransactiondtl.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                        if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
+                        {
+                            string path = Server.MapPath("~/Uploads/" + dtl.DescriptionId + "/");
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+
+                            financialTransactiondtl.FileName.SaveAs(path + dtl.FileName.FileName);
+                            financialTransactiondtl.ReferenceDoc = dtl.FileName.FileName;
+                        }
+                        else
+                            financialTransactiondtl.ReferenceDoc = null;
+
+                        dbContext.Entry(financialTransactiondtl).State = EntityState.Modified;
+
+                    }
+                    else
+                    {
+
+                        dtl.FinancialTransactionId = ftinfo.financialTransaction.FinancialTransactionId;
+                        dtl.CreatedBy = USER_ID;
+                        dtl.CreatedOn = UTILITY.SINGAPORETIME;
+
+                        if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
+                        {
+                            string path = Server.MapPath("~/Uploads/" + dtl.DescriptionId + "/");
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+
+                            dtl.FileName.SaveAs(path + dtl.FileName.FileName);
+                            dtl.ReferenceDoc = dtl.FileName.FileName;
+                        }
+                        else
+                            dtl.ReferenceDoc = null;
+
+                        dbContext.FinancialTransactionDetails.Add(dtl);
+                    }
                 }
 
                 dbContext.SaveChanges();
