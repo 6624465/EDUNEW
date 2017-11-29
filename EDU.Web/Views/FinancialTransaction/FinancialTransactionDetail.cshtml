@@ -8,6 +8,7 @@
             <h4 class="modal-title">@ViewBag.Title</h4>
         </div>
         <div class="modal-body" id="FinancialTransactionModalBody">
+            @Html.HiddenFor(x => x.FinancialTransactionDetailId)
             @Html.HiddenFor(x => x.FinancialTransactionId)
             @Html.HiddenFor(x => x.TrainingConfirmationID)
             @Html.HiddenFor(x => x.DescriptionId)
@@ -28,7 +29,7 @@
                         <span class="pull-right">Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", @placeholder= "Amount", onkeyup="CalculateLocalAmount()" })
+                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", @placeholder = "Amount", onkeyup = "CalculateLocalAmount()" })
                     </div>
                 </div>
             </div>
@@ -48,7 +49,7 @@
                         <span class="pull-right">Reference Doc</span>
                     </label>
                     <div class="col-md-6">
-                        <input type="file" value="@Model.ReferenceDoc" />
+                        @Html.TextBoxFor(x => x.ReferenceDoc, new { type = "file", @class = "form-control", id = Profile })&nbsp;@Model.ReferenceDoc
                     </div>
                 </div>
             </div>
@@ -71,6 +72,6 @@
 </div>
 @section SectionScripts {
     <script type="text/javascript">
-        
+
     </script>
 }

@@ -56,16 +56,11 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="FinancialTransactionDetails">
           <Key>
-            <PropertyRef Name="FinancialTransactionId" />
-            <PropertyRef Name="TrainingConfirmationID" />
-            <PropertyRef Name="Description" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="CreatedOn" />
+            <PropertyRef Name="FinancialTransactionDetailId" />
           </Key>
+          <Property Name="FinancialTransactionDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FinancialTransactionId" Type="int" Nullable="false" />
           <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DescriptionId" Type="smallint" />
@@ -187,26 +182,11 @@ warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' 
           <EntitySet Name="Lookup" EntityType="Self.Lookup" Schema="Config" store:Type="Tables" />
           <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayments" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransaction" EntityType="Self.FinancialTransaction" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="FinancialTransactionDetails" EntityType="Self.FinancialTransactionDetails" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Registration" EntityType="Self.Registration" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainerInformation" EntityType="Self.TrainerInformation" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainingConfirmation" EntityType="Self.TrainingConfirmation" Schema="Edu" store:Type="Tables" />
-          <EntitySet Name="FinancialTransactionDetails" EntityType="Self.FinancialTransactionDetails" store:Type="Tables" store:Schema="Edu">
-            <DefiningQuery>SELECT 
-    [FinancialTransactionDetails].[FinancialTransactionId] AS [FinancialTransactionId], 
-    [FinancialTransactionDetails].[TrainingConfirmationID] AS [TrainingConfirmationID], 
-    [FinancialTransactionDetails].[DescriptionId] AS [DescriptionId], 
-    [FinancialTransactionDetails].[Description] AS [Description], 
-    [FinancialTransactionDetails].[Amount] AS [Amount], 
-    [FinancialTransactionDetails].[LocalAmount] AS [LocalAmount], 
-    [FinancialTransactionDetails].[ReferenceDoc] AS [ReferenceDoc], 
-    [FinancialTransactionDetails].[Remarks] AS [Remarks], 
-    [FinancialTransactionDetails].[CreatedBy] AS [CreatedBy], 
-    [FinancialTransactionDetails].[CreatedOn] AS [CreatedOn], 
-    [FinancialTransactionDetails].[ModifiedBy] AS [ModifiedBy], 
-    [FinancialTransactionDetails].[ModifiedOn] AS [ModifiedOn]
-    FROM [Edu].[FinancialTransactionDetails] AS [FinancialTransactionDetails]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -379,12 +359,9 @@ warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' 
         </EntityType>
         <EntityType Name="FinancialTransactionDetail">
           <Key>
-            <PropertyRef Name="FinancialTransactionId" />
-            <PropertyRef Name="TrainingConfirmationID" />
-            <PropertyRef Name="Description" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="CreatedOn" />
+            <PropertyRef Name="FinancialTransactionDetailId" />
           </Key>
+          <Property Name="FinancialTransactionDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FinancialTransactionId" Type="Int32" Nullable="false" />
           <Property Name="TrainingConfirmationID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DescriptionId" Type="Int16" />
@@ -581,6 +558,7 @@ warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' 
                 <ScalarProperty Name="DescriptionId" ColumnName="DescriptionId" />
                 <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
                 <ScalarProperty Name="FinancialTransactionId" ColumnName="FinancialTransactionId" />
+                <ScalarProperty Name="FinancialTransactionDetailId" ColumnName="FinancialTransactionDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -14,6 +14,7 @@ namespace EDU.Web.Models
     
     public partial class FinancialTransactionDetail
     {
+        public int FinancialTransactionDetailId { get; set; }
         public int FinancialTransactionId { get; set; }
         public string TrainingConfirmationID { get; set; }
         public Nullable<short> DescriptionId { get; set; }
@@ -27,5 +28,6 @@ namespace EDU.Web.Models
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public System.Web.HttpPostedFileBase FileName { get; set; }
+
     }
 }

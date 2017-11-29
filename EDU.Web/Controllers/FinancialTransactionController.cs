@@ -48,14 +48,14 @@ namespace EDU.Web.Controllers
             foreach (EDU.Web.Models.Lookup item in FinancialTransactionLookupList)
             {
                 if (financialTransactionVM.financialTransactionDetailList.Where(x => x.DescriptionId == item.LookupID).Count() == 0)
-                    financialTransactionVM.financialTransactionDetailList.Add(new FinancialTransactionDetail() { DescriptionId = item.LookupID, Description = item.LookupDescription, FinancialTransactionId = financialTransaction.FinancialTransactionId, TrainingConfirmationID = financialTransaction.TrainingConfirmationID });
+                    financialTransactionVM.financialTransactionDetailList.Add(new FinancialTransactionDetail() { DescriptionId = item.LookupID, Description = item.LookupDescription, FinancialTransactionId = financialTransaction.FinancialTransactionId, TrainingConfirmationID = financialTransaction.TrainingConfirmationID, FinancialTransactionDetailId = -1 });
             }
 
             return View(financialTransactionVM);
         }
 
         [HttpGet]
-        public PartialViewResult FinancialTransactionDetail(int financialTransactionId, string trainingConfirmationID, short? descriptionId, string description, decimal? currencyExRate)
+        public PartialViewResult FinancialTransactionDetail(int financialTransactionId, string trainingConfirmationID, short? descriptionId, string description, decimal? currencyExRate, int financialTransactionDetailId)
         {
             ViewData["CurrencyExRate"] = currencyExRate;
             if (financialTransactionId == -1)
@@ -65,21 +65,21 @@ namespace EDU.Web.Controllers
             }
             else
             {
-                if (dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == financialTransactionId && x.TrainingConfirmationID == trainingConfirmationID && x.DescriptionId == descriptionId).Count() > 0)
+                if (dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId).Count() > 0)
                 {
                     ViewBag.Title = "Update Financial Transaction";
-                    return PartialView(dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == financialTransactionId && x.TrainingConfirmationID == trainingConfirmationID && x.DescriptionId == descriptionId));
+                    return PartialView(dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId));
                 }
                 else
                 {
                     ViewBag.Title = "New Financial Transaction";
-                    return PartialView(new FinancialTransactionDetail { FinancialTransactionId = financialTransactionId, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description });
+                    return PartialView(new FinancialTransactionDetail { FinancialTransactionId = financialTransactionId, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1 });
                 }
             }
         }
 
         [HttpPost]
-        public JsonResult SaveFinancialTransaction(FinancialTransactionVM ftinfo, FinancialTransactionDetail dtl)
+        public ActionResult SaveFinancialTransaction(FinancialTransactionVM ftinfo, FinancialTransactionDetail dtl)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace EDU.Web.Controllers
                     dbContext.FinancialTransactions.Add(financialTransaction);
 
                     //Details Save
-                    dtl.FinancialTransactionId = ftinfo.financialTransaction.FinancialTransactionId;
+                    dtl.FinancialTransactionId = financialTransaction.FinancialTransactionId;
                     dtl.CreatedBy = USER_ID;
                     dtl.CreatedOn = UTILITY.SINGAPORETIME;
 
@@ -155,8 +155,6 @@ namespace EDU.Web.Controllers
                     financialTransaction.Country = ftinfo.financialTransaction.Country;
                     financialTransaction.CurrencyCode = ftinfo.financialTransaction.CurrencyCode;
                     financialTransaction.CurrencyExRate = ftinfo.financialTransaction.CurrencyExRate;
-                    financialTransaction.GrossProfit = ftinfo.financialTransaction.GrossProfit;
-                    financialTransaction.ProfitAndLossPercent = ftinfo.financialTransaction.ProfitAndLossPercent;
                     financialTransaction.IsActive = true;
 
                     financialTransaction.ModifiedBy = USER_ID;
@@ -190,11 +188,11 @@ namespace EDU.Web.Controllers
 
                     financialTransaction.GrossProfit = baseAmount - grossprofit;
                     financialTransaction.ProfitAndLossPercent = financialTransaction.GrossProfit / 100;
-
-
-
                     dbContext.Entry(financialTransaction).State = EntityState.Modified;
 
+
+
+                    //Details Save
                     financialTransactiondtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == dtl.FinancialTransactionId && x.TrainingConfirmationID == dtl.TrainingConfirmationID && x.DescriptionId == dtl.DescriptionId).FirstOrDefault();
                     if (financialTransactiondtl != null)
                     {
@@ -255,8 +253,7 @@ namespace EDU.Web.Controllers
                 throw ex;
             }
 
-            string message = "Saved Successfully.";
-            return Json(message, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("FinancialTransactionList", new { trainingConfirmationID = ftinfo.financialTransaction.TrainingConfirmationID });
         }
 
         [HttpGet]
