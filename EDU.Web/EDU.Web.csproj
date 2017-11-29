@@ -1728,6 +1728,7 @@
     <Content Include="Views\Trainer\TrainingConfirmationList.cshtml" />
     <Content Include="Views\Trainer\TrainerConfirmation.cshtml" />
     <Content Include="Views\FinancialTransaction\FinancialTransactionList.cshtml" />
+    <Content Include="Views\FinancialTransaction\FinancialTransactionDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

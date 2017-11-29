@@ -1,4 +1,5 @@
-﻿@model EDU.Web.ViewModels.FinancialTransactionModel.FinancialTransactionVM
+﻿@using Newtonsoft.Json;
+@model EDU.Web.ViewModels.FinancialTransactionModel.FinancialTransactionVM
 
 @{
     ViewBag.Title = "FinancialTransactionList";
@@ -60,9 +61,9 @@
                                      columns:
                                         grid.Columns(
                                         grid.Column("DESCRIPTION", "DESCRIPTION"),
-                                        grid.Column("Amount", "Amount", format: @<text> <span class="display-mode"> @(item.Amount !=null ? Convert.ToInt64(item.Amount) : null) </span>  <input type="text" name="Amount" id="Amount" value="@(item.Amount !=null ?Convert.ToInt64(item.Amount) : null)" class="edit-mode numCss" /> </text>, style: ""),
-                                        grid.Column("ReferenceDoc", "Reference Doc", format: @<text> <span class="display-mode"> @(item.ReferenceDoc !=null ? item.ReferenceDoc : null) </span>  <input type="file" name="ReferenceDoc" id="ReferenceDoc" value="@(item.ReferenceDoc != null ?item.ReferenceDoc : null)" class="edit-mode numCss" /> </text>, style: ""),
-                                        grid.Column("Remarks", "Remarks", format: @<text> <span class="display-mode"> @(item.Remarks !=null ? item.NoOfStudents : null) </span>  <input type="text" name="Remarks" id="Remarks" value="@(item.Remarks !=null ? item.Remarks : null)" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("Amount", "Amount", format: @<text> <span class="display-mode"> @(item.Amount != null ? Convert.ToInt64(item.Amount) : null) </span>  <input type="text" name="Amount" id="Amount" value="@(item.Amount !=null ?Convert.ToInt64(item.Amount) : null)" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("ReferenceDoc", "Reference Doc", format: @<text> <span class="display-mode"> @(item.ReferenceDoc != null ? item.ReferenceDoc : null) </span>  <input type="file" name="ReferenceDoc" id="ReferenceDoc" value="@(item.ReferenceDoc != null ?item.ReferenceDoc : null)" class="edit-mode numCss" /> </text>, style: ""),
+                                        grid.Column("Remarks", "Remarks", format: @<text> <span class="display-mode"> @(item.Remarks != null ? item.NoOfStudents : null) </span>  <input type="text" name="Remarks" id="Remarks" value="@(item.Remarks !=null ? item.Remarks : null)" class="edit-mode numCss" /> </text>, style: ""),
                                         grid.Column("", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
@@ -76,7 +77,6 @@
                     </div>
                 </div>
                 <div class="modal-footer css10">
-                    <button type="button" onclick="SaveFinancialTransaction()" class="btn btn-primary btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
                     <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
                 </div>
             </div>
@@ -91,8 +91,7 @@
             window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
         };
 
-        $(function () {
-            debugger;
+        @*$(function () {
             $('.edit-mode').hide();
             $('.edit-user, .cancel-user').on('click', function () {
                 var tr = $(this).parents('tr:first');
@@ -101,16 +100,70 @@
 
             $('.save-user').on('click',function()
             {
+                debugger;
+                //if ($('#frmFinancial').valid()) {
+            var tr = $(this).parents('tr:first');
 
+            var Amount = tr.find("#Amount").val();
+            var ReferenceDoc = tr.find("#ReferenceDoc").val();
+            var Remarks = tr.find("#Remarks").val();
+
+            tr.find('.edit-mode, .display-mode').toggle();
+
+            debugger;
+
+            $.ajax({
+                url: '@Url.Content("~/FinancialTransaction/SaveFinancialTransaction/")',
+                data: JSON.stringify(@Html.Raw(JsonConvert.SerializeObject(Model))),
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert(data);
+                    location.reload(true);
+                }
+            });
+        //}
             })
-        });
+        });*@
 
-        function SaveFinancialTransaction()
-        {
 
-        }
         function SubmitFinancialTransaction() {
 
         }
-        </script>
+        
+        function EditCourse(Id, trainingConfirmationID, descriptionId, currencyExRate ) {
+            $.ajax({
+                url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&currencyExRate=" + currencyExRate,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');                   
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+
+        function CountryChange(el) {
+        if (el.value) {
+                $.ajax({
+                    url: '@Url.Content("~/FinancialTransaction/GetCurrency?Id=")' + el.value,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        debugger;
+                        $("#CurrencyCode").val(data);
+                    },
+                    error: function (err) {
+                    }
+                });
+            }
+        else
+            {
+                $("#CurrencyCode").val('');
+            }
+    };
+    </script>
 }
