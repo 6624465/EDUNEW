@@ -19,6 +19,7 @@ namespace EDU.Web.Models
         public Nullable<short> DescriptionId { get; set; }
         public string Description { get; set; }
         public Nullable<decimal> Amount { get; set; }
+        public Nullable<decimal> LocalAmount { get; set; }
         public string ReferenceDoc { get; set; }
         public string Remarks { get; set; }
         public string CreatedBy { get; set; }

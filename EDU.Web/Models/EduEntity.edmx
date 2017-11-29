@@ -71,6 +71,7 @@ warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' 
           <Property Name="DescriptionId" Type="smallint" />
           <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LocalAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ReferenceDoc" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -197,6 +198,7 @@ warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' 
     [FinancialTransactionDetails].[DescriptionId] AS [DescriptionId], 
     [FinancialTransactionDetails].[Description] AS [Description], 
     [FinancialTransactionDetails].[Amount] AS [Amount], 
+    [FinancialTransactionDetails].[LocalAmount] AS [LocalAmount], 
     [FinancialTransactionDetails].[ReferenceDoc] AS [ReferenceDoc], 
     [FinancialTransactionDetails].[Remarks] AS [Remarks], 
     [FinancialTransactionDetails].[CreatedBy] AS [CreatedBy], 
@@ -388,6 +390,7 @@ warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' 
           <Property Name="DescriptionId" Type="Int16" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LocalAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -572,6 +575,7 @@ warning 6002: The table/view 'DB_9F30C5_edudev.Edu.FinancialTransactionDetails' 
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="ReferenceDoc" ColumnName="ReferenceDoc" />
+                <ScalarProperty Name="LocalAmount" ColumnName="LocalAmount" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="DescriptionId" ColumnName="DescriptionId" />
