@@ -128,7 +128,7 @@
                     contentType: 'application/json',
                     success: function (data) {
                         debugger;
-                        $("#CurrencyCode").val(data);
+                        $("#financialTransaction_CurrencyCode").val(data);
                     },
                     error: function (err) {
                     }
@@ -136,7 +136,7 @@
             }
         else
             {
-                $("#CurrencyCode").val('');
+            $("#financialTransaction_CurrencyCode").val('');
             }
     };
     </script>
