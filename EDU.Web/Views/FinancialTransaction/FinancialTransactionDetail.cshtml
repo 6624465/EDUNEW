@@ -1,1 +1,89 @@
-﻿
+﻿<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">@ViewBag.Title</h4>
+        </div>
+        <div class="modal-body" id="FinancialTransactionModalBody">
+
+            @*@Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.IsActive)
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Country</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(x => x.Country,
+                    new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchCode", "BranchName"),
+                    "Select Country", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Product</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(x => x.Product,
+                    new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
+                    "Select Product", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Course Name</span>
+                    </label>
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(x => x.CourseName,
+                    new { @class = "form-control", placeholder = "Course Name", onblur = "ValidateCourseName(true)" })
+                    </div>
+                    @Html.HiddenFor(x => x.Id)
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">No. Of Days</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(x => x.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Public Price</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.PublicPrice,
+                    new { @class = "form-control numCss", placeholder = "Public Price", @Value = Convert.ToInt64(Model.PublicPrice) })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Private Price</span>
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.PrivatePrice,
+                    new { @class = "form-control numCss", placeholder = "Private Price", @Value = Convert.ToInt64(Model.PrivatePrice) })
+                    </div>
+                </div>
+            </div>*@
+
+            <div class="modal-footer css10">
+                <button type="button" onclick="SaveFinancialTransaction()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>

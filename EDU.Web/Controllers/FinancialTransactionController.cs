@@ -54,18 +54,26 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult FinancialTransactionDetail(int? financialTransactionId, string trainingConfirmationID, short? descriptionId, string description, decimal? currencyExRate)
+        public PartialViewResult FinancialTransactionDetail(int financialTransactionId, string trainingConfirmationID, short? descriptionId, string description, decimal? currencyExRate)
         {
             ViewData["CurrencyExRate"] = currencyExRate;
             if (financialTransactionId == -1)
             {
                 ViewBag.Title = "New Financial Transaction";
-                return PartialView(new FinancialTransactionDetail { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId,Description= description });
+                return PartialView(new FinancialTransactionDetail { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description });
             }
             else
             {
-                ViewBag.Title = "Update Financial Transaction";
-                return PartialView(dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == financialTransactionId && x.TrainingConfirmationID == trainingConfirmationID && x.DescriptionId == descriptionId));
+                if (dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == financialTransactionId && x.TrainingConfirmationID == trainingConfirmationID && x.DescriptionId == descriptionId).Count() > 0)
+                {
+                    ViewBag.Title = "Update Financial Transaction";
+                    return PartialView(dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == financialTransactionId && x.TrainingConfirmationID == trainingConfirmationID && x.DescriptionId == descriptionId));
+                }
+                else
+                {
+                    ViewBag.Title = "New Financial Transaction";
+                    return PartialView(new FinancialTransactionDetail { FinancialTransactionId = financialTransactionId, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description });
+                }
             }
         }
 
