@@ -30,16 +30,16 @@
           "Select Event No.", new { @class = "form-control input-sm ", onchange = "ChangeEventID(this);" })
                                 </div>
                                 @*<label class="col-md-1 control-label">
-                                    <span>Country</span>
-                                </label>*@
+                                        <span>Country</span>
+                                    </label>*@
                                 <div class="col-md-2">
                                     @Html.DropDownListFor(x => x.financialTransaction.Country,
       new SelectList(Model.countryList, "BranchID", "BranchName"),
       "Select Country", new { @class = "form-control input-sm ", onchange = "CountryChange(this);" })
                                 </div>
                                 @*<label class="col-md-1 control-label">
-                                    <span>Currency</span>
-                                </label>*@
+                                        <span>Currency</span>
+                                    </label>*@
                                 <div class="col-md-1">
                                     @Html.DropDownListFor(x => x.financialTransaction.CurrencyCode,
       new SelectList(Model.currencyList, "LookupCode", "LookupCode"),
@@ -69,7 +69,7 @@
                                         grid.Column("", format: @<text>
                                             @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                             {
-                                                <button class="btn btn-primary btn-xs waves-effect" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,@item.TrainingConfirmationID,@item.DescriptionId,@item.Description)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
                                             }
                                         </text>, style: "col3Width", canSort: false)
@@ -113,13 +113,26 @@
             </div>
         </div>
     </div>
+    <div id="myModal" class="modal fade" role="dialog">
+
+    </div>
                                     }
 @section SectionScripts {
     <script type="text/javascript">
 
+        $(function () {
+            debugger;
+            if ($('#financialTransaction_TrainingConfirmationID').val() != '' && $('#financialTransaction_TrainingConfirmationID').val() != null)
+                $('.btn_edit').removeAttr('disabled');
+            else
+                $('.btn_edit').attr('disabled', 'disabled');
+        });
+
         function ChangeEventID(el) {
+
             $('#eventid').val(el.value);
             window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+
         };
 
         function SaveFinancialTransaction() {
