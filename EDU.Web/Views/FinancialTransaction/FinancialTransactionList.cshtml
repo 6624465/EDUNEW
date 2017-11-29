@@ -137,19 +137,21 @@
                 success: function (html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
+                    if (descriptionId == 1050)
+                        $('#Amount').attr('disabled', 'disabled');
+                    else
+                        $('#Amount').removeAttr('disabled');
+                    CalculateLocalAmount();
                 },
                 error: function (err) {
 
                 }
             });
-            if (descriptionId == 1050)
-                $('#Amount').attr('disabled', 'disabled');
-            else
-                $('#Amount').removeAttr('disabled');
+            
         }
 
         function CountryChange(el) {
-        if (el.value) {
+            if (el.value) {
                 $.ajax({
                     url: '@Url.Content("~/FinancialTransaction/GetCurrency?Id=")' + el.value,
                     method: 'GET',
@@ -162,20 +164,17 @@
                     }
                 });
             }
-        else
-            {
-            $("#financialTransaction_CurrencyCode").val('');
+            else {
+                $("#financialTransaction_CurrencyCode").val('');
             }
         };
-        function CalculateLocalAmount()
-        {
+        function CalculateLocalAmount() {
             debugger;
             var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
             var Amount = parseInt($('#Amount').val());
             var result = currencyrate * Amount;
             $('#LocalAmount').val(result);
-            if(isNaN(Amount))
-            {
+            if (isNaN(Amount)) {
                 $('#LocalAmount').val('');
             }
         }
