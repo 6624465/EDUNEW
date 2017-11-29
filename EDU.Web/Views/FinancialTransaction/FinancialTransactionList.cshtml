@@ -57,6 +57,33 @@
                         }
                         <div id="gridContent">
                             @grid.GetHtml(
+                                     tableStyle: "table table-striped",
+                                     mode: WebGridPagerModes.All,
+                                     columns:
+                                        grid.Columns(
+                                        grid.Column("DESCRIPTION", "DESCRIPTION"),
+                                        grid.Column("Amount", "Amount"),
+                                        grid.Column("ReferenceDoc", "Reference Doc"),
+                                        grid.Column("Remarks", "Remarks"),
+                                        grid.Column("", format: @<text>
+                                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                            {
+                                                <button class="btn btn-xs btn-success waves-effect" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,@item.TrainingConfirmationID,@item.DescriptionId,@item.Description)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;">Edit</i></button>
+
+                                            }
+                                        </text>, style: "col3Width", canSort: false)
+                                        ))
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="row css10">
+                    <div class="col-md-12">
+                        @{
+                            var grid = new WebGrid(Model.financialTransactionDetailList);
+                        }
+                        <div id="gridContent">
+                            @grid.GetHtml(
                                               tableStyle: "table table-striped",
                                               mode: WebGridPagerModes.All,
                                               columns:
@@ -76,7 +103,7 @@
                                                  ))
                         </div>
                     </div>
-                </div>
+                </div>*@
                 <div class="modal-footer css10">
                     <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
                 </div>
@@ -105,9 +132,10 @@
 
         }
 
-        function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, currencyExRate ) {
+        function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, description) {
+            var currencyExRate = 100;
             $.ajax({
-                url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&currencyExRate=" + currencyExRate,
+                url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&description=" + description + "&currencyExRate=" + currencyExRate,
                 method: 'get',
                 contentType: 'text/html',
                 success: function (html) {

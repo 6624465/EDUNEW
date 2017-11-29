@@ -54,13 +54,13 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult FinancialTransactionDetail(int? financialTransactionId, string trainingConfirmationID, short? descriptionId, decimal? currencyExRate)
+        public PartialViewResult FinancialTransactionDetail(int? financialTransactionId, string trainingConfirmationID, short? descriptionId, string description, decimal? currencyExRate)
         {
             ViewData["CurrencyExRate"] = currencyExRate;
             if (financialTransactionId == -1)
             {
                 ViewBag.Title = "New Financial Transaction";
-                return PartialView(new FinancialTransactionDetail { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId });
+                return PartialView(new FinancialTransactionDetail { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId,Description= description });
             }
             else
             {
