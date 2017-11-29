@@ -78,7 +78,7 @@ namespace EDU.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveFinancialTransaction(FinancialTransactionVM ftinfo)
+        public JsonResult SaveFinancialTransaction(FinancialTransactionVM ftinfo, FinancialTransactionDetail dtl)
         {
             try
             {

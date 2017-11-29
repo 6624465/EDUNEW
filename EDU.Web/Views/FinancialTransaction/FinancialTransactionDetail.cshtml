@@ -8,14 +8,17 @@
             <h4 class="modal-title">@ViewBag.Title</h4>
         </div>
         <div class="modal-body" id="FinancialTransactionModalBody">
-            @Html.HiddenFor(x=>x.FinancialTransactionId)
+            @Html.HiddenFor(x => x.FinancialTransactionId)
+            @Html.HiddenFor(x => x.TrainingConfirmationID)
+            @Html.HiddenFor(x => x.DescriptionId)
+            @Html.HiddenFor(x => x.Description)
             <div class="row">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
                         <span class="pull-right">Description</span>
                     </label>
                     <div class="col-md-6">
-                       @Html.TextBoxFor(x=>x.Description, new{@class="form-control",@disabled= "disabled" })
+                        @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -25,7 +28,7 @@
                         <span class="pull-right">Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", @placeholder= "Amount" })
+                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", @placeholder = "Amount" })
                     </div>
                 </div>
             </div>
@@ -35,7 +38,7 @@
                         <span class="pull-right">Local Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.LocalAmount, new { @class = "form-control numCss", @placeholder = "LocalAmount",@disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.LocalAmount, new { @class = "form-control numCss", @placeholder = "LocalAmount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -45,7 +48,7 @@
                         <span class="pull-right">Reference Doc</span>
                     </label>
                     <div class="col-md-6">
-                       <input type="file" value="@Model.ReferenceDoc"/>
+                        <input type="file" value="@Model.ReferenceDoc" />
                     </div>
                 </div>
             </div>
@@ -55,7 +58,7 @@
                         <span class="pull-right">Remarks</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextAreaFor(x => x.Remarks, new { @class="form-control"})
+                        @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control" })
                     </div>
                 </div>
             </div>

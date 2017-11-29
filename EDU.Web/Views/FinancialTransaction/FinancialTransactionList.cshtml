@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("SaveFinancialTransaction", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancial", name = "frmFinancial" }))
+@using (Html.BeginForm("SaveFinancialTransaction", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancial", name = "frmFinancial", enctype = "multipart/form-data" }))
 {
     <div class="page page-forms-elements">
         <div class="page-wrap">
@@ -24,6 +24,7 @@
                                     <span>Event No.</span>
                                 </label>
                                 <div class="col-md-2">
+                                    @Html.HiddenFor(x => x.financialTransaction.FinancialTransactionId)
                                     <input type="hidden" id="eventid" name="eventid" />
                                     @Html.DropDownListFor(x => x.financialTransaction.TrainingConfirmationID,
           new SelectList(Model.trainingConfirmationList, "TrainingConfirmationID", "TrainingConfirmationID"),
@@ -77,34 +78,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        @*<div class="row css10">
-                                <div class="col-md-12">
-                                    @{
-                                        var grid = new WebGrid(Model.financialTransactionDetailList);
-                                    }
-                                    <div id="gridContent">
-                                        @grid.GetHtml(
-                                                          tableStyle: "table table-striped",
-                                                          mode: WebGridPagerModes.All,
-                                                          columns:
-                                                             grid.Columns(
-                                                             grid.Column("DESCRIPTION", "DESCRIPTION"),
-                                                             grid.Column("Amount", "Amount", format: @<text> <span class="display-mode"> @(item.Amount != null ? Convert.ToInt64(item.Amount) : null) </span>  <input type="text" name="Amount" id="Amount" value="@(item.Amount != null ? Convert.ToInt64(item.Amount) : null)" class="edit-mode numCss" /> </text>, style: ""),
-                                                             grid.Column("ReferenceDoc", "Reference Doc", format: @<text> <span class="display-mode"> @(item.ReferenceDoc != null ? item.ReferenceDoc : null) </span>  <input type="file" name="ReferenceDoc" id="ReferenceDoc" value="@(item.ReferenceDoc != null ? item.ReferenceDoc : null)" class="edit-mode" /> </text>, style: ""),
-                                                             grid.Column("Remarks", "Remarks", format: @<text> <span class="display-mode"> @(item.Remarks != null ? item.NoOfStudents : null) </span>  <textarea type="text" name="Remarks" id="Remarks" value="@(item.Remarks != null ? item.Remarks : null)" class="edit-mode"></textarea> </text>, style: ""),
-                                                             grid.Column("", format: @<text>
-                                                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                                                    {
-                                                                        <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                                    }
-                                                                    <button type="button" class="save-user edit-mode btn btn-success btn-xs waves-effect"><i class="fa fa-floppy-o" style="padding-left: 5px;"></i></button>
-                                                                    <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
-                                                            </text>, style: "col3Width", canSort: false)
-                                                             ))
-                                    </div>
-                                </div>
-                            </div>*@
                         <div class="modal-footer css10">
                             <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
                         </div>
@@ -113,6 +86,7 @@
             </div>
         </div>
     </div>
+
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
