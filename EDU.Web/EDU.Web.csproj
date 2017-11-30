@@ -1616,6 +1616,9 @@
     <Compile Include="Models\Lookup.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OperationalTransaction.cs">
+      <DependentUpon>EduEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Registration.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
@@ -1634,6 +1637,7 @@
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
     <Compile Include="ViewModels\FinancialTransaction\FinancialTransactionVM.cs" />
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
+    <Compile Include="ViewModels\OperationalTransaction\OperationalTransactionVM.cs" />
     <Compile Include="ViewModels\Registration\RegistrationVM.cs" />
     <Compile Include="ViewModels\Trainer\TrainingConfirmationVM.cs" />
   </ItemGroup>
