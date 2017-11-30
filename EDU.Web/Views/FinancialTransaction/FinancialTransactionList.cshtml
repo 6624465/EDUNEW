@@ -65,7 +65,6 @@
                                 </label>
                                 <div class="col-md-2">
                                     @Html.HiddenFor(x => x.financialTransaction.FinancialTransactionId)
-                                    @Html.HiddenFor(x => x.financialTransaction.IsSubmit)
                                     <input type="hidden" id="eventid" name="eventid" />
                                     @Html.DropDownListFor(x => x.financialTransaction.TrainingConfirmationID,
           new SelectList(Model.trainingConfirmationList, "TrainingConfirmationID", "TrainingConfirmationID"),
@@ -89,7 +88,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     @Html.TextBoxFor(x => x.financialTransaction.CurrencyExRate, "{0:#.#}",
-           new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
+           new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss", onblur = "ValidateTheExValue()" })
                                 </div>
                             </div>
                         </div>
@@ -101,7 +100,7 @@
                                      mode: WebGridPagerModes.All,
                                      columns:
                                         grid.Columns(
-                                        grid.Column("DESCRIPTION", "DESCRIPTION"),
+                                        grid.Column("DESCRIPTION", "DESCRIPTION", canSort: false),
                                         grid.Column("Amount", "Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
@@ -109,7 +108,7 @@
                                                     @ConvertToInt64(item.Amount)
                                                 </span>
                                             </div>
-                                        </text>, canSort: true),
+                                        </text>, canSort: false),
                                         grid.Column("LocalAmount", "Local Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
@@ -117,13 +116,12 @@
                                                     @ConvertToInt64(item.LocalAmount)
                                                 </span>
                                             </div>
-                                        </text>, canSort: true),
+                                        </text>, canSort: false),
                                         grid.Column("ReferenceDoc", "Reference Doc",
                                         format:
                                         @<text>
-                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc"  target="_blank">@item.ReferenceDoc</a>
-                                        </text>
-                                        ),
+                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                        </text>,canSort: false),
                                         grid.Column("Remarks", "Remarks",
                                          format:
                                         @<text>
@@ -139,11 +137,11 @@
                                                     <span>@item.Remarks</span>
                                                 }
                                             </div>
-                                        </text>),
+                                        </text>, canSort: false),
                                         grid.Column("", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                             {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit btndisable" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
                                                 }
                                         </text>, style: "col3Width", canSort: false)
@@ -151,13 +149,9 @@
                                 </div>
                             </div>
                         </div>
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                        {
-                            <div class="modal-footer css10">
-                                <button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
-                                <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
-                            </div>
-                        }
+                        <div class="modal-footer css10">
+                            <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -178,10 +172,6 @@
             else
                 $('.btn_edit').attr('disabled', 'disabled');
 
-            if ($('#financialTransaction_IsSubmit').val() != "True")
-                $('.btndisable').removeAttr('disabled');
-            else
-                $('.btndisable').attr('disabled', 'disabled');
 
             @if (Model.financialTransaction.FinancialTransactionId!=-1)
             {
@@ -194,29 +184,6 @@
             }
             //class="pull-right"
         });
-
-        function UpdateFinancialTransactionLocalAmount() {
-            if ($('#frmFinancial').valid()) {
-                var FinancialTransaction =
-                    {
-                        "CurrencyExRate": $('#financialTransaction_CurrencyExRate').val(),
-                        "Country": $('#financialTransaction_Country').val(),
-                        "CurrencyCode": $('#financialTransaction_CurrencyCode').val(),
-                        "FinancialTransactionId": $('#financialTransaction_FinancialTransactionId').val(),
-                        "TrainingConfirmationID": $('#financialTransaction_TrainingConfirmationID').val()
-                    };
-                $.ajax({
-                    url: '@Url.Content("~/FinancialTransaction/UpdateFinancialTransactionLocalAmount/")',
-                    data: JSON.stringify(FinancialTransaction),
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        alert(data);
-                        location.reload(true);
-                    }
-                });
-            }
-        }
 
         function ChangeEventID(el) {
 
@@ -237,23 +204,7 @@
 
 
         function SubmitFinancialTransaction() {
-            if ($('#frmFinancial').valid()) {
-                var FinancialTransaction =
-                    {
-                        "FinancialTransactionId": $('#financialTransaction_FinancialTransactionId').val(),
-                        "TrainingConfirmationID": $('#financialTransaction_TrainingConfirmationID').val()
-                    };
-                $.ajax({
-                    url: '@Url.Content("~/FinancialTransaction/SubmitFinancialTransaction/")',
-                    data: JSON.stringify(FinancialTransaction),
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        alert(data);
-                        location.reload(true);
-                    }
-                });
-            }
+
         }
 
         function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, description, financialTransactionDetailId) {
@@ -334,6 +285,14 @@
 
         function mouseover(el) {
             $(el).popover("show");
+        }
+        function ValidateTheExValue()
+        {
+            var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
+            if(currencyrate==0)
+            {
+                parseInt($('#financialTransaction_CurrencyExRate').val(''));
+            }
         }
     </script>
 }
