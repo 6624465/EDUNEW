@@ -101,7 +101,7 @@
                                      columns:
                                         grid.Columns(
                                         grid.Column("DESCRIPTION", "DESCRIPTION"),
-                                        grid.Column("Amount", "Amount", format: 
+                                        grid.Column("Amount", "Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
                                                 <span class="pull-right">
@@ -109,15 +109,20 @@
                                                 </span>
                                             </div>
                                         </text>, canSort: true),
-                                        grid.Column("LocalAmount", "Local Amount", format:  
-                                         @<text>
-                                                <div style='width:50px;'>
-                                                    <span class="pull-right">
-                                                        @ConvertToInt64(item.LocalAmount)
-                                                    </span>
-                                                </div>
+                                        grid.Column("LocalAmount", "Local Amount", format:
+                                        @<text>
+                                            <div style='width:50px;'>
+                                                <span class="pull-right">
+                                                    @ConvertToInt64(item.LocalAmount)
+                                                </span>
+                                            </div>
                                         </text>, canSort: true),
-                                        grid.Column("ReferenceDoc", "Reference Doc"),
+                                        grid.Column("ReferenceDoc", "Reference Doc",
+                                        format:
+                                        @<text>
+                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc"  target="_blank">@item.ReferenceDoc</a>
+                                        </text>
+                                        ),
                                         grid.Column("Remarks", "Remarks",
                                          format:
                                         @<text>
@@ -135,11 +140,11 @@
                                             </div>
                                         </text>),
                                         grid.Column("", format: @<text>
-                                            @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                             {
-                                                <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
-                                            }
+                                                }
                                         </text>, style: "col3Width", canSort: false)
                                         ))
                                 </div>
@@ -172,8 +177,8 @@
             @if (Model.financialTransaction.FinancialTransactionId!=-1)
             {
             <text>
-                var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
-                var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
+            var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
+            var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
             $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span>' + gp + '</span></td><td></td><td></td><td></td></tr>'+
                 '<tr class="bordertop"><td>P&L</td><td><span>' + pl + '%</span></td><td></td><td></td><td></td></tr>');
             </text>
