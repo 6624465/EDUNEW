@@ -17,9 +17,17 @@ namespace EDU.Web.Controllers
     {
         EducationEntities dbContext = new EducationEntities();
 
+
         [HttpGet]
         public ActionResult FinancialTransactionList(string trainingConfirmationID)
         {
+            Func<string, short?, string, string, HttpPostedFileBase> createfile = delegate (string TrainingConfirmationID, short? DescriptionId, string filename, string path)
+            {
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+                HttpPostedFileBase objFile = (HttpPostedFileBase)new MemoryPostedFile(bytes);
+                return objFile;
+            };
+
             FinancialTransactionVM financialTransactionVM = new FinancialTransactionVM();
             FinancialTransaction financialTransaction = new FinancialTransaction();
             List<FinancialTransactionDetail> financialTransactionDetails = new List<FinancialTransactionDetail>();
@@ -33,10 +41,29 @@ namespace EDU.Web.Controllers
                 financialTransaction.TrainingConfirmationID = trainingConfirmationID;
             }
 
-            financialTransactionDetails = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == financialTransaction.FinancialTransactionId && x.TrainingConfirmationID == financialTransaction.TrainingConfirmationID).ToList();
+            financialTransactionVM.financialTransactionDetailList = dbContext.FinancialTransactionDetails
+                .Where(x => x.FinancialTransactionId == financialTransaction.FinancialTransactionId && x.TrainingConfirmationID == financialTransaction.TrainingConfirmationID)
+                .Select(x => new FinancialTransactionDetailVM
+                {
+                    FinancialTransactionDetailId = x.FinancialTransactionDetailId,
+                    FinancialTransactionId = x.FinancialTransactionId,
+                    TrainingConfirmationID = x.TrainingConfirmationID,
+                    DescriptionId = x.DescriptionId,
+                    Description = x.Description,
+                    Amount = x.Amount,
+                    LocalAmount = x.LocalAmount,
+                    ReferenceDoc = x.ReferenceDoc,
+                    Remarks = x.Remarks,
+                    CreatedBy = x.CreatedBy,
+                    CreatedOn = x.CreatedOn,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedOn = x.ModifiedOn
+                })
+                .ToList();
+
 
             financialTransactionVM.financialTransaction = financialTransaction;
-            financialTransactionVM.financialTransactionDetailList = financialTransactionDetails;
+            //financialTransactionVM.financialTransactionDetailList = financialTransactionDetails;
             financialTransactionVM.currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
             financialTransactionVM.countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
             financialTransactionVM.trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
@@ -47,7 +74,7 @@ namespace EDU.Web.Controllers
             foreach (EDU.Web.Models.Lookup item in FinancialTransactionLookupList)
             {
                 if (financialTransactionVM.financialTransactionDetailList.Where(x => x.DescriptionId == item.LookupID).Count() == 0)
-                    financialTransactionVM.financialTransactionDetailList.Add(new FinancialTransactionDetail() { DescriptionId = item.LookupID, Description = item.LookupDescription, FinancialTransactionId = financialTransaction.FinancialTransactionId, TrainingConfirmationID = financialTransaction.TrainingConfirmationID, FinancialTransactionDetailId = -1, Amount = (item.LookupID == 1050 ? TotalAmount : null) });
+                    financialTransactionVM.financialTransactionDetailList.Add(new FinancialTransactionDetailVM() { DescriptionId = item.LookupID, Description = item.LookupDescription, FinancialTransactionId = financialTransaction.FinancialTransactionId, TrainingConfirmationID = financialTransaction.TrainingConfirmationID, FinancialTransactionDetailId = -1, Amount = (item.LookupID == 1050 ? TotalAmount : null) });
             }
             financialTransactionVM.financialTransactionDetailList = financialTransactionVM.financialTransactionDetailList.OrderBy(x => x.DescriptionId).ToList();
             return View(financialTransactionVM);
@@ -62,26 +89,43 @@ namespace EDU.Web.Controllers
             if (financialTransactionId == -1)
             {
                 ViewBag.Title = "New Financial Transaction";
-                return PartialView(new FinancialTransactionDetail { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1, Amount = (descriptionId == 1050 ? TotalAmount : null) });
+                return PartialView(new FinancialTransactionDetailVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1, Amount = (descriptionId == 1050 ? TotalAmount : null) });
             }
             else
             {
                 if (dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId).Count() > 0)
                 {
-                    FinancialTransactionDetail detailrow = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId).FirstOrDefault();
+                    FinancialTransactionDetailVM detailrow = dbContext.FinancialTransactionDetails
+                        .Where(x => x.FinancialTransactionDetailId == financialTransactionDetailId)
+                        .Select(x => new FinancialTransactionDetailVM
+                        {
+                            FinancialTransactionDetailId = x.FinancialTransactionDetailId,
+                            FinancialTransactionId = x.FinancialTransactionId,
+                            TrainingConfirmationID = x.TrainingConfirmationID,
+                            DescriptionId = x.DescriptionId,
+                            Description = x.Description,
+                            Amount = x.Amount,
+                            LocalAmount = x.LocalAmount,
+                            ReferenceDoc = x.ReferenceDoc,
+                            Remarks = x.Remarks,
+                            CreatedBy = x.CreatedBy,
+                            CreatedOn = x.CreatedOn,
+                            ModifiedBy = x.ModifiedBy,
+                            ModifiedOn = x.ModifiedOn
+                        }).FirstOrDefault();
                     ViewBag.Title = "Update Financial Transaction";
                     return PartialView(detailrow);
                 }
                 else
                 {
                     ViewBag.Title = "New Financial Transaction";
-                    return PartialView(new FinancialTransactionDetail { FinancialTransactionId = financialTransactionId, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1, Amount = (descriptionId == 1050 ? TotalAmount : null) });
+                    return PartialView(new FinancialTransactionDetailVM { FinancialTransactionId = financialTransactionId, TrainingConfirmationID = trainingConfirmationID, DescriptionId = descriptionId, Description = description, FinancialTransactionDetailId = -1, Amount = (descriptionId == 1050 ? TotalAmount : null) });
                 }
             }
         }
 
         [HttpPost]
-        public ActionResult SaveFinancialTransaction(FinancialTransactionVM ftvminfo, FinancialTransactionDetail dtl)
+        public ActionResult SaveFinancialTransaction(FinancialTransactionVM ftvminfo, FinancialTransactionDetailVM dtl)
         {
             try
             {
@@ -114,9 +158,18 @@ namespace EDU.Web.Controllers
 
 
                         //Details Save
-                        dtl.FinancialTransactionId = financialTransaction.FinancialTransactionId;
-                        dtl.CreatedBy = USER_ID;
-                        dtl.CreatedOn = UTILITY.SINGAPORETIME;
+                        FinancialTransactionDetail detail1 = new Models.FinancialTransactionDetail();
+
+                        detail1.Amount = dtl.Amount;
+                        detail1.DescriptionId = dtl.DescriptionId;
+                        detail1.Description = dtl.Description;
+                        detail1.LocalAmount = dtl.LocalAmount;
+                        detail1.FinancialTransactionId = financialTransaction.FinancialTransactionId;
+                        detail1.TrainingConfirmationID = dtl.TrainingConfirmationID;
+                        detail1.Remarks = dtl.Remarks;
+
+                        detail1.CreatedBy = USER_ID;
+                        detail1.CreatedOn = UTILITY.SINGAPORETIME;
 
                         if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
                         {
@@ -127,12 +180,12 @@ namespace EDU.Web.Controllers
                             }
 
                             dtl.FileName.SaveAs(path + dtl.FileName.FileName);
-                            dtl.ReferenceDoc = dtl.FileName.FileName;
+                            detail1.ReferenceDoc = dtl.FileName.FileName;
                         }
                         else
-                            dtl.ReferenceDoc = null;
+                            detail1.ReferenceDoc = null;
 
-                        dbContext.FinancialTransactionDetails.Add(dtl);
+                        dbContext.FinancialTransactionDetails.Add(detail1);
 
                         dbContext.SaveChanges();
 
@@ -141,9 +194,19 @@ namespace EDU.Web.Controllers
                     else
                     {
                         //Details Save
-                        dtl.FinancialTransactionId = financialTransaction.FinancialTransactionId;
-                        dtl.CreatedBy = USER_ID;
-                        dtl.CreatedOn = UTILITY.SINGAPORETIME;
+                        FinancialTransactionDetail detail = new Models.FinancialTransactionDetail();
+
+                        detail.Amount = dtl.Amount;
+                        detail.DescriptionId = dtl.DescriptionId;
+                        detail.Description = dtl.Description;
+                        detail.LocalAmount = dtl.LocalAmount;
+                        detail.FinancialTransactionId = financialTransaction.FinancialTransactionId;
+                        detail.TrainingConfirmationID = dtl.TrainingConfirmationID;
+                        detail.Remarks = dtl.Remarks;
+
+                        detail.FinancialTransactionId = financialTransaction.FinancialTransactionId;
+                        detail.CreatedBy = USER_ID;
+                        detail.CreatedOn = UTILITY.SINGAPORETIME;
 
                         if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
                         {
@@ -154,17 +217,17 @@ namespace EDU.Web.Controllers
                             }
 
                             dtl.FileName.SaveAs(path + dtl.FileName.FileName);
-                            dtl.ReferenceDoc = dtl.FileName.FileName;
+                            detail.ReferenceDoc = dtl.FileName.FileName;
                         }
                         else
-                            dtl.ReferenceDoc = null;
+                            detail.ReferenceDoc = null;
 
-                        dbContext.FinancialTransactionDetails.Add(dtl);
+                        dbContext.FinancialTransactionDetails.Add(detail);
                     }
 
                     decimal grossprofit = 0;
                     decimal baseAmount = 0;
-                    List<FinancialTransactionDetail> ftdtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == dtl.FinancialTransactionId && x.TrainingConfirmationID == dtl.TrainingConfirmationID).ToList();
+                    List<FinancialTransactionDetail> ftdtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == financialTransaction.FinancialTransactionId && x.TrainingConfirmationID == financialTransaction.TrainingConfirmationID).ToList();
 
 
                     if (ftdtl.Count() > 0)
@@ -260,7 +323,7 @@ namespace EDU.Web.Controllers
                         financialTransactiondtl.Amount = dtl.Amount;
                         financialTransactiondtl.LocalAmount = dtl.LocalAmount;
                         financialTransactiondtl.Remarks = dtl.Remarks;
-                        financialTransactiondtl.ReferenceDoc = dtl.ReferenceDoc;
+                        //financialTransactiondtl.ReferenceDoc = dtl.ReferenceDoc;
 
                         financialTransactiondtl.ModifiedBy = USER_ID;
                         financialTransactiondtl.ModifiedOn = UTILITY.SINGAPORETIME;
@@ -272,12 +335,11 @@ namespace EDU.Web.Controllers
                             {
                                 Directory.CreateDirectory(path);
                             }
-                            financialTransactiondtl.FileName = dtl.FileName;
-                            financialTransactiondtl.FileName.SaveAs(path + dtl.FileName.FileName);
+                            dtl.FileName.SaveAs(path + dtl.FileName.FileName);
                             financialTransactiondtl.ReferenceDoc = dtl.FileName.FileName;
                         }
-                        else
-                            financialTransactiondtl.ReferenceDoc = null;
+                        //else
+                        //    financialTransactiondtl.ReferenceDoc = null;
 
                         dbContext.Entry(financialTransactiondtl).State = EntityState.Modified;
 
@@ -285,9 +347,18 @@ namespace EDU.Web.Controllers
                     else
                     {
 
-                        dtl.FinancialTransactionId = ftvminfo.financialTransaction.FinancialTransactionId;
-                        dtl.CreatedBy = USER_ID;
-                        dtl.CreatedOn = UTILITY.SINGAPORETIME;
+                        FinancialTransactionDetail detail = new FinancialTransactionDetail();
+
+                        detail.Amount = dtl.Amount;
+                        detail.DescriptionId = dtl.DescriptionId;
+                        detail.Description = dtl.Description;
+                        detail.LocalAmount = dtl.LocalAmount;
+                        detail.TrainingConfirmationID = dtl.TrainingConfirmationID;
+                        detail.Remarks = dtl.Remarks;
+
+                        detail.FinancialTransactionId = ftvminfo.financialTransaction.FinancialTransactionId;
+                        detail.CreatedBy = USER_ID;
+                        detail.CreatedOn = UTILITY.SINGAPORETIME;
 
                         if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
                         {
@@ -298,12 +369,12 @@ namespace EDU.Web.Controllers
                             }
 
                             dtl.FileName.SaveAs(path + dtl.FileName.FileName);
-                            dtl.ReferenceDoc = dtl.FileName.FileName;
+                            detail.ReferenceDoc = dtl.FileName.FileName;
                         }
                         else
-                            dtl.ReferenceDoc = null;
+                            detail.ReferenceDoc = null;
 
-                        dbContext.FinancialTransactionDetails.Add(dtl);
+                        dbContext.FinancialTransactionDetails.Add(detail);
                     }
                 }
 
