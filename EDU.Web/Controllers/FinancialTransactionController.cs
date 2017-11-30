@@ -397,5 +397,58 @@ namespace EDU.Web.Controllers
             return Json(currencyCode == null ? "" : currencyCode.LookupCode, JsonRequestBehavior.AllowGet);
 
         }
+
+
+        [HttpPost]
+        public JsonResult UpdateFinancialTransactionLocalAmount(FinancialTransaction ft)
+        {
+            FinancialTransaction ftrans = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID && x.IsActive == true).First();
+
+            ftrans.CurrencyCode = ft.CurrencyCode;
+            ftrans.Country = ft.Country;
+            ftrans.CurrencyExRate = ft.CurrencyExRate;
+            ftrans.ModifiedBy = USER_ID;
+            ftrans.ModifiedOn = UTILITY.SINGAPORETIME;
+            dbContext.Entry(ftrans).State = EntityState.Modified;
+
+            List<FinancialTransactionDetail> FinancialTransactionDetailList = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID).ToList(); //&& x.CurrencyCode == revenue.CurrencyCode
+
+            try
+            {
+                foreach (FinancialTransactionDetail ftd in FinancialTransactionDetailList)
+                {
+                    ftd.LocalAmount = ftd.Amount * ftrans.CurrencyExRate;
+
+                    ftd.ModifiedBy = USER_ID;
+                    ftd.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                    dbContext.Entry(ftd).State = EntityState.Modified;
+                }
+
+                dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            string message = "Local Amount Updated Successfully.";
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SubmitFinancialTransaction(FinancialTransaction ft)
+        {
+            FinancialTransaction ftrans = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID && x.IsActive == true).First();
+
+            ftrans.IsSubmit = true;
+            ftrans.ModifiedBy = USER_ID;
+            ftrans.ModifiedOn = UTILITY.SINGAPORETIME;
+            dbContext.Entry(ftrans).State = EntityState.Modified;
+            dbContext.SaveChanges();
+
+            string message = "Submitted successfully.";
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
     }
 }
