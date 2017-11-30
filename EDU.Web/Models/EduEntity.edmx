@@ -74,6 +74,21 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="OperationalTransaction">
+          <Key>
+            <PropertyRef Name="OperationalTransactionId" />
+          </Key>
+          <Property Name="OperationalTransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="ParticularsId" Type="int" Nullable="false" />
+          <Property Name="Month" Type="smallint" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="Registration">
           <Key>
             <PropertyRef Name="RegistrationId" />
@@ -183,6 +198,7 @@
           <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayments" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransaction" EntityType="Self.FinancialTransaction" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransactionDetails" EntityType="Self.FinancialTransactionDetails" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="OperationalTransaction" EntityType="Self.OperationalTransaction" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Registration" EntityType="Self.Registration" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainerInformation" EntityType="Self.TrainerInformation" Schema="Edu" store:Type="Tables" />
@@ -248,6 +264,7 @@
             <End Role="FinancialTransaction" EntitySet="FinancialTransactions" />
             <End Role="FinancialTransactionDetail" EntitySet="FinancialTransactionDetails" />
           </AssociationSet>
+          <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -391,6 +408,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OperationalTransaction">
+          <Key>
+            <PropertyRef Name="OperationalTransactionId" />
+          </Key>
+          <Property Name="OperationalTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ParticularsId" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int16" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -575,6 +607,22 @@
                 <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
                 <ScalarProperty Name="FinancialTransactionId" ColumnName="FinancialTransactionId" />
                 <ScalarProperty Name="FinancialTransactionDetailId" ColumnName="FinancialTransactionDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OperationalTransactions">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.OperationalTransaction">
+              <MappingFragment StoreEntitySet="OperationalTransaction">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="ParticularsId" ColumnName="ParticularsId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="OperationalTransactionId" ColumnName="OperationalTransactionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
