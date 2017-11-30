@@ -9,6 +9,19 @@
 @{
     var grid = new WebGrid(Model.financialTransactionDetailList);
 }
+@functions {
+    public string CheckString(string remarks)
+    {
+        return remarks.Replace(System.Environment.NewLine, "<br/>");
+    }
+    public string ConvertToInt64(decimal? data)
+    {
+        if (data != null)
+            return Convert.ToInt64(data.Value).ToString();
+        else
+            return null;
+    }
+}
 <style>
     .centerbox {
         margin: auto;
@@ -88,10 +101,39 @@
                                      columns:
                                         grid.Columns(
                                         grid.Column("DESCRIPTION", "DESCRIPTION"),
-                                        grid.Column("Amount", "Amount"),
-                                        grid.Column("LocalAmount", "Local Amount"),
+                                        grid.Column("Amount", "Amount", format: 
+                                        @<text>
+                                            <div style='width:50px;'>
+                                                <span class="pull-right">
+                                                    @ConvertToInt64(item.Amount)
+                                                </span>
+                                            </div>
+                                        </text>, canSort: true),
+                                        grid.Column("LocalAmount", "Local Amount", format:  
+                                         @<text>
+                                                <div style='width:50px;'>
+                                                    <span class="pull-right">
+                                                        @ConvertToInt64(item.LocalAmount)
+                                                    </span>
+                                                </div>
+                                        </text>, canSort: true),
                                         grid.Column("ReferenceDoc", "Reference Doc"),
-                                        grid.Column("Remarks", "Remarks"),
+                                        grid.Column("Remarks", "Remarks",
+                                         format:
+                                        @<text>
+                                            <div style='width:140px;'>
+                                                @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.Remarks</span>
+                                                }
+                                            </div>
+                                        </text>),
                                         grid.Column("", format: @<text>
                                             @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                             {
@@ -227,7 +269,18 @@
                 'financialTransaction.CurrencyExRate': {
                     required: true,
                 }
+                ,
+                'Amount': {
+                    required: true,
+                }
             }
         });
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            $(el).popover("show");
+        }
     </script>
 }
