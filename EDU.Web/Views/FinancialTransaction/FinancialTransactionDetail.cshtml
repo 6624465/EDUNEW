@@ -29,7 +29,7 @@
                         <span class="pull-right">Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control numCss", @placeholder = "Amount", onkeyup = "CalculateLocalAmount()" })
+                        @Html.TextBoxFor(x => x.Amount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Amount", onkeyup = "CalculateLocalAmount()" })
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                         <span class="pull-right">Local Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.LocalAmount, new { @class = "form-control numCss", @placeholder = "LocalAmount", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.LocalAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "LocalAmount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
