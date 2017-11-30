@@ -122,19 +122,13 @@
                             <div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment 1</span>
+                                        <span class="pull-right">Payment #1</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.Payment1, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('1')" })
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment Type</span>
-                                    </label>
-                                    <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Payment1Type, listItems, new { @class = "form-control", onchange = "Payment1TypeChange(this)" })
-                                    </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment 1 Date</span>
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-right">Date</span>
                                     </label>
                                     <div class="col-md-2">
                                         <div class="input-group date" id="Payment1Dt">
@@ -144,40 +138,35 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div id="cheque1" class="row css10">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right"></span>
-                                </label>
-                                <div class="col-md-2">
-                                </div>
-                                <label id="lblCheque" class="col-md-2 control-label">
-                                    <span class="pull-right">Cheque No</span>
-                                </label>
-                                <label id="lblbanktransfer" class="col-md-2 control-label">
-                                    <span class="pull-right">Transaction Id</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.ChequeNo1, new { @class = "form-control" })
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-right">Type</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Payment1Type, listItems, new { @class = "form-control", onchange = "Payment1TypeChange(this)" })
+                                    </div>
+                                    <div id="cheque1" class="col-md-2">
+                                        @*<label id="lblCheque" class="col-md-2 control-label">
+                                                <span class="pull-right">Cheque No</span>
+                                            </label>
+                                            <label id="lblbanktransfer" class="col-md-2 control-label">
+                                                <span class="pull-right">Transaction Id</span>
+                                            </label>*@
+                                        @*<div class="col-md-2">*@
+                                        @Html.TextBoxFor(x => x.ChequeNo1, new { @class = "form-control", @placeholder = "Check No/Transaction Id" })
+                                        @*</div>*@
+                                    </div>
                                 </div>
                             </div>
                             <div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment 2</span>
+                                        <span class="pull-right">Payment #2</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.Payment2, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('2')" })
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment Type</span>
-                                    </label>
-                                    <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Payment2Type, listItems, new { @class = "form-control", onchange = "Payment2TypeChange(this)" })
-                                    </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment 2 Date</span>
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-right"> Date</span>
                                     </label>
                                     <div class="col-md-2">
                                         <div class="input-group date" id="Payment2Dt">
@@ -187,40 +176,40 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div id="cheque2" class="row css10">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right"></span>
-                                </label>
-                                <div class="col-md-2">
-                                </div>
-                                <label id="lblCheque2" class="col-md-2 control-label">
-                                    <span class="pull-right">Cheque No</span>
-                                </label>
-                                <label id="lblbanktransfer2" class="col-md-2 control-label">
-                                    <span class="pull-right">Transaction Id</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.ChequeNo2, new { @class = "form-control" })
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-right">Type</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Payment2Type, listItems, new { @class = "form-control", onchange = "Payment2TypeChange(this)" })
+                                    </div>
+                                    <div id="cheque2" class="col-md-2">
+                                        @*<label class="col-md-2 control-label">
+                                                <span class="pull-right"></span>
+                                            </label>
+                                            <div class="col-md-2">
+                                            </div>
+                                            <label id="lblCheque2" class="col-md-2 control-label">
+                                                <span class="pull-right">Cheque No</span>
+                                            </label>
+                                            <label id="lblbanktransfer2" class="col-md-2 control-label">
+                                                <span class="pull-right">Transaction Id</span>
+                                            </label>*@
+                                        @*<div class="col-md-2">*@
+                                        @Html.TextBoxFor(x => x.ChequeNo2, new { @class = "form-control", @placeholder = "Check No/Transaction Id" })
+                                        @*</div>*@
+                                    </div>
                                 </div>
                             </div>
                             <div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment 3</span>
+                                        <span class="pull-right">Payment #3</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.Payment3, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "CalculateBalanceAmount('3')" })
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment Type</span>
-                                    </label>
-                                    <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Payment3Type, listItems, new { @class = "form-control", onchange = "Payment3TypeChange(this)" })
-                                    </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Payment 3 Date</span>
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-right">Date</span>
                                     </label>
                                     <div class="col-md-2">
                                         <div class="input-group date" id="Payment3Dt">
@@ -230,22 +219,28 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div id="cheque3" class="row css10">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right"></span>
-                                </label>
-                                <div class="col-md-2">
-                                </div>
-                                <label id="lblCheque3" class="col-md-2 control-label">
-                                    <span class="pull-right">Cheque No</span>
-                                </label>
-                                <label id="lblbanktransfer3" class="col-md-2 control-label">
-                                    <span class="pull-right">Transaction Id</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.ChequeNo3, new { @class = "form-control" })
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-right">Type</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Payment3Type, listItems, new { @class = "form-control", onchange = "Payment3TypeChange(this)" })
+                                    </div>
+                                    <div id="cheque3" class="col-md-2">
+                                        @*<label class="col-md-2 control-label">
+                                                <span class="pull-right"></span>
+                                            </label>
+                                            <div class="col-md-2">
+                                            </div>
+                                            <label id="lblCheque3" class="col-md-2 control-label">
+                                                <span class="pull-right">Cheque No</span>
+                                            </label>
+                                            <label id="lblbanktransfer3" class="col-md-2 control-label">
+                                                <span class="pull-right">Transaction Id</span>
+                                            </label>
+                                            <div class="col-md-2">*@
+                                        @Html.TextBoxFor(x => x.ChequeNo3, new { @class = "form-control", @placeholder = "Check No/Transaction Id" })
+                                        @*</div>*@
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -767,7 +762,7 @@
                     parseInt($('#BalanceAmount').val(p1));
                 }
             }
-           
+
             if (BalanceAmount && Payment1 && Payment2) {
                 var p = BalanceAmount - Payment1 - Payment2;
                 parseInt($('#BalanceAmount').val(p));
@@ -793,7 +788,7 @@
                 $('#Payment3').val('');
 
             }
-           
+
         }
         function Payment1TypeChange(el) {
             $('#lblbanktransfer').hide();

@@ -42,7 +42,7 @@
         border-top: 2px solid gray !important;
         border-bottom: 2px solid gray !important;
         color: #D73925;
-        font-family: 'Bebas Neue';
+        /*font-family: 'Bebas Neue';*/
     }
 </style>
 
@@ -66,6 +66,7 @@
                                 <div class="col-md-2">
                                     @Html.HiddenFor(x => x.financialTransaction.FinancialTransactionId)
                                     <input type="hidden" id="eventid" name="eventid" />
+                                    @Html.HiddenFor(x => x.financialTransaction.IsSubmit)
                                     @Html.DropDownListFor(x => x.financialTransaction.TrainingConfirmationID,
           new SelectList(Model.trainingConfirmationList, "TrainingConfirmationID", "TrainingConfirmationID"),
           "Select Event No.", new { @class = "form-control input-sm ", onchange = "ChangeEventID(this);" })
@@ -104,7 +105,7 @@
                                         grid.Column("Amount", "Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
-                                                <span class="pull-right">
+                                                <span class="center">
                                                     @ConvertToInt64(item.Amount)
                                                 </span>
                                             </div>
@@ -112,7 +113,7 @@
                                         grid.Column("LocalAmount", "Local Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
-                                                <span class="pull-right">
+                                                <span class="center">
                                                     @ConvertToInt64(item.LocalAmount)
                                                 </span>
                                             </div>
@@ -149,9 +150,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer css10">
-                            <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
-                        </div>
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        {
+                            <div class="modal-footer css10">
+                                <button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
+                                <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -172,18 +177,45 @@
             else
                 $('.btn_edit').attr('disabled', 'disabled');
 
+            if ($('#financialTransaction_IsSubmit').val() != "True")
+                $('.btndisable').removeAttr('disabled');
+            else
+                $('.btndisable').attr('disabled', 'disabled');
 
             @if (Model.financialTransaction.FinancialTransactionId!=-1)
             {
             <text>
             var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
             var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
-            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span>' + gp + '</span></td><td></td><td></td><td></td></tr>'+
-                '<tr class="bordertop"><td>P&L</td><td><span>' + pl + '%</span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' + gp + '</span></td><td></td><td></td><td></td></tr>'+
+                '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td></tr>');
             </text>
             }
             //class="pull-right"
         });
+
+        function UpdateFinancialTransactionLocalAmount() {
+            if ($('#frmFinancial').valid()) {
+                var FinancialTransaction =
+                    {
+                        "CurrencyExRate": $('#financialTransaction_CurrencyExRate').val(),
+                        "Country": $('#financialTransaction_Country').val(),
+                        "CurrencyCode": $('#financialTransaction_CurrencyCode').val(),
+                        "FinancialTransactionId": $('#financialTransaction_FinancialTransactionId').val(),
+                        "TrainingConfirmationID": $('#financialTransaction_TrainingConfirmationID').val()
+                    };
+                $.ajax({
+                    url: '@Url.Content("~/FinancialTransaction/UpdateFinancialTransactionLocalAmount/")',
+                    data: JSON.stringify(FinancialTransaction),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                        location.reload(true);
+                    }
+                });
+            }
+        }
 
         function ChangeEventID(el) {
 
@@ -204,7 +236,23 @@
 
 
         function SubmitFinancialTransaction() {
-
+            if ($('#frmFinancial').valid()) {
+                var FinancialTransaction =
+                    {
+                        "FinancialTransactionId": $('#financialTransaction_FinancialTransactionId').val(),
+                        "TrainingConfirmationID": $('#financialTransaction_TrainingConfirmationID').val()
+                    };
+                $.ajax({
+                    url: '@Url.Content("~/FinancialTransaction/SubmitFinancialTransaction/")',
+                    data: JSON.stringify(FinancialTransaction),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                        location.reload(true);
+                    }
+                });
+            }
         }
 
         function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, description, financialTransactionDetailId) {

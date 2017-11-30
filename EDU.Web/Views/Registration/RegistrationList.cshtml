@@ -7,7 +7,7 @@
 }
 
 @{
-    WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 10);
+    WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 5);
     grid.Pager(WebGridPagerModes.All);
 
     var Student = Model.trainingconfDetail.NoOfStudents;
@@ -52,7 +52,7 @@
         border-top: 2px solid gray !important;
         border-bottom: 2px solid gray !important;
         color: #D73925;
-        font-family: 'Bebas Neue'
+        /*font-family: 'Bebas Neue'*/
     }
 </style>
 @functions {
