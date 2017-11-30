@@ -118,7 +118,12 @@
                                                 </span>
                                             </div>
                                         </text>, canSort: true),
-                                        grid.Column("ReferenceDoc", "Reference Doc"),
+                                        grid.Column("ReferenceDoc", "Reference Doc",
+                                        format:
+                                        @<text>
+                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc"  target="_blank">@item.ReferenceDoc</a>
+                                        </text>
+                                        ),
                                         grid.Column("Remarks", "Remarks",
                                          format:
                                         @<text>
@@ -181,8 +186,8 @@
             @if (Model.financialTransaction.FinancialTransactionId!=-1)
             {
             <text>
-                var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
-                var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
+            var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
+            var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
             $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span>' + gp + '</span></td><td></td><td></td><td></td></tr>'+
                 '<tr class="bordertop"><td>P&L</td><td><span>' + pl + '%</span></td><td></td><td></td><td></td></tr>');
             </text>
