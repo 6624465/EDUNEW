@@ -120,7 +120,7 @@ namespace EDU.Web.Controllers
 
                         if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
                         {
-                            string path = Server.MapPath("~/Uploads/" + dtl.DescriptionId + "/");
+                            string path = Server.MapPath("~/Uploads/" + dtl.TrainingConfirmationID + "/" + dtl.DescriptionId + "/");
                             if (!Directory.Exists(path))
                             {
                                 Directory.CreateDirectory(path);
@@ -147,7 +147,7 @@ namespace EDU.Web.Controllers
 
                         if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
                         {
-                            string path = Server.MapPath("~/Uploads/" + dtl.DescriptionId + "/");
+                            string path = Server.MapPath("~/Uploads/" + dtl.TrainingConfirmationID + "/" + dtl.DescriptionId + "/");
                             if (!Directory.Exists(path))
                             {
                                 Directory.CreateDirectory(path);
@@ -216,7 +216,7 @@ namespace EDU.Web.Controllers
 
                     decimal grossprofit = 0;
                     decimal baseAmount = 0;
-                    List<FinancialTransactionDetail> ftdtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == dtl.FinancialTransactionId && x.TrainingConfirmationID == dtl.TrainingConfirmationID).ToList();
+                    List<FinancialTransactionDetail> ftdtl = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == dtl.FinancialTransactionId && x.TrainingConfirmationID == dtl.TrainingConfirmationID).OrderBy(d => d.DescriptionId).ToList();
 
 
                     if (ftdtl.Count() > 0)
@@ -232,6 +232,10 @@ namespace EDU.Web.Controllers
                                 }
                                 else
                                     grossprofit += item.Amount.Value;
+                            }
+                            else if (dtl.DescriptionId == 1050)
+                            {
+                                baseAmount = dtl.Amount.Value;
                             }
                         }
                     }
@@ -263,12 +267,12 @@ namespace EDU.Web.Controllers
 
                         if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
                         {
-                            string path = Server.MapPath("~/Uploads/" + dtl.DescriptionId + "/");
+                            string path = Server.MapPath("~/Uploads/" + dtl.TrainingConfirmationID + "/" + dtl.DescriptionId + "/");
                             if (!Directory.Exists(path))
                             {
                                 Directory.CreateDirectory(path);
                             }
-
+                            financialTransactiondtl.FileName = dtl.FileName;
                             financialTransactiondtl.FileName.SaveAs(path + dtl.FileName.FileName);
                             financialTransactiondtl.ReferenceDoc = dtl.FileName.FileName;
                         }
@@ -287,7 +291,7 @@ namespace EDU.Web.Controllers
 
                         if (dtl.FileName != null && dtl.FileName.ContentLength > 0)
                         {
-                            string path = Server.MapPath("~/Uploads/" + dtl.DescriptionId + "/");
+                            string path = Server.MapPath("~/Uploads/" + dtl.TrainingConfirmationID + "/" + dtl.DescriptionId + "/");
                             if (!Directory.Exists(path))
                             {
                                 Directory.CreateDirectory(path);
