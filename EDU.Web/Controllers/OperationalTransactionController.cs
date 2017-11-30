@@ -18,7 +18,8 @@ namespace EDU.Web.Controllers
         {
             List<OperationalTransactionVM> list = dbContext.OperationalTransactions
                 .Where(x => x.IsActive == true && x.Month == month)
-                .Select(y=> new OperationalTransactionVM {
+                .Select(y => new OperationalTransactionVM
+                {
                     OperationalTransactionId = y.OperationalTransactionId,
                     CategoryId = y.CategoryId,
                     ParticularsId = y.ParticularsId,
@@ -41,17 +42,30 @@ namespace EDU.Web.Controllers
         {
 
             ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
-            ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").ToList();
+            //ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").ToList();
             if (operationalTransactionId == -1)
             {
                 ViewBag.Title = "New Operational Transaction";
+                ViewData["ParticularsData"] = null;
                 return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true });
             }
             else
             {
                 ViewBag.Title = "Update Operational Transaction";
-                return PartialView(dbContext.OperationalTransactions.Where(x=>x.OperationalTransactionId== operationalTransactionId));
+                OperationalTransaction ot = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
+                string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == ot.CategoryId).FirstOrDefault().LookupCode;
+                ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+                return PartialView(ot);
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetParticularsByCategory(int CategoryId)
+        {
+            string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
+            var particularsList = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+            
+            return Json(particularsList, JsonRequestBehavior.AllowGet);
         }
     }
 }
