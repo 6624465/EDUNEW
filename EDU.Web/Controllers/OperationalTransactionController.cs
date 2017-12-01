@@ -15,16 +15,17 @@ namespace EDU.Web.Controllers
         EducationEntities dbContext = new EducationEntities();
 
         // GET: OperationalTransaction
-        public ActionResult OperationalTransactionList(short? month)
+        public ActionResult OperationalTransactionList(short? month, int year)
         {
             List<OperationalTransactionVM> list = dbContext.OperationalTransactions
-                .Where(x => x.IsActive == true && x.Month == month)
+                .Where(x => x.IsActive == true && x.Month == month && x.Year == year)
                 .Select(y => new OperationalTransactionVM
                 {
                     OperationalTransactionId = y.OperationalTransactionId,
                     CategoryId = y.CategoryId,
                     ParticularsId = y.ParticularsId,
                     Month = y.Month,
+                    Year = y.Year,
                     Amount = y.Amount,
                     IsActive = y.IsActive,
                     CreatedBy = y.CreatedBy,
@@ -40,7 +41,7 @@ namespace EDU.Web.Controllers
             return View(list);
         }
 
-        public PartialViewResult OperationalTransaction(int? operationalTransactionId, short? month)
+        public PartialViewResult OperationalTransaction(int? operationalTransactionId, short? month, int? year)
         {
 
             ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
@@ -49,7 +50,7 @@ namespace EDU.Web.Controllers
             {
                 ViewBag.Title = "New Operational Transaction";
                 ViewData["ParticularsData"] = null;
-                return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month });
+                return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month, Year = year });
             }
             else
             {
@@ -62,7 +63,7 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetParticularsByCategory(int CategoryId, short? month)
+        public JsonResult GetParticularsByCategory(int CategoryId, short? month, int? year)
         {
 
             string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
@@ -70,7 +71,7 @@ namespace EDU.Web.Controllers
             var list = dbContext.OperationalTransactions.ToList();
             foreach (var item in list)
             {
-                result = result.Where(x => x.LookupID != item.ParticularsId && item.Month == month).ToList();
+                result = result.Where(x => x.LookupID != item.ParticularsId && item.Month == month && item.Year == year).ToList();
 
             }
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -98,6 +99,7 @@ namespace EDU.Web.Controllers
                     operationalTransactionInfo.CategoryId = operationalTransaction.CategoryId;
                     operationalTransactionInfo.ParticularsId = operationalTransaction.ParticularsId;
                     operationalTransactionInfo.Month = operationalTransaction.Month;
+                    operationalTransactionInfo.Year = operationalTransaction.Year;
                     operationalTransactionInfo.Amount = operationalTransaction.Amount;
 
                     operationalTransactionInfo.IsActive = true;
@@ -113,7 +115,7 @@ namespace EDU.Web.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("OperationalTransactionList", new { month = operationalTransaction.Month });
+            return RedirectToAction("OperationalTransactionList", new { month = operationalTransaction.Month, year = operationalTransaction.Year });
         }
 
         [HttpPost]

@@ -11,6 +11,7 @@ namespace EDU.Web.ViewModels.OperationalTransactionModel
         public int OperationalTransactionId { get; set; }
         public int CategoryId { get; set; }
         public int ParticularsId { get; set; }
+        public int? Year { get; set; }
         public Nullable<short> Month { get; set; }
         public decimal Amount { get; set; }
         public bool IsActive { get; set; }

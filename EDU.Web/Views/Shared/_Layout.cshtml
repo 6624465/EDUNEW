@@ -37,6 +37,7 @@
     @RenderSection("Styles", false)
     @{
         int month = Convert.ToInt16(DateTime.Now.Month.ToString());
+        int year = Convert.ToInt16(DateTime.Now.Year.ToString());
     }
 </head>
 <body id="app" class="app off-canvas nav-expand">
@@ -131,7 +132,7 @@
                                 </a>
                             </li>
                             <li id="liRevenueList">
-                                <a href="@Url.Content("~/Revenue/RevenueList?country="+Convert.ToInt16(Session["BranchId"])+"&year=2017")">
+                                <a href="@Url.Content("~/Revenue/RevenueList?country="+Convert.ToInt16(Session["BranchId"])+"&year="+year)">
                                     <i class="fa fa-money font20"></i>
                                     <span class="text ptop7">Revenue</span>
                                 </a>
@@ -161,7 +162,7 @@
                                 </a>
                             </li>
                             <li id="liOperationalTransactionList">
-                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionList?month="+month)">
+                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionList?month="+month+"&year="+year)">
                                     <i class="fa fa-money font20"></i>
                                     <span class="text ptop7">Operational Transaction</span>
                                 </a>
