@@ -9,6 +9,7 @@
     grid.Pager(WebGridPagerModes.All);
 }
 @{
+
     var listMonths = new List<SelectListItem>()
                                           {
                                            new SelectListItem {Text = "Select Month",   Value = "0"},
@@ -25,16 +26,9 @@
                                            new SelectListItem {Text = "November", Value = "11"},
                                            new SelectListItem {Text = "December", Value = "12"}
                                        };
-}
-@*@functions {
-        public string GetMonthById(int id)
-        {
-            var monthData = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
 
-            var month = (id == 0 ? null : monthData[id - 1]);
-            return month;
-        }
-    }*@
+
+}
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -52,10 +46,10 @@
                     <div class="row">
                         <div class="form-group">
                             <label class="col-md-2 control-label col-md-offset-2">
-                                <span>Select Month</span>
+                                <span class="pull-right">Select Month</span>
                             </label>
                             <div class="col-md-2">
-                                <input type="hidden" id="month" name="month" />
+                                @Html.HiddenFor(x => x.FirstOrDefault().Month)
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control", onchange = "ChangeMonth(this);" })
                             </div>
                         </div>
@@ -65,7 +59,7 @@
                                 columns: grid.Columns(
                                 grid.Column("CategoryIdDesc", "Category", canSort: true),
                                 grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
-                                grid.Column("Amount", "Amount", format: (item) => new HtmlString("$" + Convert.ToInt64(item.Amount)), canSort: true),
+                                grid.Column("Amount", "Amount", format: (item) => new HtmlString("$ " + Convert.ToInt64(item.Amount)), canSort: true),
 
                                 grid.Column("", "#Action", canSort: false,
                                     format:
@@ -109,8 +103,9 @@
 
         function AddOperationalTransaction() {
             debugger;
+
             $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction")',
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val(),
                 method: 'get',
                 contentType: 'text/html',
                 success: function(html) {
@@ -157,7 +152,7 @@
 
         function EditOperationalTransaction(Id) {
             $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id,
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val(),
                 method: 'get',
                 contentType: 'text/html',
                 success: function(html) {

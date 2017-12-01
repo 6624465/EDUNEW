@@ -1,4 +1,5 @@
-﻿﻿<!DOCTYPE html>
+﻿@using System.Globalization;
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,6 +35,9 @@
         }
     </style>
     @RenderSection("Styles", false)
+    @{
+        int month = Convert.ToInt16(DateTime.Now.Month.ToString());
+    }
 </head>
 <body id="app" class="app off-canvas nav-expand">
     <!-- header -->
@@ -157,7 +161,7 @@
                                 </a>
                             </li>
                             <li id="liOperationalTransactionList">
-                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionList")">
+                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionList?month="+month)">
                                     <i class="fa fa-money font20"></i>
                                     <span class="text ptop7">Operational Transaction</span>
                                 </a>

@@ -40,16 +40,16 @@ namespace EDU.Web.Controllers
             return View(list);
         }
 
-        public PartialViewResult OperationalTransaction(int? operationalTransactionId)
+        public PartialViewResult OperationalTransaction(int? operationalTransactionId, short? month)
         {
 
             ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
             //ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").ToList();
-            if (!operationalTransactionId.HasValue)
+            if (operationalTransactionId == -1)
             {
                 ViewBag.Title = "New Operational Transaction";
                 ViewData["ParticularsData"] = null;
-                return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true });
+                return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month });
             }
             else
             {
