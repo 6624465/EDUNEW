@@ -70,7 +70,7 @@
         </div>
     </div>
 </div>
-@using (Html.BeginForm("SaveCourse", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransaction", name = "frmOperationalTransaction" }))
+@using (Html.BeginForm("SaveOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransaction", name = "frmOperationalTransaction" }))
 {
     <div id="myModal" class="modal fade" role="dialog">
 
@@ -125,5 +125,12 @@
                 $('#ParticularsId').append($('<option></option>').val('').html(''));
             }
         }
+
+        function SaveOperationalTransaction()
+        {
+
+        }
+
+       
     </script>
 }
