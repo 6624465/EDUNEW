@@ -57,7 +57,17 @@ namespace EDU.Web.Controllers
                 ViewBag.Title = "Update Operational Transaction";
                 OperationalTransaction operationalTransaction = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
                 string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == operationalTransaction.CategoryId).FirstOrDefault().LookupCode;
-                ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+
+                var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId).ToList();
+
+                var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+                foreach (var item in list)
+                {
+                    result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
+
+                }
+                ViewData["ParticularsData"] = result;
+
                 return PartialView(operationalTransaction);
             }
         }
@@ -68,10 +78,10 @@ namespace EDU.Web.Controllers
 
             string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
             var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-            var list = dbContext.OperationalTransactions.ToList();
+            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year).ToList();
             foreach (var item in list)
             {
-                result = result.Where(x => x.LookupID != item.ParticularsId && item.Month == month && item.Year == year).ToList();
+                result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
 
             }
             return Json(result, JsonRequestBehavior.AllowGet);
