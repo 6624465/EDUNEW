@@ -105,17 +105,36 @@
                                         grid.Column("Amount", "Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64(item.Amount)
-                                                </span>
+                                                @if (item.Amount != null)
+                                                {
+                                                    <span class="center">
+                                                        $&nbsp;@ConvertToInt64(item.Amount)
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="center">
+                                                        @ConvertToInt64(item.Amount)
+                                                    </span>
+                                                }
                                             </div>
                                         </text>, canSort: false),
                                         grid.Column("LocalAmount", "Local Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64(item.LocalAmount)
-                                                </span>
+                                                @if (item.LocalAmount != null)
+                                                {
+                                                    <span class="center">
+                                                        $&nbsp;@ConvertToInt64(item.LocalAmount)
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="center">
+                                                        @ConvertToInt64(item.LocalAmount)
+                                                    </span>
+                                                }
+                                                
                                             </div>
                                         </text>, canSort: false),
                                         grid.Column("ReferenceDoc", "Reference Doc",
