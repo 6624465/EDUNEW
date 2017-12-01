@@ -46,7 +46,7 @@
                                         <span class="pull-right">Profile</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control",id= Profile })&nbsp;@Model.Profile
+                                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })&nbsp;@Model.Profile
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                         <span class="pull-right">Contact</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control numCss"})
+                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control numCss" })
                                     </div>
                                 </div>
                             </div>
@@ -122,19 +122,12 @@
             $('#CountryName').val($("#Country option:selected").text());
         }
         function SaveTrainer() {
-            debugger;
-            var file = $('input[type=file]').val(); 
-            if(file && file!="" &&$('#frmTrainer').valid())
+            $('#frmTrainer').valid()
             {
-                    debugger;
-                    //$('#CountryName').val($("#Country option:selected").text());
-                    $('#frmTrainer').submit();
+                $('#frmTrainer').submit();
             }
-            else{
-                alert("The file is required...")
-            }
-            
         }
+
         $('#frmTrainer').validate({
             rules: {
                 TrainerName: {
@@ -157,7 +150,7 @@
                 },
                 Contact: {
                     required: true,
-                    maxlength: 12   
+                    maxlength: 12
                 },
                 Profile: {
                     required: true
