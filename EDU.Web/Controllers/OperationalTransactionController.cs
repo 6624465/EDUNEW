@@ -32,11 +32,12 @@ namespace EDU.Web.Controllers
                     ModifiedBy = y.ModifiedBy,
                     ModifiedOn = y.ModifiedOn,
                     CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
-                    ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription,
-                    MonthDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription
+                    ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
+                    //,
+                    //MonthDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription
                 })
                 .ToList();
-            return View();
+            return View(list);
         }
 
         public PartialViewResult OperationalTransaction(int? operationalTransactionId)
@@ -107,6 +108,19 @@ namespace EDU.Web.Controllers
                 throw ex;
             }
             return RedirectToAction("OperationalTransactionList", new { month = operationalTransaction.Month });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOperationalTransaction(int? operationalTransactionId)
+        {
+            OperationalTransaction operationalTransactioninfo = dbContext.OperationalTransactions.
+                   Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
+            if (operationalTransactioninfo != null)
+            {
+                operationalTransactioninfo.IsActive = false;
+                dbContext.SaveChanges();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }
