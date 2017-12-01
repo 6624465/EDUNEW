@@ -2,6 +2,7 @@
 using EDU.Web.ViewModels.OperationalTransactionModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -52,10 +53,10 @@ namespace EDU.Web.Controllers
             else
             {
                 ViewBag.Title = "Update Operational Transaction";
-                OperationalTransaction ot = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
-                string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == ot.CategoryId).FirstOrDefault().LookupCode;
+                OperationalTransaction operationalTransaction = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
+                string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == operationalTransaction.CategoryId).FirstOrDefault().LookupCode;
                 ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-                return PartialView(ot);
+                return PartialView(operationalTransaction);
             }
         }
 
@@ -64,8 +65,48 @@ namespace EDU.Web.Controllers
         {
             string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
             ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-            
+
             return Json(ViewData["ParticularsData"], JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveOperationalTransaction(OperationalTransaction operationalTransaction)
+        {
+            try
+            {
+                if (operationalTransaction.OperationalTransactionId == -1)
+                {
+                    operationalTransaction.CreatedBy = USER_ID;
+                    operationalTransaction.CreatedOn = UTILITY.SINGAPORETIME;
+                    operationalTransaction.IsActive = true;
+
+                    dbContext.OperationalTransactions.Add(operationalTransaction);
+                }
+
+                else
+                {
+                    OperationalTransaction operationalTransactionInfo = dbContext.OperationalTransactions.
+                        Where(x => x.OperationalTransactionId == operationalTransaction.OperationalTransactionId).FirstOrDefault();
+
+                    operationalTransactionInfo.CategoryId = operationalTransaction.CategoryId;
+                    operationalTransactionInfo.ParticularsId = operationalTransaction.ParticularsId;
+                    operationalTransactionInfo.Month = operationalTransaction.Month;
+                    operationalTransactionInfo.Amount = operationalTransaction.Amount;
+
+                    operationalTransactionInfo.IsActive = true;
+
+                    operationalTransactionInfo.ModifiedBy = USER_ID;
+                    operationalTransactionInfo.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                    dbContext.Entry(operationalTransactionInfo).State = EntityState.Modified;
+                }
+                dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction("OperationalTransactionList", new { month = operationalTransaction.Month });
         }
     }
 }
