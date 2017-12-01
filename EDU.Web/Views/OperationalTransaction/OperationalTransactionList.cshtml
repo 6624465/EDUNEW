@@ -26,15 +26,15 @@
                                            new SelectListItem {Text = "December", Value = "12"}
                                        };
 }
-@functions {
-    public string GetMonthById(int id)
-    {
-        var monthData = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
+@*@functions {
+        public string GetMonthById(int id)
+        {
+            var monthData = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
 
-        var month = (id == 0 ? null : monthData[id - 1]);
-        return month;
-    }
-}
+            var month = (id == 0 ? null : monthData[id - 1]);
+            return month;
+        }
+    }*@
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -104,7 +104,7 @@
         function AddOperationalTransaction() {
             debugger;
             $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=-1")',
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction")',
                 method: 'get',
                 contentType: 'text/html',
                 success: function(html) {
@@ -174,6 +174,11 @@
 
         function SaveOperationalTransaction()
         {
+            debugger;
+            if ($('#frmOperationalTransaction').valid()) {
+                $('#frmOperationalTransaction').submit();
+            }
+        }
 
         $('#frmOperationalTransaction').validate({
             rules: {
@@ -187,7 +192,7 @@
                     required: true
                 },
             }
-        })
+        });
 
 
     </script>
