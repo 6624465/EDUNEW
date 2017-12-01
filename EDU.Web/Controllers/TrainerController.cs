@@ -93,7 +93,6 @@ namespace EDU.Web.Controllers
                         TrainerInfo.FileName.SaveAs(path + TrainerInfo.FileName.FileName);
                         trainerInfoDetail.Profile = TrainerInfo.FileName.FileName;
                     }
-                    trainerInfoDetail.Profile = TrainerInfo.Profile;
                     trainerInfoDetail.TrainerRate = TrainerInfo.TrainerRate;
                     trainerInfoDetail.VendorName = TrainerInfo.VendorName;
                     trainerInfoDetail.Address = TrainerInfo.Address;
