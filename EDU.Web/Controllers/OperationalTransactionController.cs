@@ -140,5 +140,40 @@ namespace EDU.Web.Controllers
             }
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpGet]
+        public ActionResult OperationalTransactionReportList(int year)
+        {
+            int month = DateTime.Now.Month;
+            //if (month > 3)
+            //{
+
+            //}
+            List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
+                .Where(x => x.IsActive == true && x.Year == year)
+                .Select(y => new OperationalTransactionReportVM
+                {
+                    CategoryId = y.CategoryId,
+                    ParticularsId = y.ParticularsId,
+                    Year = y.Year,
+                    AprAmount = y.Amount,
+                    MayAmount = y.Amount,
+                    JuneAmount = y.Amount,
+                    JulyAmount = y.Amount,
+                    AugAmount = y.Amount,
+                    SepAmount = y.Amount,
+                    OctAmount = y.Amount,
+                    NovAmount = y.Amount,
+                    DecAmount = y.Amount,
+                    JanAmount = y.Amount,
+                    FebAmount = y.Amount,
+                    MarAmount = y.Amount,
+                    CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
+                    ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
+                })
+                .ToList();
+            return View(list);
+        }
     }
 }
