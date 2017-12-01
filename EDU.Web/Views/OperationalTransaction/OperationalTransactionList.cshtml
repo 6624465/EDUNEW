@@ -48,13 +48,13 @@
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Year</span>
                             </label>
-                            <div class="col-md-1">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control " })
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control " })
                             </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Month</span>
                             </label>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 @Html.HiddenFor(x => x.FirstOrDefault().Month)
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control", onchange = "ChangeMonth(this);" })
                             </div>
@@ -105,14 +105,15 @@
     <script type="text/javascript">
         function ChangeMonth(el) {
             $('#month').val(el.value);
-            window.location = '@Url.Action("OperationalTransactionList", "OperationalTransaction", new { month = ""})' + '?month=' + el.value;
+
+            window.location = '@Url.Action("OperationalTransactionList", "OperationalTransaction", new { month = ""})' + '?month=' + el.value + "&year=" + $('#Year').val();
         };
 
         function AddOperationalTransaction() {
             debugger;
 
             $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val(),
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val(),
                 method: 'get',
                 contentType: 'text/html',
                 success: function(html) {
@@ -131,7 +132,7 @@
             {
                 debugger;
                 $.ajax({
-                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value + "&month=" + $('#Month').val(),
+                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value + "&month=" + $('#Month').val() + "&year=" + $('#Year').val(),
                     method: 'get',
                     contentType: 'text/html',
                     success: function(data) {
@@ -159,7 +160,7 @@
 
         function EditOperationalTransaction(Id) {
             $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val(),
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val() + "&year=" + $('#Year').val(),
                 method: 'get',
                 contentType: 'text/html',
                 success: function(html) {
