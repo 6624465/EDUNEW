@@ -1,12 +1,13 @@
-﻿@model EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM
+﻿@using System.Globalization;
+@model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM>
 @{
     ViewBag.Title = "OperationalTransactionList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*@{
-        WebGrid grid = new WebGrid(rowsPerPage: 10);
-        grid.Pager(WebGridPagerModes.All);
-    }*@
+@{
+    var grid = new WebGrid(Model, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.All);
+}
 @{
     var listMonths = new List<SelectListItem>()
                                           {
@@ -25,6 +26,15 @@
                                            new SelectListItem {Text = "December", Value = "12"}
                                        };
 }
+@functions {
+    public string GetMonthById(int id)
+    {
+        var monthData = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
+
+        var month = (id == 0 ? null : monthData[id - 1]);
+        return month;
+    }
+}
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -35,46 +45,43 @@
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
                             <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddOperationalTransaction()"><i class="fa fa-plus"></i>Add New Operational Transaction</button>
-                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
                         }
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-md-1 control-label col-md-offset-2">
+                            <label class="col-md-2 control-label col-md-offset-2">
                                 <span>Select Month</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
-                    @*<div>
-                            @grid.GetHtml(
-                                    columns: grid.Columns(
-                        grid.Column("ProductName", "Product", canSort: true),
-                        grid.Column("CourseName", "Course Name", canSort: true),
-                        grid.Column("NoOfDays", "No Of Days", canSort: true),
-                        grid.Column("CountryName", "Country", canSort: true),
-                        grid.Column("PublicPrice", "Public Price", format: @<text>  <span class="display-mode">@(item.PublicPrice > 0 ? Convert.ToInt32(item.PublicPrice) : "N/A") </span> </text>, style: "", canSort: true),
-                        grid.Column("PrivatePrice", "Private Price", format: @<text>  <span class="display-mode">@(item.PrivatePrice > 0 ? Convert.ToInt32(item.PrivatePrice) : "N/A") </span> </text>, style: "", canSort: true),
-                        grid.Column("", "#Action", canSort: false,
+                    <div>
+                        @grid.GetHtml(
+                                columns: grid.Columns(
+                                grid.Column("CategoryIdDesc", "Category", canSort: true),
+                                grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
+                                grid.Column("Amount", "Amount", format: (item) => new HtmlString("$" + Convert.ToInt64(item.Amount)), canSort: true),
+
+                                grid.Column("", "#Action", canSort: false,
                                     format:
                                     @<text>
                                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                         {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                         }
                                     </text>)),
-                                    tableStyle: "table")
-                        </div>*@
-                    @*<div class="row">
-                            <div class="col-sm-12">
-                                <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                            </div>
-                        </div>*@
+                                tableStyle: "table")
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,19 +93,25 @@
 
     </div>
 }
-@section SectionScripts{
+
+@using (Html.BeginForm("DeleteOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransactionDelete", name = "frmOperationalTransactionDelete" }))
+{
+    <input type="hidden" id="operationalTransactionId" name="operationalTransactionId" />
+}
+@section SectionScripts
+    {
     <script type="text/javascript">
         function AddOperationalTransaction() {
             debugger;
             $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction")',
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=-1")',
                 method: 'get',
                 contentType: 'text/html',
-                success: function (html) {
+                success: function(html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                 },
-                error: function (err) {
+                error: function(err) {
 
                 }
             });
@@ -106,40 +119,61 @@
 
         function GetParticularsByCategory(Id) {
             debugger;
-            if (Id.value) {
+            if (Id.value)
+            {
                 debugger;
                 $.ajax({
                     url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value,
                     method: 'get',
                     contentType: 'text/html',
-                    success: function (data) {
+                    success: function(data) {
                         debugger;
                         $('#ParticularsId').empty();
                         $('#ParticularsId').append($('<option></option>').val('').html(''));
-                        $.each(data, function (key, value) {
+                        $.each(data, function(key, value) {
                             $('#ParticularsId').append($('<option></option>').val(value.LookupID).html(value.LookupDescription));
                         });
                         $('#ParticularsId').removeAttr('disabled');
                     },
-                    error: function (err) {
+                    error: function(err) {
 
                     }
                 });
             }
 
-            else {
+            else
+            {
                 $('#ParticularsId').empty();
                 $('#ParticularsId').attr('disabled', 'disabled');
                 $('#ParticularsId').append($('<option></option>').val('').html(''));
             }
         }
 
-        function SaveOperationalTransaction() {
+        function EditOperationalTransaction(Id) {
+            $.ajax({
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id,
+                method: 'get',
+                contentType: 'text/html',
+                success: function(html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function(err) {
+
+                }
+            });
+        }
+        function DeleteOperationalTransaction(Id) {
             debugger;
-            if ($('#frmOperationalTransaction').valid()) {
-                $('#frmOperationalTransaction').submit();
+            if (confirm("Are you sure, do you want delete?"))
+            {
+                $('#operationalTransactionId').val(Id);
+                $('#frmOperationalTransactionDelete').submit();
             }
         }
+
+        function SaveOperationalTransaction()
+        {
 
         $('#frmOperationalTransaction').validate({
             rules: {
