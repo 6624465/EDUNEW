@@ -221,6 +221,7 @@
         });
 
         function UpdateFinancialTransactionLocalAmount() {
+            debugger;
             if ($('#frmFinancial').valid()) {
                 var FinancialTransaction =
                     {
@@ -350,6 +351,9 @@
                 ,
                 'Amount': {
                     required: true,
+                },
+                'financialTransaction.TrainingConfirmationID':{
+                    required:true
                 }
             }
         });
