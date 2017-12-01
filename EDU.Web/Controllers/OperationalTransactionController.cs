@@ -58,7 +58,7 @@ namespace EDU.Web.Controllers
                 OperationalTransaction operationalTransaction = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
                 string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == operationalTransaction.CategoryId).FirstOrDefault().LookupCode;
 
-                var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId).ToList();
+                var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId && x.IsActive == true).ToList();
 
                 var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
                 foreach (var item in list)
@@ -78,7 +78,7 @@ namespace EDU.Web.Controllers
 
             string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
             var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year).ToList();
+            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.IsActive==true).ToList();
             foreach (var item in list)
             {
                 result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
@@ -146,10 +146,14 @@ namespace EDU.Web.Controllers
         public ActionResult OperationalTransactionReport(int year)
         {
             int month = DateTime.Now.Month;
-            //if (month > 3)
-            //{
-
-            //}
+            int fYear;
+            if (month < 4)
+            {
+                fYear = year - 1;
+            }
+            else {
+                fYear = year + 1;
+            }
             List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
                 .Where(x => x.IsActive == true && x.Year == year)
                 .Select(y => new OperationalTransactionReportVM
