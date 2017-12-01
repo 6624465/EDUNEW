@@ -3,10 +3,10 @@
     ViewBag.Title = "OperationalTransactionList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*@{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+@{
+    WebGrid grid = new WebGrid(rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
-}*@
+}
 @{
     var listMonths = new List<SelectListItem>()
                                           {
@@ -25,7 +25,7 @@
                                            new SelectListItem {Text = "December", Value = "12"}
                                        };
 }
-<div class="page">
+<div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
             <div class="box" id="grid">
@@ -39,8 +39,18 @@
                         }
                     </div>
                 </div>
-                @*<div class="box-body">
-                    <div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label col-md-offset-2">
+                                <span>Select Month</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x=>x.Month, listMonths,new { @class="form-control"})
+                            </div>
+                        </div>
+                    </div>
+                    @*<div>
                         @grid.GetHtml(
                                 columns: grid.Columns(
                     grid.Column("ProductName", "Product", canSort: true),
@@ -59,13 +69,13 @@
                                     }
                                 </text>)),
                                 tableStyle: "table")
-                    </div>
+                    </div>*@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
                         </div>
                     </div>
-                </div>*@
+                </div>
             </div>
         </div>
     </div>
