@@ -1,12 +1,12 @@
-﻿
+﻿@model EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM
 @{
     ViewBag.Title = "OperationalTransactionList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{
+@*@{
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
     grid.Pager(WebGridPagerModes.All);
-}
+}*@
 @{
     var listMonths = new List<SelectListItem>()
                                           {
@@ -92,6 +92,38 @@
 
                 }
             });
+        }
+
+        function GetParticularsByCategory(Id)
+        {
+            debugger;
+            if(Id.value)
+            {
+                debugger;
+                $.ajax({
+                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value,
+                    method: 'get',
+                    contentType: 'text/html',
+                    success: function (data) {
+                        debugger;
+                        $('#ParticularsId').empty();
+                        $('#ParticularsId').append($('<option></option>').val('').html(''));
+                        $.each(data, function (key, value) {
+                            $('#ParticularsId').append($('<option></option>').val(value.LookupID).html(value.LookupDescription));
+                        });
+                        $('#ParticularsId').removeAttr('disabled');
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            }
+
+            else {
+                $('#ParticularsId').empty();
+                $('#ParticularsId').attr('disabled', 'disabled');
+                $('#ParticularsId').append($('<option></option>').val('').html(''));
+            }
         }
     </script>
 }

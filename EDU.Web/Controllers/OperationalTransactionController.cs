@@ -38,12 +38,12 @@ namespace EDU.Web.Controllers
             return View();
         }
 
-        public PartialViewResult OperationalTransaction(int operationalTransactionId)
+        public PartialViewResult OperationalTransaction(int? operationalTransactionId)
         {
 
             ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
             //ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").ToList();
-            if (operationalTransactionId == -1)
+            if (!operationalTransactionId.HasValue)
             {
                 ViewBag.Title = "New Operational Transaction";
                 ViewData["ParticularsData"] = null;
@@ -63,9 +63,9 @@ namespace EDU.Web.Controllers
         public JsonResult GetParticularsByCategory(int CategoryId)
         {
             string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
-            var particularsList = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+            ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
             
-            return Json(particularsList, JsonRequestBehavior.AllowGet);
+            return Json(ViewData["ParticularsData"], JsonRequestBehavior.AllowGet);
         }
     }
 }
