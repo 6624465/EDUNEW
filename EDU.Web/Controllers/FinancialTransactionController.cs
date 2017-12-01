@@ -402,6 +402,10 @@ namespace EDU.Web.Controllers
         [HttpPost]
         public JsonResult UpdateFinancialTransactionLocalAmount(FinancialTransaction ft)
         {
+            if (ft.FinancialTransactionId == -1)
+            {                
+                return Json("Please update Financial Transaction Information before click on update button.", JsonRequestBehavior.AllowGet);
+            }
             FinancialTransaction ftrans = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID && x.IsActive == true).First();
 
             ftrans.CurrencyCode = ft.CurrencyCode;

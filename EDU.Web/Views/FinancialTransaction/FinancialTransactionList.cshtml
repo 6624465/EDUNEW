@@ -196,19 +196,26 @@
             else
                 $('.btn_edit').attr('disabled', 'disabled');
 
+
+
             if ($('#financialTransaction_IsSubmit').val() != "True")
                 $('.btndisable').removeAttr('disabled');
             else
                 $('.btndisable').attr('disabled', 'disabled');
 
-            @if (Model.financialTransaction.FinancialTransactionId!=-1)
+            @if (Model.financialTransaction.FinancialTransactionId != -1)
             {
             <text>
+            $('.btndisable').removeAttr('disabled');
             var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
             var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
             $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td></td><td></td><td></td></tr>'+
                 '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td></tr>');
             </text>
+            }
+            else
+            {
+                <text>$('.btndisable').attr('disabled', 'disabled');</text>
             }
             //class="pull-right"
         });

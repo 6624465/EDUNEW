@@ -55,7 +55,8 @@
                                 <span>Select Month</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control" })
+                                <input type="hidden" id="month" name="month" />
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control", onchange = "ChangeMonth(this);" })
                             </div>
                         </div>
                     </div>
@@ -101,6 +102,11 @@
 @section SectionScripts
     {
     <script type="text/javascript">
+        function ChangeMonth(el) {
+            $('#month').val(el.value);
+            window.location = '@Url.Action("OperationalTransactionList", "OperationalTransaction", new { month = ""})' + '?month=' + el.value;
+        };
+
         function AddOperationalTransaction() {
             debugger;
             $.ajax({
