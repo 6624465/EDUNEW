@@ -163,7 +163,7 @@
                 url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val() + "&year=" + $('#Year').val(),
                 method: 'get',
                 contentType: 'text/html',
-                success: function(html) {
+                success: function (html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                 },
