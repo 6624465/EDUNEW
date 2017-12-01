@@ -1736,6 +1736,7 @@
     <Content Include="Views\FinancialTransaction\FinancialTransactionDetail.cshtml" />
     <Content Include="Views\OperationalTransaction\OperationalTransactionList.cshtml" />
     <Content Include="Views\OperationalTransaction\OperationalTransaction.cshtml" />
+    <Content Include="Views\OperationalTransaction\OperationalTransactionReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -138,12 +138,12 @@ namespace EDU.Web.Controllers
                 operationalTransactioninfo.IsActive = false;
                 dbContext.SaveChanges();
             }
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("OperationalTransactionList", new { month = operationalTransactioninfo.Month, year = operationalTransactioninfo.Year });
         }
 
 
         [HttpGet]
-        public ActionResult OperationalTransactionReportList(int year)
+        public ActionResult OperationalTransactionReport(int year)
         {
             int month = DateTime.Now.Month;
             //if (month > 3)
