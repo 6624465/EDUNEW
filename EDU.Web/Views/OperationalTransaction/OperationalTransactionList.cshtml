@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    var grid = new WebGrid(Model);
+    var grid = new WebGrid(Model, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
 }
 @{
@@ -117,8 +117,7 @@
             });
         }
 
-        function GetParticularsByCategory(Id)
-        {
+        function GetParticularsByCategory(Id) {
             debugger;
             if (Id.value)
             {
@@ -176,7 +175,19 @@
         function SaveOperationalTransaction()
         {
 
-        }
+        $('#frmOperationalTransaction').validate({
+            rules: {
+                CategoryId: {
+                    required: true
+                },
+                ParticularsId: {
+                    required: true
+                },
+                Amount: {
+                    required: true
+                },
+            }
+        })
 
 
     </script>
