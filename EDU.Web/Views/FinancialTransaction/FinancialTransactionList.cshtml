@@ -161,7 +161,7 @@
                                         grid.Column("", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                             {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit" data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
                                                 }
                                         </text>, style: "col3Width", canSort: false)
@@ -198,19 +198,21 @@
 
 
 
-            if ($('#financialTransaction_IsSubmit').val() != "True")
-                $('.btndisable').removeAttr('disabled');
-            else
-                $('.btndisable').attr('disabled', 'disabled');
+            
 
             @if (Model.financialTransaction.FinancialTransactionId != -1)
             {
             <text>
-            $('.btndisable').removeAttr('disabled');
-            var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
-            var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
-            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td></td><td></td><td></td></tr>'+
-                '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td></tr>');
+                if ($('#financialTransaction_IsSubmit').val() != "True")
+                    $('.btndisable').removeAttr('disabled');
+                else {
+                    $('.btndisable').attr('disabled', 'disabled');
+                    $('.btn_edit').attr('disabled', 'disabled');
+                }
+                var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
+                var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
+                $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td></td><td></td><td></td></tr>'+
+                    '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td></tr>');
             </text>
             }
             else
