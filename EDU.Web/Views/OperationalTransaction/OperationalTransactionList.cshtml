@@ -124,7 +124,7 @@
             {
                 debugger;
                 $.ajax({
-                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value,
+                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value + "&month=" + $('#Month').val(),
                     method: 'get',
                     contentType: 'text/html',
                     success: function(data) {
