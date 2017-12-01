@@ -206,7 +206,7 @@
             <text>
             var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
             var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
-            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' + gp + '</span></td><td></td><td></td><td></td></tr>'+
+            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td></td><td></td><td></td></tr>'+
                 '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td></tr>');
             </text>
             }
