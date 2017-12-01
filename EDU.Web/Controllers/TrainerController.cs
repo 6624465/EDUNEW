@@ -81,6 +81,7 @@ namespace EDU.Web.Controllers
                     trainerInfoDetail.Technology = TrainerInfo.Technology;
                     trainerInfoDetail.Country = TrainerInfo.Country;
                     trainerInfoDetail.CountryName = TrainerInfo.CountryName ?? "";
+
                     if (TrainerInfo.FileName != null && TrainerInfo.FileName.ContentLength > 0)
                     {
                         string path = Server.MapPath("~/Uploads/" + TrainerInfo.TrianerId + "/");
@@ -90,11 +91,8 @@ namespace EDU.Web.Controllers
                         }
 
                         TrainerInfo.FileName.SaveAs(path + TrainerInfo.FileName.FileName);
-                        TrainerInfo.Profile = TrainerInfo.FileName.FileName;
+                        trainerInfoDetail.Profile = TrainerInfo.FileName.FileName;
                     }
-                    else
-                        TrainerInfo.Profile = null;
-                    trainerInfoDetail.Profile = TrainerInfo.Profile;
                     trainerInfoDetail.TrainerRate = TrainerInfo.TrainerRate;
                     trainerInfoDetail.VendorName = TrainerInfo.VendorName;
                     trainerInfoDetail.Address = TrainerInfo.Address;
