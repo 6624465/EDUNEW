@@ -62,12 +62,21 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetParticularsByCategory(int CategoryId)
+        public JsonResult GetParticularsByCategory(int CategoryId, short? month)
         {
-            string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
-            ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
 
-            return Json(ViewData["ParticularsData"], JsonRequestBehavior.AllowGet);
+            string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
+            var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+            var list = dbContext.OperationalTransactions.ToList();
+           
+            foreach (var item in list)
+            {
+                  result = result.Where(x => x.LookupID != item.ParticularsId && item.Month!=month).ToList();
+               
+            }
+            
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
