@@ -1522,6 +1522,15 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap1.min.css" />
     <Content Include="Scripts\bootstrap1.min.js" />
+    <Content Include="Scripts\Charts\exporting.js" />
+    <Content Include="Scripts\Charts\highcharts-3d.js" />
+    <Content Include="Scripts\Charts\highcharts.js" />
+    <Content Include="Scripts\Charts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\Charts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\Charts\jquery.jqChart.min.js" />
+    <Content Include="Scripts\Charts\jquery.jqRangeSlider.min.js" />
+    <Content Include="Scripts\Charts\jquery.mousewheel.js" />
+    <Content Include="Scripts\Charts\prettify.js" />
     <Content Include="Scripts\Core\app.js" />
     <Content Include="Scripts\Core\bootstrap-rating.min.js" />
     <Content Include="Scripts\Core\c3.min.js" />
@@ -1579,6 +1588,7 @@
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\OperationalTransactionController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RevenueController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
@@ -1736,6 +1746,10 @@
     <Content Include="Views\FinancialTransaction\FinancialTransactionDetail.cshtml" />
     <Content Include="Views\OperationalTransaction\OperationalTransactionList.cshtml" />
     <Content Include="Views\OperationalTransaction\OperationalTransaction.cshtml" />
+    <Content Include="Views\Reports\Achievement.cshtml" />
+    <Content Include="Views\Reports\Operationaltransaction.cshtml" />
+    <Content Include="Views\Reports\OperationalExpenses.cshtml" />
+    <Content Include="Views\Reports\DashboardOperationaltransaction.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

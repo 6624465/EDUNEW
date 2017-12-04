@@ -167,6 +167,19 @@
                                     <span class="text ptop7">Operational Transaction</span>
                                 </a>
                             </li>
+                            
+                        </ul>
+                    </li>
+                    <li class="waves-effect">
+                        <a href="javascript:;">
+                            <i class="ion ion-stats-bars"></i>
+                            <span class="text">Reports</span>
+                            <i class="arrow ion-chevron-left"></i>
+                        </a>
+                        <ul class="inner-drop list-unstyled">
+                            <li class="waves-effect"><a href="@Url.Content("~/Reports/Achievement")">Achievement</a></li>
+                            <li class="waves-effect"><a href="@Url.Content("~/Reports/Operationaltransaction")">Operational transaction</a></li>
+                            <li class="waves-effect"><a href="@Url.Content("~/Reports/OperationalExpenses")">Operational Expenses</a></li>
                         </ul>
                     </li>
                 </ul> <!-- #end navigation -->
@@ -233,8 +246,21 @@
     <!-- Dev only -->
     <!-- Vendors -->
 
+    <!--highcharts-->
+    <script src="@Url.Content("~/Scripts/Charts/highcharts.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/highcharts-3d.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/exporting.js")"></script>
 
+    <!--jqChart-->
+    <script src="@Url.Content("~/Scripts/Charts/jquery-1.11.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/jquery-ui-1.10.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/jquery.jqChart.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/jquery.jqRangeSlider.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/jquery.mousewheel.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/prettify.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+
+
     @*<script src="@Url.Content("~/Scripts/Core/vendors.js")"></script>*@
     @*<script src="@Url.Content("~/Scripts/Core/d3.min.js")"></script>
         <script src="@Url.Content("~/Scripts/Core/c3.min.js")"></script>*@
