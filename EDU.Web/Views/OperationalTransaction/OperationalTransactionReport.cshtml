@@ -1,0 +1,69 @@
+﻿@using System.Globalization;
+@model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionReportVM>
+@{
+    ViewBag.Title = "OperationalTransactionReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var grid = new WebGrid(Model, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.All);
+}
+@{
+
+    var listMonths = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "Select Month",   Value = "0"},
+                                           new SelectListItem {Text = "Janaury",   Value = "1"},
+                                           new SelectListItem {Text = "February", Value = "2"},
+                                           new SelectListItem {Text = "March", Value = "3"},
+                                           new SelectListItem {Text = "April",   Value = "4"},
+                                           new SelectListItem {Text = "May", Value = "5"},
+                                           new SelectListItem {Text = "June", Value = "6"},
+                                           new SelectListItem {Text = "July",   Value = "7"},
+                                           new SelectListItem {Text = "August", Value = "8"},
+                                           new SelectListItem {Text = "September", Value = "9"},
+                                           new SelectListItem {Text = "October",   Value = "10"},
+                                           new SelectListItem {Text = "November", Value = "11"},
+                                           new SelectListItem {Text = "December", Value = "12"}
+                                       };
+
+
+}
+<div class="page page-forms-elements">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Operational Transaction Report List</h4>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control ", onchange = "ChangeYear(this);" })
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @grid.GetHtml(
+                                columns: grid.Columns(
+                                grid.Column("CategoryIdDesc", "Category", canSort: true),
+                                grid.Column("ParticularsIdDesc", "Particulars", canSort: true)
+                                //grid.Column("Amount", "Amount", format: (item) => new HtmlString("$ " + Convert.ToInt64(item.Amount)), canSort: true),
+
+                               ),
+                                tableStyle: "table")
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

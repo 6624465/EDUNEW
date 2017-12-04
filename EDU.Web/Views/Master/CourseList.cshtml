@@ -36,7 +36,7 @@
                                 @<text>
                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
-                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditCourse(@item.Id,'@item.CourseName')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                         <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                     }
                                 </text>)),
@@ -84,7 +84,7 @@
                 }
             });
         }
-        function EditCourse(Id) {
+        function EditCourse(Id, cname) {
             $.ajax({
                 url: '@Url.Content("~/Master/Course?Id=")' + Id,
                 method: 'get',
@@ -92,7 +92,8 @@
                 success: function (html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
-                    $('#CourseName, #Country, #Product').attr('disabled', 'disabled');
+                    $('#Country, #Product').attr('disabled', 'disabled');
+                    $('#cname').val(cname);
                 },
                 error: function (err) {
 
@@ -197,21 +198,26 @@
         };
 
         function ValidateByCourseName() {
-
-            var def = $.Deferred();
-            $.ajax({
-                url: '@Url.Content("~/Master/IsEduCourseExists?courseName=")' + $('#CourseName').val() + '&country=' + $('#Country').val() + '&product=' + $('#Product').val(),
-                method: 'get',
-                contentType: 'text/html',
-                success: function (result) {
-                    def.resolve(result);
-                }
-            });
-            return def.promise();
+            if ($('#cname').val() == $('#CourseName').val() && $('#id').val() != -1)
+            { }
+            else {
+                var def = $.Deferred();
+                $.ajax({
+                    url: '@Url.Content("~/Master/IsEduCourseExists?courseName=")' + $('#CourseName').val() + '&country=' + $('#Country').val() + '&product=' + $('#Product').val(),
+                    method: 'get',
+                    contentType: 'text/html',
+                    success: function (result) {
+                        def.resolve(result);
+                    }
+                });
+                return def.promise();
+            }
         };
 
 
         function ValidateCourseName(isBlur) {
+            
+
             var promise = ValidateByCourseName();
             $.when(promise).done(function (result) {
                 if (isBlur) {
