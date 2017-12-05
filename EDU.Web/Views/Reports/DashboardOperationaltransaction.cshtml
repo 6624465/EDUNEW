@@ -75,22 +75,26 @@
                                         </div>
                                     </div>
                                 </section>
-                                <section class="space2">
+                                <section class="space">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-4">
                                             <div id="container4"></div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-4">
                                             <div id="container5"></div>
                                         </div>
                                     </div>
                                 </section>
                                 <section class="space">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-4">
                                             <div id="container6"></div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-4">
                                             <div id="container7"></div>
                                         </div>
                                     </div>
@@ -169,17 +173,27 @@
         height: 50px;
         background: orange;
     }
-
-    .space {
-        position: relative;
-        bottom: 50px;
-    }
     /*.highcharts-label
                     {
                         display:none!important;
                     }*/
     .highcharts-data-label-connector {
         display: none !important;
+    }
+    /*rect.highcharts-background {
+    height:250px !important;
+    }
+    .highcharts-container .highcharts-3d-chart {
+        height: 250px !important;
+    }
+    .highcharts-root {
+        height: 250px !important;
+    }*/
+    #container, #container1,
+    #container2, #container3,
+    #container4, #container5,
+    #container6, #container7 {
+        height: 250px !important;
     }
 </style>
 @section SectionScripts{
@@ -203,7 +217,7 @@
             },
             title: {
                 text: 'CAMBODIA',
-                y: 100
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -212,7 +226,7 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
                         enabled: false,
                         format: '{point.name}'
@@ -273,7 +287,7 @@
             },
             title: {
                 text: 'BANGLADESH',
-                y: 100
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -282,7 +296,7 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
                         enabled: false,
                         format: '{point.name}'
@@ -293,17 +307,42 @@
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
@@ -312,13 +351,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'MYANMAR',
-                y: 45
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -327,9 +366,9 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
@@ -338,17 +377,42 @@
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
@@ -357,13 +421,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'SRI LANKA',
-                y: 45
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -372,9 +436,9 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
@@ -383,17 +447,42 @@
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
@@ -402,13 +491,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'PAKISTAN',
-                y: 45
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -417,9 +506,9 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
@@ -428,17 +517,42 @@
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
@@ -447,13 +561,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'PHILIPPINES',
-                y: 45
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -462,11 +576,9 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectColor: '#000000',
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
@@ -475,17 +587,42 @@
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
@@ -494,13 +631,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'LAOS',
-                y: 45
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -509,9 +646,9 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
@@ -520,17 +657,42 @@
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
@@ -539,13 +701,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'VIETNAM',
-                y: 45
+                y: 80
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -554,29 +716,53 @@
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
-                    depth: 35,
+                    depth: 70,
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
             },
-
             series: [{
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
