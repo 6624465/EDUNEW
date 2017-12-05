@@ -1,107 +1,130 @@
 ﻿
+@model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM>
 @{
     ViewBag.Title = "DashboardOperationaltransaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
 
-<section class="content">
-    <div class="box">
-        <div class="box-header with-border">
+    var listMonths = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "Select Month",   Value = "0"},
+                                           new SelectListItem {Text = "Janaury",   Value = "1"},
+                                           new SelectListItem {Text = "February", Value = "2"},
+                                           new SelectListItem {Text = "March", Value = "3"},
+                                           new SelectListItem {Text = "April",   Value = "4"},
+                                           new SelectListItem {Text = "May", Value = "5"},
+                                           new SelectListItem {Text = "June", Value = "6"},
+                                           new SelectListItem {Text = "July",   Value = "7"},
+                                           new SelectListItem {Text = "August", Value = "8"},
+                                           new SelectListItem {Text = "September", Value = "9"},
+                                           new SelectListItem {Text = "October",   Value = "10"},
+                                           new SelectListItem {Text = "November", Value = "11"},
+                                           new SelectListItem {Text = "December", Value = "12"}
+                                       };
 
-            <div class="row">
-                <section class="content-header">
-                    <ol class="breadcrumb">
-                        <li><a href='@Url.Content("~/Home/Education")'><i class="fa fa-dashboard"></i> Home</a></li>
-                    </ol>
-                </section>
-            </div>
 
-        </div>
-        <h3 class="box-title" style="text-align:center">&nbsp;Dashboard Operational transaction</h3>
-        <div class="box-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-2">
-                        <div class="row">
-                        </div>
-                        <div class="row">
+}
 
-                        </div>
-                        <div class="row"></div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>MTD</label>
-                                Dropdownlist <select></select>
+<div class="page page-forms-elements">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Dashboard Operational transaction</h4>
+                    <div class="box-tools">
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear(this);" })
                             </div>
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Month</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                            </div>
+
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div id="container"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div id="container"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="container1"></div>
+                                    </div>
+                                </div>
+                                <section class="space">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="container2"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="container3"></div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="space2">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="container4"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="container5"></div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="space">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="container6"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="container7"></div>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
-                            <div class="col-md-6">
-                                <div id="container1"></div>
+                            <div class="col-md-2">
+                                <div class="row">
+
+                                </div>
+                                <div class="row">
+                                    <h2>Legend</h2>
+                                    <br />
+                                    <div id="rectangle"></div>
+                                    <br />
+                                    <div id="rectangle1"></div>
+                                    <br />
+                                    <div id="rectangle2"></div>
+                                    <br />
+                                    <div id="rectangle3"></div>
+                                    <br />
+                                    <div id="rectangle4"></div>
+                                    <br />
+                                    <div id="rectangle5"></div>
+                                </div>
+
                             </div>
+
                         </div>
-                        <section class="space">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div id="container2"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="container3"></div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="space2">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div id="container4"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="container5"></div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="space">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div id="container6"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="container7"></div>
-                                </div>
-                            </div>
-                        </section>
                     </div>
-                    <div class="col-md-2">
-                        <div class="row">
-
-                        </div>
-                        <div class="row">
-                            <h2>Legend</h2>
-                            <br />
-                            <div id="rectangle"></div>
-                            <br />
-                            <div id="rectangle1"></div>
-                            <br />
-                            <div id="rectangle2"></div>
-                            <br />
-                            <div id="rectangle3"></div>
-                            <br />
-                            <div id="rectangle4"></div>
-                            <br />
-                            <div id="rectangle5"></div>
-                        </div>
-
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 <style>
     .highcharts-button-symbol {
         display: none;
@@ -151,13 +174,12 @@
         position: relative;
         bottom: 50px;
     }
-    .highcharts-label
-    {
-        display:none!important;
-    }
-    .highcharts-data-label-connector
-    {
-        display:none!important;
+    /*.highcharts-label
+                    {
+                        display:none!important;
+                    }*/
+    .highcharts-data-label-connector {
+        display: none !important;
     }
 </style>
 @section SectionScripts{
@@ -175,13 +197,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'CAMBODIA',
-                y: 45
+                y: 100
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -192,7 +214,7 @@
                     cursor: 'pointer',
                     depth: 35,
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
@@ -201,17 +223,42 @@
                 type: 'pie',
                 name: 'Browser share',
                 data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
+                    {
+                        name: 'Firefox',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'IE',
+                        y: 26.8,
+                        sliced: true,
+                        selected: true
+                    },
                     {
                         name: 'Chrome',
                         y: 12.8,
                         sliced: true,
                         selected: true
                     },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
+                    {
+                        name: 'Safari',
+                        y: 8.5,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Others',
+                        y: 0.7,
+                        sliced: true,
+                        selected: true
+                    },
+                    {
+                        name: 'Opera',
+                        y: 6.2,
+                        sliced: true,
+                        selected: true
+                    }
                 ]
             }]
         });
@@ -220,13 +267,13 @@
                 type: 'pie',
                 options3d: {
                     enabled: true,
-                    alpha: 45,
+                    alpha: 65,
                     beta: 0
                 }
             },
             title: {
                 text: 'BANGLADESH',
-                y: 45
+                y: 100
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -237,7 +284,7 @@
                     cursor: 'pointer',
                     depth: 35,
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         format: '{point.name}'
                     }
                 }
