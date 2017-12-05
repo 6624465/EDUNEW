@@ -4,83 +4,81 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="content">
-    <div class="box">
-        <div class="box-header with-border">
-
-            <div class="row">
-                <section class="content-header">
-                    <ol class="breadcrumb">
-                        <li><a href='@Url.Content("~/Home/Education")'><i class="fa fa-dashboard"></i> Home</a></li>
-                    </ol>
-                </section>
-            </div>
-        </div>
-        <h3 class="box-title" style="text-align:center; color:blue">&nbsp;PRODUCT - Achievement  YTD</h3>
-        <div class="box-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="jqChart8"></div>
-                            </div>
-                        </div>
-                        <div class="row css10">
-                            <div class="col-md-12">
-                                <div id="jqChart9"></div>
-                            </div>
-                        </div>
+<div class="page page-forms-elements">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>PRODUCT - Achievement  YTD</h4>
+                    <div class="box-tools">
                     </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-1">
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="jqChart8"></div>
+                                    </div>
+                                </div>
+                                <div class="row css10">
+                                    <div class="col-md-12">
+                                        <div id="jqChart9"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-5">
 
-                                <div id="jqChart"></div>
+                                        <div id="jqChart"></div>
 
-                            </div>
-                            <div class="col-md-5">
-                                <div id="jqChart1"></div>
-                            </div>
-                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div id="jqChart1"></div>
+                                    </div>
+                                </div>
 
-                        <div class="row css10">
-                            <div class="col-md-1">
-                            </div>
+                                <div class="row css10">
+                                    <div class="col-md-1">
+                                    </div>
 
-                            <div class="col-md-5">
+                                    <div class="col-md-5">
 
-                                <div id="jqChart2"></div>
+                                        <div id="jqChart2"></div>
 
-                            </div>
-                            <div class="col-md-5">
-                                <div id="jqChart3"></div>
-                            </div>
-                        </div>
-                        <div class="row css10">
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div id="jqChart3"></div>
+                                    </div>
+                                </div>
+                                <div class="row css10">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-5">
 
-                                <div id="jqChart4"></div>
+                                        <div id="jqChart4"></div>
 
-                            </div>
-                            <div class="col-md-5">
-                                <div id="jqChart5"></div>
-                            </div>
-                        </div>
-                        <div class="row css10">
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div id="jqChart5"></div>
+                                    </div>
+                                </div>
+                                <div class="row css10">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-5">
 
-                                <div id="jqChart6"></div>
+                                        <div id="jqChart6"></div>
 
-                            </div>
-                            <div class="col-md-5">
-                                <div id="jqChart7"></div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div id="jqChart7"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,83 +86,76 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 @section SectionScripts {
-   
-<script lang="javascript" type="text/javascript">
-    $(function () {
-        $('#liReportsAchievement').addClass('active');
-    });
-    $(document).ready(function () {
 
-        var background = {
-            type: 'linearGradient',
-            x0: 0,
-            y0: 0,
-            x1: 0,
-            y1: 1,
-            colorStops: [{ offset: 0, color: '#d2e6c9' },
-                         { offset: 1, color: 'white' }]
-        };
+    <script lang="javascript" type="text/javascript">
+        $(function () {
+            $('#liReportsAchievement').addClass('active');
+        });
+        $(document).ready(function () {
 
-        $('#jqChart8').jqChart({
-            title: { text: 'Countries By Area' },
-            legend: { title: 'Countries' },
-            border: { strokeStyle: '#6ba851' },
-            background: background,
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            series: [
-                {
-                    type: 'doughnut',
-                    innerExtent: 0.5,
-                    outerExtent: 1.0,
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#BFBFBF'],
-                    labels: {
-                        stringFormat: '%.1f%%',
-                        valueType: 'percentage',
-                        font: '15px sans-serif',
-                        fillStyle: 'white'
-                    },
-                    data: [['OTHER', 33], ['EC COUNCIL', 57], ['MICROSOFT', 33],
+            var background = {
+                type: 'linearGradient',
+                x0: 0,
+                y0: 0,
+                x1: 0,
+                y1: 1,
+                colorStops: [{ offset: 0, color: '#d2e6c9' },
+                { offset: 1, color: 'white' }]
+            };
+
+            $('#jqChart8').jqChart({
+                title: { text: 'Countries By Area' },
+                legend: { title: 'Countries' },
+                border: { strokeStyle: '#6ba851' },
+                background: background,
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                series: [
+                    {
+                        type: 'doughnut',
+                        innerExtent: 0.5,
+                        outerExtent: 1.0,
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#BFBFBF'],
+                        labels: {
+                            stringFormat: '%.1f%%',
+                            valueType: 'percentage',
+                            font: '15px sans-serif',
+                            fillStyle: 'white'
+                        },
+                        data: [['OTHER', 33], ['EC COUNCIL', 57], ['MICROSOFT', 33],
                         ['VMWARE', 12], ['ORACLE', 35]]
-                }
-            ]
-        });
-    });
-</script>
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart9').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            series: [
-                {
-                    type: 'bar',
-                    title: '',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [['OTHER', 200], ['EC COUNCIL', 400], ['MICROSOFT', 250],
-                             ['VMWARE', 500], ['ORACLE', 400]]
-                }
-            ]
-        });
-    });
-</script>
+                    }
+                ]
+            });
 
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
+            $('#jqChart9').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                series: [
+                    {
+                        type: 'bar',
+                        title: '',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [['OTHER', 200], ['EC COUNCIL', 400], ['MICROSOFT', 250],
+                        ['VMWARE', 500], ['ORACLE', 400]]
+                    }
+                ]
+            });
+
+            $('#jqChart').jqChart({
+                title: { text: 'MYANMAR' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
                     {
                         type: 'category',
                         location: 'bottom',
@@ -174,178 +165,23 @@
                             angle: -45
                         }
                     }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'MYANMAR',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
-        });
-    });
-</script>
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart1').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
-                   {
-                       type: 'category',
-                       location: 'bottom',
-                       categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
-                       labels: {
-                           font: '12px sans-serif',
-                           angle: -45
-                       }
-                   }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'SRI LANKA',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
-        });
-    });
-</script>
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
 
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart2').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
-                   {
-                       type: 'category',
-                       location: 'bottom',
-                       categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
-                       labels: {
-                           font: '12px sans-serif',
-                           angle: -45
-                       }
-                   }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'BANGLADESH',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
-        });
-    });
-</script>
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart3').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
-                   {
-                       type: 'category',
-                       location: 'bottom',
-                       categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
-                       labels: {
-                           font: '12px sans-serif',
-                           angle: -45
-                       }
-                   }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'CAMBODIA',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
-        });
-    });
-</script>
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart4').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
-                   {
-                       type: 'category',
-                       location: 'bottom',
-                       categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
-                       labels: {
-                           font: '12px sans-serif',
-                           angle: -45
-                       }
-                   }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'PAKISTAN',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
-        });
-    });
-</script>
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart5').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
-                   {
-                       type: 'category',
-                       location: 'bottom',
-                       categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
-                       labels: {
-                           font: '12px sans-serif',
-                           angle: -45
-                       }
-                   }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'VIETNAM',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
-        });
-    });
-</script>
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart6').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
+            $('#jqChart1').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
                     {
                         type: 'category',
                         location: 'bottom',
@@ -355,49 +191,181 @@
                             angle: -45
                         }
                     }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'PHILIPPINES',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        title: 'SRI LANKA',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
+
+            $('#jqChart2').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
+                        labels: {
+                            font: '12px sans-serif',
+                            angle: -45
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        title: 'BANGLADESH',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
+
+            $('#jqChart3').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
+                        labels: {
+                            font: '12px sans-serif',
+                            angle: -45
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        title: 'CAMBODIA',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
+
+            $('#jqChart4').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
+                        labels: {
+                            font: '12px sans-serif',
+                            angle: -45
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        title: 'PAKISTAN',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
+
+            $('#jqChart5').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
+                        labels: {
+                            font: '12px sans-serif',
+                            angle: -45
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        title: 'VIETNAM',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
+
+            $('#jqChart6').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
+                        labels: {
+                            font: '12px sans-serif',
+                            angle: -45
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        title: 'PHILIPPINES',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
+
+            $('#jqChart7').jqChart({
+                title: { text: '' },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                axes: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
+                        labels: {
+                            font: '12px sans-serif',
+                            angle: -45
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        title: 'LAOS',
+                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
+                        data: [33, 58, 33, 12, 50]
+                    }
+                ]
+            });
         });
-    });
-</script>
-<script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart7').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            axes: [
-                   {
-                       type: 'category',
-                       location: 'bottom',
-                       categories: ['OTHER', 'EC COUNCIL', 'MICROSOFT', 'VMWARE', 'ORACLE'],
-                       labels: {
-                           font: '12px sans-serif',
-                           angle: -45
-                       }
-                   }
-            ],
-            series: [
-                {
-                    type: 'column',
-                    title: 'LAOS',
-                    fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                    data: [33, 58, 33, 12, 50]
-                }
-            ]
-        });
-    });
-</script>
-    }
+    </script>
+}
 
 
 

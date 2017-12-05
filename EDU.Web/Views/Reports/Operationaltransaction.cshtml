@@ -1,143 +1,183 @@
 ﻿
+@model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM>
 @{
     ViewBag.Title = "Operationaltransaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    var listMonths = new List<SelectListItem> ()
+    {
+    new SelectListItem {Text = "Select Month",   Value = "0"},
+    new SelectListItem {Text = "Janaury",   Value = "1"},
+    new SelectListItem {Text = "February", Value = "2"},
+    new SelectListItem {Text = "March", Value = "3"},
+    new SelectListItem {Text = "April",   Value = "4"},
+    new SelectListItem {Text = "May", Value = "5"},
+    new SelectListItem {Text = "June", Value = "6"},
+    new SelectListItem {Text = "July",   Value = "7"},
+    new SelectListItem {Text = "August", Value = "8"},
+    new SelectListItem {Text = "September", Value = "9"},
+    new SelectListItem {Text = "October",   Value = "10"},
+    new SelectListItem {Text = "November", Value = "11"},
+    new SelectListItem {Text = "December", Value = "12"}
+    };
 
-<section class="content">
-    <div class="box">
-        <div class="box-header with-border">
 
-            <div class="row">
-                <section class="content-header">
-                    <ol class="breadcrumb">
-                        <li><a href='@Url.Content("~/Home/Education")'><i class="fa fa-dashboard"></i> Home</a></li>
-                    </ol>
-                </section>
-            </div>
-
-        </div>
-        <h3 class="box-title" style="text-align:center">&nbsp;Operational transaction</h3>
-        <div class="box-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>MTD</label>
-                            </div>
-                            <div class="col-md-5">
-                                Dropdownlist <select></select>
-                            </div>
-                            <div class="col-md-5">
-                                Dropdownlist<select>
-                                    Dropdownlist
-                                </select>
-                            </div>
+}
+    <div class="page page-forms-elements">
+        <div class="page-wrap">
+            <div class="panel panel-default">
+                <div class="box" id="grid">
+                    <div class="box-header">
+                        <h4>Operational transaction</h4>
+                        <div class="box-tools">
                         </div>
+                    </div>
+                    <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="container"></div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>MTD</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                        </div>
+                                        <div class="col-md-5">
+                                            @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align:center">
+                                            <h2>
+                                                <label>YTD</label>
+                                            </h2>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div id="jqChart"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-12" style="text-align:center">
-                                <h2>
-                                    <label>YTD</label>
-                                </h2>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div id="jqChart"></div>
-                            </div>
-                        </div>
-
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-</section>
-<style>
-    .highcharts-button-symbol {
-        display: none;
-    }
-</style>
-@section SectionScripts{
-<script type="text/javascript">
-    $(function () {
-        $('#liReportsOperationaltransaction').addClass('active');
-    });
-    Highcharts.chart('container', {
-        chart: {
-            type: 'pie',
-            options3d: {
-                enabled: true,
-                alpha: 45,
-                beta: 0
-            }
-        },
-        title: {
-            text: ''
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                depth: 35,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}'
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Browser share',
-            data: [
-                ['Firefox', 45.0],
-                ['IE', 26.8],
-                {
-                    name: 'Chrome',
-                    y: 12.8,
-                    sliced: true,
-                    selected: true
+    <style>
+        .highcharts-button-symbol {
+            display: none;
+        }
+    </style>
+    @section SectionScripts{
+        <script type="text/javascript">
+            $(function () {
+                $('#liReportsOperationaltransaction').addClass('active');
+            });
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 65,
+                        beta: 0
+                    }
                 },
-                ['Safari', 8.5],
-                ['Opera', 6.2],
-                ['Others', 0.7]
-            ]
-        }]
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#jqChart').jqChart({
-            title: { text: '' },
-            animation: { duration: 1 },
-            shadows: {
-                enabled: true
-            },
-            series: [
-                {
-                    type: 'column',
-                    title: '',
-                    fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                    data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                           ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                    ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                        {
+                            name: 'Firefox',
+                            y: 45.0,
+                            sliced: true,
+                            selected: true
+                        },
+                        {
+                            name: 'IE',
+                            y: 26.8,
+                            sliced: true,
+                            selected: true
+                        },
+                        {
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },
+                        {
+                            name: 'Safari',
+                            y: 8.5,
+                            sliced: true,
+                            selected: true
+                        },
+                        {
+                            name: 'Others',
+                            y: 0.7,
+                            sliced: true,
+                            selected: true
+                        },
+                        {
+                            name: 'Opera',
+                            y: 6.2,
+                            sliced: true,
+                            selected: true
+                        }
                     ]
-                }
-            ]
-        });
-    });
-</script>
+                }]
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#jqChart').jqChart({
+                    title: { text: '' },
+                    animation: { duration: 1 },
+                    shadows: {
+                        enabled: true
+                    },
+                    series: [
+                        {
+                            type: 'column',
+                            title: '',
+                            fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
+                            data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
+                            ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
+                            ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
+                            ]
+                        }
+                    ]
+                });
+            });
+        </script>
     }
