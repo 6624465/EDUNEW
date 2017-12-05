@@ -117,6 +117,7 @@
                                         grid1.Column("QuarterlyTargetAmt", "Quarterly", format: @<text> @(item.QuarterlyTargetAmt > 0 ? Convert.ToInt64(item.QuarterlyTargetAmt) : "")</text>, style: "QuarterlyTargetAmt alignright"),
                                         grid1.Column("MonthlyTargetAmt", "Monthly", format: @<text> @(item.MonthlyTargetAmt > 0 ? Convert.ToInt64(item.MonthlyTargetAmt) : "")</text>, style: "MonthlyTargetAmt alignright"),
                                         grid1.Column("", format: @<text>
+                                    <div style="width:35px;"></div>
                                         </text>, style: "col3Width", canSort: false)
                                         ))
                                 </div>
