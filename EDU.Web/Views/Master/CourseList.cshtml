@@ -36,7 +36,7 @@
                                 @<text>
                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
-                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditCourse(@item.Id,'@item.CourseName')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                         <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                     }
                                 </text>)),
@@ -84,7 +84,9 @@
                 }
             });
         }
-        function EditCourse(Id, cname) {
+        function EditCourse(Id) {
+            debugger;
+            var cname = $('#btnEdit_' + Id).data('cname');
             $.ajax({
                 url: '@Url.Content("~/Master/Course?Id=")' + Id,
                 method: 'get',
