@@ -15,18 +15,8 @@
                     </ol>
                 </section>
             </div>
-
-            <div class="box-tools">
-                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                {
-                    <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/CustomerPayment/Payment?customerId=-1")'">
-                        <i class="fa fa-plus"></i>&nbsp;Add New Trainer
-                    </button>
-                }
-            </div>
         </div>
         <h3 class="box-title" style="text-align:center; color:blue">&nbsp;PRODUCT - Achievement  YTD</h3>
-
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
