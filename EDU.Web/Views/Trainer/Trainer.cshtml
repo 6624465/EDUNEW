@@ -110,6 +110,9 @@
 </div>
 @section SectionScripts {
     <script type="text/javascript">
+        $(function () {
+            $('#liTrainersList').addClass('active');
+        });
         $('#Address,#Remarks').keypress(function (event) {
             if (event.which == 13) {
                 event.preventDefault();
