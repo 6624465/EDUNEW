@@ -1750,6 +1750,7 @@
     <Content Include="Views\Reports\Operationaltransaction.cshtml" />
     <Content Include="Views\Reports\OperationalExpenses.cshtml" />
     <Content Include="Views\Reports\DashboardOperationaltransaction.cshtml" />
+    <Content Include="Views\OperationalTransaction\OperationalTransactionReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
