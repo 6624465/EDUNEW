@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDUCATION</title>
+    @RenderSection("StylesCharts", false)
     <link rel="shortcut icon" href="@Url.Content("~/images/ezy-corporation-logo.png")" />
     <link rel="stylesheet" href="@Url.Content("~/Css/ionicons-2.0.1/css/ionicons.css")">
     <link rel="stylesheet" href="@Url.Content("~/Css/font-awesome-4.7.0/css/font-awesome.css")">
@@ -188,6 +189,7 @@
                             <li id="liReportsOperationalExpenses" class="waves-effect"><a href="@Url.Content("~/Reports/OperationalExpenses")">Operational Expenses</a></li>
                             <li id="liDashboardOperationaltransaction" class="waves-effect"><a href="@Url.Content("~/Reports/DashboardOperationaltransaction")">Dashboard Operational transaction</a></li>
                             <li id="liReportsTotalRevenue" class="waves-effect"><a href="@Url.Content("~/Reports/TotalRevenue")">Total Revenue</a></li>
+                            <li id="liReportsDashboard" class="waves-effect"><a href="@Url.Content("~/Reports/Dashboard")">Dashboard</a></li>
                         </ul>
                     </li>
                 </ul> <!-- #end navigation -->
@@ -215,8 +217,8 @@
     <!-- theme settings -->
     <div class="site-settings clearfix hidden-xs" style="display:none;">
         <div class="settings clearfix">
-            <div class="trigger ion ion-settings left"></div>
-            <div class="wrapper left">
+            <div class="trigger ion ion-settings left" style="display:none;"></div>
+            <div class="wrapper left" style="display:none;">
                 <ul class="list-unstyled other-settings">
                     <li class="clearfix mb10">
                         <div class="left small">Nav Horizontal</div>
