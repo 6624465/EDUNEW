@@ -63,6 +63,10 @@ namespace EDU.Web.Reports.Controllers
         {
             return View();
         }
+        public ActionResult DashboardOperationaltransaction()
+        {
+            return View();
+        }
 
     }
 }

@@ -1,0 +1,521 @@
+﻿
+@{
+    ViewBag.Title = "DashboardOperationaltransaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+
+            <div class="row">
+                <section class="content-header">
+                    <ol class="breadcrumb">
+                        <li><a href='@Url.Content("~/Home/Education")'><i class="fa fa-dashboard"></i> Home</a></li>
+                    </ol>
+                </section>
+            </div>
+
+        </div>
+        <h3 class="box-title" style="text-align:center">&nbsp;Dashboard Operational transaction</h3>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="row">
+                        </div>
+                        <div class="row">
+                           
+                        </div>
+                        <div class="row"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>MTD</label>
+                                Dropdownlist <select></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="container"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="container1"></div>
+                            </div>
+                        </div>
+                        <section class="space">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="container2"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="container3"></div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="space2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="container4"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="container5"></div>
+                                </div>
+                            </div>
+                            </section>
+                        <section class="space">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="container6"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="container7"></div>
+                                </div>
+                            </div>
+                        </section>
+</div>
+                    <div class="col-md-2">
+                        <div class="row">
+
+                        </div>
+                        <div class="row">
+                            <h2>Legend</h2>
+                            <br />
+                            <div id="rectangle"></div>
+                            <br />
+                            <div id="rectangle1"></div>
+                            <br />
+                            <div id="rectangle2"></div>
+                            <br />
+                            <div id="rectangle3"></div>
+                            <br />
+                            <div id="rectangle4"></div>
+                            <br />
+                            <div id="rectangle5"></div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .highcharts-button-symbol {
+        display: none;
+    }
+    .highcharts-credits {
+        display: none;
+    }
+    #rectangle {
+        width: 100px;
+        height: 50px;
+        background: blue;
+    }
+    #rectangle1 {
+        width: 100px;
+        height: 50px;
+        background: red;
+    }
+    #rectangle2{
+    width:100px;
+    height:50px;
+    background:green;
+}
+     #rectangle3 {
+        width: 100px;
+        height: 50px;
+        background: red;
+    }
+      #rectangle4 {
+        width: 100px;
+        height: 50px;
+        background: yellow;
+    }
+       #rectangle5 {
+        width: 100px;
+        height: 50px;
+        background: orange;
+    }
+      .space{
+          position:relative;
+          bottom:50px;
+      }
+      
+      
+</style>
+@section SectionScripts{
+    <script type="text/javascript">
+        $(function () {
+            Highcharts.setOptions({
+                colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+            });
+        });
+    Highcharts.chart('container', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'CAMBODIA',
+            y:45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    Highcharts.chart('container1', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'BANGLADESH',
+            y:45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    Highcharts.chart('container2', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'MYANMAR',
+            y: 45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    Highcharts.chart('container3', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'SRI LANKA',
+            y: 45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    Highcharts.chart('container4', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'PAKISTAN',
+            y: 45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    Highcharts.chart('container5', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'PHILIPPINES',
+            y: 45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectColor: '#000000',
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    Highcharts.chart('container6', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'LAOS',
+            y: 45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    Highcharts.chart('container7', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'VIETNAM',
+            y: 45
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+       
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari', 8.5],
+                ['Opera', 6.2],
+                ['Others', 0.7]
+            ]
+        }]
+    });
+    </script>
+    }
+
