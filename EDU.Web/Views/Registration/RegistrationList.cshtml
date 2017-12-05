@@ -303,6 +303,9 @@
 @section SectionScripts
     {
     <script type="text/javascript">
+        $(function () {
+            $('#liRegistrationList').addClass('active');
+        });
         $(document).ready(function () {
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (reg > 0)

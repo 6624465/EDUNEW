@@ -188,7 +188,9 @@
 }
 @section SectionScripts {
     <script type="text/javascript">
-
+        $(function () {
+            $('#liFinancialTransactionList').addClass('active');
+        });
         $(function () {
             debugger;
             if ($('#financialTransaction_TrainingConfirmationID').val() != '' && $('#financialTransaction_TrainingConfirmationID').val() != null)

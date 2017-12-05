@@ -100,6 +100,9 @@
 </div>
 @section SectionScripts{
     <script type="text/javascript">
+        $(function () {
+            $('#liTrainersList').addClass('active');
+        });
         function DeleteTrainer(id) {
             if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
