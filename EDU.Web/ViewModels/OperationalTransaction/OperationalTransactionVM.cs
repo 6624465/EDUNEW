@@ -31,17 +31,18 @@ namespace EDU.Web.ViewModels.OperationalTransactionModel
         public int? Year { get; set; }
         public string CategoryIdDesc { get; set; }
         public string ParticularsIdDesc { get; set; }
-        public decimal AprAmount { get; set; }
-        public decimal MayAmount { get; set; }
-        public decimal JuneAmount { get; set; }
-        public decimal JulyAmount { get; set; }
-        public decimal AugAmount { get; set; }
-        public decimal SepAmount { get; set; }
-        public decimal OctAmount { get; set; }
-        public decimal NovAmount { get; set; }
-        public decimal DecAmount { get; set; }
-        public decimal JanAmount { get; set; }
-        public decimal FebAmount { get; set; }
-        public decimal MarAmount { get; set; }
+        public decimal? AprAmount { get; set; }
+        public decimal? MayAmount { get; set; }
+        public decimal? JuneAmount { get; set; }
+        public decimal? JulyAmount { get; set; }
+        public decimal? AugAmount { get; set; }
+        public decimal? SepAmount { get; set; }
+        public decimal? OctAmount { get; set; }
+        public decimal? NovAmount { get; set; }
+        public decimal? DecAmount { get; set; }
+        public decimal? JanAmount { get; set; }
+        public decimal? FebAmount { get; set; }
+        public decimal? MarAmount { get; set; }
+        public decimal? YTD { get; set; }
     }
 }

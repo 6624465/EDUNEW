@@ -1,4 +1,5 @@
-﻿@using System.Globalization;
+﻿@using Newtonsoft.Json;
+@using System.Globalization;
 @model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionReportVM>
 @{
     ViewBag.Title = "OperationalTransactionReport";
@@ -7,6 +8,39 @@
 @{
     var grid = new WebGrid(Model, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
+
+    var count = Model.Count();
+    var myArray = (List<decimal?>)ViewData["Summary"];
+}
+
+<style>
+    .center {
+        text-align: center !important;
+    }
+
+    .right {
+        text-align: right !important;
+    }
+
+    .last {
+        color: #D73925;
+    }
+
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        color: #D73925;
+        /*font-family: 'Bebas Neue'*/
+    }
+</style>
+@functions {
+    public string ConvertToInt64(decimal? data)
+    {
+        if (data != null && data > 0)
+            return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
+        else
+            return null;
+    }
 }
 @{
 
@@ -43,17 +77,94 @@
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control ", onchange = "ChangeYear(this);" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = (i + " - " + (i + 1)).ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear(this);" })
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                         @grid.GetHtml(
                                 columns: grid.Columns(
                                 grid.Column("CategoryIdDesc", "Category", canSort: true),
-                                grid.Column("ParticularsIdDesc", "Particulars", canSort: true)
-                                //grid.Column("Amount", "Amount", format: (item) => new HtmlString("$ " + Convert.ToInt64(item.Amount)), canSort: true),
+                                grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
+                                grid.Column("AprAmount", "Apr", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.AprAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("MayAmount", "May", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.MayAmount)
+                                    </span>
+                                </text>, canSort: false),
 
+                                grid.Column("JuneAmount", "June", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.JuneAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("JulyAmount", "July", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.JulyAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("AugAmount", "Aug", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.AugAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("SepAmount", "Sep", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.SepAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("OctAmount", "Oct", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.OctAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("NovAmount", "Nov", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.NovAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("DecAmount", "Dec", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.DecAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("JanAmount", "Jan", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.JanAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("FebAmount", "Feb", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.FebAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("MarAmount", "Mar", format:
+                                @<text>
+                                    <span class="center">
+                                        @ConvertToInt64(item.MarAmount)
+                                    </span>
+                                </text>, canSort: false),
+                                grid.Column("YTD", "YTD", format:
+                                @<text>
+                                    <span class="center last">
+                                        @ConvertToInt64(item.YTD)
+                                    </span>
+                                </text>, canSort: false)
                                ),
                                 tableStyle: "table")
                     </div>
@@ -67,3 +178,34 @@
         </div>
     </div>
 </div>
+@section SectionScripts
+    {
+    <script type="text/javascript">
+         function ChangeYear(el) {
+             window.location = '@Url.Action("OperationalTransactionReport", "OperationalTransaction", new { year = ""})' + '?year=' + el.value;
+        };
+
+        $(document).ready(function () {
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            @if (count > 0)
+        {
+            <text>
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[0])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[1])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[2])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[3])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[4])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[5])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[6])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[7])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[8])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[9])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[10])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[11])' + '</span></td><td><span class="center">'
+                + '@ConvertToInt64(myArray[12])' + '</span></td></tr>');
+            </text>
+            }
+        });
+    </script>
+}

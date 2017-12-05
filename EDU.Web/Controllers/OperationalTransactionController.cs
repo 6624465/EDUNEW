@@ -78,7 +78,7 @@ namespace EDU.Web.Controllers
 
             string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
             var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.IsActive==true).ToList();
+            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.IsActive == true).ToList();
             foreach (var item in list)
             {
                 result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
@@ -145,39 +145,79 @@ namespace EDU.Web.Controllers
         [HttpGet]
         public ActionResult OperationalTransactionReport(int year)
         {
-            int month = DateTime.Now.Month;
-            int fYear;
-            if (month < 4)
+            try
             {
-                fYear = year - 1;
-            }
-            else {
-                fYear = year + 1;
-            }
-            List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
-                .Where(x => x.IsActive == true && x.Year == year)
-                .Select(y => new OperationalTransactionReportVM
+                int month = DateTime.Now.Month;
+                int fYear;
+                int cYear;
+
+                if (month < 4)
                 {
-                    CategoryId = y.CategoryId,
-                    ParticularsId = y.ParticularsId,
-                    Year = y.Year,
-                    AprAmount = y.Amount,
-                    MayAmount = y.Amount,
-                    JuneAmount = y.Amount,
-                    JulyAmount = y.Amount,
-                    AugAmount = y.Amount,
-                    SepAmount = y.Amount,
-                    OctAmount = y.Amount,
-                    NovAmount = y.Amount,
-                    DecAmount = y.Amount,
-                    JanAmount = y.Amount,
-                    FebAmount = y.Amount,
-                    MarAmount = y.Amount,
-                    CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
-                    ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
-                })
-                .ToList();
-            return View(list);
+                    cYear = year - 1;
+                    fYear = year;
+                }
+                else
+                {
+                    fYear = year + 1;
+                    cYear = year;
+                }
+
+
+                List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
+                    .Where(x => x.IsActive == true)
+                    .Select(y => new OperationalTransactionReportVM
+                    {
+                        CategoryId = y.CategoryId,
+                        ParticularsId = y.ParticularsId,
+                        AprAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        MayAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        JuneAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        JulyAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        AugAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        SepAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        OctAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        NovAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        DecAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,  //fYear
+                    JanAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        FebAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        MarAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
+                        ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
+
+                    }).Distinct()
+                    .ToList();
+                List<OperationalTransactionReportVM> list1 = new List<OperationalTransactionReportVM>();
+                foreach (var item in list)
+                {
+                    item.YTD = item.AprAmount + item.MayAmount + item.JuneAmount + item.JulyAmount + item.AugAmount + item.SepAmount +
+                              item.OctAmount + item.NovAmount + item.DecAmount + item.JanAmount + item.FebAmount + item.MarAmount;
+
+                    list1.Add(item);
+                }
+
+                List<decimal?> summary = new List<decimal?>();
+
+                summary.Add(list1.Sum(x => x.AprAmount));
+                summary.Add(list1.Sum(x => x.MayAmount));
+                summary.Add(list1.Sum(x => x.JuneAmount));
+                summary.Add(list1.Sum(x => x.JulyAmount));
+                summary.Add(list1.Sum(x => x.AugAmount));
+                summary.Add(list1.Sum(x => x.SepAmount));
+                summary.Add(list1.Sum(x => x.OctAmount));
+                summary.Add(list1.Sum(x => x.NovAmount));
+                summary.Add(list1.Sum(x => x.DecAmount));
+                summary.Add(list1.Sum(x => x.JanAmount));
+                summary.Add(list1.Sum(x => x.FebAmount));
+                summary.Add(list1.Sum(x => x.MarAmount));
+                summary.Add(list1.Sum(x => x.YTD));
+                ViewData["Summary"] = summary;
+
+                return View(list1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
