@@ -209,6 +209,9 @@
 }
 @section SectionScripts{
     <script type="text/javascript">
+        $(function () {
+            $('#liRegionalLeads').addClass('active');
+        });
         $(document).ready(function () {
             var totalleadsonhand = @ViewData["totalleadsonhand"].ToString();
             var totalrevenue = @ViewData["totalrevenue"].ToString();
