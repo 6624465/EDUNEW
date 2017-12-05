@@ -1,0 +1,204 @@
+﻿@model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM>
+
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="http://circle.firchow.net/assets/css/styles.css" rel="stylesheet">
+<link rel="stylesheet" href="http://circle.firchow.net/assets/css/circle.css">
+
+
+@{
+    var listMonths = new List<SelectListItem>()
+    {
+    new SelectListItem {Text = "Select Month",   Value = "0"},
+    new SelectListItem {Text = "Janaury",   Value = "1"},
+    new SelectListItem {Text = "February", Value = "2"},
+    new SelectListItem {Text = "March", Value = "3"},
+    new SelectListItem {Text = "April",   Value = "4"},
+    new SelectListItem {Text = "May", Value = "5"},
+    new SelectListItem {Text = "June", Value = "6"},
+    new SelectListItem {Text = "July",   Value = "7"},
+    new SelectListItem {Text = "August", Value = "8"},
+    new SelectListItem {Text = "September", Value = "9"},
+    new SelectListItem {Text = "October",   Value = "10"},
+    new SelectListItem {Text = "November", Value = "11"},
+    new SelectListItem {Text = "December", Value = "12"}
+    };
+
+
+}
+<div class="page page-forms-elements">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>DashBoard - Achievement  YTD</h4>
+                    <div class="box-tools">
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>MTD</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                </div>
+                            </div>
+                            <div class="row css10">
+                                    <div class="col-xs-2">
+                                        <div class="inner-content text-center">
+                                            <div class="c100 p100 center">
+                                                <span>100%</span>
+                                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                            </div>
+                                            <p><em>VMWARE</em></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="inner-content text-center">
+                                            <div class="c100 p100 center green">
+                                                <span>100%</span>
+                                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                            </div>
+                                            <p><em>ORACLE</em></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="inner-content text-center">
+                                            <div class="c100 p100 center orange">
+                                                <span>100%</span>
+                                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                            </div>
+                                            <p><em>MICROSOFT</em></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="inner-content text-center">
+                                            <div class="c100 p100 center red">
+                                                <span>100%</span>
+                                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                            </div>
+                                            <p><em>EC COUNCIL</em></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="inner-content text-center">
+                                            <div class="c100 p100 center orange">
+                                                <span>100%</span>
+                                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                            </div>
+                                            <p><em>OTHER</em></p>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <div class="inner-content text-center">
+                                        <div class="c100 p25 center">
+                                            <span>25%</span>
+                                            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                        </div>
+                                        <p><em>VMWARE</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="inner-content text-center">
+                                        <div class="c100 p40 center green">
+                                            <span>40%</span>
+                                            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                        </div>
+                                        <p><em>ORACLE</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="inner-content text-center">
+                                        <div class="c100 p50 center orange">
+                                            <span>50%</span>
+                                            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                        </div>
+                                        <p><em>MICROSOFT</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="inner-content text-center">
+                                        <div class="c100 p70 center red">
+                                            <span>70%</span>
+                                            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                        </div>
+                                        <p><em>EC COUNCIL</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="inner-content text-center">
+                                        <div class="c100 p80 center orange">
+                                            <span>80%</span>
+                                            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                        </div>
+                                        <p><em>OTHER</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section SectionScripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var background = {
+                type: '',
+                border: 0,
+                //x0: 0,
+                //y0: 0,
+                //x1: 0,
+                //y1: 1,
+                //colorStops: [{ offset: 0, color: '#d2e6c9' },
+                //             { offset: 1, color: 'white' }]
+            };
+
+            $('#jqChart').jqChart({
+                title: { text: '' },
+                legend: { title: '' },
+                border: { strokeStyle: '' },
+                //background: background,
+                //animation: { duration: 1 },
+                //shadows: {
+                //    enabled: true
+                //},
+                series: [
+                    {
+                        type: 'pie',
+                        //fillStyles: ['#418CF0'],
+                        labels: {
+                            //stringFormat: '%.1f%%',
+                            //valueType: 'percentage',
+                            //font: '15px sans-serif',
+                            //fillStyle: 'white'
+                        },
+                        //explodedRadius: 10,
+                        //explodedSlices: [5],
+                        data: [['United States', 65]]
+                    }
+                ]
+            });
+
+        });
+    </script>
+}
+

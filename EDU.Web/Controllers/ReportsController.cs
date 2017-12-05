@@ -35,6 +35,10 @@ namespace EDU.Web.Reports.Controllers
         {
             return View();
         }
-
+        public ActionResult DashBoard()
+        {
+            return View();
+        }
     }
+      
 }
