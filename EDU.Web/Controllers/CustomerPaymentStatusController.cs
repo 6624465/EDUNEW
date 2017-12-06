@@ -44,28 +44,33 @@ namespace EDU.Web.Controllers
                         TrainingConfirmationID = tcdtl.TrainingConfirmationID,
                         Product = tcdtl.Product,
                         Course = tcdtl.Course,
-                        TotalNoOfDays = tcdtl.TotalNoOfDays,
-                        NoOfStudents = tcdtl.NoOfStudents,
-                        Private = tcdtl.Private,
-                        Public = tcdtl.Public,
-                        StartDate = tcdtl.StartDate,
-                        EndDate = tcdtl.EndDate,
-                        TrianerId = tcdtl.TrianerId,
-                        IsActive = tcdtl.IsActive,
-                        CreatedBy = tcdtl.CreatedBy,
-                        CreatedOn = tcdtl.CreatedOn,
-                        ModifiedBy = tcdtl.ModifiedBy,
-                        ModifiedOn = tcdtl.ModifiedOn,
                         ProductName = productName,
                         CourseName = courseName,
                         TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
                     };
                 }
 
-                result.registration = List;
+                result.customerPayment = List .Select(x => new CustomerPayment
+                    {
+                        CustomerPaymentId = -1,
+                        RegistrationId = x.RegistrationId,
+                        InvoiceAmount = x.TotalAmount,
+                        PaidAmount = x.Payment1 + x.Payment2 + x.Payment3,
+                        BalanceAmount = x.BalanceAmount,
+                        OtherReceivablesAmount = 0,
+                        TotalAmount = 0,
+                        DueDate = null,
+                        ReceiptDate = null,
+                        ReferenceDoc = null,
+                        IsActive = true,
+                        CreatedBy = null,
+                        CreatedOn = DateTime.Now,
+                        ModifiedBy = null,
+                        ModifiedOn = null
+                    }).ToList();
                 result.trainingconf = tc;
                 result.trainingconfDetail = tcd;
-                
+
             }
             catch (Exception ex)
             {
@@ -75,8 +80,28 @@ namespace EDU.Web.Controllers
         }
         private List<Registration> GetList(string trainingConfirmationID)
         {
-            List<Registration> registrationList = dbContext.Registrations.Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).ToList();
-            return registrationList;
+            List<Registration> List = dbContext.Registrations
+                .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID && x.BalanceAmount > 0)
+                //.Select(x => new CustomerPayment
+                //{
+                //    CustomerPaymentId=-1,
+                //    RegistrationId = x.RegistrationId,
+                //    InvoiceAmount = x.TotalAmount,
+                //    PaidAmount = x.Payment1+x.Payment2+x.Payment3,
+                //    BalanceAmount = x.BalanceAmount,
+                //    OtherReceivablesAmount = 0,
+                //    TotalAmount = 0,
+                //    DueDate = null,
+                //    ReceiptDate = null,
+                //    ReferenceDoc = null,
+                //    IsActive = true,
+                //    CreatedBy = null,
+                //    CreatedOn = DateTime.Now,
+                //    ModifiedBy = null,
+                //    ModifiedOn = null
+                //})
+                .ToList();
+            return List;
         }
     }
 }

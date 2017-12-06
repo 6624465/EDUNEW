@@ -25,7 +25,6 @@ namespace EDU.Web.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CustomerPayment> CustomerPayments { get; set; }
         public virtual DbSet<Revenue> Revenues { get; set; }
         public virtual DbSet<TrainerInformation> TrainerInformations { get; set; }
         public virtual DbSet<TrainingConfirmation> TrainingConfirmations { get; set; }
@@ -34,5 +33,6 @@ namespace EDU.Web.Models
         public virtual DbSet<FinancialTransaction> FinancialTransactions { get; set; }
         public virtual DbSet<FinancialTransactionDetail> FinancialTransactionDetails { get; set; }
         public virtual DbSet<OperationalTransaction> OperationalTransactions { get; set; }
+        public virtual DbSet<CustomerPayment> CustomerPayments { get; set; }
     }
 }

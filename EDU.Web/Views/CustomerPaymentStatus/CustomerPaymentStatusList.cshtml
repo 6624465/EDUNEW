@@ -9,14 +9,14 @@
 
 
 @{
-//WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 5);
-//grid.Pager(WebGridPagerModes.All);
+    WebGrid grid = new WebGrid(Model.customerPayment, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.All);
 
-//var Student = Model.trainingconfDetail.NoOfStudents;
-//var reg = Model.registration.Count();
-//var remainReg = Student - reg;
+    //var Student = Model.trainingconfDetail.NoOfStudents;
+    //var reg = Model.registration.Count();
+    //var remainReg = Student - reg;
 
-//var myArray = (List<string>)ViewData["Summary"];
+    //var myArray = (List<string>)ViewData["Summary"];
 }
 <style>
     .centerbox {
@@ -88,7 +88,7 @@
                             </label>
                             <div class="col-md-2">
                                 <input type="hidden" id="eventid" name="eventid" />
-                                @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
+                                @Html.DropDownListFor(x => x.customerPayment.FirstOrDefault().TrainingConfirmationID,
                                  new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
                                  "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
                             </div>
@@ -133,50 +133,49 @@
 
                     <div class="row" style="margin-top:20px;">
                     </div>
-                    @*<div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
+                    <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                         @grid.GetHtml(
                                     columns: grid.Columns(
-                                            grid.Column("StudentName", "Student Name", canSort: true,
+                                            grid.Column("RegistrationId", "Student Name", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:150px;'>
-                                                            @(item.StudentName)
+                                                            @(item.RegistrationId)
                                                         </div>
                                                     </text>),
-                                            grid.Column("Amount", "Amount", canSort: true,
+                                            grid.Column("InvoiceAmount", "InvoiceAmount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.Amount)
+                                                                @ConvertToInt64(item.InvoiceAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("WHTPercent", "WHT", canSort: true,
+                                            grid.Column("PaidAmount", "PaidAmount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
                                                             <span class="center">
-                                                                @(new HtmlString(ConvertToInt64(item.WHTPercent) + "%"))
+                                                                @ConvertToInt64(item.PaidAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("WHTAmount", "WHT Amount", canSort: true,
+                                            grid.Column("BalanceAmount", "BalanceAmount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:80px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.WHTAmount)
+                                                                @ConvertToInt64(item.BalanceAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(ConvertToInt64(item.VATPercent) + "%"), canSort: true, style: "center"),
-                                            grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
+                                            grid.Column("OtherReceivablesAmount", "OtherReceivablesAmount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.VATAmount)
+                                                                @ConvertToInt64(item.OtherReceivablesAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
@@ -189,63 +188,9 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("Payment1", "Payment 1", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:60px;'>
-                                                            <span class="pull-right">
-                                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment1)</span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                    </text>),
-                                            grid.Column("Payment2", "Payment 2", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:60px;'>
-                                                            <span class="pull-right">
-                                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment2)</span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                    </text>),
-                                            grid.Column("Payment3", "Payment 3", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:60px;'>
-                                                            <span class="pull-right">
-                                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment3)</span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                    </text>),
-                                            grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            <span class="pull-right">
-                                                                @ConvertToInt64(item.OtherDeductionsAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("BalanceAmount", "Balance", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:60px;'>
-                                                            <span class="pull-right">
-                                                                @ConvertToInt64(item.BalanceAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("Email", "Email", canSort: true),
-                                            grid.Column("Contact", "Contact", canSort: true),
-                                            grid.Column("CompanyName", "CompanyName", canSort: true),
+                                            grid.Column("DueDate", "DueDate", canSort: true),
+                                            grid.Column("ReceiptDate", "ReceiptDate", canSort: true),
+                                            grid.Column("ReferenceDoc", "ReferenceDoc", canSort: true),
                                             grid.Column("", "#Action", canSort: false,
                                                         format:
                                                         @<text>
@@ -263,7 +208,7 @@
                         <div class="col-sm-12">
                             <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
                         </div>
-                    </div>*@
+                    </div>
                 </div>
             </div>
         </div>

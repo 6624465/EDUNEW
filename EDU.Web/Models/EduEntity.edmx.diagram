@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5785c3b37bdf445b8e230514632aacc9" Name="Diagram1">
-        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.CustomerPayment" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.Revenue" Width="1.5" PointX="2.625" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.TrainerInformation" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" Width="1.5" PointX="3.375" PointY="6.75" />
@@ -15,6 +14,7 @@
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.FinancialTransactionDetail" Width="1.75" PointX="9.375" PointY="0.75" />
         <AssociationConnector Association="DB_9F30C5_edudevModel.FinancialTransactionFinancialTransactionDetail" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.OperationalTransaction" Width="1.5" PointX="7.375" PointY="5.75" />
+        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.CustomerPayment" Width="1.5" PointX="9.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

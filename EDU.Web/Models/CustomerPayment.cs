@@ -14,17 +14,21 @@ namespace EDU.Web.Models
     
     public partial class CustomerPayment
     {
-        public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
-        public string OrderId { get; set; }
-        public string CourseName { get; set; }
-        public string InvoiceValue { get; set; }
-        public Nullable<decimal> BalanceAmount { get; set; }
-        public string OtherRecievables { get; set; }
-        public Nullable<System.DateTime> DueDate { get; set; }
-        public Nullable<System.DateTime> RecieptDate { get; set; }
-        public string ReferenceDocument { get; set; }
+        public int CustomerPaymentId { get; set; }
+        public int RegistrationId { get; set; }
+        public string TrainingConfirmationID { get; set; }
+        public Nullable<decimal> InvoiceAmount { get; set; }
         public Nullable<decimal> PaidAmount { get; set; }
+        public Nullable<decimal> BalanceAmount { get; set; }
+        public Nullable<decimal> OtherReceivablesAmount { get; set; }
+        public Nullable<decimal> TotalAmount { get; set; }
+        public Nullable<System.DateTime> DueDate { get; set; }
+        public Nullable<System.DateTime> ReceiptDate { get; set; }
+        public string ReferenceDoc { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedOn { get; set; }
     }
 }

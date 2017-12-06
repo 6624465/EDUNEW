@@ -21,22 +21,26 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="CustomerPayments">
+        <EntityType Name="CustomerPayment">
           <Key>
-            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="CustomerPaymentId" />
           </Key>
-          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
-          <Property Name="OrderId" Type="nvarchar" MaxLength="250" />
-          <Property Name="CourseName" Type="nvarchar" MaxLength="50" />
-          <Property Name="InvoiceValue" Type="nvarchar" MaxLength="500" />
-          <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OtherRecievables" Type="nvarchar" MaxLength="250" />
-          <Property Name="DueDate" Type="datetime" />
-          <Property Name="RecieptDate" Type="datetime" />
-          <Property Name="ReferenceDocument" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerPaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegistrationId" Type="int" Nullable="false" />
+          <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" />
+          <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OtherReceivablesAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="ReceiptDate" Type="datetime" />
+          <Property Name="ReferenceDoc" Type="nvarchar" MaxLength="100" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
         <EntityType Name="FinancialTransaction">
           <Key>
@@ -196,7 +200,7 @@
         </EntityType>
         <EntityContainer Name="DB_9F30C5_edudevModelStoreContainer">
           <EntitySet Name="Lookup" EntityType="Self.Lookup" Schema="Config" store:Type="Tables" />
-          <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayments" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransaction" EntityType="Self.FinancialTransaction" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransactionDetails" EntityType="Self.FinancialTransactionDetails" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="OperationalTransaction" EntityType="Self.OperationalTransaction" Schema="Edu" store:Type="Tables" />
@@ -209,23 +213,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_9F30C5_edudevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="CustomerPayment">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrderId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OtherRecievables" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="RecieptDate" Type="DateTime" Precision="3" />
-          <Property Name="ReferenceDocument" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
         <EntityType Name="Revenue">
           <Key>
             <PropertyRef Name="RevenueId" />
@@ -253,7 +240,6 @@
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="EducationEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CustomerPayments" EntityType="Self.CustomerPayment" />
           <EntitySet Name="Revenues" EntityType="Self.Revenue" />
           <EntitySet Name="TrainerInformations" EntityType="DB_9F30C5_edudevModel.TrainerInformation" />
           <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
@@ -266,6 +252,7 @@
             <End Role="FinancialTransactionDetail" EntitySet="FinancialTransactionDetails" />
           </AssociationSet>
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
+          <EntitySet Name="CustomerPayments" EntityType="DB_9F30C5_edudevModel.CustomerPayment" />
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -425,30 +412,33 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="CustomerPayment">
+          <Key>
+            <PropertyRef Name="CustomerPaymentId" />
+          </Key>
+          <Property Name="CustomerPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegistrationId" Type="Int32" Nullable="false" />
+          <Property Name="TrainingConfirmationID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherReceivablesAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptDate" Type="DateTime" Precision="3" />
+          <Property Name="ReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DB_9F30C5_edudevModelStoreContainer" CdmEntityContainer="EducationEntities">
-          <EntitySetMapping Name="CustomerPayments">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CustomerPayment">
-              <MappingFragment StoreEntitySet="CustomerPayments">
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="InvoiceValue" ColumnName="InvoiceValue" />
-                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
-                <ScalarProperty Name="OtherRecievables" ColumnName="OtherRecievables" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="RecieptDate" ColumnName="RecieptDate" />
-                <ScalarProperty Name="ReferenceDocument" ColumnName="ReferenceDocument" />
-                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Revenues">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.Revenue">
               <MappingFragment StoreEntitySet="Revenue">
@@ -626,6 +616,28 @@
                 <ScalarProperty Name="ParticularsId" ColumnName="ParticularsId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="OperationalTransactionId" ColumnName="OperationalTransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerPayments">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CustomerPayment">
+              <MappingFragment StoreEntitySet="CustomerPayment">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ReferenceDoc" ColumnName="ReferenceDoc" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="OtherReceivablesAmount" ColumnName="OtherReceivablesAmount" />
+                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="InvoiceAmount" ColumnName="InvoiceAmount" />
+                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
+                <ScalarProperty Name="RegistrationId" ColumnName="RegistrationId" />
+                <ScalarProperty Name="CustomerPaymentId" ColumnName="CustomerPaymentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
