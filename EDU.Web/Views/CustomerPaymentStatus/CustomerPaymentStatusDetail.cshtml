@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
-                        <span class="pull-right">Customer</span>
+                        <span class="pull-right">Customer Name</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.CustomerName, new { @class = "form-control", @disabled = "disabled" })
@@ -23,20 +23,10 @@
             <div class="row css10">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
-                        <span class="pull-right">Invoice Value</span>
+                        <span class="pull-right">Invoice Amount</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount", @disabled = "disabled" })
-                    </div>
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Paid Amount</span>
-                    </label>
-                    <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.PaidAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "PaidAmount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
