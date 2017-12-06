@@ -55,7 +55,7 @@ namespace EDU.Web.Controllers
                     CustomerPaymentId = -1,
                     RegistrationId = x.RegistrationId,
                     InvoiceAmount = x.TotalAmount,
-                    PaidAmount = x.Payment1 + x.Payment2 + x.Payment3,
+                    PaidAmount = (x.Payment1==null?0:x.Payment1) + (x.Payment2 == null ? 0 : x.Payment2) + (x.Payment3 == null ? 0 : x.Payment3),
                     BalanceAmount = x.BalanceAmount,
                     OtherReceivablesAmount = 0,
                     TotalAmount = 0,
