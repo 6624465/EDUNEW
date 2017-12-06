@@ -3,7 +3,27 @@
     ViewBag.Title = "CourseSalesMaster";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
 
+    var listMonths = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "Select Month",   Value = "0"},
+                                           new SelectListItem {Text = "Janaury",   Value = "1"},
+                                           new SelectListItem {Text = "February", Value = "2"},
+                                           new SelectListItem {Text = "March", Value = "3"},
+                                           new SelectListItem {Text = "April",   Value = "4"},
+                                           new SelectListItem {Text = "May", Value = "5"},
+                                           new SelectListItem {Text = "June", Value = "6"},
+                                           new SelectListItem {Text = "July",   Value = "7"},
+                                           new SelectListItem {Text = "August", Value = "8"},
+                                           new SelectListItem {Text = "September", Value = "9"},
+                                           new SelectListItem {Text = "October",   Value = "10"},
+                                           new SelectListItem {Text = "November", Value = "11"},
+                                           new SelectListItem {Text = "December", Value = "12"}
+                                       };
+
+
+}
 <div class="page page-forms-elements">
     @using (Html.BeginForm("CoureSalesMaster", "Master", FormMethod.Post, new { id = "frmCourseDetail", name = "frmCourseDetail" }))
     {
@@ -117,7 +137,7 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Month,
-                                       new SelectList(Model.monthList, "Value", "Name"),
+                                       new SelectList(listMonths, "Value", "Text"),
                                        "Select Month",
                                       new { @class = "form-control", @disabled = "disabled" })
                                     </div>
@@ -347,7 +367,7 @@
                 var d = $('#courseSalesMaster_StartDate').val();
                 var m = d.toString().split("/")[1];
                 var dmonth = parseInt(m);
-                $('#courseSalesMaster_Month').val(dmonth - 1);
+                $('#courseSalesMaster_Month').val(dmonth);
                 $('#courseSalesMaster_EndDate').val('');
                 $('#EndDt').data("DateTimePicker").minDate(e.date);
             });

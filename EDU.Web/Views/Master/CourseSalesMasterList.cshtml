@@ -105,7 +105,7 @@
                                         @item.NoOfDays
                                     </div>
                                 </text>, style: "center"),
-                                grid.Column("Month", "Month", format: @<text> @GetMonthById(item.Month == null ? 0 : item.Month + 1) </text>, canSort: true),
+                                grid.Column("Month", "Month", format: @<text> @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
                                 grid.Column("StartDate", "Start Dt", format: @<text> @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                                 grid.Column("EndDate", "End Dt", format: @<text> @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
 

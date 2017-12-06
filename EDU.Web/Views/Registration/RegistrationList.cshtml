@@ -121,7 +121,7 @@
                                 <input type="hidden" id="eventid" name="eventid" />
                                 @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
                                  new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
-                                 "Select Event No.", new { @class = "form-control", onchange = "ChangeEventID(this);" })
+                                 "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
                             </div>
                         </div>
                     </div>
@@ -283,8 +283,8 @@
                                                             <div style='width:80px;'>
                                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                             {
-                                                                    <button class="btn btn-xs btn-success waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                                    <button class="btn btn-xs btn-danger waves-effect" style="padding-left: 5px;margin-left: 6px;" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                                 }
                                                             </div>
                                                         </text>)),
