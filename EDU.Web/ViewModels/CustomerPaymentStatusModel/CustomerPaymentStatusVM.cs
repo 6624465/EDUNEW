@@ -7,11 +7,31 @@ namespace EDU.Web.ViewModels.CustomerPaymentStatusModel
 {
     public class CustomerPaymentStatusVM
     {
-        public List<Web.Models.CustomerPayment> customerPayment { get; set; }
+        public List<CustomerPaymentVM> customerPayment { get; set; }
         public List<Web.Models.TrainingConfirmation> trainingconf { get; set; }
         public TrainingConfirmDtl trainingconfDetail { get; set; }
     }
 
+    public class CustomerPaymentVM
+    {
+        public int CustomerPaymentId { get; set; }
+        public int RegistrationId { get; set; }
+        public string TrainingConfirmationID { get; set; }
+        public Nullable<decimal> InvoiceAmount { get; set; }
+        public Nullable<decimal> PaidAmount { get; set; }
+        public Nullable<decimal> BalanceAmount { get; set; }
+        public Nullable<decimal> OtherReceivablesAmount { get; set; }
+        public Nullable<decimal> TotalAmount { get; set; }
+        public Nullable<System.DateTime> DueDate { get; set; }
+        public Nullable<System.DateTime> ReceiptDate { get; set; }
+        public string ReferenceDoc { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public string CustomerName { get; set; }
+    }
     public class TrainingConfirmDtl
     {
         public int Id { get; set; }

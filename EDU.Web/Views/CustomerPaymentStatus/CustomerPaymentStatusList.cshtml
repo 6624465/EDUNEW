@@ -58,7 +58,7 @@
     }
 </style>
 @functions {
-  
+
     public string ConvertToInt64(decimal? data)
     {
         if (data != null)
@@ -67,7 +67,7 @@
             return null;
     }
 
-   
+
 }
 <div class="page page-forms-elements">
     <div class="page-wrap">
@@ -104,30 +104,6 @@
                                     <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
                                 </div>
                             </div>
-                            @*<div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <label class="control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
-                                </div>
-                                <div class="col-md-5">
-                                    <label class="control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <label class="control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
-                                </div>
-                                <div class="col-md-5">
-                                    <label class="control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <label class="control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
-                                </div>
-                                <div class="col-md-5">
-                                    <label class="control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
-                                </div>
-                            </div>*@
                         </div>
                     </div>
 
@@ -136,14 +112,14 @@
                     <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                         @grid.GetHtml(
                                     columns: grid.Columns(
-                                            grid.Column("RegistrationId", "Student Name", canSort: true,
+                                            grid.Column("CustomerName", "Customer", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:150px;'>
-                                                            @(item.RegistrationId)
+                                                            @(item.CustomerName)
                                                         </div>
                                                     </text>),
-                                            grid.Column("InvoiceAmount", "InvoiceAmount", canSort: true,
+                                            grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
@@ -156,12 +132,12 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
-                                                            <span class="center">
+                                                            <span class="pull-right">
                                                                 @ConvertToInt64(item.PaidAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("BalanceAmount", "BalanceAmount", canSort: true,
+                                            grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:80px;'>
@@ -170,7 +146,7 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("OtherReceivablesAmount", "OtherReceivablesAmount", canSort: true,
+                                            grid.Column("OtherReceivablesAmount", "Other Receivables Amount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
@@ -188,9 +164,9 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("DueDate", "DueDate", canSort: true),
-                                            grid.Column("ReceiptDate", "ReceiptDate", canSort: true),
-                                            grid.Column("ReferenceDoc", "ReferenceDoc", canSort: true),
+                                        grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                                        grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                                            grid.Column("ReferenceDoc", "Reference Doc", canSort: true),
                                             grid.Column("", "#Action", canSort: false,
                                                         format:
                                                         @<text>
@@ -204,7 +180,7 @@
                                                         </text>)),
                                                         tableStyle: "table")
                     </div>
-                    <div class="row">
+                    <div class="row css10">
                         <div class="col-sm-12">
                             <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
                         </div>
@@ -218,7 +194,7 @@
     {
     <script type="text/javascript">
         $(function () {
-            $('#liRegistrationList').addClass('active');
+            $('#liCustomerPaymentStatusList').addClass('active');
         });
         @*$(document).ready(function () {
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));

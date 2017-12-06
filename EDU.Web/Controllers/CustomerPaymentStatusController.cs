@@ -50,24 +50,26 @@ namespace EDU.Web.Controllers
                     };
                 }
 
-                result.customerPayment = List .Select(x => new CustomerPayment
-                    {
-                        CustomerPaymentId = -1,
-                        RegistrationId = x.RegistrationId,
-                        InvoiceAmount = x.TotalAmount,
-                        PaidAmount = x.Payment1 + x.Payment2 + x.Payment3,
-                        BalanceAmount = x.BalanceAmount,
-                        OtherReceivablesAmount = 0,
-                        TotalAmount = 0,
-                        DueDate = null,
-                        ReceiptDate = null,
-                        ReferenceDoc = null,
-                        IsActive = true,
-                        CreatedBy = null,
-                        CreatedOn = DateTime.Now,
-                        ModifiedBy = null,
-                        ModifiedOn = null
-                    }).ToList();
+                result.customerPayment = List.Select(x => new CustomerPaymentVM
+                {
+                    CustomerPaymentId = -1,
+                    RegistrationId = x.RegistrationId,
+                    InvoiceAmount = x.TotalAmount,
+                    PaidAmount = x.Payment1 + x.Payment2 + x.Payment3,
+                    BalanceAmount = x.BalanceAmount,
+                    OtherReceivablesAmount = 0,
+                    TotalAmount = 0,
+                    DueDate = null,
+                    ReceiptDate = null,
+                    ReferenceDoc = null,
+                    IsActive = true,
+                    CreatedBy = null,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = null,
+                    ModifiedOn = null,
+                    CustomerName = x.StudentName
+                }).ToList();
+
                 result.trainingconf = tc;
                 result.trainingconfDetail = tcd;
 
@@ -82,24 +84,6 @@ namespace EDU.Web.Controllers
         {
             List<Registration> List = dbContext.Registrations
                 .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID && x.BalanceAmount > 0)
-                //.Select(x => new CustomerPayment
-                //{
-                //    CustomerPaymentId=-1,
-                //    RegistrationId = x.RegistrationId,
-                //    InvoiceAmount = x.TotalAmount,
-                //    PaidAmount = x.Payment1+x.Payment2+x.Payment3,
-                //    BalanceAmount = x.BalanceAmount,
-                //    OtherReceivablesAmount = 0,
-                //    TotalAmount = 0,
-                //    DueDate = null,
-                //    ReceiptDate = null,
-                //    ReferenceDoc = null,
-                //    IsActive = true,
-                //    CreatedBy = null,
-                //    CreatedOn = DateTime.Now,
-                //    ModifiedBy = null,
-                //    ModifiedOn = null
-                //})
                 .ToList();
             return List;
         }
