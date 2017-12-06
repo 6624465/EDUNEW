@@ -4160,7 +4160,7 @@ fieldset[disabled] .btn-youtube.active {
   padding-left: 12px;
   display: table;
   width: 100%;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 }
 .main-container .nav-wrap .site-nav .nav-list > li a:hover {
   color: #455a64;
