@@ -1582,6 +1582,7 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseDetailController.cs" />
+    <Compile Include="Controllers\CustomerPaymentStatusController.cs" />
     <Compile Include="Controllers\FinancialTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
@@ -1754,6 +1755,7 @@
     <Content Include="Views\OperationalTransaction\OperationalTransactionReport.cshtml" />
     <Content Include="Views\Reports\TotalRevenue.cshtml" />
     <Content Include="Views\Reports\DashBoard.cshtml" />
+    <Content Include="Views\CustomerPaymentStatus\CustomerPaymentStatusList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

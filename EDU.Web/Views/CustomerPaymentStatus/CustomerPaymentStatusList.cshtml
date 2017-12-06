@@ -1,0 +1,349 @@
+﻿
+@using Newtonsoft.Json;
+
+@model EDU.Web.ViewModels.Registration.RegistrationVM
+@{
+    ViewBag.Title = "CustomerPaymentStatusList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+//WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 5);
+//grid.Pager(WebGridPagerModes.All);
+
+//var Student = Model.trainingconfDetail.NoOfStudents;
+//var reg = Model.registration.Count();
+//var remainReg = Student - reg;
+
+//var myArray = (List<string>)ViewData["Summary"];
+}
+<style>
+    .centerbox {
+        margin: auto;
+        width: 100%;
+        border: 1px solid gray;
+        border-radius: 20px;
+    }
+
+    .center {
+        text-align: center !important;
+    }
+
+    .right {
+        text-align: right !important;
+    }
+
+    .popover {
+        color: black;
+        min-width: 300px;
+    }
+
+    .popover-title {
+        background-color: #F7F7F7;
+        border-bottom: 1px solid #EBEBEB;
+        border-radius: 5px 5px 0 0;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        margin: 0;
+        padding: 8px 14px;
+    }
+
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        color: #D73925;
+        /*font-family: 'Bebas Neue'*/
+    }
+</style>
+@functions {
+  
+    public string ConvertToInt64(decimal? data)
+    {
+        if (data != null)
+            return Convert.ToInt64(data.Value).ToString();
+        else
+            return null;
+    }
+
+   
+}
+<div class="page page-forms-elements">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <div style="display:-webkit-inline-box">
+                        <h4> Customer Payment Status</h4>
+                    </div>
+                    <div class="box-tools">
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label col-md-offset-2">
+                                <span>Order #</span>
+                            </label>
+                            <div class="col-md-2">
+                                <input type="hidden" id="eventid" name="eventid" />
+                                @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
+                                 new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
+                                 "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
+                            </div>
+                        </div>
+                    </div>
+                    <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
+                        <div class="centerbox">
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                                </div>
+                            </div>
+                            @*<div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label class="control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                    </div>
+                    @*<div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
+                        @grid.GetHtml(
+                                    columns: grid.Columns(
+                                            grid.Column("StudentName", "Student Name", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:150px;'>
+                                                            @(item.StudentName)
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Amount", "Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:50px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.Amount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("WHTPercent", "WHT", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:50px;'>
+                                                            <span class="center">
+                                                                @(new HtmlString(ConvertToInt64(item.WHTPercent) + "%"))
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("WHTAmount", "WHT Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:80px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.WHTAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(ConvertToInt64(item.VATPercent) + "%"), canSort: true, style: "center"),
+                                            grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.VATAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                             grid.Column("TotalAmount", "Total Amount", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:75px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.TotalAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Payment1", "Payment 1", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment1)</span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                    </text>),
+                                            grid.Column("Payment2", "Payment 2", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment2)</span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                    </text>),
+                                            grid.Column("Payment3", "Payment 3", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment3)</span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                    </text>),
+                                            grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.OtherDeductionsAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("BalanceAmount", "Balance", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:60px;'>
+                                                            <span class="pull-right">
+                                                                @ConvertToInt64(item.BalanceAmount)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
+                                            grid.Column("Email", "Email", canSort: true),
+                                            grid.Column("Contact", "Contact", canSort: true),
+                                            grid.Column("CompanyName", "CompanyName", canSort: true),
+                                            grid.Column("", "#Action", canSort: false,
+                                                        format:
+                                                        @<text>
+                                                            <div style='width:80px;'>
+                                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                            {
+                                                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                }
+                                                            </div>
+                                                        </text>)),
+                                                        tableStyle: "table")
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section SectionScripts
+    {
+    <script type="text/javascript">
+        $(function () {
+            $('#liRegistrationList').addClass('active');
+        });
+        @*$(document).ready(function () {
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            @if (reg > 0)
+        {
+            <text>
+                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + myArray[0] + '</span></td><td></td><td><span class="pull-right">' + myArray[1] + '</span></td><td></td><td><span class="pull-right">' + myArray[2] + '</span></td><td><span class="pull-right">' + myArray[3] + '</span></td><td><span class="pull-right">' + myArray[4] + '</span></td><td><span class="pull-right">' + myArray[5] + '</span></td><td><span class="pull-right">' + myArray[6] + '</span></td><td><span class="pull-right">' + myArray[7] + '</span></td><td><span class="pull-right">' + myArray[8] +'</span></td><td></td><td></td><td></td></tr>');
+            </text>
+            }
+        });*@
+
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            debugger;
+            $(el).popover("show");
+        }
+
+        $(function () {
+            $('#lblmsg').hide();
+            $('#TrainingDetails').hide();
+            $('#addbtn').attr('disabled', 'disabled');
+            var trid = $('#TrainingConfirmationID').val();
+            debugger;
+            if (trid != null && trid != '') {
+                $('#TrainingDetails').show();
+                $('#lblmsg').show();
+                @*@if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
+                    {
+                    <text>$('#addbtn').attr('disabled', 'disabled');</text>
+                }
+                else
+                {
+                    <text>$('#addbtn').removeAttr('disabled', 'disabled');</text>
+                }*@
+            }
+        });
+
+        function ChangeEventID(el) {
+            $('#eventid').val(el.value);
+            window.location = '@Url.Action("CustomerPaymentStatusList", "CustomerPaymentStatus", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+        };
+
+        function navigatetoDetail() {
+            var trid = $('#TrainingConfirmationID').val();
+            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid;
+        };
+
+        function DeleteRegistration(id) {
+            if (confirm("Are you sure, You want to delete")) {
+                $.ajax({
+                    url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        alert("Deleted Successfully");
+                        if (data) {
+                            location.reload();
+                        }
+                    },
+                    error: function (e) {
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+
+
+
