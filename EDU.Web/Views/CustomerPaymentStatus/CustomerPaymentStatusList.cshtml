@@ -69,6 +69,8 @@
 
 
 }
+@using (Html.BeginForm("SaveCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmCustomerPaymentStatus", name = "CustomerPaymentStatus", enctype = "multipart/form-data" }))
+{
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -89,8 +91,8 @@
                             <div class="col-md-2">
                                 <input type="hidden" id="eventid" name="eventid" />
                                 @Html.DropDownListFor(x => x.customerPayment.FirstOrDefault().TrainingConfirmationID,
-                                 new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
-                                 "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
+          new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
+          "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
                             </div>
                         </div>
                     </div>
@@ -111,16 +113,16 @@
                     </div>
                     <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                         @grid.GetHtml(
-                                    columns: grid.Columns(
-                                            grid.Column("CustomerName", "Customer", canSort: true,
-                                                    format:
+                     columns: grid.Columns(
+                             grid.Column("CustomerName", "Customer", canSort: true,
+                                     format:
                                                     @<text>
                                                         <div style='width:150px;'>
                                                             @(item.CustomerName)
                                                         </div>
                                                     </text>),
-                                            grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
-                                                    format:
+                             grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
+                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
                                                             <span class="pull-right">
@@ -128,8 +130,8 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("PaidAmount", "PaidAmount", canSort: true,
-                                                    format:
+                             grid.Column("PaidAmount", "PaidAmount", canSort: true,
+                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
                                                             <span class="pull-right">
@@ -137,8 +139,8 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("BalanceAmount", "Balance Amount", canSort: true,
-                                                    format:
+                             grid.Column("BalanceAmount", "Balance Amount", canSort: true,
+                                     format:
                                                     @<text>
                                                         <div style='width:80px;'>
                                                             <span class="pull-right">
@@ -146,8 +148,8 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("OtherReceivablesAmount", "Other Receivables Amount", canSort: true,
-                                                    format:
+                             grid.Column("OtherReceivablesAmount", "Other Receivables Amount", canSort: true,
+                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
                                                             <span class="pull-right">
@@ -155,8 +157,8 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                             grid.Column("TotalAmount", "Total Amount", canSort: true,
-                                                    format:
+                              grid.Column("TotalAmount", "Total Amount", canSort: true,
+                                     format:
                                                     @<text>
                                                         <div style='width:75px;'>
                                                             <span class="pull-right">
@@ -164,21 +166,22 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                        grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
-                                        grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
-                                            grid.Column("ReferenceDoc", "Reference Doc", canSort: true),
-                                            grid.Column("", "#Action", canSort: false,
-                                                        format:
+                         grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                         grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                             grid.Column("ReferenceDoc", "Reference Doc", canSort: true),
+                             grid.Column("", "#Action", canSort: false,
+                                         format:
                                                         @<text>
                                                             <div style='width:80px;'>
                                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                                            {
-                                                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                {
+                                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditCustomerPaymentStatusDetail(@item.CustomerPaymentId,'@item.InvoiceAmount',@item.PaidAmount,'@item.BalanceAmount')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                    @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
                                                                     <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                                 }
                                                             </div>
                                                         </text>)),
-                                                        tableStyle: "table")
+                                         tableStyle: "table")
                     </div>
                     <div class="row css10">
                         <div class="col-sm-12">
@@ -190,6 +193,11 @@
         </div>
     </div>
 </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+
+</div>
+}
 @section SectionScripts
     {
     <script type="text/javascript">
@@ -245,6 +253,24 @@
             window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid;
         };
 
+
+        function EditCustomerPaymentStatusDetail(Id,InvoiceAmount,PaidAmount,BalanceAmount) {
+            debugger;
+                $.ajax({
+                    url: '@Url.Content("~/CustomerPaymentStatus/CustomerPaymentStatusDetail?CustomerPaymentId=")' + Id + "&InvoiceAmount=" + InvoiceAmount + "&PaidAmount=" + PaidAmount + "&BalanceAmount=" + BalanceAmount,
+                    method: 'get',
+                    contentType: 'text/html',
+                    success: function (html) {
+                        $('#myModal').html(html);
+                        $('#myModal').modal('show');
+                    },
+                    error: function (err) {
+
+                    }
+                });
+           
+
+        }
         function DeleteRegistration(id) {
             if (confirm("Are you sure, You want to delete")) {
                 $.ajax({

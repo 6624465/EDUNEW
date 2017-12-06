@@ -1757,6 +1757,7 @@
     <Content Include="Views\Reports\TotalRevenue.cshtml" />
     <Content Include="Views\Reports\DashBoard.cshtml" />
     <Content Include="Views\CustomerPaymentStatus\CustomerPaymentStatusList.cshtml" />
+    <Content Include="Views\CustomerPaymentStatus\CustomerPaymentStatusDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

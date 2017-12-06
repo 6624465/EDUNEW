@@ -1,0 +1,114 @@
+﻿
+@model EDU.Web.ViewModels.CustomerPaymentStatusModel.CustomerPaymentVM
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">@ViewBag.Title</h4>
+        </div>
+        <div class="modal-body" id="FinancialTransactionModalBody">
+            @Html.HiddenFor(x => x.CustomerPaymentId)
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Customer</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.CustomerName, new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Invoice Value</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount"})
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Paid Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.PaidAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "PaidAmount", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Paid Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.PaidAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "PaidAmount", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Balance Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.BalanceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Balance Amount", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Other Receivables Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount"})
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Other Receivables Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Other Receivables Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Reference Doc</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer css10">
+                <button type="button" onclick="SaveCustomerPaymentStatus()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section SectionScripts {
+    <script type="text/javascript">
+
+    </script>
+}

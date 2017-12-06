@@ -31,6 +31,7 @@ namespace EDU.Web.ViewModels.CustomerPaymentStatusModel
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public string CustomerName { get; set; }
+        public HttpPostedFileBase FileName { get; set; }
     }
     public class TrainingConfirmDtl
     {

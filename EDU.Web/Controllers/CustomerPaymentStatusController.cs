@@ -80,6 +80,21 @@ namespace EDU.Web.Controllers
             }
             return result;
         }
+        [HttpGet]
+        public PartialViewResult CustomerPaymentStatusDetail(int? CustomerPaymentId,decimal? InvoiceAmount,decimal? PaidAmount,decimal? BalanceAmount)
+        {
+            if (!CustomerPaymentId.HasValue)
+            {
+                ViewBag.Title = "New Customer Payment Status";
+                return PartialView(new CustomerPaymentVM { CustomerPaymentId = -1, IsActive = true });
+            }
+            else
+            {
+                ViewBag.Title = "Update Customer Payment Status";
+                return PartialView();
+
+            }
+        }
         private List<Registration> GetList(string trainingConfirmationID)
         {
             List<Registration> List = dbContext.Registrations
