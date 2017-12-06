@@ -257,6 +257,17 @@
                     success: function (html) {
                         $('#myModal').html(html);
                         $('#myModal').modal('show');
+                        debugger;
+                        $('#DueDate, #ReceiptDate').datetimepicker({
+                            icons: {
+                                time: 'fa fa-clock-o',
+                                date: 'fa fa-calendar',
+                                up: 'fa fa-arrow-up',
+                                down: 'fa fa-arrow-down'
+                            },
+                            minDate: new Date(),
+                            format: 'DD/MM/YYYY'
+                        });
                     },
                     error: function (err) {
 
