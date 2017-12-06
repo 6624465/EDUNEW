@@ -140,6 +140,27 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" style="padding-top:5%">
+                            <div class="col-md-6">
+                                <div id="chartContainer" style="height: 200px; width: 100%;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="chartContainer1" style="height: 200px; width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:5%">
+                            <div class="col-md-6">
+                                <div id="chartContainer2" style="height: 200px; width: 100%;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="chartContainer3" style="height: 200px; width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:5%">
+                            <div class="col-md-6">
+                                <div id="chartContainer4" style="height: 200px; width: 100%;"></div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -148,6 +169,7 @@
     </div>
 </div>
 @section SectionScripts {
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -189,6 +211,111 @@
             });
 
         });
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: false,
+            theme: "light2",
+            title:{
+                text: "ORACLE"
+            },
+            axisY:{
+                includeZero: false,
+            },
+            data: [{        
+                type: "line",       
+                dataPoints: [
+                    { y: 0 },
+                    { y: 60 },
+                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+                    { y: 70 },
+                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
+                ]
+            }]
+        });
+        chart.render();
+        var chart1 = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: false,
+            theme: "light2",
+            title: {
+                text: "VMWARE"
+            },
+            axisY: {
+                includeZero: false,
+            },
+            data: [{
+                type: "line",
+                dataPoints: [
+                    { y: 0 },
+                    { y: 60 },
+                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+                    { y: 70 },
+                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
+                ]
+            }]
+        });
+        chart1.render();
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+            animationEnabled: false,
+            theme: "light2",
+            title: {
+                text: "MICROSOFT"
+            },
+            axisY: {
+                includeZero: false,
+            },
+            data: [{
+                type: "line",
+                dataPoints: [
+                    { y: 0 },
+                    { y: 60 },
+                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+                    { y: 70 },
+                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
+                ]
+            }]
+        });
+        chart2.render();
+        var chart3 = new CanvasJS.Chart("chartContainer3", {
+            animationEnabled: false,
+            theme: "light2",
+            title: {
+                text: "EC COUNCIL"
+            },
+            axisY: {
+                includeZero: false,
+            },
+            data: [{
+                type: "line",
+                dataPoints: [
+                    { y: 0 },
+                    { y: 60 },
+                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+                    { y: 70 },
+                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
+                ]
+            }]
+        });
+        chart3.render();
+        var chart4 = new CanvasJS.Chart("chartContainer4", {
+            animationEnabled: false,
+            theme: "light2",
+            title: {
+                text: "EC COUNCIL"
+            },
+            axisY: {
+                includeZero: false,
+            },
+            data: [{
+                type: "line",
+                dataPoints: [
+                    { y: 0 },
+                    { y: 60 },
+                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+                    { y: 70 },
+                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
+                ]
+            }]
+        });
+        chart4.render();
     </script>
 }
 
