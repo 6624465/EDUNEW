@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section StylesCharts{
-<link href="http://circle.firchow.net/assets/css/styles.css" rel="stylesheet">
-<link rel="stylesheet" href="http://circle.firchow.net/assets/css/circle.css">
-    }
+    <link href="http://circle.firchow.net/assets/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://circle.firchow.net/assets/css/circle.css">
+}
 
 @{
     var listMonths = new List<SelectListItem>()
@@ -141,24 +141,151 @@
                             </div>
                         </div>
                         <div class="row" style="padding-top:5%">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div id="chartContainer" style="height: 200px; width: 100%;"></div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div id="chartContainer1" style="height: 200px; width: 100%;"></div>
                             </div>
-                        </div>
-                        <div class="row" style="padding-top:5%">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div id="chartContainer2" style="height: 200px; width: 100%;"></div>
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        <div class="row" style="padding-top:5%">
+                            <div class="col-md-4">
                                 <div id="chartContainer3" style="height: 200px; width: 100%;"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="chartContainer4" style="height: 200px; width: 100%;"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="chartContainer5" style="height: 370px; width: 100%;"></div>
                             </div>
                         </div>
                         <div class="row" style="padding-top:5%">
-                            <div class="col-md-6">
-                                <div id="chartContainer4" style="height: 200px; width: 100%;"></div>
+                            <div class="col-md-4">
+                               <table class="table-responsive" style="width:100%" border="2" >
+                                   <thead>
+                                       <tr style="background:blue;color:white">
+                                           <th style="width:25%">PRODUCT</th>
+                                           <th style="width:25%">GOAL</th>
+                                           <th style="width:25%">ACHIEVED</th>
+                                           <th style="width:25%">%</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr>
+                                           <th>VMWARE</th>
+                                           <th>80</th>
+                                           <th>20</th>
+                                           <th>25%</th>
+                                       </tr>
+                                       <tr>
+                                           <th>ORACLE</th>
+                                           <th>80</th>
+                                           <th>20</th>
+                                           <th>25%</th>
+                                       </tr>
+                                       <tr>
+                                           <th>MICROSOFT</th>
+                                           <th>80</th>
+                                           <th>20</th>
+                                           <th>25%</th>
+                                       </tr>
+                                       <tr>
+                                           <th>EC COUNCIL</th>
+                                           <th>80</th>
+                                           <th>20</th>
+                                           <th></th>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                            </div>
+                            <div class="col-md-8">
+                                <table class="table-responsive" style="width:100%" border="2">
+                                    <thead>
+                                        <tr style="background:blue;color:white">
+                                            <th style="width:25%">PRODUCT</th>
+                                            <th>JAN</th>
+                                            <th>FEB</th>
+                                            <th>MAR</th>
+                                            <th>APR</th>
+                                            <th>MAY</th>
+                                            <th>JUN</th>
+                                            <th>JUL</th>
+                                            <th>AUG</th>
+                                            <th>SET</th>
+                                            <th>NOV</th>
+                                            <th>DEC</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>VMWARE</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+
+                                           
+                                        </tr>
+                                        <tr>
+                                            <th>ORACLE</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            
+                                           
+                                        </tr>
+                                        <tr>
+                                            <th>MICROSOFT</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                           
+
+                                           
+                                        </tr>
+                                        <tr>
+                                            <th>EC COUNCIL</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th></th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            <th>25%</th>
+                                            <th>80</th>
+                                            <th>20</th>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -169,7 +296,7 @@
     </div>
 </div>
 @section SectionScripts {
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -214,14 +341,14 @@
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: false,
             theme: "light2",
-            title:{
+            title: {
                 text: "ORACLE"
             },
-            axisY:{
+            axisY: {
                 includeZero: false,
             },
-            data: [{        
-                type: "line",       
+            data: [{
+                type: "line",
                 dataPoints: [
                     { y: 0 },
                     { y: 60 },
@@ -316,6 +443,23 @@
             }]
         });
         chart4.render();
+        var chart5 = new CanvasJS.Chart("chartContainer5", {
+            animationEnabled: true,
+            title: {
+                text: "Total Revenue"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 240,
+                yValueFormatString: "##0.00\"%\"",
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                    { y: 79.45, label: "Google" },
+                    { y: 7.31, label: "Bing" }
+                ]
+            }]
+        });
+        chart5.render();
     </script>
 }
 
