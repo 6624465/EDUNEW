@@ -73,42 +73,64 @@
             <div class="row css10">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
-                        <span class="pull-right">Other Receivables Amount</span>
+                        <span class="pull-right">Due Date</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount" })
+                        <div class="input-group date" id="DueDate">
+                            @Html.TextBoxFor(x => x.DueDate, new { @class = "form-control dtCss" })
+                            <span class="input-group-addon">
+                                <i class="ion ion-calendar"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row css10">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
-                        <span class="pull-right">Other Receivables Amount</span>
+                        <span class="pull-right">Receipt Date</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount" })
+                        <div class="input-group date" id="ReceiptDate">
+                            @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control dtCss" })
+                            <span class="input-group-addon">
+                                <i class="ion ion-calendar"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Reference Doc</span>
-                    </label>
-                    <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })
-                    </div>
+        <div class="row css10">
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    <span class="pull-right">Reference Doc</span>
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })
                 </div>
             </div>
-            <div class="modal-footer css10">
-                <button type="button" onclick="SaveCustomerPaymentStatus()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
-                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
-            </div>
+        </div>
+        <div class="modal-footer css10">
+            <button type="button" onclick="SaveCustomerPaymentStatus()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+            <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
         </div>
     </div>
 </div>
+</div>
 @section SectionScripts {
     <script type="text/javascript">
+        $(function () {
+            $('#DueDate, #ReceiptDate').datetimepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down'
+                },
+                minDate: new Date(),
+                format: 'DD/MM/YYYY'
+            });
+        });
 
     </script>
 }
