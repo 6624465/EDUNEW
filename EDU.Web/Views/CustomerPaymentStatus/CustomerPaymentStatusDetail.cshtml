@@ -26,7 +26,7 @@
                         <span class="pull-right">Invoice Value</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount"})
+                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
