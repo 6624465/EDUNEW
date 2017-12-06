@@ -29,42 +29,75 @@ namespace EDU.Web.Controllers
             ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
             if (TrainerInfo == null)
             {
-                TrainerInfo = new TrainerInformation();
-                TrainerInfo.TrianerId = -1;
+                TrainerVM trainerVM = new TrainerVM();
+                trainerVM.TrianerId = -1;
 
-                return View(TrainerInfo);
+                return View(trainerVM);
             }
             else
             {
-                return View(TrainerInfo);
+                TrainerVM trainerVM = dbContext.TrainerInformations.
+                Where(x => x.TrianerId == Id && x.IsActive == true)
+                        .Select(x => new TrainerVM
+                        {
+                            TrianerId = TrainerInfo.TrianerId,
+                            Technology = TrainerInfo.Technology,
+                            Country = TrainerInfo.Country,
+                            CountryName = TrainerInfo.CountryName,
+                            TrainerRate = TrainerInfo.TrainerRate,
+                            VendorName = TrainerInfo.VendorName,
+                            Address = TrainerInfo.Address,
+                            Contact = TrainerInfo.Contact,
+                            Remarks = TrainerInfo.Remarks,
+                            TrainerName = TrainerInfo.TrainerName,
+                            CreatedBy = TrainerInfo.CreatedBy,
+                            CreatedOn = TrainerInfo.CreatedOn,
+                            ModifiedBy = TrainerInfo.ModifiedBy,
+                            ModifiedOn = TrainerInfo.ModifiedOn,
+                            IsActive = true,
+                            Profile = TrainerInfo.Profile
+                        }).FirstOrDefault();
+                return View(trainerVM);
             }
         }
 
         [HttpPost]
-        public ActionResult SaveTrainer(TrainerInformation TrainerInfo)
+        public ActionResult SaveTrainer(TrainerVM TrainerInfo)
         {
             try
             {
-
                 if (TrainerInfo.TrianerId == -1)
                 {
-                    TrainerInfo.CreatedBy = USER_ID;
-                    TrainerInfo.CreatedOn = UTILITY.SINGAPORETIME;
-                    TrainerInfo.IsActive = true;
+                    TrainerInformation trainer = new TrainerInformation();
+
+                    trainer.TrianerId = TrainerInfo.TrianerId;
+                    trainer.Technology = TrainerInfo.Technology;
+                    trainer.Country = TrainerInfo.Country;
+                    trainer.CountryName = TrainerInfo.CountryName;
+                    trainer.TrainerRate = TrainerInfo.TrainerRate;
+                    trainer.VendorName = TrainerInfo.VendorName;
+                    trainer.Address = TrainerInfo.Address;
+                    trainer.Contact = TrainerInfo.Contact;
+                    trainer.Remarks = TrainerInfo.Remarks;
+                    trainer.TrainerName = TrainerInfo.TrainerName;
+
+                    trainer.CreatedBy = USER_ID;
+                    trainer.CreatedOn = UTILITY.SINGAPORETIME;
+                    trainer.IsActive = true;
 
                     if (TrainerInfo.FileName != null && TrainerInfo.FileName.ContentLength > 0)
                     {
-                        TrainerInfo.Profile = TrainerInfo.FileName.FileName;
+                        trainer.Profile = TrainerInfo.FileName.FileName;
                     }
                     else
-                        TrainerInfo.Profile = null;
+                        trainer.Profile = null;
 
-                    dbContext.TrainerInformations.Add(TrainerInfo);
+                    dbContext.TrainerInformations.Add(trainer);
                     dbContext.SaveChanges();
 
                     if (TrainerInfo.FileName != null && TrainerInfo.FileName.ContentLength > 0)
                     {
-                        string path = Server.MapPath("~/Uploads/" + TrainerInfo.TrianerId + "/");
+                        string path = Server.MapPath("~/Uploads/" + trainer.TrianerId + "/");
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);

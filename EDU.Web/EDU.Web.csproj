@@ -1649,6 +1649,7 @@
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
     <Compile Include="ViewModels\OperationalTransaction\OperationalTransactionVM.cs" />
     <Compile Include="ViewModels\Registration\RegistrationVM.cs" />
+    <Compile Include="ViewModels\Trainer\TrainerVM.cs" />
     <Compile Include="ViewModels\Trainer\TrainingConfirmationVM.cs" />
   </ItemGroup>
   <ItemGroup>
