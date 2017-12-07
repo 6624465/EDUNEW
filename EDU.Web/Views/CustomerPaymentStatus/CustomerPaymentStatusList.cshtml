@@ -179,11 +179,11 @@
                                             <div style='width:80px;'>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                                                    <button id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                     @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
                                                 if (item.CustomerPaymentId > 0)
                                                 {
-                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                     }
                                                 }
                                             </div>
