@@ -175,9 +175,12 @@
                                             <div style='width:80px;'>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditCustomerPaymentStatusDetail(@item.CustomerPaymentId,'@item.InvoiceAmount',@item.PaidAmount,'@item.BalanceAmount','@item.CustomerName')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                     @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
+                                                if (item.CustomerPaymentId > 0)
+                                                {
                                                     <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    }
                                                 }
                                             </div>
                                         </text>)),
@@ -202,17 +205,9 @@
     {
     <script type="text/javascript">
         $(function () {
+
             $('#liCustomerPaymentStatusList').addClass('active');
         });
-        @*$(document).ready(function () {
-            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
-            @if (reg > 0)
-        {
-            <text>
-                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + myArray[0] + '</span></td><td></td><td><span class="pull-right">' + myArray[1] + '</span></td><td></td><td><span class="pull-right">' + myArray[2] + '</span></td><td><span class="pull-right">' + myArray[3] + '</span></td><td><span class="pull-right">' + myArray[4] + '</span></td><td><span class="pull-right">' + myArray[5] + '</span></td><td><span class="pull-right">' + myArray[6] + '</span></td><td><span class="pull-right">' + myArray[7] + '</span></td><td><span class="pull-right">' + myArray[8] +'</span></td><td></td><td></td><td></td></tr>');
-            </text>
-            }
-        });*@
 
         function mouseleave(el) {
             $(el).popover("hide");
@@ -227,17 +222,9 @@
             $('#TrainingDetails').hide();
             $('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
-            debugger;
+
             if (trid != null && trid != '') {
                 $('#TrainingDetails').show();
-                @*@if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
-                    {
-                    <text>$('#addbtn').attr('disabled', 'disabled');</text>
-                }
-                else
-                {
-                    <text>$('#addbtn').removeAttr('disabled', 'disabled');</text>
-                }*@
             }
         });
 
@@ -246,11 +233,14 @@
             window.location = '@Url.Action("CustomerPaymentStatusList", "CustomerPaymentStatus", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
         };
 
-        function EditCustomerPaymentStatusDetail(Id, InvoiceAmount, PaidAmount, BalanceAmount, CustomerName) {
+        function EditCustomerPaymentStatusDetail(el) {
+            debugger;
+            var obj = $(el).data('object');
             $.ajax({
-                url: '@Url.Content("~/CustomerPaymentStatus/CustomerPaymentStatusDetail?CustomerPaymentId=")' + Id + "&InvoiceAmount=" + InvoiceAmount + "&PaidAmount=" + PaidAmount + "&BalanceAmount=" + BalanceAmount + "&CustomerName=" + CustomerName,
-                method: 'get',
-                contentType: 'text/html',
+                url: '@Url.Content("~/CustomerPaymentStatus/CustomerPaymentStatusDetail/")',
+                data: JSON.stringify(obj),
+                method: 'post',
+                contentType: 'application/json; charset=utf-8',
                 success: function (html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
@@ -319,7 +309,7 @@
                 RemoveDisabledFields();
                 $('#frmCustomerPaymentStatus').submit();
             }
-           
+
         }
 
         function RemoveDisabledFields()
