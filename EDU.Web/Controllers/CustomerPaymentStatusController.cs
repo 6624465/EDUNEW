@@ -3,6 +3,7 @@ using EDU.Web.ViewModels.CustomerPaymentStatusModel;
 using EZY.EDU.BusinessFactory;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -81,7 +82,7 @@ namespace EDU.Web.Controllers
             return result;
         }
         [HttpGet]
-        public PartialViewResult CustomerPaymentStatusDetail(int? CustomerPaymentId, decimal? InvoiceAmount, decimal? PaidAmount, decimal? BalanceAmount)
+        public PartialViewResult CustomerPaymentStatusDetail(int? CustomerPaymentId, decimal? InvoiceAmount, decimal? PaidAmount, decimal? BalanceAmount,string CustomerName)
         {
             if (CustomerPaymentId == -1)
             {
@@ -102,5 +103,56 @@ namespace EDU.Web.Controllers
                 .ToList();
             return List;
         }
+        [HttpPost]
+        public ActionResult SaveCustomerPaymentStatus(CustomerPaymentVM customerpaymentvm)
+        {
+            try
+            {
+            CustomerPayment customerpayment = new CustomerPayment();
+              if(customerpaymentvm.CustomerPaymentId==-1)
+                {
+                    customerpayment.CustomerPaymentId = customerpaymentvm.CustomerPaymentId;
+                    customerpayment.RegistrationId = customerpaymentvm.RegistrationId;
+                    customerpayment.TrainingConfirmationID = customerpaymentvm.TrainingConfirmationID;
+                    customerpayment.InvoiceAmount = customerpaymentvm.InvoiceAmount;
+                    customerpayment.PaidAmount = customerpaymentvm.PaidAmount;
+                    customerpayment.BalanceAmount = customerpaymentvm.BalanceAmount;
+                    customerpayment.OtherReceivablesAmount = customerpaymentvm.OtherReceivablesAmount;
+                    customerpayment.TotalAmount = customerpaymentvm.TotalAmount;
+                    customerpayment.DueDate = customerpaymentvm.DueDate;
+
+                    customerpayment.ReceiptDate = customerpaymentvm.ReceiptDate;
+                    //customerpayment.ReferenceDoc = customerpaymentvm.ReferenceDoc;
+                    customerpayment.ReceiptDate = customerpaymentvm.ReceiptDate;
+                    customerpayment.IsActive = true;
+                    customerpayment.CreatedBy = USER_ID;
+                    customerpayment.CreatedOn = UTILITY.SINGAPORETIME;
+                    if (customerpaymentvm.FileName != null && customerpaymentvm.FileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/" + customerpaymentvm.TrainingConfirmationID);
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        customerpaymentvm.FileName.SaveAs(path + customerpaymentvm.FileName.FileName);
+                        customerpayment.ReferenceDoc = customerpaymentvm.FileName.FileName;
+                    }
+                }
+             
+                dbContext.CustomerPayments.Add(customerpayment);
+                dbContext.SaveChanges();
+           
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction("CustomerPaymentStatusList", new { trainingConfirmationID = customerpaymentvm.TrainingConfirmationID });
+        }
+
+      
     }
 }

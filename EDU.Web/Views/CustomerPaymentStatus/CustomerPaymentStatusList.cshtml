@@ -175,9 +175,9 @@
                                             <div style='width:80px;'>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditCustomerPaymentStatusDetail(@item.CustomerPaymentId,'@item.InvoiceAmount',@item.PaidAmount,'@item.BalanceAmount')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                                    @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
-                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditCustomerPaymentStatusDetail(@item.CustomerPaymentId,'@item.InvoiceAmount',@item.PaidAmount,'@item.BalanceAmount','@item.CustomerName')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
+                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                 }
                                             </div>
                                         </text>)),
@@ -224,14 +224,12 @@
         }
 
         $(function () {
-            $('#lblmsg').hide();
             $('#TrainingDetails').hide();
             $('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
             debugger;
             if (trid != null && trid != '') {
                 $('#TrainingDetails').show();
-                $('#lblmsg').show();
                 @*@if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
                     {
                     <text>$('#addbtn').attr('disabled', 'disabled');</text>
@@ -248,34 +246,35 @@
             window.location = '@Url.Action("CustomerPaymentStatusList", "CustomerPaymentStatus", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
         };
 
-        function EditCustomerPaymentStatusDetail(Id,InvoiceAmount,PaidAmount,BalanceAmount) {
-            debugger;
-                $.ajax({
-                    url: '@Url.Content("~/CustomerPaymentStatus/CustomerPaymentStatusDetail?CustomerPaymentId=")' + Id + "&InvoiceAmount=" + InvoiceAmount + "&PaidAmount=" + PaidAmount + "&BalanceAmount=" + BalanceAmount,
-                    method: 'get',
-                    contentType: 'text/html',
-                    success: function (html) {
-                        $('#myModal').html(html);
-                        $('#myModal').modal('show');
-                        debugger;
-                        $('#DueDate, #ReceiptDate').datetimepicker({
-                            icons: {
-                                time: 'fa fa-clock-o',
-                                date: 'fa fa-calendar',
-                                up: 'fa fa-arrow-up',
-                                down: 'fa fa-arrow-down'
-                            },
-                            minDate: new Date(),
-                            format: 'DD/MM/YYYY'
-                        });
-                    },
-                    error: function (err) {
+        function EditCustomerPaymentStatusDetail(Id, InvoiceAmount, PaidAmount, BalanceAmount, CustomerName) {
+            $.ajax({
+                url: '@Url.Content("~/CustomerPaymentStatus/CustomerPaymentStatusDetail?CustomerPaymentId=")' + Id + "&InvoiceAmount=" + InvoiceAmount + "&PaidAmount=" + PaidAmount + "&BalanceAmount=" + BalanceAmount + "&CustomerName=" + CustomerName,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                    debugger;
+                    $('#DueDate, #ReceiptDate').datetimepicker({
+                        icons: {
+                            time: 'fa fa-clock-o',
+                            date: 'fa fa-calendar',
+                            up: 'fa fa-arrow-up',
+                            down: 'fa fa-arrow-down'
+                        },
+                        minDate: new Date(),
+                        format: 'DD/MM/YYYY'
+                    });
+                    var invoiceamt = $('#InvoiceAmount').val();
+                    $('#TotalAmount').val(invoiceamt);
+                },
+                error: function (err) {
 
-                    }
-                });
+                }
+            });
         }
 
-        function DeleteRegistration(id) {
+        @*function DeleteRegistration(id) {
             if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
                     url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
@@ -291,6 +290,45 @@
                     }
                 });
             }
+        }*@
+        function CalculateTotalAmount() {
+            var invoiceamt = parseInt($('#InvoiceAmount').val());
+            var OtherReceivablesAmount = parseInt($('#OtherReceivablesAmount').val());
+            if (isNaN(OtherReceivablesAmount))
+            {
+                $('#TotalAmount').val(invoiceamt);
+            }
+            if (invoiceamt && OtherReceivablesAmount)
+            {
+                var result = invoiceamt+OtherReceivablesAmount;
+                $('#TotalAmount').val(result);
+            }
+        }
+
+        $('#frmCustomerPaymentStatus').validate({
+            rules: {
+                OtherReceivablesAmount: {
+                    required:true
+        }
+        }
+        });
+        function SaveCustomerPaymentStatus(id)
+        {
+            if ($('#frmCustomerPaymentStatus').valid())
+            {
+                RemoveDisabledFields();
+                $('#frmCustomerPaymentStatus').submit();
+            }
+           
+        }
+
+        function RemoveDisabledFields()
+        {
+            $('#CustomerName').removeAttr('disabled');
+            $('#InvoiceAmount').removeAttr('disabled');
+            $('#PaidAmount').removeAttr('disabled');
+            $('#BalanceAmount').removeAttr('disabled');
+            $('#TotalAmount').removeAttr('disabled');
         }
     </script>
 }
