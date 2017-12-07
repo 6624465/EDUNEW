@@ -1,0 +1,321 @@
+﻿@using Newtonsoft.Json;
+@model EDU.Web.ViewModels.VendorPaymentStatusModel.VendorPaymentStatusVM
+@{
+    ViewBag.Title = "VendorPaymentStatusList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    WebGrid grid = new WebGrid(Model.VendorPayment, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.All);
+
+    //var Student = Model.trainingconfDetail.NoOfStudents;
+    //var reg = Model.registration.Count();
+    //var remainReg = Student - reg;
+
+    //var myArray = (List<string>)ViewData["Summary"];
+}
+<style>
+    .centerbox {
+        margin: auto;
+        width: 100%;
+        border: 1px solid gray;
+        border-radius: 20px;
+    }
+
+    .center {
+        text-align: center !important;
+    }
+
+    .right {
+        text-align: right !important;
+    }
+
+    .popover {
+        color: black;
+        min-width: 300px;
+    }
+
+    .popover-title {
+        background-color: #F7F7F7;
+        border-bottom: 1px solid #EBEBEB;
+        border-radius: 5px 5px 0 0;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        margin: 0;
+        padding: 8px 14px;
+    }
+
+    .bordertop {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+        color: #D73925;
+        /*font-family: 'Bebas Neue'*/
+    }
+</style>
+@functions {
+
+    public string ConvertToInt64(decimal? data)
+    {
+        if (data != null)
+            return Convert.ToInt64(data.Value).ToString();
+        else
+            return null;
+    }
+
+
+}
+@using (Html.BeginForm("SaveVendorPaymentStatus", "VendorPaymentStatus", FormMethod.Post, new { id = "frmVendorPaymentStatus", name = "frmVendorPaymentStatus", enctype = "multipart/form-data" }))
+{
+    <div class="page page-forms-elements">
+        <div class="page-wrap">
+            <div class="panel panel-default">
+                <div class="box" id="grid">
+                    <div class="box-header">
+                        <div style="display:-webkit-inline-box">
+                            <h4> Vendor Payment Status</h4>
+                        </div>
+                        <div class="box-tools">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-md-1 control-label col-md-offset-2">
+                                    <span>Order #</span>
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="hidden" id="eventid" name="eventid" />
+                                    @Html.DropDownListFor(x => x.VendorPayment.FirstOrDefault().TrainingConfirmationID,
+          new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
+          "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
+                            <div class="centerbox">
+                                <div class="row">
+                                    <div class="col-md-5 col-md-offset-1">
+                                        <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:20px;">
+                        </div>
+                        <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
+                            @grid.GetHtml(
+                     columns: grid.Columns(
+                             grid.Column("VendorName", "Vendor", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:150px;'>
+                                            @(item.VendorName)
+                                        </div>
+                                    </text>),
+                             grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:50px;'>
+                                            <span class="pull-right">
+                                                @ConvertToInt64(item.InvoiceAmount)
+                                            </span>
+                                        </div>
+                                    </text>),
+                             grid.Column("PaidAmount", "PaidAmount", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:50px;'>
+                                            <span class="pull-right">
+                                                @ConvertToInt64(item.PaidAmount)
+                                            </span>
+                                        </div>
+                                    </text>),
+                             grid.Column("BalanceAmount", "Balance Amount", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:80px;'>
+                                            <span class="pull-right">
+                                                @ConvertToInt64(item.BalanceAmount)
+                                            </span>
+                                        </div>
+                                    </text>),
+                             grid.Column("OtherReceivablesAmount", "Other Receivables Amount", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:100px;'>
+                                            <span class="pull-right">
+                                                @ConvertToInt64(item.OtherReceivablesAmount)
+                                            </span>
+                                        </div>
+                                    </text>),
+                              grid.Column("TotalAmount", "Total Amount", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:75px;'>
+                                            <span class="pull-right">
+                                                @ConvertToInt64(item.TotalAmount)
+                                            </span>
+                                        </div>
+                                    </text>),
+                         grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                         grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                             grid.Column("ReferenceDoc", "Reference Doc",
+                             format:
+                            @<text>
+                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/CPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                            </text>, canSort: true),
+                             grid.Column("", "#Action", canSort: false,
+                                         format:
+                                        @<text>
+                                            <div style='width:80px;'>
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                {
+                                                    <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
+                                                if (item.VendorPaymentId > 0)
+                                                {
+                                                    <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    }
+                                                }
+                                            </div>
+                                        </text>)),
+                                         tableStyle: "table")
+                        </div>
+                        <div class="row css10">
+                            <div class="col-sm-12">
+                                <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+
+    </div>
+}
+@using (Html.BeginForm("DeleteVendorPaymentStatus", "VendorPaymentStatus", FormMethod.Post, new { id = "frmDeleteVendorPaymentStatus", name = "frmDeleteVendorPaymentStatus", enctype = "multipart/form-data" }))
+{
+
+}
+@section SectionScripts
+    {
+    <script type="text/javascript">
+        $(function () {
+
+            $('#liVendorPaymentStatusList').addClass('active');
+        });
+
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            debugger;
+            $(el).popover("show");
+        }
+
+        $(function () {
+            $('#TrainingDetails').hide();
+            $('#addbtn').attr('disabled', 'disabled');
+            var trid = $('#TrainingConfirmationID').val();
+
+            if (trid != null && trid != '') {
+                $('#TrainingDetails').show();
+            }
+        });
+
+        function ChangeEventID(el) {
+            $('#eventid').val(el.value);
+            window.location = '@Url.Action("VendorPaymentStatusList", "VendorPaymentStatus", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+        };
+
+        function EditVendorPaymentStatusDetail(el) {
+            debugger;
+            var obj = $(el).data('object');
+            $.ajax({
+                url: '@Url.Content("~/VendorPaymentStatus/VendorPaymentStatusDetail/")',
+                data: JSON.stringify(obj),
+                method: 'post',
+                contentType: 'application/json; charset=utf-8',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                    var invoiceamt = $('#InvoiceAmount').val();
+                    $('#TotalAmount').val(invoiceamt);
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+
+        function DeleteVendorPaymentStatus(id) {
+            if (confirm("Are you sure, You want to delete")) {
+                $.ajax({
+                    url: '@Url.Content("~/VendorPaymentStatus/DeleteVendorPaymentStatus?VendorPaymentId=")' + id,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data) {
+                            alert("Deleted Successfully");
+                            location.reload();
+                        }
+                    },
+                    error: function (e) {
+                    }
+                });
+            }
+        }
+        function CalculateTotalAmount() {
+            var invoiceamt = parseInt($('#InvoiceAmount').val());
+            var OtherReceivablesAmount = parseInt($('#OtherReceivablesAmount').val());
+            if (isNaN(OtherReceivablesAmount)) {
+                $('#TotalAmount').val(invoiceamt);
+            }
+            if (invoiceamt && OtherReceivablesAmount) {
+                var result = invoiceamt + OtherReceivablesAmount;
+                $('#TotalAmount').val(result);
+            }
+        }
+
+        $('#frmVendorPaymentStatus').validate({
+            rules: {
+                OtherReceivablesAmount: {
+                    required: true
+                }
+            }
+        });
+        function SaveVendorPaymentStatus(id) {
+            if ($('#frmVendorPaymentStatus').valid()) {
+                RemoveDisabledFields();
+                $('#frmVendorPaymentStatus').submit();
+            }
+
+        }
+
+        function RemoveDisabledFields() {
+            $('#VendorName').removeAttr('disabled');
+            $('#InvoiceAmount').removeAttr('disabled');
+            $('#PaidAmount').removeAttr('disabled');
+            $('#BalanceAmount').removeAttr('disabled');
+            $('#TotalAmount').removeAttr('disabled');
+        }
+    </script>
+}
+
+
+
+
+
+
+
+
