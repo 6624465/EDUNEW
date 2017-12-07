@@ -198,6 +198,27 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="VenderPayment">
+          <Key>
+            <PropertyRef Name="VenderPaymentId" />
+          </Key>
+          <Property Name="VenderPaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VenderId" Type="int" Nullable="false" />
+          <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" />
+          <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OtherReceivablesAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="ReceiptDate" Type="datetime" />
+          <Property Name="ReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
         <EntityContainer Name="DB_9F30C5_edudevModelStoreContainer">
           <EntitySet Name="Lookup" EntityType="Self.Lookup" Schema="Config" store:Type="Tables" />
           <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="Edu" store:Type="Tables" />
@@ -208,6 +229,7 @@
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainerInformation" EntityType="Self.TrainerInformation" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainingConfirmation" EntityType="Self.TrainingConfirmation" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="VenderPayment" EntityType="Self.VenderPayment" Schema="Edu" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -253,6 +275,7 @@
           </AssociationSet>
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
           <EntitySet Name="CustomerPayments" EntityType="DB_9F30C5_edudevModel.CustomerPayment" />
+          <EntitySet Name="VenderPayments" EntityType="DB_9F30C5_edudevModel.VenderPayment" />
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -418,6 +441,27 @@
           </Key>
           <Property Name="CustomerPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RegistrationId" Type="Int32" Nullable="false" />
+          <Property Name="TrainingConfirmationID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OtherReceivablesAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptDate" Type="DateTime" Precision="3" />
+          <Property Name="ReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="VenderPayment">
+          <Key>
+            <PropertyRef Name="VenderPaymentId" />
+          </Key>
+          <Property Name="VenderPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VenderId" Type="Int32" Nullable="false" />
           <Property Name="TrainingConfirmationID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InvoiceAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
@@ -638,6 +682,28 @@
                 <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
                 <ScalarProperty Name="RegistrationId" ColumnName="RegistrationId" />
                 <ScalarProperty Name="CustomerPaymentId" ColumnName="CustomerPaymentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VenderPayments">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.VenderPayment">
+              <MappingFragment StoreEntitySet="VenderPayment">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ReferenceDoc" ColumnName="ReferenceDoc" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="OtherReceivablesAmount" ColumnName="OtherReceivablesAmount" />
+                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="InvoiceAmount" ColumnName="InvoiceAmount" />
+                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
+                <ScalarProperty Name="VenderId" ColumnName="VenderId" />
+                <ScalarProperty Name="VenderPaymentId" ColumnName="VenderPaymentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

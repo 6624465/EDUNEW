@@ -34,5 +34,6 @@ namespace EDU.Web.Models
         public virtual DbSet<FinancialTransactionDetail> FinancialTransactionDetails { get; set; }
         public virtual DbSet<OperationalTransaction> OperationalTransactions { get; set; }
         public virtual DbSet<CustomerPayment> CustomerPayments { get; set; }
+        public virtual DbSet<VenderPayment> VenderPayments { get; set; }
     }
 }
