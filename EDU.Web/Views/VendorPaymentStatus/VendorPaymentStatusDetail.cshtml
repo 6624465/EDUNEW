@@ -1,0 +1,146 @@
+﻿
+@model EDU.Web.ViewModels.VendorPaymentStatusModel.VendorPaymentVM
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">@ViewBag.Title</h4>
+        </div>
+        <div class="modal-body" id="FinancialTransactionModalBody">
+            @Html.HiddenFor(x => x.VendorPaymentId)
+            @Html.HiddenFor(x => x.RegistrationId)
+            @Html.HiddenFor(x => x.TrainingConfirmationID)
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Vendor Name</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Invoice Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Paid Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.PaidAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "PaidAmount", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Balance Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.BalanceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Balance Amount", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Other Receivables Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount", onkeyup = "CalculateTotalAmount()" })
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Total Amount</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.TotalAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "TotalAmount", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Due Date</span>
+                    </label>
+                    <div class="col-md-6">
+                        <div class="input-group date" id="DDate">
+                            @Html.TextBoxFor(x => x.DueDate, new { @class = "form-control dtCss" })
+                            <span class="input-group-addon">
+                                <i class="ion ion-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Receipt Date</span>
+                    </label>
+                    <div class="col-md-6">
+                        <div class="input-group date" id="RDate">
+                            @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control dtCss" })
+                            <span class="input-group-addon">
+                                <i class="ion ion-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Reference Doc</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })
+                        &nbsp;@Model.ReferenceDoc
+                        @Html.HiddenFor(x => x.ReferenceDoc)
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer css10">
+                <button type="button" onclick="SaveVendorPaymentStatus()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        $(function () {
+            $('#DDate, #RDate').datetimepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down'
+                },
+                minDate: new Date(),
+                format: 'DD/MM/YYYY'
+            });
+           @if(Model.VendorPaymentId!=-1)
+           {
+               <text>
+                    $('#DueDate').val('@Model.DueDate.Value.ToString("dd/MM/yyyy")');
+                    $('#ReceiptDate').val('@Model.ReceiptDate.Value.ToString("dd/MM/yyyy")');
+             </text>
+           }
+        });
+</script>
+

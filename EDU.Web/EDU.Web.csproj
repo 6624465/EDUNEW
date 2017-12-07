@@ -1594,6 +1594,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\VendorPaymentStatusController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1646,6 +1647,7 @@
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
+    <Compile Include="ViewModels\VendorPaymentStatusModel\VendorPaymentStatusVM.cs" />
     <Compile Include="ViewModels\CustomerPaymentStatusModel\CustomerPaymentStatusVM.cs" />
     <Compile Include="ViewModels\FinancialTransaction\FinancialTransactionVM.cs" />
     <Compile Include="ViewModels\Master\CourseSalesMasterVm.cs" />
@@ -1758,6 +1760,8 @@
     <Content Include="Views\Reports\DashBoard.cshtml" />
     <Content Include="Views\CustomerPaymentStatus\CustomerPaymentStatusList.cshtml" />
     <Content Include="Views\CustomerPaymentStatus\CustomerPaymentStatusDetail.cshtml" />
+    <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusList.cshtml" />
+    <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
