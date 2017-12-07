@@ -15,7 +15,7 @@
         <AssociationConnector Association="DB_9F30C5_edudevModel.FinancialTransactionFinancialTransactionDetail" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.OperationalTransaction" Width="1.5" PointX="7.375" PointY="5.75" />
         <EntityTypeShape EntityType="DB_9F30C5_edudevModel.CustomerPayment" Width="1.5" PointX="9.375" PointY="5.75" />
-        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.VenderPayment" Width="1.5" PointX="7.375" PointY="10.75" />
+        <EntityTypeShape EntityType="DB_9F30C5_edudevModel.VendorPayment" Width="1.5" PointX="7.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

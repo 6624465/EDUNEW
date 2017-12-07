@@ -15,7 +15,7 @@ namespace EDU.Web.ViewModels.VendorPaymentStatusModel
     public class VendorPaymentVM
     {
         public int VendorPaymentId { get; set; }
-        public int RegistrationId { get; set; }
+        public int VendorId { get; set; }
         public string TrainingConfirmationID { get; set; }
         public Nullable<decimal> InvoiceAmount { get; set; }
         public Nullable<decimal> PaidAmount { get; set; }

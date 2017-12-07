@@ -12,10 +12,10 @@ namespace EDU.Web.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VenderPayment
+    public partial class VendorPayment
     {
-        public int VenderPaymentId { get; set; }
-        public int VenderId { get; set; }
+        public int VendorPaymentId { get; set; }
+        public int VendorId { get; set; }
         public string TrainingConfirmationID { get; set; }
         public Nullable<decimal> InvoiceAmount { get; set; }
         public Nullable<decimal> PaidAmount { get; set; }

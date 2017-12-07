@@ -8,12 +8,6 @@
 @{
     WebGrid grid = new WebGrid(Model.VendorPayment, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
-
-    //var Student = Model.trainingconfDetail.NoOfStudents;
-    //var reg = Model.registration.Count();
-    //var remainReg = Student - reg;
-
-    //var myArray = (List<string>)ViewData["Summary"];
 }
 <style>
     .centerbox {
@@ -177,7 +171,6 @@
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                    @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
                                                 if (item.VendorPaymentId > 0)
                                                 {
                                                     <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>

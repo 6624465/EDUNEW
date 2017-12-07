@@ -56,7 +56,7 @@ namespace EDU.Web.Controllers
                     .Select(x => new VendorPaymentVM
                     {
                         VendorPaymentId = x.VendorPaymentId,
-                        RegistrationId = x.RegistrationId,
+                        VendorId = x.VendorId,
                         TrainingConfirmationID = x.TrainingConfirmationID,
                         InvoiceAmount = x.TotalAmount,
                         PaidAmount = x.PaidAmount,
@@ -71,19 +71,19 @@ namespace EDU.Web.Controllers
                         CreatedOn = x.CreatedOn,
                         ModifiedBy = x.ModifiedBy,
                         ModifiedOn = x.ModifiedOn,
-                        VendorName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
+                        VendorName = dbContext.Registrations.Where(r => r.RegistrationId == x.VendorId).FirstOrDefault().StudentName
                     })
                     .ToList();
 
 
                 foreach (var item in regList)
                 {
-                    if (dbContext.VendorPayments.Where(x => x.IsActive == true && x.RegistrationId == item.RegistrationId).Count() == 0)
+                    if (dbContext.VendorPayments.Where(x => x.IsActive == true && x.VendorId == item.RegistrationId).Count() == 0)
                     {
                         VendorPaymentVM.Add(new VendorPaymentVM()
                         {
                             VendorPaymentId = -1,
-                            RegistrationId = item.RegistrationId,
+                            VendorId = item.RegistrationId,
                             TrainingConfirmationID = item.TrainingConfirmationID,
                             InvoiceAmount = item.TotalAmount,
                             PaidAmount = (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3),
@@ -146,7 +146,7 @@ namespace EDU.Web.Controllers
                 if (Vendorpaymentvm.VendorPaymentId == -1)
                 {
                     Vendorpayment.VendorPaymentId = Vendorpaymentvm.VendorPaymentId;
-                    Vendorpayment.RegistrationId = Vendorpaymentvm.RegistrationId;
+                    Vendorpayment.VendorId = Vendorpaymentvm.VendorId;
                     Vendorpayment.TrainingConfirmationID = Vendorpaymentvm.TrainingConfirmationID;
                     Vendorpayment.InvoiceAmount = Vendorpaymentvm.InvoiceAmount;
                     Vendorpayment.PaidAmount = Vendorpaymentvm.PaidAmount;
@@ -180,7 +180,7 @@ namespace EDU.Web.Controllers
                 else {
                     Vendorpayment = dbContext.VendorPayments.Where(x => x.VendorPaymentId == Vendorpaymentvm.VendorPaymentId).FirstOrDefault();
 
-                    Vendorpayment.RegistrationId = Vendorpaymentvm.RegistrationId;
+                    Vendorpayment.VendorId = Vendorpaymentvm.VendorId;
                     Vendorpayment.TrainingConfirmationID = Vendorpaymentvm.TrainingConfirmationID;
                     Vendorpayment.InvoiceAmount = Vendorpaymentvm.InvoiceAmount;
                     Vendorpayment.PaidAmount = Vendorpaymentvm.PaidAmount;

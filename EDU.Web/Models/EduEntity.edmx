@@ -198,12 +198,12 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
-        <EntityType Name="VenderPayment">
+        <EntityType Name="VendorPayment">
           <Key>
-            <PropertyRef Name="VenderPaymentId" />
+            <PropertyRef Name="VendorPaymentId" />
           </Key>
-          <Property Name="VenderPaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="VenderId" Type="int" Nullable="false" />
+          <Property Name="VendorPaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorId" Type="int" Nullable="false" />
           <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" />
           <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="2" />
@@ -229,7 +229,7 @@
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainerInformation" EntityType="Self.TrainerInformation" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="TrainingConfirmation" EntityType="Self.TrainingConfirmation" Schema="Edu" store:Type="Tables" />
-          <EntitySet Name="VenderPayment" EntityType="Self.VenderPayment" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="VendorPayment" EntityType="Self.VendorPayment" Schema="Edu" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -275,7 +275,7 @@
           </AssociationSet>
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
           <EntitySet Name="CustomerPayments" EntityType="DB_9F30C5_edudevModel.CustomerPayment" />
-          <EntitySet Name="VenderPayments" EntityType="DB_9F30C5_edudevModel.VenderPayment" />
+          <EntitySet Name="VendorPayments" EntityType="DB_9F30C5_edudevModel.VendorPayment" />
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -456,12 +456,12 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="VenderPayment">
+        <EntityType Name="VendorPayment">
           <Key>
-            <PropertyRef Name="VenderPaymentId" />
+            <PropertyRef Name="VendorPaymentId" />
           </Key>
-          <Property Name="VenderPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VenderId" Type="Int32" Nullable="false" />
+          <Property Name="VendorPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorId" Type="Int32" Nullable="false" />
           <Property Name="TrainingConfirmationID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InvoiceAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
@@ -685,9 +685,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VenderPayments">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.VenderPayment">
-              <MappingFragment StoreEntitySet="VenderPayment">
+          <EntitySetMapping Name="VendorPayments">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.VendorPayment">
+              <MappingFragment StoreEntitySet="VendorPayment">
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -702,8 +702,8 @@
                 <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
                 <ScalarProperty Name="InvoiceAmount" ColumnName="InvoiceAmount" />
                 <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
-                <ScalarProperty Name="VenderId" ColumnName="VenderId" />
-                <ScalarProperty Name="VenderPaymentId" ColumnName="VenderPaymentId" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorPaymentId" ColumnName="VendorPaymentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
