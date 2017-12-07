@@ -71,7 +71,7 @@ namespace EDU.Web.Controllers
                         CreatedOn = x.CreatedOn,
                         ModifiedBy = x.ModifiedBy,
                         ModifiedOn = x.ModifiedOn,
-                        CustomerName = dbContext.Registrations.Where(r=>r.RegistrationId==x.RegistrationId).FirstOrDefault().StudentName
+                        CustomerName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
                     })
                     .ToList();
 
@@ -102,7 +102,7 @@ namespace EDU.Web.Controllers
                         });
                     }
                 }
-                
+
                 result.customerPayment = customerPaymentVM;
 
                 result.trainingconf = tc;
@@ -117,7 +117,7 @@ namespace EDU.Web.Controllers
         }
         [HttpPost]
         public PartialViewResult CustomerPaymentStatusDetail(CustomerPaymentVM customerPayment)
-        {            
+        {
             if (customerPayment.CustomerPaymentId == -1)
             {
                 ViewBag.Title = "New Customer Payment Status";
@@ -159,7 +159,10 @@ namespace EDU.Web.Controllers
                     customerpayment.IsActive = true;
                     customerpayment.CreatedBy = USER_ID;
                     customerpayment.CreatedOn = UTILITY.SINGAPORETIME;
-
+                    if (customerpaymentvm.FileName != null && customerpaymentvm.FileName.ContentLength > 0)
+                    {
+                        customerpayment.ReferenceDoc = customerpaymentvm.FileName.FileName;
+                    }
                     dbContext.CustomerPayments.Add(customerpayment);
 
                     dbContext.SaveChanges();
@@ -172,12 +175,11 @@ namespace EDU.Web.Controllers
                             Directory.CreateDirectory(path);
                         }
                         customerpaymentvm.FileName.SaveAs(path + customerpaymentvm.FileName.FileName);
-                        customerpayment.ReferenceDoc = customerpaymentvm.FileName.FileName;
                     }
                 }
                 else {
                     customerpayment = dbContext.CustomerPayments.Where(x => x.CustomerPaymentId == customerpaymentvm.CustomerPaymentId).FirstOrDefault();
-                    
+
                     customerpayment.RegistrationId = customerpaymentvm.RegistrationId;
                     customerpayment.TrainingConfirmationID = customerpaymentvm.TrainingConfirmationID;
                     customerpayment.InvoiceAmount = customerpaymentvm.InvoiceAmount;
@@ -191,7 +193,10 @@ namespace EDU.Web.Controllers
                     customerpayment.IsActive = true;
                     customerpayment.ModifiedBy = USER_ID;
                     customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
-                    
+                    if (customerpaymentvm.FileName != null && customerpaymentvm.FileName.ContentLength > 0)
+                    {
+                        customerpayment.ReferenceDoc = customerpaymentvm.FileName.FileName;
+                    }
                     dbContext.SaveChanges();
 
                     if (customerpaymentvm.FileName != null && customerpaymentvm.FileName.ContentLength > 0)
@@ -202,7 +207,6 @@ namespace EDU.Web.Controllers
                             Directory.CreateDirectory(path);
                         }
                         customerpaymentvm.FileName.SaveAs(path + customerpaymentvm.FileName.FileName);
-                        customerpayment.ReferenceDoc = customerpaymentvm.FileName.FileName;
                     }
                 }
             }
