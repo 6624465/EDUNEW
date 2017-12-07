@@ -69,7 +69,7 @@
 
 
 }
-@using (Html.BeginForm("SaveCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmCustomerPaymentStatus", name = "CustomerPaymentStatus", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SaveCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmCustomerPaymentStatus", name = "frmCustomerPaymentStatus", enctype = "multipart/form-data" }))
 {
     <div class="page page-forms-elements">
         <div class="page-wrap">
@@ -168,11 +168,11 @@
                                     </text>),
                          grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                          grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
-                             grid.Column("ReferenceDoc", "Reference Doc", canSort: true,
+                             grid.Column("ReferenceDoc", "Reference Doc",
                              format:
                              @<text>
-                            <a href="" target="_blank"/>
-                            </text>),
+                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/CPS_@item.CustomerPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                            </text>, canSort: true),
                              grid.Column("", "#Action", canSort: false,
                                          format:
                                         @<text>
@@ -200,10 +200,14 @@
             </div>
         </div>
     </div>
-
+    
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
+}
+@using (Html.BeginForm("DeleteCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmDeleteCustomerPaymentStatus", name = "frmDeleteCustomerPaymentStatus", enctype = "multipart/form-data" }))
+{
+    
 }
 @section SectionScripts
     {
@@ -275,8 +279,8 @@
                     type: 'POST',
                     contentType: 'application/json',
                     success: function (data) {
-                        alert("Deleted Successfully");
                         if (data) {
+                            alert("Deleted Successfully");
                             location.reload();
                         }
                     },
