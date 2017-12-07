@@ -219,6 +219,18 @@ namespace EDU.Web.Controllers
             return RedirectToAction("CustomerPaymentStatusList", new { trainingConfirmationID = customerpaymentvm.TrainingConfirmationID });
         }
 
+        [HttpPost]
+        public JsonResult DeleteCustomerPaymentStatus(int CustomerPaymentId)
+        {
+            CustomerPayment deletecustomer = dbContext.CustomerPayments.Where(x => x.CustomerPaymentId == CustomerPaymentId).FirstOrDefault();
+            if(deletecustomer != null)
+            {
+                deletecustomer.IsActive = false;
+                dbContext.SaveChanges();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

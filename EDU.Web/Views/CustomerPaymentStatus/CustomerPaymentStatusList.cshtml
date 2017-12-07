@@ -168,7 +168,11 @@
                                     </text>),
                          grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                          grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
-                             grid.Column("ReferenceDoc", "Reference Doc", canSort: true),
+                             grid.Column("ReferenceDoc", "Reference Doc", canSort: true,
+                             format:
+                             @<text>
+                            <a href="" target="_blank"/>
+                            </text>),
                              grid.Column("", "#Action", canSort: false,
                                          format:
                                         @<text>
@@ -179,7 +183,7 @@
                                                     @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
                                                 if (item.CustomerPaymentId > 0)
                                                 {
-                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                     }
                                                 }
                                             </div>
@@ -264,10 +268,10 @@
             });
         }
 
-        @*function DeleteRegistration(id) {
+        function DeleteCustomerPaymentStatus(id) {
             if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
-                    url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
+                    url: '@Url.Content("~/CustomerPaymentStatus/DeleteCustomerPaymentStatus?CustomerPaymentId=")' + id,
                     type: 'POST',
                     contentType: 'application/json',
                     success: function (data) {
@@ -280,17 +284,15 @@
                     }
                 });
             }
-        }*@
+        }
         function CalculateTotalAmount() {
             var invoiceamt = parseInt($('#InvoiceAmount').val());
             var OtherReceivablesAmount = parseInt($('#OtherReceivablesAmount').val());
-            if (isNaN(OtherReceivablesAmount))
-            {
+            if (isNaN(OtherReceivablesAmount)) {
                 $('#TotalAmount').val(invoiceamt);
             }
-            if (invoiceamt && OtherReceivablesAmount)
-            {
-                var result = invoiceamt+OtherReceivablesAmount;
+            if (invoiceamt && OtherReceivablesAmount) {
+                var result = invoiceamt + OtherReceivablesAmount;
                 $('#TotalAmount').val(result);
             }
         }
@@ -298,22 +300,19 @@
         $('#frmCustomerPaymentStatus').validate({
             rules: {
                 OtherReceivablesAmount: {
-                    required:true
-        }
-        }
+                    required: true
+                }
+            }
         });
-        function SaveCustomerPaymentStatus(id)
-        {
-            if ($('#frmCustomerPaymentStatus').valid())
-            {
+        function SaveCustomerPaymentStatus(id) {
+            if ($('#frmCustomerPaymentStatus').valid()) {
                 RemoveDisabledFields();
                 $('#frmCustomerPaymentStatus').submit();
             }
 
         }
 
-        function RemoveDisabledFields()
-        {
+        function RemoveDisabledFields() {
             $('#CustomerName').removeAttr('disabled');
             $('#InvoiceAmount').removeAttr('disabled');
             $('#PaidAmount').removeAttr('disabled');
