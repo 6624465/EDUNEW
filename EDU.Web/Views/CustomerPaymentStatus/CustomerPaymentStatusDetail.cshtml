@@ -79,7 +79,7 @@
                         <span class="pull-right">Due Date</span>
                     </label>
                     <div class="col-md-6">
-                        <div class="input-group date" id="DueDate">
+                        <div class="input-group date" id="DDate">
                             @Html.TextBoxFor(x => x.DueDate, new { @class = "form-control dtCss" })
                             <span class="input-group-addon">
                                 <i class="ion ion-calendar"></i>
@@ -94,7 +94,7 @@
                         <span class="pull-right">Receipt Date</span>
                     </label>
                     <div class="col-md-6">
-                        <div class="input-group date" id="ReceiptDate">
+                        <div class="input-group date" id="RDate">
                             @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control dtCss" })
                             <span class="input-group-addon">
                                 <i class="ion ion-calendar"></i>
@@ -122,17 +122,24 @@
         </div>
     </div>
 </div>
-@section SectionScripts {
-    <script type="text/javascript">
-
-        
-           @if(Model.CustomerPaymentId.ToString()!=null)
+<script type="text/javascript">
+        $(function () {
+            $('#DDate, #RDate').datetimepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down'
+                },
+                minDate: new Date(),
+                format: 'DD/MM/YYYY'
+            });
+           @if(Model.CustomerPaymentId!=-1)
            {
                <text>
-                    $('#DueDate').val(@Model.DueDate);
-                    $('#DueDate').val(@Model.ReceiptDate);
+                    $('#DueDate').val('@Model.DueDate.Value.ToString("dd/MM/yyyy")');
+                    $('#ReceiptDate').val('@Model.ReceiptDate.Value.ToString("dd/MM/yyyy")');
              </text>
            }
-       
-    </script>
-}
+        });
+</script>
