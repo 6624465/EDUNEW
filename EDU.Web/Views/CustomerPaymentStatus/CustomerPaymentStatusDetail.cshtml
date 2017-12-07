@@ -58,7 +58,7 @@
                         <span class="pull-right">Other Receivables Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount",onkeyup="CalculateTotalAmount()"})
+                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount", onkeyup = "CalculateTotalAmount()" })
                     </div>
                 </div>
             </div>
@@ -103,28 +103,36 @@
                     </div>
                 </div>
             </div>
-        <div class="row css10">
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    <span class="pull-right">Reference Doc</span>
-                </label>
-                <div class="col-md-6">
-                    @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })
-                    &nbsp;@Model.ReferenceDoc
-                    @Html.HiddenFor(x => x.ReferenceDoc)
+            <div class="row css10">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span class="pull-right">Reference Doc</span>
+                    </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })
+                        &nbsp;@Model.ReferenceDoc
+                        @Html.HiddenFor(x => x.ReferenceDoc)
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer css10">
-            <button type="button" onclick="SaveCustomerPaymentStatus()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
-            <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            <div class="modal-footer css10">
+                <button type="button" onclick="SaveCustomerPaymentStatus()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
 @section SectionScripts {
     <script type="text/javascript">
 
+        
+           @if(Model.CustomerPaymentId.ToString()!=null)
+           {
+               <text>
+                    $('#DueDate').val(@Model.DueDate);
+                    $('#DueDate').val(@Model.ReceiptDate);
+             </text>
+           }
        
     </script>
 }
