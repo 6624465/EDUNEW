@@ -7,6 +7,15 @@
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
     grid.Pager(WebGridPagerModes.All);
 }
+@functions {
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data > 0)
+            return new HtmlString("$"+Convert.ToInt64(data.Value)).ToString();
+        else
+            return null;
+    }
+        }
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -14,11 +23,11 @@
                 <div class="box-header">
                     <h4>Course List</h4>
                     <div class="box-tools">
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        @if(Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddCourse()"><i class="fa fa-plus"></i>Add New Course</button>
-                            // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
-                        }
+                            <button type = "button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddCourse()"><i class="fa fa-plus"></i>Add New Course</button>
+        // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
+    }
                     </div>
                 </div>
                 <div class="box-body">
@@ -29,12 +38,16 @@
                     grid.Column("CourseName", "Course Name", canSort: true),
                     grid.Column("NoOfDays", "No Of Days", canSort: true),
                     grid.Column("CountryName", "Country", canSort: true),
-                    grid.Column("PublicPrice", "Public Price", format: @<text>  <span class="display-mode">@(item.PublicPrice > 0 ? Convert.ToInt32(item.PublicPrice): "N/A") </span> </text>, style: "", canSort: true),
-                    grid.Column("PrivatePrice", "Private Price", format: @<text>  <span class="display-mode">@(item.PrivatePrice > 0 ? Convert.ToInt32(item.PrivatePrice): "N/A") </span> </text>, style: "", canSort: true),
+                    grid.Column("PublicPrice", "Public Price", format: @<text> 
+                         <span class="display-mode">@ConvertToInt64dollar(item.PublicPrice) </span> 
+                        </text>, style: "", canSort: true),
+                    grid.Column("PrivatePrice", "Private Price", format: @<text> 
+                         <span class="display-mode">@ConvertToInt64dollar(item.PrivatePrice) </span>
+                         </text>, style: "", canSort: true),
                     grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
-                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    @if(Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
                                         <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                         <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
@@ -53,18 +66,19 @@
     </div>
 </div>
 
-@using (Html.BeginForm("DeleteEduCourse", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
+@using(Html.BeginForm("DeleteEduCourse", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
 {
-    <input type="hidden" id="id" name="id" />
+    <input type = "hidden" id="id" name="id" />
 }
-@using (Html.BeginForm("SaveCourse", "Master", FormMethod.Post, new { id = "frmCourse", name = "frmCourse", autocomplete = "off" }))
+@using(Html.BeginForm("SaveCourse", "Master", FormMethod.Post, new { id = "frmCourse", name = "frmCourse", autocomplete = "off" }))
 {
-    <div id="myModal" class="modal fade" role="dialog">
+    <div id = "myModal" class="modal fade" role="dialog">
 
     </div>
 }
 
-@section SectionScripts{
+@section SectionScripts
+    {
     <script type="text/javascript">
         $(function () {
             $('#liCourse').addClass('active');
@@ -75,11 +89,11 @@
                 url: '@Url.Content("~/Master/Course")',
                 method: 'get',
                 contentType: 'text/html',
-                success: function (html) {
+                success: function(html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                 },
-                error: function (err) {
+                error: function(err) {
 
                 }
             });
@@ -91,13 +105,13 @@
                 url: '@Url.Content("~/Master/Course?Id=")' + Id,
                 method: 'get',
                 contentType: 'text/html',
-                success: function (html) {
+                success: function(html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                     $('#Country, #Product').attr('disabled', 'disabled');
                     $('#cname').val(cname);
                 },
-                error: function (err) {
+                error: function(err) {
 
                 }
             });
@@ -116,13 +130,13 @@
                 confirmButtonClass: "btn-danger",
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
-            },
-        function () {
+                },
+        function() {
             $('#id').val(Id);
             $('#frmDelete').submit();
-            swal("Deleted!", "Your Course has been deleted.", "success");
+                swal("Deleted!", "Your Course has been deleted.", "success");
 
-        });
+            });
         }
 
         function SaveCourse() {
@@ -131,11 +145,13 @@
             var country = $('#Country').val() == null ? '' : $('#Country').val();
             var product = $('#Product').val() == null ? '' : $('#Product').val();
 
-            if (cName != '' && country != '' && product != '') {
+            if (cName != '' && country != '' && product != '')
+            {
                 if ($('#Id').val() == '-1') {
                     var promise = ValidateByCourseName();
-                    $.when(promise).done(function (result) {
-                        if (result == "False") {
+                    $.when(promise).done(function(result) {
+                        if (result == "False")
+                        {
                             if ($('#frmCourse').valid()) {
                                 $('#CourseName').removeAttr('disabled');
                                 $('#Country').removeAttr('disabled');
@@ -143,8 +159,10 @@
                                 $('#frmCourse').submit();
                             }
                         }
-                        else {
-                            if (result == "True") {
+                        else
+                        {
+                            if (result == "True")
+                            {
                                 alert("Course already exists with the combination of country and Product. Please re-enter new course.");
                                 $('#CourseName').val('');
                                 if ($('#frmCourse').valid()) {
@@ -163,7 +181,8 @@
                     }
                 }
             }
-            else {
+            else
+            {
                 if ($('#frmCourse').valid()) {
                     debugger;
                     //$('#frmCourse').submit();
@@ -171,29 +190,37 @@
             }
         };
         $('#frmCourse').validate({
-            rules: {
-                Country: {
+            rules:
+            {
+                Country:
+                {
+                    required: true
+                    },
+                Product:
+                {
                     required: true
                 },
-                Product: {
-                    required: true
-                },
-                CourseName: {
+                CourseName:
+                {
                     required: true,
                     maxlength: 255
                 },
-                CourseDescription: {
+                CourseDescription:
+                {
                     required: true,
                     maxlength: 255
                 },
-                NoOfDays: {
+                NoOfDays:
+                {
                     required: true,
                     maxlength: 4
                 },
-                PublicPrice: {
+                PublicPrice:
+                {
                     validatePrices: true
                 },
-                PrivatePrice: {
+                PrivatePrice:
+                {
                     validatePrices: true
                 }
             }
@@ -201,7 +228,8 @@
         $.validator.addMethod('validatePrices', function (value, element, param) {
             var PublicPrice = parseFloat($('#PublicPrice').val());
             var PrivatePrice = parseFloat($('#PrivatePrice').val());
-            if ((isNaN(PublicPrice) || PublicPrice == 0) && (isNaN(PrivatePrice) || PrivatePrice == 0)) {
+            if ((isNaN(PublicPrice) || PublicPrice == 0) && (isNaN(PrivatePrice) || PrivatePrice == 0))
+            {
                 return false;
             }
             else
@@ -223,7 +251,7 @@
                     url: '@Url.Content("~/Master/IsEduCourseExists?courseName=")' + $('#CourseName').val() + '&country=' + $('#Country').val() + '&product=' + $('#Product').val(),
                     method: 'get',
                     contentType: 'text/html',
-                    success: function (result) {
+                    success: function(result) {
                         def.resolve(result);
                     }
                 });
@@ -233,19 +261,22 @@
 
 
         function ValidateCourseName(isBlur) {
-            
+
 
             var promise = ValidateByCourseName();
-            $.when(promise).done(function (result) {
-                if (isBlur) {
-                    if (result == "True") {
+            $.when(promise).done(function(result) {
+                if (isBlur)
+                {
+                    if (result == "True")
+                    {
                         alert("Course already exists with the combination of country and Product. Please re-enter new course.");
                         $('#CourseName').val('');
                     }
                 }
-                else {
+                else
+                {
                     return result
-                }
+                    }
             });
         };
     </script>
