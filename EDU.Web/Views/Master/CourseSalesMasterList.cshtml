@@ -221,10 +221,25 @@
         });
 
         function DeleteCourseSalesMaster(Id) {
-            if (confirm("Are you sure, do you want delete?")) {
-                $('#id').val(Id);
-                $('#frmDelete').submit();
-            }
+            //if (confirm("Are you sure, do you want delete?")) {
+            //    $('#id').val(Id);
+            //    $('#frmDelete').submit();
+            //}
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+        function () {
+            $('#id').val(Id);
+            $('#frmDelete').submit();
+            swal("Deleted!", "Your Regional Leads record has been deleted.", "success");
+
+        });
         }
 
         function mouseleave(el) {

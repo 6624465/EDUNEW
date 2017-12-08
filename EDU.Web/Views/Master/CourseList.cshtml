@@ -104,10 +104,25 @@
         }
         function DeleteEduCourse(Id) {
             debugger;
-            if (confirm("Are you sure, do you want delete?")) {
-                $('#id').val(Id);
-                $('#frmDelete').submit();
-            }
+            //if (confirm("Are you sure, do you want delete?")) {
+            //    $('#id').val(Id);
+            //    $('#frmDelete').submit();
+            //}
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+        function () {
+            $('#id').val(Id);
+            $('#frmDelete').submit();
+            swal("Deleted!", "Your Course has been deleted.", "success");
+
+        });
         }
 
         function SaveCourse() {

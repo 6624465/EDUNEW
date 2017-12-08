@@ -180,11 +180,26 @@
         }
         function DeleteOperationalTransaction(Id) {
             debugger;
-            if (confirm("Are you sure, do you want delete?"))
-            {
-                $('#operationalTransactionId').val(Id);
-                $('#frmOperationalTransactionDelete').submit();
-            }
+            //if (confirm("Are you sure, do you want delete?"))
+            //{
+            //    $('#operationalTransactionId').val(Id);
+            //    $('#frmOperationalTransactionDelete').submit();
+            //}
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+       function () {
+           $('#operationalTransactionId').val(Id);
+           $('#frmOperationalTransactionDelete').submit();
+           swal("Deleted!", "Your Operational Transaction record has been deleted.", "success");
+
+       });
         }
 
         function SaveOperationalTransaction()

@@ -311,7 +311,7 @@
             @if (reg > 0)
         {
             <text>
-                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + myArray[0] + '</span></td><td></td><td><span class="pull-right">' + myArray[1] + '</span></td><td></td><td><span class="pull-right">' + myArray[2] + '</span></td><td><span class="pull-right">' + myArray[3] + '</span></td><td><span class="pull-right">' + myArray[4] + '</span></td><td><span class="pull-right">' + myArray[5] + '</span></td><td><span class="pull-right">' + myArray[6] + '</span></td><td><span class="pull-right">' + myArray[7] + '</span></td><td><span class="pull-right">' + myArray[8] +'</span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + myArray[0] + '</span></td><td></td><td><span class="pull-right">' + myArray[1] + '</span></td><td></td><td><span class="pull-right">' + myArray[2] + '</span></td><td><span class="pull-right">' + myArray[3] + '</span></td><td><span class="pull-right">' + myArray[4] + '</span></td><td><span class="pull-right">' + myArray[5] + '</span></td><td><span class="pull-right">' + myArray[6] + '</span></td><td><span class="pull-right">' + myArray[7] + '</span></td><td><span class="pull-right">' + myArray[8] +'</span></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });
@@ -356,7 +356,7 @@
         };
 
         function DeleteRegistration(id) {
-            if (confirm("Are you sure, You want to delete")) {
+            @*if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
                     url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
                     type: 'POST',
@@ -370,7 +370,32 @@
                     error: function (e) {
                     }
                 });
+            }*@
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+    function () {
+        $.ajax({
+            url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+                if (data) {
+                    swal("Deleted!", "Your Registration record has been deleted.", "success");
+                    location.reload();
+                }
+            },
+            error: function (e) {
             }
+        });
+
+    });
         }
     </script>
 }

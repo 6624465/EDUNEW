@@ -135,7 +135,7 @@
 {
     <input type="hidden" id="id" name="id" />
 }
-@using (Html.BeginForm("SaveTrainingConfirmation", "Trainer", FormMethod.Post, new { id = "frmTrainerConfirmation", name = "frmTrainerConfirmation" }))
+@using (Html.BeginForm("SaveTrainingConfirmation", "Trainer", FormMethod.Post, new { id = "frmTrainerConfirmation", name = "frmTrainerConfirmation",autocomplete = "off"}))
 {
     <div id="myModal" class="modal fade" role="dialog">
 
@@ -177,10 +177,25 @@
         }
 
         function DeletetrainingConf(Id) {
-            if (confirm("Are you sure, do you want delete?")) {
-                $('#id').val(Id);
-                $('#frmDelete').submit();
-            }
+            //if (confirm("Are you sure, do you want delete?")) {
+            //    $('#id').val(Id);
+            //    $('#frmDelete').submit();
+            //}
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+       function () {
+           $('#id').val(Id);
+           $('#frmDelete').submit();
+           swal("Deleted!", "Your Training Confirmation record has been deleted.", "success");
+
+       });
         }
 
         function SaveTrainingConfirmation() {

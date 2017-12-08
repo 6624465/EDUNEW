@@ -250,12 +250,14 @@
                 method: 'post',
                 contentType: 'application/json; charset=utf-8',
                 success: function (html) {
+                    debugger;
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                     var invoiceamt = $('#InvoiceAmount').val();
                     $('#TotalAmount').val(invoiceamt);
                 },
                 error: function (err) {
+                    debugger;
 
                 }
             });

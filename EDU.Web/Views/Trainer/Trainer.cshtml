@@ -6,7 +6,7 @@
 
 <div class="page page-forms-elements">
 
-    @using (Html.BeginForm("SaveTrainer", "Trainer", FormMethod.Post, new { id = "frmTrainer", name = "frmTrainer", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("SaveTrainer", "Trainer", FormMethod.Post, new { id = "frmTrainer", name = "frmTrainer", enctype = "multipart/form-data" , autocomplete = "off"}))
     {
         @Html.HiddenFor(x => x.TrianerId)
         @Html.HiddenFor(x => x.CountryName)
