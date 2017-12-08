@@ -45,20 +45,28 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">Country</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.HiddenFor(x=>x.FirstOrDefault().CountryName)
+                                  @Html.DropDownListFor(x => x.FirstOrDefault().Country,
+                                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
+                                 "Select Country", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear(this);" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Month</span>
                             </label>
                             <div class="col-md-2">
                                 @Html.HiddenFor(x => x.FirstOrDefault().Month)
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
-
                         </div>
                     </div>
                     <div>
@@ -103,61 +111,56 @@
 @section SectionScripts
     {
     <script type="text/javascript">
+        
         $(function () {
             $('#liOperationalTransactionList').addClass('active');
         });
-        function ChangeMonth(el) {
-            $('#month').val(el.value);
-
-            window.location = '@Url.Action("OperationalTransactionList", "OperationalTransaction", new { month = "", year = "" })' + '?month=' + el.value + "&year=" + $('#Year').val();
+        function ChangeMonth() {
+            window.location = '@Url.Action("OperationalTransactionList", "OperationalTransaction", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
         };
 
-        function ChangeYear(el) {
-            window.location = '@Url.Action("OperationalTransactionList", "OperationalTransaction", new { month = "", year=""})' + '?month=' + $('#Month').val() + "&year=" + el.value;
-        };
         function AddOperationalTransaction() {
             debugger;
-
-            $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val(),
-                method: 'get',
-                contentType: 'text/html',
-                success: function(html) {
-                    $('#myModal').html(html);
-                    $('#myModal').modal('show');
-                },
-                error: function(err) {
-
-                }
-            });
+            if ($('#frmOperationalTransaction').valid()) {
+                $.ajax({
+                    url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val(),
+                    method: 'get',
+                    contentType: 'text/html',
+                    success: function (html) {
+                        debugger;
+                        $('#myModal').html(html);
+                        $('#myModal').modal('show');
+                    },
+                    error: function (err) {
+                    }
+                });
+            }
         }
 
         function GetParticularsByCategory(Id) {
             debugger;
-            if (Id.value)
-            {
+            if (Id.value) {
                 debugger;
                 $.ajax({
-                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value + "&month=" + $('#Month').val() + "&year=" + $('#Year').val(),
+                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value + "&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val(),
                     method: 'get',
                     contentType: 'text/html',
-                    success: function(data) {
+                    success: function (data) {
                         debugger;
                         $('#ParticularsId').empty();
                         $('#ParticularsId').append($('<option></option>').val('').html(''));
-                        $.each(data, function(key, value) {
+                        $.each(data, function (key, value) {
                             $('#ParticularsId').append($('<option></option>').val(value.LookupID).html(value.LookupDescription));
                         });
                         $('#ParticularsId').removeAttr('disabled');
                     },
-                    error: function(err) {
+                    error: function (err) {
 
                     }
                 });
             }
 
-            else
-            {
+            else {
                 $('#ParticularsId').empty();
                 $('#ParticularsId').attr('disabled', 'disabled');
                 $('#ParticularsId').append($('<option></option>').val('').html(''));
@@ -166,14 +169,15 @@
 
         function EditOperationalTransaction(Id) {
             $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val() + "&year=" + $('#Year').val(),
+                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val(),
                 method: 'get',
                 contentType: 'text/html',
                 success: function (html) {
+                    debugger;
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                 },
-                error: function(err) {
+                error: function (err) {
 
                 }
             });
@@ -202,16 +206,19 @@
        });
         }
 
-        function SaveOperationalTransaction()
-        {
+        function SaveOperationalTransaction() {
             debugger;
             if ($('#frmOperationalTransaction').valid()) {
+                $('#CountryName').val($("#Country option:selected").text());
                 $('#frmOperationalTransaction').submit();
             }
         }
 
         $('#frmOperationalTransaction').validate({
             rules: {
+                Country: {
+                    required: true
+                },
                 CategoryId: {
                     required: true
                 },
@@ -221,6 +228,7 @@
                 Amount: {
                     required: true
                 },
+               
             }
         });
 
