@@ -70,7 +70,7 @@
     public string ConvertToInt64(decimal? data)
     {
         if (data != null&& data>0)
-            return new HtmlString(Convert.ToInt64(data.Value).ToString() + "%").ToString();
+            return new HtmlString(Convert.ToInt64(data.Value) + "%").ToString();
         else
             return null;
     }
