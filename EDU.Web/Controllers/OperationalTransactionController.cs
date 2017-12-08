@@ -37,10 +37,14 @@ namespace EDU.Web.Controllers
                     ModifiedOn = y.ModifiedOn,
                     CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
                     ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
-                    //,
-                    //MonthDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription
                 })
                 .ToList();
+
+            decimal? totalAmount = list.Sum(x => x.Amount);
+
+
+            ViewData["totalAmount"] = totalAmount;
+
             ViewData["CountryData"] = new BranchBO().GetList();
             return View(list);
         }
@@ -174,7 +178,7 @@ namespace EDU.Web.Controllers
 
 
                 List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
-                    .Where(x => x.IsActive == true && x.Country == country &&x.Year==year)
+                    .Where(x => x.IsActive == true && x.Country == country && x.Year == year)
                     .Select(y => new OperationalTransactionReportVM
                     {
                         CategoryId = y.CategoryId,
