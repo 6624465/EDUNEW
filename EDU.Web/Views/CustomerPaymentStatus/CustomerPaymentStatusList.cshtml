@@ -12,11 +12,17 @@
     WebGrid grid = new WebGrid(Model.customerPayment, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
 
-    //var Student = Model.trainingconfDetail.NoOfStudents;
-    //var reg = Model.registration.Count();
-    //var remainReg = Student - reg;
-
-    //var myArray = (List<string>)ViewData["Summary"];
+    var cPayment = Model.customerPayment.Count();
+    var myArray = (List<decimal?>)ViewData["Summary"];
+}
+@functions{
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data != 0)
+            return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
+        else
+            return null;
+    }
 }
 <style>
     .centerbox {
@@ -108,8 +114,9 @@
                                     <label class="col-md-1 control-label">
                                         <span>Course:&nbsp;&nbsp;&nbsp;&nbsp; </span>
                                     </label>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")" />
+                                    <div class="col-md-5">
+                                        @Html.TextAreaFor(x => x.trainingconfDetail.CourseName,
+                                                new { @class = "form-control", placeholder = "Course Name", @readonly = "readonly" })
                                     </div>
                                 </div>
                             </div>
@@ -130,36 +137,36 @@
                              grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:50px;'>
+                                        <div style='width:88px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.InvoiceAmount)
+                                                @ConvertToInt64dollar(item.InvoiceAmount)
                                             </span>
                                         </div>
                                     </text>),
                              grid.Column("PaidAmount", "PaidAmount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:50px;'>
+                                        <div style='width:68px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.PaidAmount)
+                                                @ConvertToInt64dollar(item.PaidAmount)
                                             </span>
                                         </div>
                                     </text>),
                              grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:80px;'>
+                                        <div style='width:90px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.BalanceAmount)
+                                                @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
                                         </div>
                                     </text>),
                              grid.Column("OtherReceivablesAmount", "Other Receivables Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:100px;'>
+                                        <div style='width:150px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.OtherReceivablesAmount)
+                                                @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
                                         </div>
                                     </text>),
@@ -168,7 +175,7 @@
                                     @<text>
                                         <div style='width:75px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.TotalAmount)
+                                                @ConvertToInt64dollar(item.TotalAmount)
                                             </span>
                                         </div>
                                     </text>),
@@ -221,6 +228,14 @@
         $(function () {
 
             $('#liCustomerPaymentStatusList').addClass('active');
+
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            @if (cPayment > 0)
+        {
+            <text>
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
+            </text>
+            }
         });
 
         function mouseleave(el) {
@@ -289,13 +304,8 @@
         function CalculateTotalAmount() {
             var invoiceamt = parseInt($('#InvoiceAmount').val());
             var OtherReceivablesAmount = parseInt($('#OtherReceivablesAmount').val());
-            if (isNaN(OtherReceivablesAmount)) {
-                $('#TotalAmount').val(invoiceamt);
-            }
-            if (invoiceamt && OtherReceivablesAmount) {
-                var result = invoiceamt + OtherReceivablesAmount;
-                $('#TotalAmount').val(result);
-            }
+            var result = (isNaN(invoiceamt) ? 0 : invoiceamt) + (isNaN(OtherReceivablesAmount) ? 0 : OtherReceivablesAmount);
+            $('#TotalAmount').val(result);
         }
 
         $('#frmCustomerPaymentStatus').validate({

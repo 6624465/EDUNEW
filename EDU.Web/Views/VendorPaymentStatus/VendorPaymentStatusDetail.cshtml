@@ -28,7 +28,7 @@
                         <span class="pull-right">Invoice Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount", onkeyup = "CalculateTotalAmount()" })
                     </div>
                 </div>
             </div>
@@ -134,11 +134,21 @@
                 minDate: new Date(),
                 format: 'DD/MM/YYYY'
             });
-           @if(Model.VendorPaymentId!=-1)
+           @if(Model.VendorPaymentId != -1)
            {
                <text>
-                    $('#DueDate').val('@Model.DueDate.Value.ToString("dd/MM/yyyy")');
-                    $('#ReceiptDate').val('@Model.ReceiptDate.Value.ToString("dd/MM/yyyy")');
+            @if (Model.DueDate.HasValue) {
+                 <text>
+            $('#DueDate').val('@Model.DueDate.Value.ToString("dd/MM/yyyy")');
+            </text>
+            }
+
+            @if (Model.ReceiptDate.HasValue) {
+                 <text>
+            $('#ReceiptDate').val('@Model.ReceiptDate.Value.ToString("dd/MM/yyyy")');
+            </text>
+            }
+
              </text>
            }
         });

@@ -108,6 +108,29 @@ namespace EDU.Web.Controllers
                 result.trainingconf = tc;
                 result.trainingconfDetail = tcd;
 
+                long invoiceAmount = 0;
+                long paidAmount = 0;
+                long balanceAmount = 0;
+                long otherreceivablesAmount = 0;
+                long totalAmount = 0;
+
+                foreach (var item in customerPaymentVM)
+                {
+                    invoiceAmount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
+                    paidAmount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
+                    balanceAmount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+                    otherreceivablesAmount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
+                    totalAmount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+                }
+
+                List<decimal?> summary = new List<decimal?>();
+                summary.Add(invoiceAmount);
+                summary.Add(paidAmount);
+                summary.Add(balanceAmount);
+                summary.Add(otherreceivablesAmount);
+                summary.Add(totalAmount);
+                ViewData["Summary"] = summary;
+
             }
             catch (Exception ex)
             {
@@ -115,6 +138,7 @@ namespace EDU.Web.Controllers
             }
             return result;
         }
+
         [HttpPost]
         public PartialViewResult CustomerPaymentStatusDetail(CustomerPaymentVM customerPayment)
         {
@@ -130,6 +154,7 @@ namespace EDU.Web.Controllers
 
             }
         }
+
         private List<Registration> GetList(string trainingConfirmationID)
         {
             List<Registration> List = dbContext.Registrations
@@ -137,6 +162,7 @@ namespace EDU.Web.Controllers
                 .ToList();
             return List;
         }
+
         [HttpPost]
         public ActionResult SaveCustomerPaymentStatus(CustomerPaymentVM customerpaymentvm)
         {
@@ -177,7 +203,8 @@ namespace EDU.Web.Controllers
                         customerpaymentvm.FileName.SaveAs(path + customerpaymentvm.FileName.FileName);
                     }
                 }
-                else {
+                else
+                {
                     customerpayment = dbContext.CustomerPayments.Where(x => x.CustomerPaymentId == customerpaymentvm.CustomerPaymentId).FirstOrDefault();
 
                     customerpayment.RegistrationId = customerpaymentvm.RegistrationId;
@@ -223,14 +250,12 @@ namespace EDU.Web.Controllers
         public JsonResult DeleteCustomerPaymentStatus(int CustomerPaymentId)
         {
             CustomerPayment deletecustomer = dbContext.CustomerPayments.Where(x => x.CustomerPaymentId == CustomerPaymentId).FirstOrDefault();
-            if(deletecustomer != null)
+            if (deletecustomer != null)
             {
                 deletecustomer.IsActive = false;
                 dbContext.SaveChanges();
             }
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
-
     }
 }

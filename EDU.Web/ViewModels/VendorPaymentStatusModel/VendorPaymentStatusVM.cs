@@ -39,6 +39,7 @@ namespace EDU.Web.ViewModels.VendorPaymentStatusModel
         public string TrainingConfirmationID { get; set; }
         public int Product { get; set; }
         public int Course { get; set; }
+        public int TrianerId { get; set; }
 
         public string ProductName { get; set; }
         public string CourseName { get; set; }
