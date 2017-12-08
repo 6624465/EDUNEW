@@ -197,14 +197,39 @@ namespace EDU.Web.Controllers
                 //customer payment status update
 
                 CustomerPayment customerpayment = dbContext.CustomerPayments.Where(x => x.RegistrationId == regObj.RegistrationId && x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                if (customerpayment != null)
+                {
+                    customerpayment.PaidAmount = (regObj.Payment1 == null ? 0 : regObj.Payment1) + (regObj.Payment2 == null ? 0 : regObj.Payment2) + (regObj.Payment3 == null ? 0 : regObj.Payment3);
+                    customerpayment.BalanceAmount = regObj.BalanceAmount;
 
-                customerpayment.PaidAmount = (regObj.Payment1 == null ? 0 : regObj.Payment1) + (regObj.Payment2 == null ? 0 : regObj.Payment2) + (regObj.Payment3 == null ? 0 : regObj.Payment3);
-                customerpayment.BalanceAmount = regObj.BalanceAmount;
-                
-                customerpayment.IsActive = true;
-                customerpayment.ModifiedBy = USER_ID;
-                customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
-                dbContext.SaveChanges();
+                    customerpayment.IsActive = true;
+                    customerpayment.ModifiedBy = USER_ID;
+                    customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                    dbContext.SaveChanges();
+                }
+
+
+                //vendor payment status update
+                List<Registration> regList = dbContext.Registrations.Where(x => x.TrainingConfirmationID == registration.TrainingConfirmationID && x.IsActive == true).ToList();
+                decimal? PaidAmount = 0;
+                decimal? BalanceAmount = 0;
+                foreach (var item in regList)
+                {
+                    PaidAmount+= (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
+                    BalanceAmount += item.BalanceAmount;
+                }
+
+                VendorPayment vendorpayment = dbContext.VendorPayments.Where(x => x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                if (vendorpayment != null)
+                {
+                    vendorpayment.PaidAmount = PaidAmount;
+                    vendorpayment.BalanceAmount = BalanceAmount;
+
+                    vendorpayment.IsActive = true;
+                    vendorpayment.ModifiedBy = USER_ID;
+                    vendorpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                    dbContext.SaveChanges();
+                }
             }
             return RedirectToAction("RegistrationList", new { trainingConfirmationID = registration.TrainingConfirmationID });
         }
