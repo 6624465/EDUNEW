@@ -14,7 +14,7 @@
     var reg = Model.registration.Count();
     var remainReg = Student - reg;
 
-    var myArray = (List<string>)ViewData["Summary"];
+    var myArray = (List<decimal?>)ViewData["Summary"];
 }
 <style>
     .centerbox {
@@ -67,10 +67,17 @@
         else
             return "";
     }
-    public string ConvertToInt64(decimal? data)
+    public string ConvertToInt64percent(decimal? data)
     {
-        if (data != null&& data>0)
+        if (data != null && data > 0)
             return new HtmlString(Convert.ToInt64(data.Value) + "%").ToString();
+        else
+            return null;
+    }
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data != 0 )
+            return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
         else
             return null;
     }
@@ -177,9 +184,9 @@
                                             grid.Column("Amount", "Amount", canSort: true,
                                                     format:
                                                     @<text>
-                                                        <div style='width:50px;'>
+                                                        <div style='width:70px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.Amount)
+                                                                @ConvertToInt64dollar(item.Amount)
                                                             </span>
                                                         </div>
                                                     </text>),
@@ -188,7 +195,7 @@
                                                     @<text>
                                                         <div style='width:50px;'>
                                                             <span class="center">
-                                                                @ConvertToInt64(item.WHTPercent)
+                                                                @ConvertToInt64percent(item.WHTPercent)
                                                             </span>
                                                         </div>
                                                     </text>),
@@ -197,22 +204,22 @@
                                                     @<text>
                                                         <div style='width:80px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.WHTAmount)
+                                                                @ConvertToInt64dollar(item.WHTAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("VATPercent", "VAT/TAX", 
+                                            grid.Column("VATPercent", "VAT/TAX",
                                             format:
-                                                    @<text>
-                                                     @ConvertToInt64(item.VATPercent) 
-                                                    </text>
-                                            ,canSort: true, style: "center"),
+                                            @<text>
+                                                @ConvertToInt64percent(item.VATPercent)
+                                            </text>
+                                            , canSort: true, style: "center"),
                                             grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.VATAmount)
+                                                                @ConvertToInt64dollar(item.VATAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
@@ -221,18 +228,18 @@
                                                     @<text>
                                                         <div style='width:75px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.TotalAmount)
+                                                                @ConvertToInt64dollar(item.TotalAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
                                             grid.Column("Payment1", "Payment 1", canSort: true,
                                                     format:
                                                     @<text>
-                                                        <div style='width:60px;'>
+                                                        <div style='width:70px;'>
                                                             <span class="pull-right">
                                                                 <a style="cursor:pointer;text-decoration:underline;">
                                                                     <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment1)</span>
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment1)</span>
                                                                     </a>
                                                                 </span>
                                                             </div>
@@ -240,11 +247,11 @@
                                             grid.Column("Payment2", "Payment 2", canSort: true,
                                                     format:
                                                     @<text>
-                                                        <div style='width:60px;'>
+                                                        <div style='width:70px;'>
                                                             <span class="pull-right">
                                                                 <a style="cursor:pointer;text-decoration:underline;">
                                                                     <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment2)</span>
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment2)</span>
                                                                     </a>
                                                                 </span>
                                                             </div>
@@ -252,11 +259,11 @@
                                             grid.Column("Payment3", "Payment 3", canSort: true,
                                                     format:
                                                     @<text>
-                                                        <div style='width:60px;'>
+                                                        <div style='width:70px;'>
                                                             <span class="pull-right">
                                                                 <a style="cursor:pointer;text-decoration:underline;">
                                                                     <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64(item.Payment3)</span>
+                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment3)</span>
                                                                     </a>
                                                                 </span>
                                                             </div>
@@ -266,16 +273,16 @@
                                                     @<text>
                                                         <div style='width:100px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.OtherDeductionsAmount)
+                                                                @ConvertToInt64dollar(item.OtherDeductionsAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
                                             grid.Column("BalanceAmount", "Balance", canSort: true,
                                                     format:
                                                     @<text>
-                                                        <div style='width:60px;'>
+                                                        <div style='width:70px;'>
                                                             <span class="pull-right">
-                                                                @ConvertToInt64(item.BalanceAmount)
+                                                                @ConvertToInt64dollar(item.BalanceAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
@@ -316,7 +323,7 @@
             @if (reg > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">' + myArray[0] + '</span></td><td></td><td><span class="pull-right">' + myArray[1] + '</span></td><td></td><td><span class="pull-right">' + myArray[2] + '</span></td><td><span class="pull-right">' + myArray[3] + '</span></td><td><span class="pull-right">' + myArray[4] + '</span></td><td><span class="pull-right">' + myArray[5] + '</span></td><td><span class="pull-right">' + myArray[6] + '</span></td><td><span class="pull-right">' + myArray[7] + '</span></td><td><span class="pull-right">' + myArray[8] +'</span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });

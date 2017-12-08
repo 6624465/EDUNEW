@@ -91,16 +91,16 @@ namespace EDU.Web.Controllers
                     baltotal += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
                 }
 
-                List<string> summary = new List<string>();
-                summary.Add(amounttotal.ToString());
-                summary.Add(whttotal.ToString());
-                summary.Add(vattotal.ToString());
-                summary.Add(sumamounttotal.ToString());
-                summary.Add(payment1total.ToString());
-                summary.Add(payment2total.ToString());
-                summary.Add(payment3total.ToString());
-                summary.Add(othertotal.ToString());
-                summary.Add(baltotal.ToString());
+                List<decimal?> summary = new List<decimal?>();
+                summary.Add(amounttotal);
+                summary.Add(whttotal);
+                summary.Add(vattotal);
+                summary.Add(sumamounttotal);
+                summary.Add(payment1total);
+                summary.Add(payment2total);
+                summary.Add(payment3total);
+                summary.Add(othertotal);
+                summary.Add(baltotal);
                 ViewData["Summary"] = summary;
             }
             catch (Exception ex)
