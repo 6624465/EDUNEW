@@ -137,8 +137,18 @@
            @if(Model.CustomerPaymentId!=-1)
            {
                <text>
-                    $('#DueDate').val('@Model.DueDate.Value.ToString("dd/MM/yyyy")');
-                    $('#ReceiptDate').val('@Model.ReceiptDate.Value.ToString("dd/MM/yyyy")');
+            @if (Model.DueDate.HasValue) {
+                 <text>
+            $('#DueDate').val('@Model.DueDate.Value.ToString("dd/MM/yyyy")');
+            </text>
+            }
+
+            @if (Model.ReceiptDate.HasValue) {
+                 <text>
+            $('#ReceiptDate').val('@Model.ReceiptDate.Value.ToString("dd/MM/yyyy")');
+            </text>
+            }
+
              </text>
            }
         });
