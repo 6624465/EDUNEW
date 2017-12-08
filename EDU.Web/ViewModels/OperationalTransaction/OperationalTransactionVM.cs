@@ -22,6 +22,8 @@ namespace EDU.Web.ViewModels.OperationalTransactionModel
         public string CategoryIdDesc { get; set; }
         public string ParticularsIdDesc { get; set; }
         public string MonthDesc { get; set; }
+        public short Country { get; set; }
+        public string CountryName { get; set; }
     }
 
     public class OperationalTransactionReportVM
@@ -44,5 +46,7 @@ namespace EDU.Web.ViewModels.OperationalTransactionModel
         public decimal? FebAmount { get; set; }
         public decimal? MarAmount { get; set; }
         public decimal? YTD { get; set; }
+        public short Country { get; set; }
+        public string CountryName { get; set; }
     }
 }

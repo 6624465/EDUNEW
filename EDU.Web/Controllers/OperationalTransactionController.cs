@@ -24,6 +24,8 @@ namespace EDU.Web.Controllers
                     OperationalTransactionId = y.OperationalTransactionId,
                     CategoryId = y.CategoryId,
                     ParticularsId = y.ParticularsId,
+                    Country = y.Country,
+                    CountryName=y.CountryName,
                     Month = y.Month,
                     Year = y.Year,
                     Amount = y.Amount,
@@ -111,6 +113,8 @@ namespace EDU.Web.Controllers
                     operationalTransactionInfo.Month = operationalTransaction.Month;
                     operationalTransactionInfo.Year = operationalTransaction.Year;
                     operationalTransactionInfo.Amount = operationalTransaction.Amount;
+                    operationalTransactionInfo.Country = operationalTransaction.Country;
+                    operationalTransactionInfo.CountryName = operationalTransaction.CountryName;
 
                     operationalTransactionInfo.IsActive = true;
 
@@ -169,6 +173,8 @@ namespace EDU.Web.Controllers
                     {
                         CategoryId = y.CategoryId,
                         ParticularsId = y.ParticularsId,
+                        Country = y.Country,
+                        CountryName = y.CountryName,
                         AprAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
                         MayAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
                         JuneAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
