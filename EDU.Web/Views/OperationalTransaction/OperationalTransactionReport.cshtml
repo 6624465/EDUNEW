@@ -190,14 +190,18 @@
 @section SectionScripts
     {
     <script type="text/javascript">
-         @*function ChangeYear(el) {
-             window.location = '@Url.Action("OperationalTransactionReport", "OperationalTransaction", new { year = ""})' + '?year=' + el.value;
-        };*@
         function ChangeCountryMonth() {
             debugger;
             window.location = '@Url.Action("OperationalTransactionReport", "OperationalTransaction", new { year = "", country = "" })' + '?year=' + $('#Year').val()+ "&country=" + $('#Country').val();
         };
         $(document).ready(function () {
+            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            {
+                <text>
+            $('#Country').attr('disabled','disabled');
+             </text>
+            }
+
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (count > 0)
         {

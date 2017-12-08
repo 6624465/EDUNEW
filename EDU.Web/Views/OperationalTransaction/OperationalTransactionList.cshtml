@@ -10,6 +10,16 @@
 
     var count = Model.Count();
 }
+@functions {
+
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data > 0)
+            return new HtmlString("$ " + Convert.ToInt64(data.Value)).ToString();
+        else
+            return null;
+    }
+}
 @{
 
     var listMonths = new List<SelectListItem>()
@@ -84,8 +94,15 @@
                                 columns: grid.Columns(
                                 grid.Column("CategoryIdDesc", "Category", canSort: true),
                                 grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
-                                grid.Column("Amount", "Amount", format: (item) => new HtmlString("$ " + Convert.ToInt64(item.Amount)), canSort: true),
-
+                        grid.Column("Amount", "Amount", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:88px;'>
+                                            <span class="center">
+                                                @ConvertToInt64dollar(item.Amount)
+                                            </span>
+                                        </div>
+                                    </text>),
                                 grid.Column("", "#Action", canSort: false,
                                     format:
                                     @<text>
@@ -123,9 +140,15 @@
     <script type="text/javascript">
 
         $(function () {
+            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            {
+                <text>
+                    $('#Country').attr('disabled','disabled');
+                 </text>
+            }
             $('#liOperationalTransactionList').addClass('active');
             var totalAmount = "$ " + @ViewData["totalAmount"].ToString();
-             @if (count > 0)
+            @if (count > 0)
         {
             <text>
             $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="center">' + totalAmount + '</td><tr>');
