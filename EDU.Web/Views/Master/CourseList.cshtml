@@ -11,9 +11,9 @@
     public string ConvertToInt64dollar(decimal? data)
     {
         if (data != null && data > 0)
-            return new HtmlString("$"+Convert.ToInt64(data.Value)).ToString();
+            return new HtmlString("$ "+Convert.ToInt64(data.Value)).ToString();
         else
-            return null;
+            return "N/A";
     }
         }
 <div class="page">
