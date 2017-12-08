@@ -1,5 +1,6 @@
 ﻿using EDU.Web.Models;
 using EDU.Web.ViewModels.OperationalTransactionModel;
+using EZY.EDU.BusinessFactory;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,17 +16,17 @@ namespace EDU.Web.Controllers
         EducationEntities dbContext = new EducationEntities();
 
         // GET: OperationalTransaction
-        public ActionResult OperationalTransactionList(short? month, int year)
+        public ActionResult OperationalTransactionList(short? month, int year, int country)
         {
             List<OperationalTransactionVM> list = dbContext.OperationalTransactions
-                .Where(x => x.IsActive == true && x.Month == month && x.Year == year)
+                .Where(x => x.IsActive == true && x.Month == month && x.Year == year && x.Country == country)
                 .Select(y => new OperationalTransactionVM
                 {
                     OperationalTransactionId = y.OperationalTransactionId,
                     CategoryId = y.CategoryId,
                     ParticularsId = y.ParticularsId,
                     Country = y.Country,
-                    CountryName=y.CountryName,
+                    CountryName = y.CountryName,
                     Month = y.Month,
                     Year = y.Year,
                     Amount = y.Amount,
@@ -40,10 +41,11 @@ namespace EDU.Web.Controllers
                     //MonthDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription
                 })
                 .ToList();
+            ViewData["CountryData"] = new BranchBO().GetList();
             return View(list);
         }
-
-        public PartialViewResult OperationalTransaction(int? operationalTransactionId, short? month, int? year)
+        [HttpGet]
+        public PartialViewResult OperationalTransaction(int? operationalTransactionId, short? month, int? year, short country)
         {
 
             ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
@@ -52,7 +54,8 @@ namespace EDU.Web.Controllers
             {
                 ViewBag.Title = "New Operational Transaction";
                 ViewData["ParticularsData"] = null;
-                return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month, Year = year });
+                ViewData["CountryData"] = new BranchBO().GetList();
+                return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month, Year = year, Country = country });
             }
             else
             {
@@ -69,18 +72,18 @@ namespace EDU.Web.Controllers
 
                 }
                 ViewData["ParticularsData"] = result;
-
+                ViewData["CountryData"] = new BranchBO().GetList();
                 return PartialView(operationalTransaction);
             }
         }
 
         [HttpGet]
-        public JsonResult GetParticularsByCategory(int CategoryId, short? month, int? year)
+        public JsonResult GetParticularsByCategory(int CategoryId, short? month, int? year, int country)
         {
 
             string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
             var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.IsActive == true).ToList();
+            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.Country == country && x.IsActive == true).ToList();
             foreach (var item in list)
             {
                 result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
@@ -94,8 +97,10 @@ namespace EDU.Web.Controllers
         {
             try
             {
+                string countryname = operationalTransaction.Country > 0 ? new BranchBO().GetList().Where(x => x.BranchID == operationalTransaction.Country).FirstOrDefault().BranchName : "";
                 if (operationalTransaction.OperationalTransactionId == -1)
                 {
+                    operationalTransaction.CountryName = countryname;
                     operationalTransaction.CreatedBy = USER_ID;
                     operationalTransaction.CreatedOn = UTILITY.SINGAPORETIME;
                     operationalTransaction.IsActive = true;
@@ -108,6 +113,7 @@ namespace EDU.Web.Controllers
                     OperationalTransaction operationalTransactionInfo = dbContext.OperationalTransactions.
                         Where(x => x.OperationalTransactionId == operationalTransaction.OperationalTransactionId).FirstOrDefault();
 
+                    operationalTransactionInfo.CountryName = countryname;
                     operationalTransactionInfo.CategoryId = operationalTransaction.CategoryId;
                     operationalTransactionInfo.ParticularsId = operationalTransaction.ParticularsId;
                     operationalTransactionInfo.Month = operationalTransaction.Month;
@@ -129,7 +135,7 @@ namespace EDU.Web.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("OperationalTransactionList", new { month = operationalTransaction.Month, year = operationalTransaction.Year });
+            return RedirectToAction("OperationalTransactionList", new { month = operationalTransaction.Month, year = operationalTransaction.Year, country = operationalTransaction.Country });
         }
 
         [HttpPost]
@@ -142,12 +148,12 @@ namespace EDU.Web.Controllers
                 operationalTransactioninfo.IsActive = false;
                 dbContext.SaveChanges();
             }
-            return RedirectToAction("OperationalTransactionList", new { month = operationalTransactioninfo.Month, year = operationalTransactioninfo.Year });
+            return RedirectToAction("OperationalTransactionList", new { month = operationalTransactioninfo.Month, year = operationalTransactioninfo.Year, country = operationalTransactioninfo.Country });
         }
 
 
         [HttpGet]
-        public ActionResult OperationalTransactionReport(int year)
+        public ActionResult OperationalTransactionReport(int year, int country)
         {
             try
             {
@@ -168,7 +174,7 @@ namespace EDU.Web.Controllers
 
 
                 List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
-                    .Where(x => x.IsActive == true)
+                    .Where(x => x.IsActive == true && x.Country == country)
                     .Select(y => new OperationalTransactionReportVM
                     {
                         CategoryId = y.CategoryId,
@@ -184,7 +190,7 @@ namespace EDU.Web.Controllers
                         OctAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
                         NovAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
                         DecAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,  //fYear
-                    JanAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        JanAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
                         FebAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
                         MarAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
                         CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,

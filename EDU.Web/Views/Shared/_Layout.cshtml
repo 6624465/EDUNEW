@@ -179,7 +179,7 @@
                                 </a>
                             </li>
                             <li id="liOperationalTransactionList">
-                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionList?month="+month+"&year="+year)">
+                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionList?month="+month+"&year="+year+"&country="+Convert.ToInt16(Session["BranchId"]))">
                                     <i class="fa fa-money font20"></i>
                                     <span class="text ptop7">Operational Transactions</span>
                                 </a>
