@@ -57,6 +57,15 @@
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
 }
+@functions {
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data > 0)
+            return new HtmlString("$ " + Convert.ToInt64(data.Value)).ToString();
+        else
+            return "N/A";
+    }
+}
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -164,7 +173,7 @@
                                                 @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
                                             </div>
                                         </text>, style: "center"),
-                                grid.Column("Revenue", "Revenue", format: @<text> @(item.Revenue > 0 ? Convert.ToInt32(item.Revenue) : "0") </text>, canSort: true, style: "center Revenue"),
+                                grid.Column("Revenue", "Revenue", format: @<text>@ConvertToInt64dollar(item.Revenue)</text>, canSort: true, style: "center Revenue"),
                                 grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
