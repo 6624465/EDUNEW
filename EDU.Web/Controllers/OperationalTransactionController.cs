@@ -223,7 +223,7 @@ namespace EDU.Web.Controllers
                 summary.Add(list1.Sum(x => x.MarAmount));
                 summary.Add(list1.Sum(x => x.YTD));
                 ViewData["Summary"] = summary;
-
+                ViewData["CountryData"] = new BranchBO().GetList();
                 return View(list1);
             }
             catch (Exception ex)
