@@ -174,7 +174,7 @@ namespace EDU.Web.Controllers
 
 
                 List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
-                    .Where(x => x.IsActive == true && x.Country == country)
+                    .Where(x => x.IsActive == true && x.Country == country &&x.Year==year)
                     .Select(y => new OperationalTransactionReportVM
                     {
                         CategoryId = y.CategoryId,
