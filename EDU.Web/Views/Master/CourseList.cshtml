@@ -57,7 +57,7 @@
 {
     <input type="hidden" id="id" name="id" />
 }
-@using (Html.BeginForm("SaveCourse", "Master", FormMethod.Post, new { id = "frmCourse", name = "frmCourse" }))
+@using (Html.BeginForm("SaveCourse", "Master", FormMethod.Post, new { id = "frmCourse", name = "frmCourse", autocomplete = "off" }))
 {
     <div id="myModal" class="modal fade" role="dialog">
 

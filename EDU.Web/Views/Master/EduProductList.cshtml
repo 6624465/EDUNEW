@@ -54,7 +54,7 @@
 {
     <input type="hidden" id="id" name="id" />
 }
-@using (Html.BeginForm("SaveEduProduct", "Master", FormMethod.Post, new { id = "frmEduProduct", name = "frmEduProduct" }))
+@using (Html.BeginForm("SaveEduProduct", "Master", FormMethod.Post, new { id = "frmEduProduct", name = "frmEduProduct", autocomplete = "off" }))
 {
     <div id="myModal" class="modal fade" role="dialog">
 
@@ -84,10 +84,25 @@
             });
         }
         function DeleteProductCategory(Id) {
-            if (confirm("Are you sure, do you want delete?")) {
+            //if (confirm("Are you sure, do you want delete?")) {
+            //    $('#id').val(Id);
+            //    $('#frmDelete').submit();
+            //}
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+            function () {
                 $('#id').val(Id);
                 $('#frmDelete').submit();
-            }
+                swal("Deleted!", "Your product has been deleted.", "success");
+
+            });
         }
         function EditEduProduct(Id) {
             $.ajax({

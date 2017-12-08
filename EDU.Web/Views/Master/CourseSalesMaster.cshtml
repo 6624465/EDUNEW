@@ -25,7 +25,7 @@
 
 }
 <div class="page page-forms-elements">
-    @using (Html.BeginForm("CoureSalesMaster", "Master", FormMethod.Post, new { id = "frmCourseDetail", name = "frmCourseDetail" }))
+    @using (Html.BeginForm("CoureSalesMaster", "Master", FormMethod.Post, new { id = "frmCourseDetail", name = "frmCourseDetail", autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.courseSalesMaster.Id)
         <div class="page-wrap">

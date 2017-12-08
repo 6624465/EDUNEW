@@ -16,7 +16,7 @@
 }
 <div class="page page-forms-elements">
 
-    @using (Html.BeginForm("Registration", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration" }))
+    @using (Html.BeginForm("Registration", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration" , autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.RegistrationId)
         @Html.HiddenFor(x => x.TrainingConfirmationID)

@@ -252,7 +252,7 @@
         }
 
         function DeleteVendorPaymentStatus(id) {
-            if (confirm("Are you sure, You want to delete")) {
+            @*if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
                     url: '@Url.Content("~/VendorPaymentStatus/DeleteVendorPaymentStatus?VendorPaymentId=")' + id,
                     type: 'POST',
@@ -266,7 +266,32 @@
                     error: function (e) {
                     }
                 });
-            }
+            }*@
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+     function () {
+         $.ajax({
+             url: '@Url.Content("~/VendorPaymentStatus/DeleteVendorPaymentStatus?VendorPaymentId=")' + id,
+             type: 'POST',
+             contentType: 'application/json',
+             success: function (data) {
+                 if (data) {
+                     swal("Deleted!", "Your record has been deleted.", "success");
+                     location.reload();
+                 }
+             },
+             error: function (e) {
+             }
+         });
+
+     });
         }
         function CalculateTotalAmount() {
             var invoiceamt = parseInt($('#InvoiceAmount').val());

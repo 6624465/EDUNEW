@@ -1567,6 +1567,8 @@
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\sweetalert.css" />
+    <Content Include="Scripts\sweetalert.js" />
     <Content Include="Scripts\webGrid.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
