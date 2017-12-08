@@ -20,6 +20,14 @@
     {
         return remarks.Replace(System.Environment.NewLine, "<br/>");
     }
+
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data > 0)
+            return new HtmlString("$ " + Convert.ToInt64(data.Value)).ToString();
+        else
+            return null;
+    }
 }
 <style>
     .bordertop {
@@ -56,15 +64,6 @@
 @{
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
-}
-@functions {
-    public string ConvertToInt64dollar(decimal? data)
-    {
-        if (data != null && data > 0)
-            return new HtmlString("$ " + Convert.ToInt64(data.Value)).ToString();
-        else
-            return "N/A";
-    }
 }
 <div class="page">
     <div class="page-wrap">
@@ -173,7 +172,16 @@
                                                 @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
                                             </div>
                                         </text>, style: "center"),
-                                grid.Column("Revenue", "Revenue", format: @<text>@ConvertToInt64dollar(item.Revenue)</text>, canSort: true, style: "center Revenue"),
+                                    grid.Column("Revenue", "Revenue", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:88px;'>
+                                            <span class="pull-right">
+                                                @ConvertToInt64dollar(item.Revenue)
+                                            </span>
+                                        </div>
+                                    </text>),
+                                @*grid.Column("Revenue", "Revenue", format: @<text>@ConvertToInt64dollar(item.Revenue)</text>, canSort: true, style: "center Revenue"),*@
                                 grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
@@ -222,11 +230,11 @@
             $('#liRegionalLeads').addClass('active');
         });
         $(document).ready(function () {
-            var totalleadsonhand = @ViewData["totalleadsonhand"].ToString();
-            var totalrevenue = @ViewData["totalrevenue"].ToString();
+            var totalleadsonhand ="$ "+ @ViewData["totalleadsonhand"].ToString();
+            var totalrevenue = "$ " + @ViewData["totalrevenue"].ToString();
             debugger;
 
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="center">' + totalrevenue + '</td><td>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="pull-right">' + totalrevenue + '</td><td>');
         });
 
         function DeleteCourseSalesMaster(Id) {
