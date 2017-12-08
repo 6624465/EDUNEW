@@ -193,6 +193,18 @@ namespace EDU.Web.Controllers
                     dbContext.Entry(regObj).State = EntityState.Modified;
                 }
                 dbContext.SaveChanges();
+
+                //customer payment status update
+
+                CustomerPayment customerpayment = dbContext.CustomerPayments.Where(x => x.RegistrationId == regObj.RegistrationId && x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+
+                customerpayment.PaidAmount = (regObj.Payment1 == null ? 0 : regObj.Payment1) + (regObj.Payment2 == null ? 0 : regObj.Payment2) + (regObj.Payment3 == null ? 0 : regObj.Payment3);
+                customerpayment.BalanceAmount = regObj.BalanceAmount;
+                
+                customerpayment.IsActive = true;
+                customerpayment.ModifiedBy = USER_ID;
+                customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                dbContext.SaveChanges();
             }
             return RedirectToAction("RegistrationList", new { trainingConfirmationID = registration.TrainingConfirmationID });
         }
