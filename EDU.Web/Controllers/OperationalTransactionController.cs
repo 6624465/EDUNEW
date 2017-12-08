@@ -37,10 +37,14 @@ namespace EDU.Web.Controllers
                     ModifiedOn = y.ModifiedOn,
                     CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
                     ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
-                    //,
-                    //MonthDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription
                 })
                 .ToList();
+
+            decimal? totalAmount = list.Sum(x => x.Amount);
+
+
+            ViewData["totalAmount"] = totalAmount;
+
             ViewData["CountryData"] = new BranchBO().GetList();
             return View(list);
         }
@@ -63,7 +67,7 @@ namespace EDU.Web.Controllers
                 OperationalTransaction operationalTransaction = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
                 string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == operationalTransaction.CategoryId).FirstOrDefault().LookupCode;
 
-                var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId && x.IsActive == true).ToList();
+                var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId && x.IsActive == true && x.Country == country).ToList();
 
                 var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
                 foreach (var item in list)
@@ -174,7 +178,7 @@ namespace EDU.Web.Controllers
 
 
                 List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
-                    .Where(x => x.IsActive == true && x.Country == country &&x.Year==year)
+                    .Where(x => x.IsActive == true && x.Country == country && x.Year == year)
                     .Select(y => new OperationalTransactionReportVM
                     {
                         CategoryId = y.CategoryId,
