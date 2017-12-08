@@ -114,8 +114,9 @@
                                     <label class="col-md-1 control-label">
                                         <span>Course:&nbsp;&nbsp;&nbsp;&nbsp; </span>
                                     </label>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")" />
+                                    <div class="col-md-5">
+                                        @Html.TextAreaFor(x => x.trainingconfDetail.CourseName,
+                                                new { @class = "form-control", placeholder = "Course Name", @readonly = "readonly" })
                                     </div>
                                 </div>
                             </div>
@@ -303,13 +304,8 @@
         function CalculateTotalAmount() {
             var invoiceamt = parseInt($('#InvoiceAmount').val());
             var OtherReceivablesAmount = parseInt($('#OtherReceivablesAmount').val());
-            if (isNaN(OtherReceivablesAmount)) {
-                $('#TotalAmount').val(invoiceamt);
-            }
-            if (invoiceamt && OtherReceivablesAmount) {
-                var result = invoiceamt + OtherReceivablesAmount;
-                $('#TotalAmount').val(result);
-            }
+            var result = (isNaN(invoiceamt) ? 0 : invoiceamt) + (isNaN(OtherReceivablesAmount) ? 0 : OtherReceivablesAmount);
+            $('#TotalAmount').val(result);
         }
 
         $('#frmCustomerPaymentStatus').validate({

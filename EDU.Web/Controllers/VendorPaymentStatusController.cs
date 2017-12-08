@@ -34,11 +34,13 @@ namespace EDU.Web.Controllers
 
 
                 TrainingConfirmDtl tcd = new TrainingConfirmDtl();
-
+                string trianerName = "";
                 if (tcdtl != null)
                 {
                     string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
                     string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault().CourseName : "";
+                    trianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName;
+
                     tcd = new TrainingConfirmDtl()
                     {
                         Id = tcdtl.Id,
@@ -47,7 +49,7 @@ namespace EDU.Web.Controllers
                         Course = tcdtl.Course,
                         ProductName = productName,
                         CourseName = courseName,
-                        TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
+                        TrianerId = tcdtl.TrianerId
                     };
                 }
 
@@ -58,7 +60,7 @@ namespace EDU.Web.Controllers
                         VendorPaymentId = x.VendorPaymentId,
                         VendorId = x.VendorId,
                         TrainingConfirmationID = x.TrainingConfirmationID,
-                        InvoiceAmount = x.TotalAmount,
+                        InvoiceAmount = x.InvoiceAmount,
                         PaidAmount = x.PaidAmount,
                         BalanceAmount = x.BalanceAmount,
                         OtherReceivablesAmount = x.OtherReceivablesAmount,
@@ -71,36 +73,44 @@ namespace EDU.Web.Controllers
                         CreatedOn = x.CreatedOn,
                         ModifiedBy = x.ModifiedBy,
                         ModifiedOn = x.ModifiedOn,
-                        VendorName = dbContext.Registrations.Where(r => r.RegistrationId == x.VendorId).FirstOrDefault().StudentName
+                        VendorName = trianerName
                     })
                     .ToList();
 
+                decimal? invoiceAmount = 0;
+                decimal? paidAmount = 0;
+                decimal? balanceAmount = 0;
 
                 foreach (var item in regList)
                 {
-                    if (dbContext.VendorPayments.Where(x => x.IsActive == true && x.VendorId == item.RegistrationId).Count() == 0)
+                    invoiceAmount += item.TotalAmount;
+                    paidAmount += (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
+                    balanceAmount += item.BalanceAmount;
+                }
+
+
+                if (VendorPaymentVM.Count() == 0 && trainingConfirmationID !="")
+                {
+                    VendorPaymentVM.Add(new VendorPaymentVM()
                     {
-                        VendorPaymentVM.Add(new VendorPaymentVM()
-                        {
-                            VendorPaymentId = -1,
-                            VendorId = item.RegistrationId,
-                            TrainingConfirmationID = item.TrainingConfirmationID,
-                            InvoiceAmount = item.TotalAmount,
-                            PaidAmount = (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3),
-                            BalanceAmount = item.BalanceAmount,
-                            OtherReceivablesAmount = 0,
-                            TotalAmount = 0,
-                            DueDate = null,
-                            ReceiptDate = null,
-                            ReferenceDoc = null,
-                            IsActive = true,
-                            CreatedBy = null,
-                            CreatedOn = DateTime.Now,
-                            ModifiedBy = null,
-                            ModifiedOn = null,
-                            VendorName = item.StudentName
-                        });
-                    }
+                        VendorPaymentId = -1,
+                        VendorId = tcd.TrianerId,
+                        TrainingConfirmationID = tcd.TrainingConfirmationID,
+                        InvoiceAmount = invoiceAmount,
+                        PaidAmount = paidAmount,
+                        BalanceAmount = balanceAmount,
+                        OtherReceivablesAmount = 0,
+                        TotalAmount = 0,
+                        DueDate = null,
+                        ReceiptDate = null,
+                        ReferenceDoc = null,
+                        IsActive = true,
+                        CreatedBy = null,
+                        CreatedOn = DateTime.Now,
+                        ModifiedBy = null,
+                        ModifiedOn = null,
+                        VendorName = trianerName
+                    });
                 }
 
                 result.VendorPayment = VendorPaymentVM;
@@ -133,7 +143,7 @@ namespace EDU.Web.Controllers
         private List<Registration> GetList(string trainingConfirmationID)
         {
             List<Registration> List = dbContext.Registrations
-                .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID && x.BalanceAmount > 0)
+                .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID)
                 .ToList();
             return List;
         }
@@ -169,7 +179,7 @@ namespace EDU.Web.Controllers
 
                     if (Vendorpaymentvm.FileName != null && Vendorpaymentvm.FileName.ContentLength > 0)
                     {
-                        string path = Server.MapPath("~/Uploads/" + "CPS_" + Vendorpayment.VendorPaymentId + "/");
+                        string path = Server.MapPath("~/Uploads/" + "VPS_" + Vendorpayment.VendorPaymentId + "/");
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
@@ -177,7 +187,8 @@ namespace EDU.Web.Controllers
                         Vendorpaymentvm.FileName.SaveAs(path + Vendorpaymentvm.FileName.FileName);
                     }
                 }
-                else {
+                else
+                {
                     Vendorpayment = dbContext.VendorPayments.Where(x => x.VendorPaymentId == Vendorpaymentvm.VendorPaymentId).FirstOrDefault();
 
                     Vendorpayment.VendorId = Vendorpaymentvm.VendorId;
@@ -201,7 +212,7 @@ namespace EDU.Web.Controllers
 
                     if (Vendorpaymentvm.FileName != null && Vendorpaymentvm.FileName.ContentLength > 0)
                     {
-                        string path = Server.MapPath("~/Uploads/" + "CPS_" + Vendorpayment.VendorPaymentId + "/");
+                        string path = Server.MapPath("~/Uploads/" + "VPS_" + Vendorpayment.VendorPaymentId + "/");
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
