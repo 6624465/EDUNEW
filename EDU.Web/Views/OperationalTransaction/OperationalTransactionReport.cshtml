@@ -73,11 +73,20 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-md-1 control-label">
+                            <label class="col-md-2 control-label">
+                                <span class="pull-right">Country</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.HiddenFor(x => x.FirstOrDefault().CountryName)
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Country,
+                                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
+                                 "Select Country", new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
+                            </div>
+                            <label class="col-md-2 control-label">
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = (i + " - " + (i + 1)).ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear(this);" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = (i + " - " + (i + 1)).ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
                             </div>
                         </div>
                     </div>
@@ -181,10 +190,13 @@
 @section SectionScripts
     {
     <script type="text/javascript">
-         function ChangeYear(el) {
+         @*function ChangeYear(el) {
              window.location = '@Url.Action("OperationalTransactionReport", "OperationalTransaction", new { year = ""})' + '?year=' + el.value;
+        };*@
+        function ChangeCountryMonth() {
+            debugger;
+            window.location = '@Url.Action("OperationalTransactionReport", "OperationalTransaction", new { year = "", country = "" })' + '?year=' + $('#Year').val()+ "&country=" + $('#Country').val();
         };
-
         $(document).ready(function () {
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (count > 0)

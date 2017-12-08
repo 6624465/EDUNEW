@@ -26,6 +26,15 @@
         text-align: right !important;
     }
 </style>
+@functions {
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data > 0)
+            return new HtmlString("$ " + Convert.ToInt64(data.Value)).ToString();
+        else
+            return "";
+    }
+}
 <form name="frmRevenue" id="frmRevenue">
     <div class="page page-forms-elements">
         <div class="page-wrap">
@@ -61,7 +70,7 @@
                         <div class="row css10">
                             <div class="col-md-12">
                                 @{
-                            var grid = new WebGrid(Model);
+                                    var grid = new WebGrid(Model);
                                 }
                                 <div id="gridContent">
                                     @grid.GetHtml(
@@ -75,10 +84,14 @@
                                         grid.Column("QuarterlyTargetAmt", header: "", format: @<input type="hidden" name="QuarterlyTargetAmt" value="@item.QuarterlyTargetAmt" />, style: "width0"),
                                         grid.Column("MonthlyTargetAmt", header: "", format: @<input type="hidden" name="MonthlyTargetAmt" value="@item.MonthlyTargetAmt" />, style: "width0"),
                                         grid.Column("ProductName", "Product Name", format: @<text>  @item.ProductName  </text>, style: ""),
-                                        grid.Column("YearlyTarget", "YearlyTarget", format: @<text> <span class="display-mode"> @(item.YearlyTarget > 0 ? Convert.ToInt64(item.YearlyTarget) : "") </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt64(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: "YearlyTarget alignright"),
-                                        grid.Column("HalfYearlyTarget", "Half Yearly", format: @<text> <span class="display-mode"> @(item.HalfYearlyTarget > 0 ? Convert.ToInt64(item.HalfYearlyTarget) : "")</span>  </text>, style: "HalfYearlyTarget alignright"),
-                                        grid.Column("QuarterlyTarget", "Quarterly", format: @<text>  <span class="display-mode">@(item.QuarterlyTarget > 0 ? Convert.ToInt64(item.QuarterlyTarget) : "")</span>   </text>, style: "QuarterlyTarget alignright"),
-                                        grid.Column("MonthlyTarget", "Monthly", format: @<text> <span class="display-mode"> @(item.MonthlyTarget > 0 ? Convert.ToInt64(item.MonthlyTarget) : "")  </span> </text>, style: "MonthlyTarget alignright"),
+                                        grid.Column("YearlyTarget", "YearlyTarget", format:
+                                        @<text> <span class="display-mode"> @ConvertToInt64dollar(item.YearlyTarget) </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt64(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: "YearlyTarget alignright"),
+                                        grid.Column("HalfYearlyTarget", "Half Yearly", format:
+                                        @<text> <span class="display-mode"> @ConvertToInt64dollar(item.HalfYearlyTarget)</span>  </text>, style: "HalfYearlyTarget alignright"),
+                                        grid.Column("QuarterlyTarget", "Quarterly", format:
+                                        @<text>  <span class="display-mode">@ConvertToInt64dollar(item.QuarterlyTarget)</span>   </text>, style: "QuarterlyTarget alignright"),
+                                        grid.Column("MonthlyTarget", "Monthly", format:
+                                        @<text> <span class="display-mode">@ConvertToInt64dollar(item.MonthlyTarget)  </span> </text>, style: "MonthlyTarget alignright"),
                                         grid.Column("Action", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
@@ -93,13 +106,13 @@
 
                             <div class="col-md-12 css10">
                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                        {
+                                {
                                     <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
-                        }
+                                }
                             </div>
                             <div class="col-md-12 css10">
                                 @{
-                            var grid1 = new WebGrid(Model);
+                                    var grid1 = new WebGrid(Model);
                                 }
                                 <div id="gridContent1">
                                     @grid1.GetHtml(
@@ -117,7 +130,7 @@
                                         grid1.Column("QuarterlyTargetAmt", "Quarterly", format: @<text> @(item.QuarterlyTargetAmt > 0 ? Convert.ToInt64(item.QuarterlyTargetAmt) : "")</text>, style: "QuarterlyTargetAmt alignright"),
                                         grid1.Column("MonthlyTargetAmt", "Monthly", format: @<text> @(item.MonthlyTargetAmt > 0 ? Convert.ToInt64(item.MonthlyTargetAmt) : "")</text>, style: "MonthlyTargetAmt alignright"),
                                         grid1.Column("", format: @<text>
-                                    <div style="width:35px;"></div>
+                                                <div style="width:35px;"></div>
                                         </text>, style: "col3Width", canSort: false)
                                         ))
                                 </div>
@@ -156,18 +169,18 @@
             var totalmt = 0;
             debugger;
             $('#gridContent .YearlyTarget').each(function () {
-                totalyt = totalyt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
+                totalyt = totalyt + parseInt($(this)[0].innerText.replace('$', '').trim() == "" ? 0 : $(this)[0].innerText.replace('$', '').toLocaleString());
             });
             $('#gridContent .HalfYearlyTarget').each(function () {
-                totalhyt = totalhyt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
+                totalhyt = totalhyt + parseInt($(this)[0].innerText.replace('$', '').trim() == "" ? 0 : $(this)[0].innerText.replace('$', '').toLocaleString());
             });
             $('#gridContent .QuarterlyTarget').each(function () {
-                totalqyt = totalqyt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
+                totalqyt = totalqyt + parseInt($(this)[0].innerText.replace('$', '').trim() == "" ? 0 : $(this)[0].innerText.replace('$', '').toLocaleString());
             });
             $('#gridContent .MonthlyTarget').each(function () {
-                totalmt = totalmt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
+                totalmt = totalmt + parseInt($(this)[0].innerText.replace('$', '').trim() == "" ? 0 : $(this)[0].innerText.replace('$', '').toLocaleString());
             });
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + totalyt + '</td><td class="alignright">' + totalhyt + '</td><td class="alignright">' + totalqyt + '</td><td  class="alignright">' + totalmt + '</td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + "$ " + totalyt + '</td><td class="alignright">' + "$ " + totalhyt + '</td><td class="alignright">' + "$ " + totalqyt + '</td><td  class="alignright">' + "$ " + totalmt + '</td></tr>');
 
             var totalytamt = 0;
             var totalhytamt = 0;
@@ -191,22 +204,22 @@
 
     <script type="text/javascript">
 
-    $('#frmRevenue').validate({
-        rules: {
-            'Country': {
-                required: true
-            },
-            'CurrencyCode': {
-                required: true
-            },
-            'CurrencyExRate': {
-                required: true
-            },
-            'YearlyTarget': {
-                required: true
+        $('#frmRevenue').validate({
+            rules: {
+                'Country': {
+                    required: true
+                },
+                'CurrencyCode': {
+                    required: true
+                },
+                'CurrencyExRate': {
+                    required: true
+                },
+                'YearlyTarget': {
+                    required: true
+                }
             }
-        }
-    });
+        });
 
         function updateRevenueInfoByExRate() {
             if ($('#frmRevenue').valid()) {
@@ -230,21 +243,20 @@
             }
         }
 
-    var Product = null;
-    var ProductName = null;
-    var RevenueId = null;
-    var Year = null;
+        var Product = null;
+        var ProductName = null;
+        var RevenueId = null;
+        var Year = null;
 
-    function SaveRevenue(revenueId, product, year, productName)
-    {
-         Product = product;
-         ProductName = productName;
-         RevenueId = revenueId;
-         Year = year;
-    }
-    function CountryChange(el) {
-        if (el.value) {
-            window.location = '@Url.Action("RevenueList", "Revenue", new { country = "", year="" })' + '?country=' + el.value + '&year=' + 2017;
+        function SaveRevenue(revenueId, product, year, productName) {
+            Product = product;
+            ProductName = productName;
+            RevenueId = revenueId;
+            Year = year;
+        }
+        function CountryChange(el) {
+            if (el.value) {
+                window.location = '@Url.Action("RevenueList", "Revenue", new { country = "", year="" })' + '?country=' + el.value + '&year=' + 2017;
                 @*$.ajax({
                     url: '@Url.Content("~/Revenue/GetCurrency?Id=")' + el.value,
                     method: 'GET',
@@ -257,57 +269,56 @@
                     }
                 });*@
             }
-        else
-            {
+            else {
                 $("#CurrencyCode").val('');
             }
-    };
+        };
 
-    $(function () {
+        $(function () {
 
-        $("#CurrencyCode").val('@Model.FirstOrDefault().CurrencyCode');
+            $("#CurrencyCode").val('@Model.FirstOrDefault().CurrencyCode');
 
-        $('.edit-mode').hide();
-        $('.edit-user, .cancel-user').on('click', function () {
-            var tr = $(this).parents('tr:first');
-            tr.find('.edit-mode, .display-mode').toggle();
-        });
+            $('.edit-mode').hide();
+            $('.edit-user, .cancel-user').on('click', function () {
+                var tr = $(this).parents('tr:first');
+                tr.find('.edit-mode, .display-mode').toggle();
+            });
 
-        $('.save-user').on('click', function () {
-            if ($('#frmRevenue').valid()) {
-            var tr = $(this).parents('tr:first');
+            $('.save-user').on('click', function () {
+                if ($('#frmRevenue').valid()) {
+                    var tr = $(this).parents('tr:first');
 
-            //var Product = tr.find("#hdnProduct").val();
-            //var ProductName = tr.find("#hdnProductName").val();
-            var YearlyTarget = tr.find("#YearlyTarget").val();
-            //var RevenueId = tr.find("#hdnRevenueId").val();
-            //var Year = tr.find("#hdnYear").val();
+                    //var Product = tr.find("#hdnProduct").val();
+                    //var ProductName = tr.find("#hdnProductName").val();
+                    var YearlyTarget = tr.find("#YearlyTarget").val();
+                    //var RevenueId = tr.find("#hdnRevenueId").val();
+                    //var Year = tr.find("#hdnYear").val();
 
-            tr.find('.edit-mode, .display-mode').toggle();
-            var Revenue =
-                {
-                    "RevenueId": RevenueId,
-                    "Product": Product,
-                    "ProductName": ProductName,
-                    "YearlyTarget": YearlyTarget,
-                    "CurrencyExRate": $('#CurrencyExRate').val(),
-                    "Country": $('#Country').val(),
-                    "CountryName": $("#Country option:selected").text(),
-                    "CurrencyCode": $('#CurrencyCode').val(),
-                    "Year": Year
-                };
-            $.ajax({
-                url: '@Url.Content("~/Revenue/SaveRevenueInfo/")',
-                data: JSON.stringify(Revenue),
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    alert(data);
-                    location.reload(true);
+                    tr.find('.edit-mode, .display-mode').toggle();
+                    var Revenue =
+                        {
+                            "RevenueId": RevenueId,
+                            "Product": Product,
+                            "ProductName": ProductName,
+                            "YearlyTarget": YearlyTarget,
+                            "CurrencyExRate": $('#CurrencyExRate').val(),
+                            "Country": $('#Country').val(),
+                            "CountryName": $("#Country option:selected").text(),
+                            "CurrencyCode": $('#CurrencyCode').val(),
+                            "Year": Year
+                        };
+                    $.ajax({
+                        url: '@Url.Content("~/Revenue/SaveRevenueInfo/")',
+                        data: JSON.stringify(Revenue),
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            alert(data);
+                            location.reload(true);
+                        }
+                    });
                 }
             });
-        }
-        });
-    })
+        })
     </script>
 }
