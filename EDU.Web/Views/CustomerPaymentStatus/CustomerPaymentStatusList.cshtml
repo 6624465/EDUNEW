@@ -96,14 +96,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
-                            <div class="centerbox">
-                                <div class="row">
-                                    <div class="col-md-5 col-md-offset-1">
-                                        <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                        <div id="TrainingDetails" class=" css10">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label col-md-offset-2">
+                                        <span>Product:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")" />
                                     </div>
-                                    <div class="col-md-5">
-                                        <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                                    <label class="col-md-1 control-label">
+                                        <span>Course:&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")" />
                                     </div>
                                 </div>
                             </div>
@@ -170,8 +176,8 @@
                          grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                              grid.Column("ReferenceDoc", "Reference Doc",
                              format:
-                             @<text>
-                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/CPS_@item.CustomerPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                            @<text>
+                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/CPS_@item.CustomerPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
                             </text>, canSort: true),
                              grid.Column("", "#Action", canSort: false,
                                          format:
@@ -200,14 +206,14 @@
             </div>
         </div>
     </div>
-    
+
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
 }
 @using (Html.BeginForm("DeleteCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmDeleteCustomerPaymentStatus", name = "frmDeleteCustomerPaymentStatus", enctype = "multipart/form-data" }))
 {
-    
+
 }
 @section SectionScripts
     {

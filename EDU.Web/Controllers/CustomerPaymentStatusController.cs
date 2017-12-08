@@ -58,7 +58,7 @@ namespace EDU.Web.Controllers
                         CustomerPaymentId = x.CustomerPaymentId,
                         RegistrationId = x.RegistrationId,
                         TrainingConfirmationID = x.TrainingConfirmationID,
-                        InvoiceAmount = x.TotalAmount,
+                        InvoiceAmount = x.InvoiceAmount,
                         PaidAmount = x.PaidAmount,
                         BalanceAmount = x.BalanceAmount,
                         OtherReceivablesAmount = x.OtherReceivablesAmount,
