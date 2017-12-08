@@ -69,8 +69,8 @@
     }
     public string ConvertToInt64(decimal? data)
     {
-        if (data != null)
-            return Convert.ToInt64(data.Value).ToString();
+        if (data != null&& data>0)
+            return new HtmlString(Convert.ToInt64(data.Value).ToString() + "%").ToString();
         else
             return null;
     }
@@ -188,7 +188,7 @@
                                                     @<text>
                                                         <div style='width:50px;'>
                                                             <span class="center">
-                                                                @(new HtmlString(ConvertToInt64(item.WHTPercent) + "%"))
+                                                                @ConvertToInt64(item.WHTPercent)
                                                             </span>
                                                         </div>
                                                     </text>),
@@ -201,7 +201,12 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("VATPercent", "VAT/TAX", format: (item) => new HtmlString(ConvertToInt64(item.VATPercent) + "%"), canSort: true, style: "center"),
+                                            grid.Column("VATPercent", "VAT/TAX", 
+                                            format:
+                                                    @<text>
+                                                     @ConvertToInt64(item.VATPercent) 
+                                                    </text>
+                                            ,canSort: true, style: "center"),
                                             grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
                                                     format:
                                                     @<text>
