@@ -49,16 +49,13 @@
     }
 </style>
 @functions {
-
-    public string ConvertToInt64(decimal? data)
+    public string ConvertToInt64dollar(decimal? data)
     {
-        if (data != null)
-            return Convert.ToInt64(data.Value).ToString();
+        if (data != null && data != 0)
+            return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
         else
             return null;
     }
-
-
 }
 @using (Html.BeginForm("SaveVendorPaymentStatus", "VendorPaymentStatus", FormMethod.Post, new { id = "frmVendorPaymentStatus", name = "frmVendorPaymentStatus", enctype = "multipart/form-data" }))
 {
@@ -87,14 +84,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
-                            <div class="centerbox">
-                                <div class="row">
-                                    <div class="col-md-5 col-md-offset-1">
-                                        <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                        <div id="TrainingDetails" class=" css10">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label col-md-offset-2">
+                                        <span>Product:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")" />
                                     </div>
+                                    <label class="col-md-1 control-label">
+                                        <span>Course:&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                                    </label>
                                     <div class="col-md-5">
-                                        <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
+                                        @Html.TextAreaFor(x => x.trainingconfDetail.CourseName,
+                                                new { @class = "form-control", placeholder = "Course Name" , @readonly= "readonly"})
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +109,7 @@
                         <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                             @grid.GetHtml(
                      columns: grid.Columns(
-                             grid.Column("VendorName", "Vendor", canSort: true,
+                             grid.Column("VendorName", "Vendor Name", canSort: true,
                                      format:
                                     @<text>
                                         <div style='width:150px;'>
@@ -115,36 +119,36 @@
                              grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:50px;'>
+                                        <div style='width:88px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.InvoiceAmount)
+                                                @ConvertToInt64dollar(item.InvoiceAmount)
                                             </span>
                                         </div>
                                     </text>),
                              grid.Column("PaidAmount", "PaidAmount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:50px;'>
+                                        <div style='width:68px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.PaidAmount)
+                                                @ConvertToInt64dollar(item.PaidAmount)
                                             </span>
                                         </div>
                                     </text>),
                              grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:80px;'>
+                                        <div style='width:90px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.BalanceAmount)
+                                                @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
                                         </div>
                                     </text>),
                              grid.Column("OtherReceivablesAmount", "Other Receivables Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:100px;'>
+                                        <div style='width:150px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.OtherReceivablesAmount)
+                                                @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
                                         </div>
                                     </text>),
@@ -153,7 +157,7 @@
                                     @<text>
                                         <div style='width:75px;'>
                                             <span class="pull-right">
-                                                @ConvertToInt64(item.TotalAmount)
+                                                @ConvertToInt64dollar(item.TotalAmount)
                                             </span>
                                         </div>
                                     </text>),
@@ -162,7 +166,7 @@
                              grid.Column("ReferenceDoc", "Reference Doc",
                              format:
                             @<text>
-                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/CPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
                             </text>, canSort: true),
                              grid.Column("", "#Action", canSort: false,
                                          format:
@@ -171,9 +175,9 @@
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                if (item.VendorPaymentId > 0)
-                                                {
-                                                    <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    if (item.VendorPaymentId > 0)
+                                                    {
+                                                        <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                     }
                                                 }
                                             </div>
@@ -203,7 +207,6 @@
     {
     <script type="text/javascript">
         $(function () {
-
             $('#liVendorPaymentStatusList').addClass('active');
         });
 
@@ -276,38 +279,36 @@
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
             },
-     function () {
-         $.ajax({
-             url: '@Url.Content("~/VendorPaymentStatus/DeleteVendorPaymentStatus?VendorPaymentId=")' + id,
-             type: 'POST',
-             contentType: 'application/json',
-             success: function (data) {
-                 if (data) {
-                     swal("Deleted!", "Your record has been deleted.", "success");
-                     location.reload();
-                 }
-             },
-             error: function (e) {
-             }
-         });
+                function () {
+                    $.ajax({
+                        url: '@Url.Content("~/VendorPaymentStatus/DeleteVendorPaymentStatus?VendorPaymentId=")' + id,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data) {
+                                swal("Deleted!", "Your record has been deleted.", "success");
+                                location.reload();
+                            }
+                        },
+                        error: function (e) {
+                        }
+                    });
 
-     });
+                });
         }
         function CalculateTotalAmount() {
             var invoiceamt = parseInt($('#InvoiceAmount').val());
             var OtherReceivablesAmount = parseInt($('#OtherReceivablesAmount').val());
-            if (isNaN(OtherReceivablesAmount)) {
-                $('#TotalAmount').val(invoiceamt);
-            }
-            if (invoiceamt && OtherReceivablesAmount) {
-                var result = invoiceamt + OtherReceivablesAmount;
-                $('#TotalAmount').val(result);
-            }
+            var result = (isNaN(invoiceamt) ? 0 : invoiceamt) + (isNaN(OtherReceivablesAmount) ? 0 : OtherReceivablesAmount);
+            $('#TotalAmount').val(result);
         }
 
         $('#frmVendorPaymentStatus').validate({
             rules: {
                 OtherReceivablesAmount: {
+                    required: true
+                },
+                InvoiceAmount: {
                     required: true
                 }
             }
