@@ -202,8 +202,8 @@
                         <ul class="inner-drop list-unstyled">
                             <li id="liReportsAchievement" class="waves-effect"><a href="@Url.Content("~/Reports/Achievement")">Achievement</a></li>
                             <li id="liReportsOperationaltransaction" class="waves-effect"><a href="@Url.Content("~/Reports/Operationaltransaction?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">Operational Transaction</a></li>
-                            <li id="liReportsOperationalExpenses" class="waves-effect"><a href="@Url.Content("~/Reports/OperationalExpenses")">Operational Expenses</a></li>
-                            <li id="liDashboardOperationaltransaction" class="waves-effect"><a href="@Url.Content("~/Reports/DashboardOperationaltransaction")">Dashboard Operational Transaction</a></li>
+                            <li id="liReportsOperationalExpenses" class="waves-effect"><a href="@Url.Content("~/Reports/OperationalExpenses?year=" + year)">Operational Expenses</a></li>
+                            <li id="liDashboardOperationaltransaction" class="waves-effect"><a href="@Url.Content("~/Reports/DashboardOperationaltransaction?month=" + month + "&year=" + year)">Dashboard Operational Transaction</a></li>
                             <li id="liReportsTotalRevenue" class="waves-effect"><a href="@Url.Content("~/Reports/TotalRevenue")">Total Revenue</a></li>
                             <li id="liReportsDashboard" class="waves-effect"><a href="@Url.Content("~/Reports/Dashboard")">DashBoard - Achievement YTD</a></li>
                         </ul>

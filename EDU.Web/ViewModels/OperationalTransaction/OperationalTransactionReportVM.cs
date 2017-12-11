@@ -17,11 +17,14 @@ namespace EDU.Web.ViewModels.OperationalTransaction
         public decimal Amount { get; set; }
         public Nullable<short> Month { get; set; }
         public short Country { get; set; }
+        public string CountryName { get; set; }
         public int Year { get; set; }
     }
 
     public class OperationalTransactionReportByYear
     {
+        public short Country { get; set; }
+        public string CountryName { get; set; }
         public decimal JanAmount { get; set; }
         public decimal FebAmount { get; set; }
         public decimal MarAmount { get; set; }

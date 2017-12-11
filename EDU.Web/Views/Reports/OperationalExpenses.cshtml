@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable <EDU.Web.ViewModels.OperationalTransaction.OperationalTransactionReportByYear>
+
 @{
     ViewBag.Title = "OperationalExpenses";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -91,7 +92,8 @@
                         type: 'column',
                         title: 'CAMBODIA',
                         fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
+                        data: [
+                            ['JAN', 33], ['FEB', 57], ['MAR', 33],
                         ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
                         ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
                         ]
