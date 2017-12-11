@@ -4,7 +4,7 @@
     ViewBag.Title = "Operationaltransaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Model.otReportByMonth.ToList()
+
 @{
     var listMonths = new List<SelectListItem> ()
     {
@@ -99,12 +99,21 @@
         .highcharts-button-symbol {
             display: none;
         }
+        .highcharts-credits
+        {
+            display: none;
+        }
     </style>
     @section SectionScripts{
         <script type="text/javascript">
             $(function () {
                 $('#liReportsOperationaltransaction').addClass('active');
             });
+
+            function ChangeMonth() {
+                window.location = '@Url.Action("Operationaltransaction", "Reports", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
+            };
+
             Highcharts.chart('container', {
                 chart: {
                     type: 'pie',
@@ -118,7 +127,7 @@
                     text: ''
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '<b>{point.percentage:.1f}%</b>'
                 },
                 plotOptions: {
                     pie: {
@@ -126,14 +135,14 @@
                         cursor: 'pointer',
                         depth: 35,
                         dataLabels: {
-                            enabled: true,
+                            enabled: false,
                             format: '{point.name}'
                         }
                     }
                 },
                 series: [{
                     type: 'pie',
-                    name: 'Browser share',
+                    name: '',
                     data: [
                         @foreach (var item in Model.otReportByMonth)
                         {
@@ -141,7 +150,7 @@
                         {
                             name:'@item.ParticularName',
                             y:@item.Amount,
-                        sliced: true
+                            sliced: true
                         },
                         </text>
                             }
@@ -153,18 +162,20 @@
             $(document).ready(function () {
                 $('#jqChart').jqChart({
                     title: { text: '' },
-                    animation: { duration: 1 },
+                    animation: { duration: 3 },
                     shadows: {
-                        enabled: true
+                        enabled: false
                     },
                     series: [
                         {
                             type: 'column',
                             title: '',
                             fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                            data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                            ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                            ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
+                            data: [
+                                ['JAN',   @Model.otReportByYear.JanAmount], ['FEB', @Model.otReportByYear.FebAmount], ['MAR',  @Model.otReportByYear.MarAmount],
+                                ['APR',  @Model.otReportByYear.AprAmount], ['MAY',  @Model.otReportByYear.MayAmount], ['JUN',  @Model.otReportByYear.JunAmount], 
+                                ['JUL',  @Model.otReportByYear.JulAmount], ['AUG',  @Model.otReportByYear.AugAmount], ['SEP',  @Model.otReportByYear.SepAmount], 
+                                ['OCT',  @Model.otReportByYear.OctAmount], ['NOV',  @Model.otReportByYear.NovAmount], ['DEC',  @Model.otReportByYear.DecAmount]
                             ]
                         }
                     ]

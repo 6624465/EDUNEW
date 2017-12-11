@@ -62,6 +62,10 @@ namespace EDU.Web.Reports.Controllers
 
                 ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 
+                if (reportList.otReportByYear == null)
+                    reportList.otReportByYear = new OperationalTransactionReportByYear();
+                if (reportList.otReportByMonth == null)
+                    reportList.otReportByMonth = new List<OperationalTransactionReportByMonth>();
                 return View(reportList);
             }
             catch (Exception ex)
