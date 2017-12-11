@@ -72,6 +72,13 @@
                         @grid.GetHtml(
                                 columns: grid.Columns(
                     grid.Column("TrainingConfirmationID", "Order No.", canSort: true),
+                       grid.Column("CountryName", "Country Name", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:110px;'>
+                                        @item.CountryName
+                                    </div>
+                                </text>),
                     grid.Column("ProductName", "Product Name", canSort: true,
                                 format:
                                 @<text>
