@@ -11,12 +11,14 @@
 }
 
 @functions {
-    public string TypeColumn(bool isPrivate, bool isPublic)
+    public string TypeColumn(bool isPrivate, bool isPublic, bool islvc)
     {
         if (isPrivate)
             return "Private";
         else if (isPublic)
             return "Public";
+        else if (islvc)
+            return "LVC";
         return "";
     }
 }
@@ -99,7 +101,7 @@
                                         @item.NoOfStudents
                                     </div>
                                 </text>, style: "center"),
-                    grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public)</text>, canSort: true),
+                    grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public, item.LVC)</text>, canSort: true),
                     grid.Column("StartDate", "Start Date", format:@<text> @item.StartDate.ToString("dd/MM/yyyy")</text>, canSort: true),
                     grid.Column("EndDate", "End Date", format:@<text> @item.EndDate.ToString("dd/MM/yyyy")</text>, canSort: true),
                     grid.Column("TotalNoOfDays", "Total # of days", canSort: true,
@@ -202,7 +204,7 @@
             if ($('#frmTrainerConfirmation').valid()) {
                 $('#Private').val($('#rdoPrivate').is(':checked'));
                 $('#Public').val($('#rdoPublic').is(':checked'));
-                $('#Lvc').val($('#rdoLvc').is(':checked'));
+                $('#LVC').val($('#rdoLvc').is(':checked'));
                 $('#frmTrainerConfirmation').submit();
             }
         }

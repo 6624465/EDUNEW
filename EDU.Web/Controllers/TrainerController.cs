@@ -218,8 +218,8 @@ namespace EDU.Web.Controllers
                         Where(x => x.TrainingConfirmationID == TrainerConfInfo.TrainingConfirmationID).FirstOrDefault();
 
                     traininfConfDetail.Country = TrainerConfInfo.Country;
-                    traininfConfDetail.Product = TrainerConfInfo.Product;
-                    traininfConfDetail.Course = TrainerConfInfo.Course;
+                    //traininfConfDetail.Product = TrainerConfInfo.Product;
+                    //traininfConfDetail.Course = TrainerConfInfo.Course;
                     traininfConfDetail.TotalNoOfDays = TrainerConfInfo.TotalNoOfDays;
                     traininfConfDetail.NoOfStudents = TrainerConfInfo.NoOfStudents;
                     traininfConfDetail.Private = TrainerConfInfo.Private;
