@@ -182,6 +182,7 @@ namespace EDU.Web.Controllers
             ViewData["ProductData"] = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
             ViewData["CourseData"] = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
             ViewData["TrainerData"] = dbContext.TrainerInformations.Where(x => x.IsActive == true).ToList();
+            ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 
             if (TrainingConfInfo == null)
             {
@@ -216,12 +217,14 @@ namespace EDU.Web.Controllers
                     TrainingConfirmation traininfConfDetail = dbContext.TrainingConfirmations.
                         Where(x => x.TrainingConfirmationID == TrainerConfInfo.TrainingConfirmationID).FirstOrDefault();
 
+                    traininfConfDetail.Country = TrainerConfInfo.Country;
                     traininfConfDetail.Product = TrainerConfInfo.Product;
                     traininfConfDetail.Course = TrainerConfInfo.Course;
                     traininfConfDetail.TotalNoOfDays = TrainerConfInfo.TotalNoOfDays;
                     traininfConfDetail.NoOfStudents = TrainerConfInfo.NoOfStudents;
                     traininfConfDetail.Private = TrainerConfInfo.Private;
                     traininfConfDetail.Public = TrainerConfInfo.Public;
+                    traininfConfDetail.LVC = TrainerConfInfo.LVC;
                     traininfConfDetail.StartDate = TrainerConfInfo.StartDate;
                     traininfConfDetail.EndDate = TrainerConfInfo.EndDate;
                     traininfConfDetail.TrianerId = TrainerConfInfo.TrianerId;
@@ -261,10 +264,13 @@ namespace EDU.Web.Controllers
                 trainingConfirmationVM.NoOfStudents = item.NoOfStudents;
                 trainingConfirmationVM.Private = item.Private;
                 trainingConfirmationVM.Public = item.Public;
+                trainingConfirmationVM.LVC = item.LVC;
                 trainingConfirmationVM.StartDate = item.StartDate;
                 trainingConfirmationVM.EndDate = item.EndDate;
                 trainingConfirmationVM.TrianerId = item.TrianerId;
                 trainingConfirmationVM.TrianerName = dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault() != null ? dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault().TrainerName : "";
+                trainingConfirmationVM.Country = item.Country;
+                trainingConfirmationVM.CountryName = new BranchBO().GetList().Where(x => x.BranchID == item.Country).FirstOrDefault() != null ? new BranchBO().GetList().Where(x => x.BranchID == item.Country).FirstOrDefault().BranchName : "";
 
                 list.Add(trainingConfirmationVM);
             }

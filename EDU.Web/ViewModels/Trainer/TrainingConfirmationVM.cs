@@ -26,5 +26,8 @@ namespace EDU.Web.ViewModels.Trainer
         public System.DateTime CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public Int16 Country { get; set; }
+        public string CountryName { get; set; }
+        public bool LVC { get; set; }
     }
 }

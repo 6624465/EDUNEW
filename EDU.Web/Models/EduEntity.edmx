@@ -199,6 +199,8 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Country" Type="smallint" Nullable="false" />
+          <Property Name="LVC" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorPayment">
           <Key>
@@ -266,7 +268,6 @@
         <EntityContainer Name="EducationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Revenues" EntityType="Self.Revenue" />
           <EntitySet Name="TrainerInformations" EntityType="DB_9F30C5_edudevModel.TrainerInformation" />
-          <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
           <EntitySet Name="Registrations" EntityType="DB_9F30C5_edudevModel.Registration" />
           <EntitySet Name="Lookups" EntityType="DB_9F30C5_edudevModel.Lookup" />
           <EntitySet Name="FinancialTransactions" EntityType="DB_9F30C5_edudevModel.FinancialTransaction" />
@@ -278,6 +279,7 @@
           <EntitySet Name="CustomerPayments" EntityType="DB_9F30C5_edudevModel.CustomerPayment" />
           <EntitySet Name="VendorPayments" EntityType="DB_9F30C5_edudevModel.VendorPayment" />
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
+          <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
         </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -295,27 +297,6 @@
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TrainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="TrainingConfirmation">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TrainingConfirmationID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="Product" Type="Int32" Nullable="false" />
-          <Property Name="Course" Type="Int32" Nullable="false" />
-          <Property Name="TotalNoOfDays" Type="Int16" Nullable="false" />
-          <Property Name="NoOfStudents" Type="Int16" Nullable="false" />
-          <Property Name="Private" Type="Boolean" Nullable="false" />
-          <Property Name="Public" Type="Boolean" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="TrianerId" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -481,6 +462,29 @@
           <Property Name="Country" Type="Int16" Nullable="false" />
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="TrainingConfirmation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingConfirmationID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="Course" Type="Int32" Nullable="false" />
+          <Property Name="TotalNoOfDays" Type="Int16" Nullable="false" />
+          <Property Name="NoOfStudents" Type="Int16" Nullable="false" />
+          <Property Name="Private" Type="Boolean" Nullable="false" />
+          <Property Name="Public" Type="Boolean" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="TrianerId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Country" Type="Int16" Nullable="false" />
+          <Property Name="LVC" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -533,28 +537,6 @@
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Technology" ColumnName="Technology" />
                 <ScalarProperty Name="TrianerId" ColumnName="TrianerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TrainingConfirmations">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainingConfirmation">
-              <MappingFragment StoreEntitySet="TrainingConfirmation">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="TrianerId" ColumnName="TrianerId" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Public" ColumnName="Public" />
-                <ScalarProperty Name="Private" ColumnName="Private" />
-                <ScalarProperty Name="NoOfStudents" ColumnName="NoOfStudents" />
-                <ScalarProperty Name="TotalNoOfDays" ColumnName="TotalNoOfDays" />
-                <ScalarProperty Name="Course" ColumnName="Course" />
-                <ScalarProperty Name="Product" ColumnName="Product" />
-                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -710,6 +692,30 @@
                 <ScalarProperty Name="ParticularsId" ColumnName="ParticularsId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="OperationalTransactionId" ColumnName="OperationalTransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainingConfirmations">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainingConfirmation">
+              <MappingFragment StoreEntitySet="TrainingConfirmation">
+                <ScalarProperty Name="LVC" ColumnName="LVC" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TrianerId" ColumnName="TrianerId" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Public" ColumnName="Public" />
+                <ScalarProperty Name="Private" ColumnName="Private" />
+                <ScalarProperty Name="NoOfStudents" ColumnName="NoOfStudents" />
+                <ScalarProperty Name="TotalNoOfDays" ColumnName="TotalNoOfDays" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
