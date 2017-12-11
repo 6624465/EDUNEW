@@ -1,29 +1,29 @@
 ﻿
-@model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM>
+@model IEnumerable<EDU.Web.ViewModels.OperationalTransaction.OperationalTransactionReportByMonth>
 @{
     ViewBag.Title = "DashboardOperationaltransaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var CountryData = (List<EZY.EDU.Contract.Branch>)ViewData["CountryData"];
 }
 @{
 
     var listMonths = new List<SelectListItem>()
-                                          {
-                                           new SelectListItem {Text = "Select Month",   Value = "0"},
-                                           new SelectListItem {Text = "Janaury",   Value = "1"},
-                                           new SelectListItem {Text = "February", Value = "2"},
-                                           new SelectListItem {Text = "March", Value = "3"},
-                                           new SelectListItem {Text = "April",   Value = "4"},
-                                           new SelectListItem {Text = "May", Value = "5"},
-                                           new SelectListItem {Text = "June", Value = "6"},
-                                           new SelectListItem {Text = "July",   Value = "7"},
-                                           new SelectListItem {Text = "August", Value = "8"},
-                                           new SelectListItem {Text = "September", Value = "9"},
-                                           new SelectListItem {Text = "October",   Value = "10"},
-                                           new SelectListItem {Text = "November", Value = "11"},
-                                           new SelectListItem {Text = "December", Value = "12"}
-                                       };
-
-
+                    {
+                    new SelectListItem {Text = "Select Month",   Value = "0"},
+                    new SelectListItem {Text = "Janaury",   Value = "1"},
+                    new SelectListItem {Text = "February", Value = "2"},
+                    new SelectListItem {Text = "March", Value = "3"},
+                    new SelectListItem {Text = "April",   Value = "4"},
+                    new SelectListItem {Text = "May", Value = "5"},
+                    new SelectListItem {Text = "June", Value = "6"},
+                    new SelectListItem {Text = "July",   Value = "7"},
+                    new SelectListItem {Text = "August", Value = "8"},
+                    new SelectListItem {Text = "September", Value = "9"},
+                    new SelectListItem {Text = "October",   Value = "10"},
+                    new SelectListItem {Text = "November", Value = "11"},
+                    new SelectListItem {Text = "December", Value = "12"}
+                };
 }
 
 <div class="page page-forms-elements">
@@ -43,15 +43,14 @@
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear(this);" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Month</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
-
                         </div>
                     </div>
                     <div class="row">
@@ -59,7 +58,7 @@
                             <div class="col-md-9">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div id="container"></div>
+                                        <div id="container0"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <div id="container1"></div>
@@ -77,25 +76,31 @@
                                 </section>
                                 <section class="space">
                                     <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div id="container4"></div>
                                         </div>
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div id="container5"></div>
                                         </div>
                                     </div>
                                 </section>
                                 <section class="space">
                                     <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div id="container6"></div>
                                         </div>
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div id="container7"></div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="space">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="container8"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="container9"></div>
                                         </div>
                                     </div>
                                 </section>
@@ -119,9 +124,7 @@
                                     <br />
                                     <div id="rectangle5"></div>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -189,582 +192,79 @@
     .highcharts-root {
         height: 250px !important;
     }*/
-    #container, #container1,
+    /*#container0, #container1,
     #container2, #container3,
     #container4, #container5,
-    #container6, #container7 {
+    #container6, #container7,
+    #container8, #container9 {
         height: 250px !important;
-    }
+    }*/
 </style>
 @section SectionScripts{
     <script type="text/javascript">
+
+         function ChangeMonth() {
+             window.location = '@Url.Action("DashboardOperationaltransaction", "Reports", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
+        };
+
         $(function () {
             $('#liDashboardOperationaltransaction').addClass('active');
-        });
-        $(function () {
+
             Highcharts.setOptions({
                 colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
             });
-        });
-        Highcharts.chart('container', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
+
+        var count = 0;
+            @foreach (var item in CountryData)
+            {
+            <text>
+        Highcharts.chart('container' + count, {
+                        chart: {
+                            type: 'pie',
+                            options3d: {
+                                enabled: true,
+                                alpha: 65,
+                                beta: 0
+                            }
+                        },
+                        title: {
+                            text: '@item.BranchName'
+                        },
+                        tooltip: {
+                            pointFormat: '<b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                depth: 60,
+                                dataLabels: {
+                                    enabled: false,
+                                    format: '{point.name}'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            data: [
+                        @foreach (var info in Model.Where(x=>x.Country==item.BranchID).ToList())
+                        {
+                            <text>
+                        {
+                            name:'@info.ParticularName',
+                            y:@info.Amount,
+                            sliced: true,
+                            selected:true
+                        },
+                        </text>
+                            }
+                    ]
+                        }]
+                    });
+                    count++;
+            </text>
                 }
-            },
-            title: {
-                text: 'CAMBODIA',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
-        Highcharts.chart('container1', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'BANGLADESH',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
-        Highcharts.chart('container2', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'MYANMAR',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
-        Highcharts.chart('container3', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'SRI LANKA',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
-        Highcharts.chart('container4', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'PAKISTAN',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
-        Highcharts.chart('container5', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'PHILIPPINES',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
-        Highcharts.chart('container6', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'LAOS',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
-        Highcharts.chart('container7', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'VIETNAM',
-                y: 80
-            },
-            tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 70,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                
-                data: [
-                    {
-                        name: 'Firefox',
-                        y: 45.0,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'IE',
-                        y: 26.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Safari',
-                        y: 8.5,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Others',
-                        y: 0.7,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Opera',
-                        y: 6.2,
-                        sliced: true,
-                        selected: true
-                    }
-                ]
-            }]
-        });
+            });
     </script>
 }
 

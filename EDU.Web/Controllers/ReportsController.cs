@@ -134,28 +134,65 @@ namespace EDU.Web.Reports.Controllers
                 throw ex;
             }
         }
-        public ActionResult DashboardOperationaltransaction(int month, int year)
+        public ActionResult DashboardOperationaltransaction(Int16 month, int year)
         {
             try
             {
                 var list = dbContext.usp_OperationalTransactionReport(year).ToList();
 
                 List<OperationalTransactionReportByMonth> reportListbyMonth = new List<OperationalTransactionReportByMonth>();
-                if (list != null)
+
+                var countrylist = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+
+                foreach (var item in countrylist)
                 {
-                    reportListbyMonth = list.Where(m => m.Month == month)
-                        .Select(x => new OperationalTransactionReportByMonth
+                    if (list.Where(x => x.Country == item.BranchID && x.Month==month).Count() == 0)
+                    {
+                        reportListbyMonth.Add(new OperationalTransactionReportByMonth()
                         {
-                            ParticularName = x.ParticularName,
-                            Amount = x.Amount,
-                            Month = x.Month,
-                            Country = x.Country,
+                            ParticularName = "",
+                            Amount = 0,
+                            Month = month,
+                            Country = item.BranchID,
                             Year = year,
-                            CountryName = x.CountryName
-                        }).ToList();
+                            CountryName = item.BranchName
+                        });
+                    }
+                    else
+                    {
+                        foreach (var it in list.Where(x => x.Country == item.BranchID && x.Month == month))
+                        {
+                            reportListbyMonth.Add(new OperationalTransactionReportByMonth()
+                            {
+                                ParticularName = it.ParticularName,
+                                Amount = it.Amount,
+                                Month = month,
+                                Country = item.BranchID,
+                                Year = year,
+                                CountryName = item.BranchName
+                            });
+                        }
+                    }
                 }
 
+                ViewData["CountryData"] = countrylist;
                 return View(reportListbyMonth);
+
+                //if (list != null)
+                //{
+                //    reportListbyMonth = list.Where(m => m.Month == month)
+                //        .Select(x => new OperationalTransactionReportByMonth
+                //        {
+                //            ParticularName = x.ParticularName,
+                //            Amount = x.Amount,
+                //            Month = x.Month,
+                //            Country = x.Country,
+                //            Year = year,
+                //            CountryName = x.CountryName
+                //        }).ToList();
+                //}
+
+                //return View(reportListbyMonth);
             }
             catch (Exception ex)
             {
