@@ -84,7 +84,6 @@
                                 <span class="pull-right">Month</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.HiddenFor(x => x.FirstOrDefault().Month)
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
                         </div>

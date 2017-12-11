@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<EDU.Web.ViewModels.OperationalTransactionModel.OperationalTransactionVM>
+@model EDU.Web.ViewModels.OperationalTransaction.OperationalTransactionReportVM
 @{
     ViewBag.Title = "Operationaltransaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -42,10 +42,10 @@
                                             <label>MTD</label>
                                         </div>
                                         <div class="col-md-5">
-                                            @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                            @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
                                         </div>
                                         <div class="col-md-5">
-                                            @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                            @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
                                         </div>
                                     </div>
                                     <div class="row">

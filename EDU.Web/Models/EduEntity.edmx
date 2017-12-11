@@ -223,6 +223,9 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
+        <Function Name="usp_OperationalTransactionReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Edu">
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="DB_9F30C5_edudevModelStoreContainer">
           <EntitySet Name="Lookup" EntityType="Self.Lookup" Schema="Config" store:Type="Tables" />
           <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="Edu" store:Type="Tables" />
@@ -280,7 +283,10 @@
           <EntitySet Name="VendorPayments" EntityType="DB_9F30C5_edudevModel.VendorPayment" />
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
           <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
-        </EntityContainer>
+          <FunctionImport Name="usp_OperationalTransactionReport" ReturnType="Collection(DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
             <PropertyRef Name="TrianerId" />
@@ -485,6 +491,13 @@
           <Property Name="Country" Type="Int16" Nullable="false" />
           <Property Name="LVC" Type="Boolean" Nullable="false" />
         </EntityType>
+        <ComplexType Name="usp_OperationalTransactionReport_Result">
+          <Property Type="Int16" Name="Month" Nullable="true" />
+          <Property Type="String" Name="ParticularName" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="CountryName" Nullable="false" MaxLength="255" />
+          <Property Type="Int16" Name="Country" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -719,6 +732,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_OperationalTransactionReport" FunctionName="DB_9F30C5_edudevModel.Store.usp_OperationalTransactionReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result">
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="ParticularName" ColumnName="ParticularName" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
