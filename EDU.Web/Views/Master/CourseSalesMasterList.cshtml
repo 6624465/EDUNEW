@@ -64,6 +64,8 @@
 @{
     WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
     grid.Pager(WebGridPagerModes.All);
+
+    var count = Model.Count();
 }
 <div class="page">
     <div class="page-wrap">
@@ -232,9 +234,10 @@
         $(document).ready(function () {
             var totalleadsonhand ="$ "+ @ViewData["totalleadsonhand"].ToString();
             var totalrevenue = "$ " + @ViewData["totalrevenue"].ToString();
-            debugger;
-
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="pull-right">' + totalrevenue + '</td><td>');
+            if(count>0)
+            {
+                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="pull-right">' + totalrevenue + '</td><td>');
+            }
         });
 
         function DeleteCourseSalesMaster(Id) {
