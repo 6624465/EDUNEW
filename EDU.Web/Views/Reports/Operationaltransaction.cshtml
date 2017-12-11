@@ -133,7 +133,7 @@
                     pie: {
                         allowPointSelect: true,
                         cursor: 'pointer',
-                        depth: 35,
+                        depth: 60,
                         dataLabels: {
                             enabled: false,
                             format: '{point.name}'
@@ -150,7 +150,8 @@
                         {
                             name:'@item.ParticularName',
                             y:@item.Amount,
-                            sliced: true
+                            sliced: true,
+                            selected:true
                         },
                         </text>
                             }

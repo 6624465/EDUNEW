@@ -1,4 +1,4 @@
-﻿@model IEnumerable <EDU.Web.ViewModels.OperationalTransaction.OperationalTransactionReportByYear>
+﻿@model IEnumerable<EDU.Web.ViewModels.OperationalTransaction.OperationalTransactionReportByYear>
 
 @{
     ViewBag.Title = "OperationalExpenses";
@@ -9,65 +9,77 @@
         <div class="panel panel-default">
             <div class="box" id="grid">
                 <div class="box-header">
-                    <h4>Dashboard - Operational Expenses</h4>
+                    <h4>Operational Expenses - (YTD)</h4>
                     <div class="box-tools">
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-12">
-                            @*<div class="row">
-                                    <h2>YTD</h2>
-                                </div>*@
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear();" })
+                            </div>
+
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 css10">
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-11">
-                                        <div id="jqChart"></div>
+                                    <div class="col-md-12">
+                                        <div id="jqChart0"></div>
                                     </div>
                                 </div>
                                 <div class="row css10">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <div id="jqChart1"></div>
                                     </div>
                                 </div>
                                 <div class="row css10">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <div id="jqChart2"></div>
                                     </div>
                                 </div>
                                 <div class="row css10">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <div id="jqChart3"></div>
+                                    </div>
+                                </div>
+                                <div class="row css10">
+                                    <div class="col-md-12">
+                                        <div id="jqChart8"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <div id="jqChart4"></div>
                                     </div>
                                 </div>
                                 <div class="row css10">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <div id="jqChart5"></div>
                                     </div>
                                 </div>
                                 <div class="row css10">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <div id="jqChart6"></div>
                                     </div>
                                 </div>
                                 <div class="row css10">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <div id="jqChart7"></div>
                                     </div>
                                 </div>
+                                <div class="row css10">
+                                    <div class="col-md-12">
+                                        <div id="jqChart9"></div>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -77,183 +89,39 @@
 
 @section SectionScripts{
     <script type="text/javascript">
+        function ChangeYear() {
+            window.location = '@Url.Action("OperationalExpenses", "Reports", new { year = ""})' + '?year=' + $('#Year').val();
+        };
         $(function () {
             $('#liReportsOperationalExpenses').addClass('active');
-        });
-        $(document).ready(function () {
-            $('#jqChart').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'CAMBODIA',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [
-                            ['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
+
+            var count = 0;
+            @foreach (var item in Model)
+            {
+                <text>
+
+            $('#jqChart' + count).jqChart({
+                        title: { text: '' },
+                        animation: { duration: 1 },
+                        shadows: {
+                        enabled: true
+                        },
+                        series: [
+                            {
+                                type: 'column',
+                                title: '@item.CountryName',
+                                fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
+                                data: [
+                                    ['JAN', @item.JanAmount], ['FEB', @item.FebAmount], ['MAR', @item.MarAmount],
+                                ['APR', @item.AprAmount], ['MAY', @item.MayAmount], ['JUN', @item.JunAmount], ['JUL', @item.JulAmount],
+                                ['AUG', @item.AugAmount], ['SEP', @item.SepAmount], ['OCT', @item.OctAmount], ['NOV', @item.NovAmount], ['DEC', @item.DecAmount]
+                                ]
+                            }
                         ]
-                    }
-                ]
             });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#jqChart1').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'MYANMAR',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
-                        ]
-                    }
-                ]
+            count++;
+            </text>
+                }
             });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#jqChart2').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'PAKISTAN',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
-                        ]
-                    }
-                ]
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#jqChart3').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'LAOS',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
-                        ]
-                    }
-                ]
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#jqChart4').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'BANGLADESH',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
-                        ]
-                    }
-                ]
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#jqChart5').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'SRI LANKA',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
-                        ]
-                    }
-                ]
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#jqChart6').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'PHILIPPINES',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
-                        ]
-                    }
-                ]
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#jqChart7').jqChart({
-                title: { text: '' },
-                animation: { duration: 1 },
-                shadows: {
-                    enabled: true
-                },
-                series: [
-                    {
-                        type: 'column',
-                        title: 'VIETNAM',
-                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                        data: [['JAN', 33], ['FEB', 57], ['MAR', 33],
-                        ['APR', 12], ['MAY', 35], ['JUN', 7], ['JUL', 24],
-                        ['AUG', 12], ['SEP', 35], ['OCT', 7], ['NOV', 24], ['DEC', 24]
-                        ]
-                    }
-                ]
-            });
-        });
     </script>
 }
