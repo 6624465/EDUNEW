@@ -1,6 +1,7 @@
 ﻿using EDU.Web;
 using EDU.Web.Models;
 using EDU.Web.ViewModels.OperationalTransaction;
+using EZY.EDU.BusinessFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace EDU.Web.Reports.Controllers
                 }).FirstOrDefault();
             }
 
+            ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 
             return View(reportList);
         }
