@@ -105,15 +105,6 @@
             $(function () {
                 $('#liReportsOperationaltransaction').addClass('active');
             });
-            @*var seriesNames = [];
-            var seriesAmount = [];
-            @foreach (var item in Model.otReportByMonth)
-                 {
-                    <text>
-                seriesNames.push(@item.ParticularName),
-                seriesAmount.push(@item.Amount),
-                    </text>
-                   }*@
             Highcharts.chart('container', {
                 chart: {
                     type: 'pie',
