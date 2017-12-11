@@ -4,6 +4,7 @@
     ViewBag.Title = "Operationaltransaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Model.otReportByMonth.ToList()
 @{
     var listMonths = new List<SelectListItem> ()
     {
@@ -35,18 +36,35 @@
                     </div>
                     <div class="box-body">
                         <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Country,
+                                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
+                                     "Select Country", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Month</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Year</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                </div>
+                              
+                            </div>
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <label>MTD</label>
+                                        <div class="col-md-12" style="text-align:center">
+                                            <h4>
+                                                <label>MTD</label>
+                                            </h4>
                                         </div>
-                                        <div class="col-md-5">
-                                            @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
-                                        </div>
-                                        <div class="col-md-5">
-                                            @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
-                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -57,11 +75,10 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-12" style="text-align:center">
-                                            <h2>
+                                            <h4>
                                                 <label>YTD</label>
-                                            </h2>
+                                            </h4>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-10">
@@ -88,6 +105,15 @@
             $(function () {
                 $('#liReportsOperationaltransaction').addClass('active');
             });
+            @*var seriesNames = [];
+            var seriesAmount = [];
+            @foreach (var item in Model.otReportByMonth)
+                 {
+                    <text>
+                seriesNames.push(@item.ParticularName),
+                seriesAmount.push(@item.Amount),
+                    </text>
+                   }*@
             Highcharts.chart('container', {
                 chart: {
                     type: 'pie',
@@ -118,42 +144,16 @@
                     type: 'pie',
                     name: 'Browser share',
                     data: [
+                        @foreach (var item in Model.otReportByMonth)
                         {
-                            name: 'Firefox',
-                            y: 45.0,
-                            sliced: true,
-                            selected: true
+                            <text>
+                        {
+                            name:'@item.ParticularName',
+                            y:@item.Amount,
+                        sliced: true
                         },
-                        {
-                            name: 'IE',
-                            y: 26.8,
-                            sliced: true,
-                            selected: true
-                        },
-                        {
-                            name: 'Chrome',
-                            y: 12.8,
-                            sliced: true,
-                            selected: true
-                        },
-                        {
-                            name: 'Safari',
-                            y: 8.5,
-                            sliced: true,
-                            selected: true
-                        },
-                        {
-                            name: 'Others',
-                            y: 0.7,
-                            sliced: true,
-                            selected: true
-                        },
-                        {
-                            name: 'Opera',
-                            y: 6.2,
-                            sliced: true,
-                            selected: true
-                        }
+                        </text>
+                            }
                     ]
                 }]
             });
