@@ -45,23 +45,27 @@ namespace EDU.Web.Reports.Controllers
                     {
                         Country = x.Country,
                         CountryName = x.CountryName,
-                        JanAmount = list.Where(y => y.Month == 1).Count() > 0 ? list.Where(y => y.Month == 1).Sum(z => z.Amount) : 0,
-                        FebAmount = list.Where(y => y.Month == 2).Count() > 0 ? list.Where(y => y.Month == 2).Sum(z => z.Amount) : 0,
-                        MarAmount = list.Where(y => y.Month == 3).Count() > 0 ? list.Where(y => y.Month == 3).Sum(z => z.Amount) : 0,
-                        AprAmount = list.Where(y => y.Month == 4).Count() > 0 ? list.Where(y => y.Month == 4).Sum(z => z.Amount) : 0,
-                        MayAmount = list.Where(y => y.Month == 5).Count() > 0 ? list.Where(y => y.Month == 5).Sum(z => z.Amount) : 0,
-                        JunAmount = list.Where(y => y.Month == 6).Count() > 0 ? list.Where(y => y.Month == 6).Sum(z => z.Amount) : 0,
-                        JulAmount = list.Where(y => y.Month == 7).Count() > 0 ? list.Where(y => y.Month == 7).Sum(z => z.Amount) : 0,
-                        AugAmount = list.Where(y => y.Month == 8).Count() > 0 ? list.Where(y => y.Month == 8).Sum(z => z.Amount) : 0,
-                        SepAmount = list.Where(y => y.Month == 9).Count() > 0 ? list.Where(y => y.Month == 9).Sum(z => z.Amount) : 0,
-                        OctAmount = list.Where(y => y.Month == 10).Count() > 0 ? list.Where(y => y.Month == 10).Sum(z => z.Amount) : 0,
-                        NovAmount = list.Where(y => y.Month == 11).Count() > 0 ? list.Where(y => y.Month == 11).Sum(z => z.Amount) : 0,
-                        DecAmount = list.Where(y => y.Month == 12).Count() > 0 ? list.Where(y => y.Month == 12).Sum(z => z.Amount) : 0,
+                        JanAmount = list.Where(y => y.Month == 1 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 1 && y.Country == country).Sum(z => z.Amount) : 0,
+                        FebAmount = list.Where(y => y.Month == 2 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 2 && y.Country == country).Sum(z => z.Amount) : 0,
+                        MarAmount = list.Where(y => y.Month == 3 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 3 && y.Country == country).Sum(z => z.Amount) : 0,
+                        AprAmount = list.Where(y => y.Month == 4 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 4 && y.Country == country).Sum(z => z.Amount) : 0,
+                        MayAmount = list.Where(y => y.Month == 5 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 5 && y.Country == country).Sum(z => z.Amount) : 0,
+                        JunAmount = list.Where(y => y.Month == 6 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 6 && y.Country == country).Sum(z => z.Amount) : 0,
+                        JulAmount = list.Where(y => y.Month == 7 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 7 && y.Country == country).Sum(z => z.Amount) : 0,
+                        AugAmount = list.Where(y => y.Month == 8 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 8 && y.Country == country).Sum(z => z.Amount) : 0,
+                        SepAmount = list.Where(y => y.Month == 9 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 9 && y.Country == country).Sum(z => z.Amount) : 0,
+                        OctAmount = list.Where(y => y.Month == 10 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 10 && y.Country == country).Sum(z => z.Amount) : 0,
+                        NovAmount = list.Where(y => y.Month == 11 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 11 && y.Country == country).Sum(z => z.Amount) : 0,
+                        DecAmount = list.Where(y => y.Month == 12 && y.Country == country).Count() > 0 ? list.Where(y => y.Month == 12 && y.Country == country).Sum(z => z.Amount) : 0,
                     }).FirstOrDefault();
                 }
 
                 ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 
+                if (reportList.otReportByYear == null)
+                    reportList.otReportByYear = new OperationalTransactionReportByYear();
+                if (reportList.otReportByMonth == null)
+                    reportList.otReportByMonth = new List<OperationalTransactionReportByMonth>();
                 return View(reportList);
             }
             catch (Exception ex)
