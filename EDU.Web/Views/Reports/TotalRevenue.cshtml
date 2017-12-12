@@ -6,14 +6,19 @@
     decimal? totalRevenue = 0;
     decimal? achievedRevenue = 0;
     decimal? yettoAchieveRevenue = 0;
+    string achievedPercent = "0";
+    string yettoAchievePercent = "0";
     foreach (var item in Model)
     {
         totalRevenue += item.TotalRevenue;
         achievedRevenue += item.AchievedRevenue;
         yettoAchieveRevenue += item.YetToAchieveRevenue;
     }
-    var achievedPercent = ((achievedRevenue * 100) / totalRevenue).Value.ToString("#0.00");
-    var yettoAchievePercent = ((yettoAchieveRevenue * 100) / totalRevenue).Value.ToString("#0.00");
+    if(totalRevenue>0)
+    {
+        achievedPercent = ((achievedRevenue * 100) / totalRevenue).Value.ToString("#0.00");
+        yettoAchievePercent = ((yettoAchieveRevenue * 100) / totalRevenue).Value.ToString("#0.00");
+    }
 
     var CountryData = (List<EZY.EDU.Contract.Branch>)ViewData["CountryData"];
 
@@ -29,6 +34,16 @@
                 </div>
                 <div class="box-body">
                     <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear();" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6">
                                 <div class="row">
@@ -40,20 +55,20 @@
                                     </div>
                                     <div style="padding-top:12px" class="col-md-2">
                                         <div class="sml">
-                                            <h6 style="color:white;padding-top:30%; text-align:center"><span id="div1"></span></h6>
-                                            <h5 style="color:white; text-align:center">39.87%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div0"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="achieved0"></span></h5>
                                         </div>
                                         <div class="sml">
-                                            <h6 style="color:white;padding-top:30%; text-align:center">LAOS</h6>
-                                            <h5 style="color:white; text-align:center">12%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div1"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="achieved1"></span></h5>
                                         </div>
                                         <div class="sml">
-                                            <h6 style="color:white;padding-top:30%; text-align:center">MYANMAR</h6>
-                                            <h5 style="color:white; text-align:center">23%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div2"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="achieved2"></span></h5>
                                         </div>
                                         <div class="sml">
-                                            <h6 style="color:white;padding-top:30%; text-align:center">INDIA</h6>
-                                            <h5 style="color:white; text-align:center">23%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div3"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="achieved3"></span></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -61,38 +76,38 @@
                                     <div class="col-md-12">
                                         <div class="col-md-2">
                                             <div class="sml">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">CAMBODIA</h6>
-                                                <h5 style="color:white; text-align:center">52%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div4" ></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="achieved4"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">BANGLADESH</h6>
-                                                <h5 style="color:white; text-align:center">45%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div5"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="achieved5"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">VIETNAM</h6>
-                                                <h5 style="color:white; text-align:center">33%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div6"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="achieved6"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">PHILIPPINES</h6>
-                                                <h5 style="color:white; text-align:center">42%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div7"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="achieved7"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">SRI LANKA</h6>
-                                                <h5 style="color:white; text-align:center">48%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div8"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="achieved8"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">SINGAPORE</h6>
-                                                <h5 style="color:white; text-align:center">48%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div9"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="achieved9"></span></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -114,20 +129,20 @@
                                     </div>
                                     <div style="padding-top:12px" class="col-md-2">
                                         <div class="sml1">
-                                            <h6 style="color:white;padding-top:30%; text-align:center">PAKISTAN</h6>
-                                            <h5 style="color:white; text-align:center">39.87%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div0"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="yetachieve0"></span></h5>
                                         </div>
                                         <div class="sml1">
-                                            <h6 style="color:white;padding-top:30%; text-align:center">LAOS</h6>
-                                            <h5 style="color:white; text-align:center">12%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div1"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="yetachieve1"></span></h5>
                                         </div>
                                         <div class="sml1">
-                                            <h6 style="color:white;padding-top:30%; text-align:center">MYANMAR</h6>
-                                            <h5 style="color:white; text-align:center">23%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div2"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="yetachieve2"></span></h5>
                                         </div>
                                         <div class="sml1">
-                                            <h6 style="color:white;padding-top:30%; text-align:center">INDIA</h6>
-                                            <h5 style="color:white; text-align:center">23%</h5>
+                                            <h6 style="color:white;padding-top:30%; text-align:center"><span class="div3"></span></h6>
+                                            <h5 style="color:white; text-align:center"><span id="yetachieve3"></span></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -135,38 +150,38 @@
                                     <div class="col-md-12">
                                         <div class="col-md-2">
                                             <div class="sml1">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">CAMBODIA</h6>
-                                                <h5 style="color:white; text-align:center">52%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div4"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="yetachieve4"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml1">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">BANGLADESH</h6>
-                                                <h5 style="color:white; text-align:center">45%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div5"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="yetachieve5"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml1">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">VIETNAM</h6>
-                                                <h5 style="color:white; text-align:center">33%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div6"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="yetachieve6"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml1">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">PHILIPPINES</h6>
-                                                <h5 style="color:white; text-align:center">42%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div7"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="yetachieve7"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml1">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">SRI LANKA</h6>
-                                                <h5 style="color:white; text-align:center">48%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div8"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="yetachieve8"></span></h5>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="sml1">
-                                                <h6 style="color:white;padding-top:30%; text-align:center">SINGAPORE</h6>
-                                                <h5 style="color:white; text-align:center">48%</h5>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div9"></span></h6>
+                                                <h5 style="color:white; text-align:center"><span id="yetachieve9"></span></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -217,17 +232,27 @@
 </style>
 @section SectionScripts {
     <script lang="javascript" type="text/javascript">
+        function ChangeYear() {
+            window.location = '@Url.Action("TotalRevenue", "Reports", new { year = ""})' + '?year=' + $('#Year').val();
+        };
         $(document).ready(function () {
-
+            var count = 0;
             @foreach(var item in CountryData)
             {
                 var info = Model.Where(x=>x.Country==item.BranchID).FirstOrDefault();
                 if (info != null) {
                     <text>
+                    debugger;
+                $('.div' + count).text('@info.CountryName');
+            var achievedPercent = @info.TotalRevenue>0?((@info.AchievedRevenue * 100) / @info.TotalRevenue):0;
+            $('#achieved' + count).text(achievedPercent.toFixed(2) + '%');
 
-                        $('#div1').HTMLText(@info.CountryName);
+            var yetachievePercent = @info.TotalRevenue>0?((@info.YetToAchieveRevenue * 100) / @info.TotalRevenue):0;
+            $('#yetachieve' + count).text(yetachievePercent.toFixed(2) + '%');
+                     count++;
                     </text>
                 }
+
             }
 
 
