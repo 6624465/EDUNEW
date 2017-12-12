@@ -6,14 +6,19 @@
     decimal? totalRevenue = 0;
     decimal? achievedRevenue = 0;
     decimal? yettoAchieveRevenue = 0;
+    string achievedPercent = "0";
+    string yettoAchievePercent = "0";
     foreach (var item in Model)
     {
         totalRevenue += item.TotalRevenue;
         achievedRevenue += item.AchievedRevenue;
         yettoAchieveRevenue += item.YetToAchieveRevenue;
     }
-    var achievedPercent = ((achievedRevenue * 100) / totalRevenue).Value.ToString("#0.00");
-    var yettoAchievePercent = ((yettoAchieveRevenue * 100) / totalRevenue).Value.ToString("#0.00");
+    if(totalRevenue>0)
+    {
+        achievedPercent = ((achievedRevenue * 100) / totalRevenue).Value.ToString("#0.00");
+        yettoAchievePercent = ((yettoAchieveRevenue * 100) / totalRevenue).Value.ToString("#0.00");
+    }
 
     var CountryData = (List<EZY.EDU.Contract.Branch>)ViewData["CountryData"];
 
@@ -28,6 +33,16 @@
                     </div>
                 </div>
                 <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeYear();" })
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6">
@@ -217,6 +232,9 @@
 </style>
 @section SectionScripts {
     <script lang="javascript" type="text/javascript">
+        function ChangeYear() {
+            window.location = '@Url.Action("TotalRevenue", "Reports", new { year = ""})' + '?year=' + $('#Year').val();
+        };
         $(document).ready(function () {
             var count = 0;
             @foreach(var item in CountryData)
@@ -225,11 +243,11 @@
                 if (info != null) {
                     <text>
                     debugger;
-                    $('.div' + count).text('@info.CountryName');
-            var achievedPercent = ((@info.AchievedRevenue * 100) / @info.TotalRevenue);
+                $('.div' + count).text('@info.CountryName');
+            var achievedPercent = @info.TotalRevenue>0?((@info.AchievedRevenue * 100) / @info.TotalRevenue):0;
             $('#achieved' + count).text(achievedPercent.toFixed(2) + '%');
 
-            var yetachievePercent = ((@info.YetToAchieveRevenue * 100) / @info.TotalRevenue);
+            var yetachievePercent = @info.TotalRevenue>0?((@info.YetToAchieveRevenue * 100) / @info.TotalRevenue):0;
             $('#yetachieve' + count).text(yetachievePercent.toFixed(2) + '%');
                      count++;
                     </text>
