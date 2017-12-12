@@ -35,10 +35,17 @@
                     <div>
                         @grid.GetHtml(
                                 columns: grid.Columns(
+                     grid.Column("CountryName", "Country", canSort: true),
                     grid.Column("ProductName", "Product", canSort: true),
                     grid.Column("CourseName", "Course Name", canSort: true),
-                    grid.Column("NoOfDays", "No Of Days", canSort: true),
-                    grid.Column("CountryName", "Country", canSort: true),
+                    grid.Column("NoOfDays", "No Of Days",
+                    format:
+                    @<text>
+                        <div style='width:80px;'>
+                            @item.NoOfDays
+                        </div>
+                    </text>
+                    , canSort: true, style: "center"),
                     grid.Column("PublicPrice", "Public Price", format: @<text> 
                          <span class="display-mode">@ConvertToInt64dollar(item.PublicPrice) </span> 
                         </text>, style: "", canSort: true),
@@ -66,7 +73,11 @@
         </div>
     </div>
 </div>
-
+<style>
+    .center{
+            text-align:center!important
+    }
+</style>
 @using(Html.BeginForm("DeleteEduCourse", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
 {
     <input type = "hidden" id="id" name="id" />
