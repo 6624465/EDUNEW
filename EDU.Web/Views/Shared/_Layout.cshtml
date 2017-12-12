@@ -31,8 +31,12 @@
         .icheckbox_flat {
             margin-top: 10px;
         }
+
         .ptop7 {
             padding: 7px 0px 0px 10px;
+        }
+        .ptop0 {
+            padding: 0px 0px 0px 10px;
         }
 
         .font20 {
@@ -72,9 +76,9 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     @*<li><a href="javascript:;"><span class="ion ion-person">&nbsp;&nbsp;</span>Profile</a></li>
-                    <li><a href="javascript:;"><span class="ion ion-settings">&nbsp;&nbsp;</span>Settings</a></li>
-                    <li class="divider"></li>
-                    <li><a href="javascript:;"><span class="ion ion-lock-combination">&nbsp;&nbsp;</span>Lock Screen</a></li>*@
+                        <li><a href="javascript:;"><span class="ion ion-settings">&nbsp;&nbsp;</span>Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:;"><span class="ion ion-lock-combination">&nbsp;&nbsp;</span>Lock Screen</a></li>*@
                     <li><a href="@Url.Content("~/Layout/LogOut")"><span class="ion ion-power">&nbsp;&nbsp;</span>LogOut</a></li>
                 </ul>
             </li>
@@ -89,28 +93,28 @@
             <div class="nav-head">
                 <!-- site logo -->
                 <a href="@Url.Content("~/Home/Index")" class="site-logo text-uppercase">
-                   <img src="@Url.Content("~/images/ezy-corporation-logo.png")" style="width:35px;" />
+                    <img src="@Url.Content("~/images/ezy-corporation-logo.png")" style="width:35px;" />
                     <span class="text">EZY EDU</span>
                 </a>
             </div>
-            
+
             <nav class="site-nav clearfix" role="navigation">
                 @*<div class="profile clearfix mb15">
-                    <img src="@Url.Content("~/images/admin.jpg")" alt="admin">
-                    <div class="group">
-                        <h5 class="name">Robert Smith</h5>
-                        <small class="desig text-uppercase">UX Designer</small>
-                    </div>
-                </div>*@
+                        <img src="@Url.Content("~/images/admin.jpg")" alt="admin">
+                        <div class="group">
+                            <h5 class="name">Robert Smith</h5>
+                            <small class="desig text-uppercase">UX Designer</small>
+                        </div>
+                    </div>*@
 
                 <!-- navigation -->
                 <ul class="list-unstyled clearfix nav-list mb15">
                     @*<li class="active">
-                        <a href="index.html">
-                            <i class="ion ion-monitor"></i>
-                            <span class="text">Dashboard</span>
-                        </a>
-                    </li>*@
+                            <a href="index.html">
+                                <i class="ion ion-monitor"></i>
+                                <span class="text">Dashboard</span>
+                            </a>
+                        </li>*@
                     <li class="waves-effect open">
                         <a href="javascript:;">
                             <i class="ion ion-android-options"></i>
@@ -118,12 +122,6 @@
                             <i class="arrow ion-chevron-left"></i>
                         </a>
                         <ul class="inner-drop list-unstyled">
-                            <li id="liEduProductList">
-                                <a href="@Url.Content("~/Master/EduProductList")">
-                                    <i class="fa fa-book font20"></i>
-                                    <span class="text ptop7">Products</span>
-                                </a>
-                            </li>
                             <li id="liCourse">
                                 <a href="@Url.Content("~/Master/CourseList")">
                                     <i class="fa fa-bars font20"></i>
@@ -134,18 +132,6 @@
                                 <a href="@Url.Content("~/Master/CourseSalesMasterList")">
                                     <i class="fa fa-chain font20"></i>
                                     <span class="text ptop7">Regional Leads</span>
-                                </a>
-                            </li>
-                            <li id="liRevenueList">
-                                <a href="@Url.Content("~/Revenue/RevenueList?country="+Convert.ToInt16(Session["BranchId"])+"&year="+year)">
-                                    <i class="fa fa-money font20"></i>
-                                    <span class="text ptop7">Assign Revenue</span>
-                                </a>
-                            </li>
-                            <li id="liTrainersList">
-                                <a href="@Url.Content("~/Trainer/TrainersList")">
-                                    <i class="fa fa-user-o font20"></i>
-                                    <span class="text ptop7">Vendor and Trainers</span>
                                 </a>
                             </li>
                             <li id="liTrainingConfirmationList">
@@ -184,28 +170,76 @@
                                     <span class="text ptop7">Operational Transactions</span>
                                 </a>
                             </li>
-                            <li id="liOperationalTransactionList">
-                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionReport?year="+year+"&country="+Convert.ToInt16(Session["BranchId"]))">
-                                    <i class="fa fa-table font20"></i>
-                                    <span class="text ptop7">Operational Transactions Report</span>
+                            <li id="liTrainersList">
+                                <a href="@Url.Content("~/Trainer/TrainersList")">
+                                    <i class="fa fa-user-o font20"></i>
+                                    <span class="text ptop7">Vendor and Trainers</span>
                                 </a>
                             </li>
-                            
+                            <li id="liEduProductList">
+                                <a href="@Url.Content("~/Master/EduProductList")">
+                                    <i class="fa fa-book font20"></i>
+                                    <span class="text ptop7">Products</span>
+                                </a>
+                            </li>
+                            <li id="liRevenueList">
+                                <a href="@Url.Content("~/Revenue/RevenueList?country="+Convert.ToInt16(Session["BranchId"])+"&year="+year)">
+                                    <i class="fa fa-money font20"></i>
+                                    <span class="text ptop7">Assign Revenue</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="waves-effect open css10">
                         <a href="javascript:;">
                             <i class="ion ion-stats-bars"></i>
-                            <span class="text">Reports</span>
+                            <span class="text">Dashboard</span>
                             <i class="arrow ion-chevron-left"></i>
                         </a>
                         <ul class="inner-drop list-unstyled">
-                            <li id="liReportsAchievement" class="waves-effect"><a href="@Url.Content("~/Reports/Achievement?year=" + year)">Achievement</a></li>
-                            <li id="liReportsOperationaltransaction" class="waves-effect"><a href="@Url.Content("~/Reports/Operationaltransaction?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">Operational Transaction</a></li>
-                            <li id="liReportsOperationalExpenses" class="waves-effect"><a href="@Url.Content("~/Reports/OperationalExpenses?year=" + year)">Operational Expenses</a></li>
-                            <li id="liDashboardOperationaltransaction" class="waves-effect"><a href="@Url.Content("~/Reports/DashboardOperationaltransaction?month=" + month + "&year=" + year)">Dashboard Operational Transaction</a></li>
-                            <li id="liReportsTotalRevenue" class="waves-effect"><a href="@Url.Content("~/Reports/TotalRevenue?year=" + year)">Total Revenue</a></li>
-                            <li id="liReportsDashboard" class="waves-effect"><a href="@Url.Content("~/Reports/Dashboard?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">DashBoard - Achievement YTD</a></li>
+                            <li id="liReportsAchievement" class="waves-effect">
+                                <a href="@Url.Content("~/Reports/Achievement?year=" + year)">
+                                    <i class="fa fa-table font20"></i>
+                                    <span class="text ptop7">Performance Report</span>
+                                </a>
+                            </li>
+
+                            <li id="liOperationalTransactionList">
+                                <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionReport?year="+year+"&country="+Convert.ToInt16(Session["BranchId"]))">
+                                    <i class="fa fa-table font20"></i>
+                                    <span class="text ptop0">Operational Transactions Report</span>
+                                </a>
+                            </li>
+                            <li id="liReportsOperationaltransaction" class="waves-effect">
+                                <a href="@Url.Content("~/Reports/Operationaltransaction?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
+                                    <i class="fa fa-table font20"></i>
+                                    <span class="text ptop7"> Operational Transaction</span>
+                                </a>
+                            </li>
+                            <li id="liReportsOperationalExpenses" class="waves-effect">
+                                <a href="@Url.Content("~/Reports/OperationalExpenses?year=" + year)">
+                                    <i class="fa fa-table font20"></i>
+                                    <span class="text ptop7"> Operational Expenses</span>
+                                </a>
+                            </li>
+                            <li id="liDashboardOperationaltransaction" class="waves-effect">
+                                <a href="@Url.Content("~/Reports/DashboardOperationaltransaction?month=" + month + "&year=" + year)">
+                                    <i class="fa fa-table font20"></i>
+                                    <span class="text ptop0">Dashboard Operational Transaction</span>
+                                </a>
+                            </li>
+                            <li id="liReportsTotalRevenue" class="waves-effect">
+                                <a href="@Url.Content("~/Reports/TotalRevenue?year=" + year)">
+                                    <i class="fa fa-table font20"></i>
+                                    <span class="text ptop7">Total Revenue</span>
+                                </a>
+                            </li>
+                            <li id="liReportsDashboard" class="waves-effect">
+                                <a href="@Url.Content("~/Reports/Dashboard?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
+                                    <i class="fa fa-table font20"></i>
+                                    <span class="text ptop0">DashBoard - Achievement YTD</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul> <!-- #end navigation -->
@@ -213,12 +247,12 @@
 
             <!-- nav-foot -->
             @*<footer class="nav-foot">
-                <p>
-                    <b>Version</b> 2.3.8<br />
-                    <strong>Copyright &copy; 2017 <a href="#">EZY EDU</a>.</strong>
-                    <br />All rights reserved.
-                </p>
-            </footer>*@
+                    <p>
+                        <b>Version</b> 2.3.8<br />
+                        <strong>Copyright &copy; 2017 <a href="#">EZY EDU</a>.</strong>
+                        <br />All rights reserved.
+                    </p>
+                </footer>*@
 
         </aside>
         <!-- #end main-navigation -->
@@ -271,7 +305,6 @@
     <!-- #end theme settings -->
     <!-- Dev only -->
     <!-- Vendors -->
-
     <!--highcharts-->
     <script src="@Url.Content("~/Scripts/Charts/highcharts.js")"></script>
     <script src="@Url.Content("~/Scripts/Charts/highcharts-3d.js")"></script>
@@ -311,7 +344,7 @@
             else
                 return false;
         });
-       
+
         $(document).on('keypress', '.numCsspuls', function (evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;
             if ((charCode >= 48 && charCode <= 57) || charCode == 8 || charCode == 43)
