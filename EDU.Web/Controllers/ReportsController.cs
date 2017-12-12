@@ -1,6 +1,7 @@
 ﻿using EDU.Web;
 using EDU.Web.Models;
 using EDU.Web.ViewModels.OperationalTransaction;
+using EDU.Web.ViewModels.ReportsModel;
 using EZY.EDU.BusinessFactory;
 using System;
 using System.Collections.Generic;
@@ -146,7 +147,7 @@ namespace EDU.Web.Reports.Controllers
 
                 foreach (var item in countrylist)
                 {
-                    if (list.Where(x => x.Country == item.BranchID && x.Month==month).Count() == 0)
+                    if (list.Where(x => x.Country == item.BranchID && x.Month == month).Count() == 0)
                     {
                         reportListbyMonth.Add(new OperationalTransactionReportByMonth()
                         {
@@ -177,31 +178,62 @@ namespace EDU.Web.Reports.Controllers
 
                 ViewData["CountryData"] = countrylist;
                 return View(reportListbyMonth);
-
-                //if (list != null)
-                //{
-                //    reportListbyMonth = list.Where(m => m.Month == month)
-                //        .Select(x => new OperationalTransactionReportByMonth
-                //        {
-                //            ParticularName = x.ParticularName,
-                //            Amount = x.Amount,
-                //            Month = x.Month,
-                //            Country = x.Country,
-                //            Year = year,
-                //            CountryName = x.CountryName
-                //        }).ToList();
-                //}
-
-                //return View(reportListbyMonth);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public ActionResult TotalRevenue()
+        public ActionResult TotalRevenue(int year)
         {
-            return View();
+            List<Revenue> RevenueList = dbContext.Revenues.Where(x => x.IsActive == true && x.Year == year).ToList();
+            var countrylist = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+            List<TotalRevenueVM> list = new List<TotalRevenueVM>();
+
+            foreach (var item in countrylist)
+            {
+                if (RevenueList.Where(x => x.Country == item.BranchID).Count() == 0)
+                {
+                    list.Add(new TotalRevenueVM()
+                    {
+                        Year = year,
+                        Country = item.BranchID,
+                        CountryName = item.BranchName,
+                        TotalRevenue = 0,
+                        AchievedRevenue = 0,
+                        YetToAchieveRevenue = 0
+                    });
+                }
+                else
+                {
+                    decimal? totalrevenue = 0;
+                    decimal? achievedRevenue = 0;
+                    decimal? yetToAchieveRevenue = 0;
+
+                    totalrevenue = RevenueList.Where(x => x.Country == item.BranchID).Sum(a=>a.YearlyTarget);                    
+
+                    foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == item.BranchID && x.StartDate.Value.Year == year && x.IsActive == true).ToList())
+                    {
+                        foreach (var regitem in dbContext.Registrations.Where(x => x.TrainingConfirmationID == tcitem.TrainingConfirmationID && x.IsActive == true).ToList())
+                        {
+                            achievedRevenue += (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3);
+                        }
+                    }
+                    yetToAchieveRevenue = totalrevenue - achievedRevenue;
+
+                    list.Add(new TotalRevenueVM()
+                    {
+                        Year = year,
+                        Country = item.BranchID,
+                        CountryName = item.BranchName,
+                        TotalRevenue = totalrevenue,
+                        AchievedRevenue = achievedRevenue,
+                        YetToAchieveRevenue = yetToAchieveRevenue
+                    });
+                }
+            }
+            ViewData["CountryData"] = countrylist;
+            return View(list);
         }
         public ActionResult DashBoard()
         {

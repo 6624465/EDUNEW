@@ -1656,6 +1656,7 @@
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\CourseDetail\CourseDetailVm.cs" />
     <Compile Include="ViewModels\OperationalTransaction\OperationalTransactionReportVM.cs" />
+    <Compile Include="ViewModels\ReportsModel\TotalRevenueVM.cs" />
     <Compile Include="ViewModels\VendorPaymentStatusModel\VendorPaymentStatusVM.cs" />
     <Compile Include="ViewModels\CustomerPaymentStatusModel\CustomerPaymentStatusVM.cs" />
     <Compile Include="ViewModels\FinancialTransaction\FinancialTransactionVM.cs" />
