@@ -14,4 +14,16 @@ namespace EDU.Web.ViewModels.ReportsModel
         public decimal? AchievedRevenue { get; set; }
         public decimal? YetToAchieveRevenue { get; set; }
     }
+
+
+    public class ProductTotalRevenueVM
+    {
+        public int Year { get; set; }
+        public Int16 Country { get; set; }
+        public string CountryName { get; set; }
+        public string ProductName { get; set; }
+        public int ProductId { get; set; }
+        public decimal? TotalRevenue { get; set; }
+        public decimal? AchievedRevenue { get; set; }
+    }
 }

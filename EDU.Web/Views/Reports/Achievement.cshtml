@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<EDU.Web.ViewModels.ReportsModel.ProductTotalRevenueVM>
+
 @{
     ViewBag.Title = "Achievement";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,12 +20,12 @@
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div id="jqChart8"></div>
+                                        <div id="jqChartdoughnut"></div>
                                     </div>
                                 </div>
                                 <div class="row css10">
                                     <div class="col-md-12">
-                                        <div id="jqChart9"></div>
+                                        <div id="jqChart"></div>
                                     </div>
                                 </div>
                             </div>
@@ -33,9 +34,7 @@
                                     <div class="col-md-1">
                                     </div>
                                     <div class="col-md-5">
-
-                                        <div id="jqChart"></div>
-
+                                        <div id="jqChart0"></div>
                                     </div>
                                     <div class="col-md-5">
                                         <div id="jqChart1"></div>
@@ -45,11 +44,8 @@
                                 <div class="row css10">
                                     <div class="col-md-1">
                                     </div>
-
                                     <div class="col-md-5">
-
                                         <div id="jqChart2"></div>
-
                                     </div>
                                     <div class="col-md-5">
                                         <div id="jqChart3"></div>
@@ -59,9 +55,7 @@
                                     <div class="col-md-1">
                                     </div>
                                     <div class="col-md-5">
-
                                         <div id="jqChart4"></div>
-
                                     </div>
                                     <div class="col-md-5">
                                         <div id="jqChart5"></div>
@@ -71,9 +65,7 @@
                                     <div class="col-md-1">
                                     </div>
                                     <div class="col-md-5">
-
                                         <div id="jqChart6"></div>
-
                                     </div>
                                     <div class="col-md-5">
                                         <div id="jqChart7"></div>
@@ -105,7 +97,7 @@
                 { offset: 1, color: 'white' }]
             };
 
-            $('#jqChart8').jqChart({
+            $('#jqChartdoughnut').jqChart({
                 title: { text: 'Countries By Area' },
                 legend: { title: 'Countries' },
                 border: { strokeStyle: '#6ba851' },
@@ -132,7 +124,7 @@
                 ]
             });
 
-            $('#jqChart9').jqChart({
+            $('#jqChart').jqChart({
                 title: { text: '' },
                 animation: { duration: 1 },
                 shadows: {
@@ -143,13 +135,22 @@
                         type: 'bar',
                         title: '',
                         fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69'],
-                        data: [['OTHER', 200], ['EC COUNCIL', 400], ['MICROSOFT', 250],
-                        ['VMWARE', 500], ['ORACLE', 400]]
+                        data: [
+                        @foreach (var item in Model.GroupBy(x=>x.ProductName).ToList())
+                        {
+                            <text>
+                                [
+                                    '@item.FirstOrDefault().ProductName',
+                                    @item.Sum(a=>a.AchievedRevenue)
+                                ],
+                            </text>
+                        }
+                        ]
                     }
                 ]
             });
 
-            $('#jqChart').jqChart({
+            $('#jqChart0').jqChart({
                 title: { text: 'MYANMAR' },
                 animation: { duration: 1 },
                 shadows: {

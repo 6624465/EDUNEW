@@ -18,9 +18,38 @@ namespace EDU.Web.Reports.Controllers
     {
         EducationEntities dbContext = new EducationEntities();
 
-        public ActionResult Achievement()
+        public ActionResult Achievement(int year)
         {
-            return View();
+            List<Revenue> RevenueList = dbContext.Revenues.Where(x => x.IsActive == true && x.Year == year).ToList();
+
+            var countrylist = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+
+            List<ProductTotalRevenueVM> list = new List<ProductTotalRevenueVM>();
+
+            foreach (var item in RevenueList)
+            {
+                decimal? achievedRevenue = 0;
+                foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == item.Country && x.StartDate.Value.Year == year && x.IsActive == true && x.Product == item.Product).ToList())
+                {
+                    foreach (var regitem in dbContext.Registrations.Where(x => x.TrainingConfirmationID == tcitem.TrainingConfirmationID && x.IsActive == true).ToList())
+                    {
+                        achievedRevenue += (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3);
+                    }
+                }
+
+                list.Add(new ProductTotalRevenueVM()
+                {
+                    Year = year,
+                    Country = item.Country,
+                    CountryName = item.CountryName,
+                    ProductName = item.ProductName,
+                    TotalRevenue = item.YearlyTarget,
+                    AchievedRevenue = achievedRevenue
+                });
+            }
+            
+            ViewData["CountryData"] = countrylist;
+            return View(list);
         }
         public ActionResult Operationaltransaction(Int16 country, int month, int year)
         {
@@ -210,7 +239,7 @@ namespace EDU.Web.Reports.Controllers
                     decimal? achievedRevenue = 0;
                     decimal? yetToAchieveRevenue = 0;
 
-                    totalrevenue = RevenueList.Where(x => x.Country == item.BranchID).Sum(a=>a.YearlyTarget);                    
+                    totalrevenue = RevenueList.Where(x => x.Country == item.BranchID).Sum(a => a.YearlyTarget);
 
                     foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == item.BranchID && x.StartDate.Value.Year == year && x.IsActive == true).ToList())
                     {
