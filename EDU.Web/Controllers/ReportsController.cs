@@ -86,23 +86,23 @@ namespace EDU.Web.Reports.Controllers
                 {
                     if (list.Where(x => x.Country == item.BranchID).Count() == 0)
                     {
-                        reportListbyYear.Add(new OperationalTransactionReportByYear()
-                        {
-                            Country = item.BranchID,
-                            CountryName = item.BranchName,
-                            JanAmount = 0,
-                            FebAmount = 0,
-                            MarAmount = 0,
-                            AprAmount = 0,
-                            MayAmount = 0,
-                            JunAmount = 0,
-                            JulAmount = 0,
-                            AugAmount = 0,
-                            SepAmount = 0,
-                            OctAmount = 0,
-                            NovAmount = 0,
-                            DecAmount = 0
-                        });
+                        //reportListbyYear.Add(new OperationalTransactionReportByYear()
+                        //{
+                        //    Country = item.BranchID,
+                        //    CountryName = item.BranchName,
+                        //    JanAmount = 0,
+                        //    FebAmount = 0,
+                        //    MarAmount = 0,
+                        //    AprAmount = 0,
+                        //    MayAmount = 0,
+                        //    JunAmount = 0,
+                        //    JulAmount = 0,
+                        //    AugAmount = 0,
+                        //    SepAmount = 0,
+                        //    OctAmount = 0,
+                        //    NovAmount = 0,
+                        //    DecAmount = 0
+                        //});
                     }
                     else
                     {
