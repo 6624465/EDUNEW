@@ -234,9 +234,9 @@
         $(document).ready(function () {
             var totalleadsonhand ="$ "+ @ViewData["totalleadsonhand"].ToString();
             var totalrevenue = "$ " + @ViewData["totalrevenue"].ToString();
-            if(count>0)
+            if(@count>0)
             {
-                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalleadsonhand + '</td><td></td><td></td><td></td><td class="pull-right">' + totalrevenue + '</td><td>');
+                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="pull-right">' + totalrevenue + '</td><td>');
             }
         });
 
