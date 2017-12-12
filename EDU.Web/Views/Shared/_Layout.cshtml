@@ -205,7 +205,7 @@
                             <li id="liReportsOperationalExpenses" class="waves-effect"><a href="@Url.Content("~/Reports/OperationalExpenses?year=" + year)">Operational Expenses</a></li>
                             <li id="liDashboardOperationaltransaction" class="waves-effect"><a href="@Url.Content("~/Reports/DashboardOperationaltransaction?month=" + month + "&year=" + year)">Dashboard Operational Transaction</a></li>
                             <li id="liReportsTotalRevenue" class="waves-effect"><a href="@Url.Content("~/Reports/TotalRevenue?year=" + year)">Total Revenue</a></li>
-                            <li id="liReportsDashboard" class="waves-effect"><a href="@Url.Content("~/Reports/Dashboard")">DashBoard - Achievement YTD</a></li>
+                            <li id="liReportsDashboard" class="waves-effect"><a href="@Url.Content("~/Reports/Dashboard?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">DashBoard - Achievement YTD</a></li>
                         </ul>
                     </li>
                 </ul> <!-- #end navigation -->
