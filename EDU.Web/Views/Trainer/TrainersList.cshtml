@@ -34,11 +34,6 @@
                     grid.Column("TrainerName", "Trainer Name", canSort: true),
                     grid.Column("Technology", "Technology", canSort: true),
                     grid.Column("CountryName", "Country Name", canSort: true),
-                    grid.Column("Profile", "Profile", format:
-                    @<text>
-                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
-                    </text>
-                         , canSort: true),
                     grid.Column("TrainerRate", "Trainer Rate", format: (item) => new HtmlString("$" + Convert.ToInt64(item.TrainerRate)), canSort: true),
                     grid.Column("VendorName", "Vendor Name", canSort: true),
 
@@ -75,7 +70,14 @@
                                         }
                                     </div>
                                 </text>),
-                    grid.Column("", "#Action", canSort: false,
+
+
+                        grid.Column("Profile", "Profile", format:
+                        @<text>
+                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
+                        </text>
+                         , canSort: true),
+                      grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
                                     <div style='width:80px;'>
