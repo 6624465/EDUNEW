@@ -57,54 +57,37 @@
                         <div class="col-md-12">
                             <div class="col-md-9">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="div0">
                                         <div id="container0"></div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="div1">
                                         <div id="container1"></div>
                                     </div>
-                                </div>
-                                <section class="space">
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div2">
                                             <div id="container2"></div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div3">
                                             <div id="container3"></div>
                                         </div>
-                                    </div>
-                                </section>
-                                <section class="space">
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div4">
                                             <div id="container4"></div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div5">
                                             <div id="container5"></div>
                                         </div>
-                                    </div>
-                                </section>
-                                <section class="space">
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div6">
                                             <div id="container6"></div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div7">
                                             <div id="container7"></div>
                                         </div>
-                                    </div>
-                                </section>
-                                <section class="space">
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div8">
                                             <div id="container8"></div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" id="div9">
                                             <div id="container9"></div>
                                         </div>
                                     </div>
-                                </section>
-                            </div>
                             <div class="col-md-2">
                                 <div class="row">
 
@@ -203,8 +186,8 @@
 @section SectionScripts{
     <script type="text/javascript">
 
-         function ChangeMonth() {
-             window.location = '@Url.Action("DashboardOperationaltransaction", "Reports", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
+        function ChangeMonth() {
+            window.location = '@Url.Action("DashboardOperationaltransaction", "Reports", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
         $(function () {
@@ -214,57 +197,68 @@
                 colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
             });
 
-        var count = 0;
+            var count = 0;
             @foreach (var item in CountryData)
             {
+                foreach (var info in Model.Where(x=>x.Country==item.BranchID).ToList())
+                {
+                    if(info.ParticularName=="")
+                    {
+                        <text>$('#div'+count).hide(); </text>
+                    }
+                    else
+                    {
+                         <text>$('#div'+count).show(); </text>
+                    }
+                }
             <text>
-        Highcharts.chart('container' + count, {
-                        chart: {
-                            type: 'pie',
-                            options3d: {
-                                enabled: true,
-                                alpha: 65,
-                                beta: 0
-                            }
-                        },
-                        title: {
-                            text: '@item.BranchName'
-                        },
-                        tooltip: {
-                            pointFormat: '<b>{point.percentage:.1f}%</b>'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                depth: 60,
-                                dataLabels: {
-                                    enabled: false,
-                                    format: '{point.name}'
-                                }
-                            }
-                        },
-                        series: [{
-                            type: 'pie',
-                            data: [
-                        @foreach (var info in Model.Where(x=>x.Country==item.BranchID).ToList())
+            Highcharts.chart('container' + count, {
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 65,
+                        beta: 0
+                    }
+                },
+                title: {
+                    text: '@item.BranchName'
+                },
+                tooltip: {
+                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 60,
+                        dataLabels: {
+                            enabled: false,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    data: [
+                @foreach (var info in Model.Where(x=>x.Country==item.BranchID).ToList())
                         {
                             <text>
-                        {
-                            name:'@info.ParticularName',
-                            y:@info.Amount,
-                            sliced: true,
-                            selected:true
-                        },
-                        </text>
+                {
+                    name:'@info.ParticularName',
+                    y:@info.Amount,
+                    sliced: true,
+                    selected:true
+                },
+                </text>
                             }
                     ]
-                        }]
-                    });
-                    count++;
+                }]
+            });
+            count++;
             </text>
                 }
-            });
+        });
     </script>
 }
 
