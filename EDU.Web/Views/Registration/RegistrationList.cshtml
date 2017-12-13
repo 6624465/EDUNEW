@@ -232,9 +232,13 @@
                                                     </text>),
                                             grid.Column("VATPercent", "VAT/TAX %",
                                             format:
-                                            @<text>
-                                                @ConvertToInt64percent(item.VATPercent)
-                                            </text>
+                                                    @<text>
+                                                        <div style='width:80px;'>
+                                                            <span class="center">
+                                                                @ConvertToInt64dollar(item.VATPercent)
+                                                            </span>
+                                                        </div>
+                                                    </text>
                                             , canSort: true, style: "center"),
                                             grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
                                                     format:
@@ -310,7 +314,15 @@
                                                     </text>),
                                             grid.Column("Email", "Email", canSort: true),
                                             grid.Column("Contact", "Contact", canSort: true),
-                                            grid.Column("CompanyName", "Company Name", canSort: true),
+                                            grid.Column("CompanyName", "Company Name", canSort: true,
+                                                    format:
+                                                    @<text>
+                                                        <div style='width:100px;'>
+                                                            <span class="center">
+                                                                @(item.CompanyName)
+                                                            </span>
+                                                        </div>
+                                                    </text>),
                                             grid.Column("", "#Action", canSort: false,
                                                         format:
                                                         @<text>
