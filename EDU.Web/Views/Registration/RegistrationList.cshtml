@@ -139,54 +139,53 @@
                                         <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")" />
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")" />
                                     </div>
                                     <div class="col-md-1">
                                         <label class="control-label">Course:&nbsp;&nbsp;  </label>
                                     </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")" />
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")" />
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-1" style="width:110px">
                                         <label class="control-label">Trainer Name:&nbsp;&nbsp;   </label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")" />
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")" />
                                     </div>
-                                    <div class="col-md-2"></div>
                                 </div>
                               </div>
-                            <div class="row">
+                            <div class="row css10">
                             <div class="form-group">
                                 <div class="col-md-1 ">
                                     <label class="control-label">Start Date:&nbsp;&nbsp;</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")" />
+                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")" />
                                 </div>
                                 <div class="col-md-1">
                                     <label class="control-label">End Date:&nbsp;&nbsp;    </label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")" />
-                                </div>
-                                <div class="col-md-1 ">
-                                    <label class="control-label" style='width:70px;'>Total # of days:&nbsp;&nbsp;    </label>
+                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")" />
                                 </div>
                                 <div class="col-md-1">
-                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")" />
+                                    <label class="control-label"  style="white-space:nowrap">Total # of days:</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")" />
                                 </div>
                                 <div class="col-md-1">
                                     <label class="control-label">Type:</label>
                                 </div>
                                 <div class="col-md-1">
-                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")" />
+                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")" />
                                 </div>
                                 <div class="col-md-1">
-                                    <label class="control-label">No of Students:&nbsp;&nbsp;   </label>
+                                    <label class="control-label " style="white-space:nowrap">No of Students:</label>
                                 </div>
                                 <div class="col-md-1">
-                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")" />
+                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")" />
                                 </div>
                             </div>
                         </div>

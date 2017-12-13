@@ -185,30 +185,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th>VMWARE</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                        </tr>
-                                        <tr>
-                                            <th>ORACLE</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                        </tr>
-                                        <tr>
-                                            <th>MICROSOFT</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                        </tr>
-                                        <tr>
-                                            <th>EC COUNCIL</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th></th>
-                                        </tr>
+                                        @foreach (var it in productRevenueByMonth)
+                                        {
+                                            decimal? amt = it.JanAmount + it.FebAmount + it.MarAmount + it.AprAmount + it.MayAmount + it.JuneAmount + it.JulyAmount + it.AugAmount + it.SepAmount + it.OctAmount + it.NovAmount + it.DecAmount;
+                                            decimal? percent = amt / (it.TotalRevenue * 100);
+                                            <tr>
+                                                <th>@it.ProductName</th>
+                                                <th>@it.TotalRevenue.Value.ToString("#0.00")</th>
+                                                <th>@amt.Value.ToString("#0.00")</th>
+                                                <th>@percent.Value.ToString("#0.00")%</th>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -226,75 +213,30 @@
                                             <th>JUL</th>
                                             <th>AUG</th>
                                             <th>SET</th>
+                                            <th>OCT</th>
                                             <th>NOV</th>
                                             <th>DEC</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th>VMWARE</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-
-
-                                        </tr>
-                                        <tr>
-                                            <th>ORACLE</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-
-
-                                        </tr>
-                                        <tr>
-                                            <th>MICROSOFT</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-
-
-
-                                        </tr>
-                                        <tr>
-                                            <th>EC COUNCIL</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th></th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-                                            <th>25%</th>
-                                            <th>80</th>
-                                            <th>20</th>
-
-                                        </tr>
+                                        @foreach (var itm in productRevenueByMonth)
+                                        {
+                                            <tr>
+                                                <th>@itm.ProductName</th>
+                                                <th>@itm.JanAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.FebAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.MarAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.AprAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.MayAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.JuneAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.JulyAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.AugAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.SepAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.OctAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.NovAmount.Value.ToString("#0.00")</th>
+                                                <th>@itm.DecAmount.Value.ToString("#0.00")</th>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
