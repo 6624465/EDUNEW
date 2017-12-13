@@ -95,7 +95,7 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="RDate">
-                            @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control dtCss" })
+                            @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control dtCss",@required=true })
                             <span class="input-group-addon">
                                 <i class="ion ion-calendar"></i>
                             </span>
