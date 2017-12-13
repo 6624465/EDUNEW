@@ -236,14 +236,75 @@ namespace EDU.Web.Reports.Controllers
             List<Revenue> RevenueList = dbContext.Revenues.Where(x => x.IsActive == true && x.Year == year && x.Country == country).ToList();
             var countrylist = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
             var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
-            List<ProductTotalRevenueByMonthVM> list = new List<ProductTotalRevenueByMonthVM>();
+
+            ProductRevenueReportVM report = new ProductRevenueReportVM();
+            List<ProductTotalRevenueByMonthVM> prodTotalRevenueByMonth = new List<ProductTotalRevenueByMonthVM>();
+            List<ProductRevenueByMonthVM> prodRevenueByMonth = new List<ProductRevenueByMonthVM>();
 
             foreach (var item in productList)
             {
+                string cname = countrylist.Where(x => x.BranchID == country).FirstOrDefault().BranchName;
+                var revenueitem = RevenueList.Where(x => x.Country == country && x.Product == item.Id).FirstOrDefault();
+
+                decimal? janamount = 0;
+                decimal? febamount = 0;
+                decimal? maramount = 0;
+                decimal? apramount = 0;
+                decimal? mayamount = 0;
+                decimal? juneamount = 0;
+                decimal? julyamount = 0;
+                decimal? augamount = 0;
+                decimal? sepamount = 0;
+                decimal? octamount = 0;
+                decimal? novamount = 0;
+                decimal? decamount = 0;
+
+                foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == country && x.StartDate.Value.Year == year && x.IsActive == true && x.Product == item.Id).ToList())
+                {
+                    foreach (var regitem in dbContext.Registrations.Where(x => x.TrainingConfirmationID == tcitem.TrainingConfirmationID && x.IsActive == true).ToList())
+                    {
+                        janamount += tcitem.StartDate.Value.Month == 1 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        febamount += tcitem.StartDate.Value.Month == 2 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        maramount += tcitem.StartDate.Value.Month == 3 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        apramount += tcitem.StartDate.Value.Month == 4 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        mayamount += tcitem.StartDate.Value.Month == 5 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        juneamount += tcitem.StartDate.Value.Month == 6 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        julyamount += tcitem.StartDate.Value.Month == 7 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        augamount += tcitem.StartDate.Value.Month == 8 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        sepamount += tcitem.StartDate.Value.Month == 9 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        octamount += tcitem.StartDate.Value.Month == 10 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        novamount += tcitem.StartDate.Value.Month == 11 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        decamount += tcitem.StartDate.Value.Month == 12 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                    }
+                }
+
+                prodRevenueByMonth.Add(new ProductRevenueByMonthVM()
+                {
+                    Country = country,
+                    CountryName = cname,
+                    ProductName = item.ProductName,
+                    Year = year,
+                    TotalRevenue = revenueitem.YearlyTarget,
+                    MonthlyTarget = revenueitem.MonthlyTarget,
+                    JanAmount = janamount,
+                    FebAmount = febamount ,
+                    MarAmount = maramount ,
+                    AprAmount = apramount ,
+                    MayAmount = mayamount ,
+                    JuneAmount =juneamount,
+                    JulyAmount =julyamount,
+                    AugAmount = augamount ,
+                    SepAmount = sepamount ,
+                    OctAmount = octamount ,
+                    NovAmount = novamount ,
+                    DecAmount = decamount
+                });
+
+
+
                 if (RevenueList.Where(x => x.Country == country && x.Product == item.Id).Count() == 0)
                 {
-                    string cname = countrylist.Where(x => x.BranchID == country).FirstOrDefault().BranchName;
-                    list.Add(new ProductTotalRevenueByMonthVM()
+                    prodTotalRevenueByMonth.Add(new ProductTotalRevenueByMonthVM()
                     {
                         Year = year,
                         Country = country,
@@ -263,9 +324,9 @@ namespace EDU.Web.Reports.Controllers
                             achievedRevenue += (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3);
                         }
                     }
-                    var revenueitem = RevenueList.Where(x => x.Country == country && x.Product == item.Id).FirstOrDefault();
+                    //var revenueitem = RevenueList.Where(x => x.Country == country && x.Product == item.Id).FirstOrDefault();
 
-                    list.Add(new ProductTotalRevenueByMonthVM()
+                    prodTotalRevenueByMonth.Add(new ProductTotalRevenueByMonthVM()
                     {
                         Year = year,
                         Country = country,
@@ -277,8 +338,11 @@ namespace EDU.Web.Reports.Controllers
                 }
             }
 
+            report.productTotalRevenueByMonth = prodTotalRevenueByMonth;
+            report.productRevenueByMonth = prodRevenueByMonth;
+
             ViewData["CountryData"] = countrylist;
-            return View(list);
+            return View(report);
         }
 
 

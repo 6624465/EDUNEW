@@ -1,9 +1,23 @@
-﻿@model IEnumerable<EDU.Web.ViewModels.ReportsModel.ProductTotalRevenueByMonthVM>
+﻿@model EDU.Web.ViewModels.ReportsModel.ProductRevenueReportVM
 
 @{
     ViewBag.Title = "DashBoard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    var productTotalRevenueByMonth = Model.productTotalRevenueByMonth;
+    var productRevenueByMonth = Model.productRevenueByMonth;
+
+    decimal? totalrevenue = 0;
+    decimal? achievedtotal = 0;
+    decimal? yettoachieve = 0;
+
+    foreach (var item in productRevenueByMonth)
+    {
+        totalrevenue += item.TotalRevenue;
+        achievedtotal += item.JanAmount + item.FebAmount + item.MarAmount + item.AprAmount + item.MayAmount + item.JuneAmount +
+            item.JulyAmount + item.AugAmount + item.SepAmount + item.OctAmount + item.NovAmount + item.DecAmount;
+    }
+    yettoachieve = totalrevenue - achievedtotal;
 }
 @section StylesCharts{
     <link href="http://circle.firchow.net/assets/css/styles.css" rel="stylesheet">
@@ -44,7 +58,7 @@
                         <div class="row css10">
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.FirstOrDefault().Country,
+                                    @Html.DropDownListFor(x => x.productTotalRevenueByMonth.FirstOrDefault().Country,
                                      new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
                                      "Select Country", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
@@ -52,13 +66,13 @@
                                     <span class="pull-right">Month</span>
                                 </label>
                                 <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                    @Html.DropDownListFor(x => x.productTotalRevenueByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Year</span>
                                 </label>
                                 <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                    @Html.DropDownListFor(x => x.productTotalRevenueByMonth.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
                             </div>
                         </div>
@@ -72,35 +86,35 @@
                                                 <span>100%</span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
-                                            <p class="text-center"><em>VMWARE</em></p>
+                                            <p class="text-center"><em><span id="Prod0"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center green">
                                                 <span>100%</span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
-                                            <p class="text-center"><em>ORACLE</em></p>
+                                            <p class="text-center"><em><span id="Prod1"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center orange">
                                                 <span>100%</span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
-                                            <p class="text-center"><em>MICROSOFT</em></p>
+                                            <p class="text-center"><em><span id="Prod2"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center red">
                                                 <span>100%</span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
-                                            <p class="text-center"><em>EC COUNCIL</em></p>
+                                            <p class="text-center"><em><span id="Prod3"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center orange">
                                                 <span>100%</span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
-                                            <p class="text-center"><em>OTHER</em></p>
+                                            <p class="text-center"><em><span id="Prod4"></span></em></p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -298,70 +312,28 @@
             $('#liReportsDashboard').addClass('active');
 
             var count = 0;
-            @foreach(var item in Model)
+            @foreach(var item in productTotalRevenueByMonth)
             {
             <text>
                 var achievedPercent = @item.TotalRevenue>0?((@item.AchievedRevenue * 100) / @item.TotalRevenue):0;
                 $('#achieved' + count).text(achievedPercent.toFixed(2) + '%');
 
+                $('#Prod' + count).text('@item.ProductName');
                 $('#div' + count).addClass('p' + parseInt(achievedPercent));
                 count++;
             </text>
             }
 
-            $('#jqChart').jqChart({
-                title: { text: '' },
-                legend: { title: '' },
-                border: { strokeStyle: '' },
-                //background: background,
-                //animation: { duration: 1 },
-                //shadows: {
-                //    enabled: true
-                //},
-                series: [
-                    {
-                        type: 'pie',
-                        //fillStyles: ['#418CF0'],
-                        labels: {
-                            //stringFormat: '%.1f%%',
-                            //valueType: 'percentage',
-                            //font: '15px sans-serif',
-                            //fillStyle: 'white'
-                        },
-                        //explodedRadius: 10,
-                        //explodedSlices: [5],
-                        data: [['United States', 65]]
-                    }
-                ]
-            });
-
         });
-        //var chart = new CanvasJS.Chart("chartContainer", {
-        //    animationEnabled: false,
-        //    theme: "light2",
-        //    title: {
-        //        text: "ORACLE"
-        //    },
-        //    axisY: {
-        //        includeZero: false,
-        //    },
-        //    data: [{
-        //        type: "line",
-        //        dataPoints: [
-        //            { y: 0 },
-        //            { y: 60 },
-        //            { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
-        //            { y: 70 },
-        //            { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
-        //        ]
-        //    }]
-        //});
-        //chart.render();
-        var chart = new CanvasJS.Chart("chartContainer0", {
+        var count = 0;
+        @foreach (var item in productRevenueByMonth)
+        {
+        <text>
+        var chart = new CanvasJS.Chart("chartContainer" + count, {
             theme: "light2", // "light1", "light2", "dark1", "dark2"
             animationEnabled: true,
             title:{
-                text: "Share Value - 2016"
+                text: '@item.ProductName'
             },
             axisX: {
                 interval: 1,
@@ -369,8 +341,13 @@
                 valueFormatString: "MMM"
             },
             axisY:{
-                title: "Price (in USD)",
-                valueFormatString: "$#0"
+                title: "",
+                valueFormatString: "$#0",
+                stripLines: [{
+                    value: @item.MonthlyTarget,
+                    label: '@item.MonthlyTarget.Value.ToString("#0.00")'
+                }],
+                maximum: (@item.TotalRevenue)/9,
             },
             data: [{
                 type: "line",
@@ -378,121 +355,39 @@
                 xValueFormatString: "MMM, YYYY",
                 yValueFormatString: "$###.#",
                 dataPoints: [
-                    { x: new Date(2016, 00, 1), y: 61 },
-                    { x: new Date(2016, 01, 1), y: 71 },
-                    { x: new Date(2016, 02, 1), y: 55 },
-                    { x: new Date(2016, 03, 1), y: 50 },
-                    { x: new Date(2016, 04, 1), y: 65 },
-                    { x: new Date(2016, 05, 1), y: 85 },
-                    { x: new Date(2016, 06, 1), y: 68 },
-                    { x: new Date(2016, 07, 1), y: 28 },
-                    { x: new Date(2016, 08, 1), y: 34 },
-                    { x: new Date(2016, 09, 1), y: 24 },
-                    { x: new Date(2016, 10, 1), y: 44 },
-                    { x: new Date(2016, 11, 1), y: 34 }
+                    { x: new Date(@item.Year, 00, 1), y: @item.JanAmount },
+                    { x: new Date(@item.Year, 01, 1), y: @item.FebAmount },
+                    { x: new Date(@item.Year, 02, 1), y: @item.MarAmount },
+                    { x: new Date(@item.Year, 03, 1), y: @item.AprAmount },
+                    { x: new Date(@item.Year, 04, 1), y: @item.MayAmount },
+                    { x: new Date(@item.Year, 05, 1), y: @item.JuneAmount },
+                    { x: new Date(@item.Year, 06, 1), y: @item.JulyAmount },
+                    { x: new Date(@item.Year, 07, 1), y: @item.AugAmount },
+                    { x: new Date(@item.Year, 08, 1), y: @item.SepAmount },
+                    { x: new Date(@item.Year, 09, 1), y: @item.OctAmount },
+                    { x: new Date(@item.Year, 10, 1), y: @item.NovAmount },
+                    { x: new Date(@item.Year, 11, 1), y: @item.DecAmount }
                 ]
-            }]
-        });
+                }]
+            });
         chart.render();
+        count++;
+        </text>
+        }
 
 
-        var chart1 = new CanvasJS.Chart("chartContainer1", {
-            animationEnabled: false,
-            theme: "light2",
-            title: {
-                text: "VMWARE"
-            },
-            axisY: {
-                includeZero: false,
-            },
-            data: [{
-                type: "line",
-                dataPoints: [
-                    { y: 0 },
-                    { y: 60 },
-                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
-                    { y: 70 },
-                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
-                ]
-            }]
-        });
-        chart1.render();
-        var chart2 = new CanvasJS.Chart("chartContainer2", {
-            animationEnabled: false,
-            theme: "light2",
-            title: {
-                text: "MICROSOFT"
-            },
-            axisY: {
-                includeZero: false,
-            },
-            data: [{
-                type: "line",
-                dataPoints: [
-                    { y: 0 },
-                    { y: 60 },
-                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
-                    { y: 70 },
-                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
-                ]
-            }]
-        });
-        chart2.render();
-        var chart3 = new CanvasJS.Chart("chartContainer3", {
-            animationEnabled: false,
-            theme: "light2",
-            title: {
-                text: "EC COUNCIL"
-            },
-            axisY: {
-                includeZero: false,
-            },
-            data: [{
-                type: "line",
-                dataPoints: [
-                    { y: 0 },
-                    { y: 60 },
-                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
-                    { y: 70 },
-                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
-                ]
-            }]
-        });
-        chart3.render();
-        var chart4 = new CanvasJS.Chart("chartContainer4", {
-            animationEnabled: false,
-            theme: "light2",
-            title: {
-                text: "EC COUNCIL"
-            },
-            axisY: {
-                includeZero: false,
-            },
-            data: [{
-                type: "line",
-                dataPoints: [
-                    { y: 0 },
-                    { y: 60 },
-                    { y: 40, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
-                    { y: 70 },
-                    { y: 50, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" }
-                ]
-            }]
-        });
-        chart4.render();
         var chart5 = new CanvasJS.Chart("chartContainer5", {
             animationEnabled: true,
             title: {
-                text: "Total Revenue"
+                text: 'Total Revenue - @totalrevenue.Value.ToString("#0.00")'
             },
             data: [{
                 type: "pie",
                 startAngle: 240,
-                yValueFormatString: "##0.00\"%\"",
                 indexLabel: "{label} {y}",
                 dataPoints: [
-                    { y: 79.45, label: "Google" },
-                    { y: 7.31, label: "Bing" }
+                    { y: @achievedtotal, label: "Achieved" },
+                    { y: @yettoachieve, label: "Yet To Achieve" }
                 ]
             }]
         });
