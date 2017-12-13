@@ -121,7 +121,7 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-md-1 control-label col-md-offset-2">
+                            <label class="col-md-1 control-label">
                                 <span>Event No.</span>
                             </label>
                             <div class="col-md-2">
@@ -132,38 +132,61 @@
                             </div>
                         </div>
                     </div>
-                    <div id="TrainingDetails" class="col-md-8 col-md-offset-2 css10">
-                        <div class="centerbox">
+                    <div id="TrainingDetails" class="col-md-12  css10">
                             <div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")</b>
+                                <div class="form-group">
+                                    <div class="col-md-1">
+                                        <label class="control-label">Product:&nbsp;&nbsp;&nbsp;&nbsp;    </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="control-label">Course:&nbsp;&nbsp;  </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="control-label">Trainer Name:&nbsp;&nbsp;   </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")" />
+                                    </div>
+                                    <div class="col-md-2"></div>
                                 </div>
-                                <div class="col-md-5">
-                                    <label class="control-label">Course:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")</b>
-                                </div>
-                            </div>
+                              </div>
                             <div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <label class="control-label">No of Students:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")</b>
+                            <div class="form-group">
+                                <div class="col-md-1 ">
+                                    <label class="control-label">Start Date:&nbsp;&nbsp;</label>
                                 </div>
-                                <div class="col-md-5">
-                                    <label class="control-label">Type:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")</b>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")" />
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <label class="control-label">Start Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                                <div class="col-md-1">
+                                    <label class="control-label">End Date:&nbsp;&nbsp;    </label>
                                 </div>
-                                <div class="col-md-5">
-                                    <label class="control-label">End Date:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")</b>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")" />
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <label class="control-label">Total # of days:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")</b>
+                                <div class="col-md-1 ">
+                                    <label class="control-label" style='width:70px;'>Total # of days:&nbsp;&nbsp;    </label>
                                 </div>
-                                <div class="col-md-5">
-                                    <label class="control-label">Trainer Name:&nbsp;&nbsp;&nbsp;&nbsp;    </label><b>@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")</b>
+                                <div class="col-md-1">
+                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")" />
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label">Type:</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")" />
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label">No of Students:&nbsp;&nbsp;   </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" class="form-control" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")" />
                                 </div>
                             </div>
                         </div>
@@ -190,7 +213,7 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("WHTPercent", "WHT", canSort: true,
+                                            grid.Column("WHTPercent", "WHT%", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
@@ -208,7 +231,7 @@
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("VATPercent", "VAT/TAX",
+                                            grid.Column("VATPercent", "VAT/TAX%",
                                             format:
                                             @<text>
                                                 @ConvertToInt64percent(item.VATPercent)
