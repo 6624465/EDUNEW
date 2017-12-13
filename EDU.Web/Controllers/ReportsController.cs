@@ -240,6 +240,7 @@ namespace EDU.Web.Reports.Controllers
             ProductRevenueReportVM report = new ProductRevenueReportVM();
             List<ProductTotalRevenueByMonthVM> prodTotalRevenueByMonth = new List<ProductTotalRevenueByMonthVM>();
             List<ProductRevenueByMonthVM> prodRevenueByMonth = new List<ProductRevenueByMonthVM>();
+            List<ProductRevenueByMonthVM> prodRevenuToAchieve = new List<ProductRevenueByMonthVM>();
 
             foreach (var item in productList)
             {
@@ -278,25 +279,32 @@ namespace EDU.Web.Reports.Controllers
                     }
                 }
 
+                decimal? achieved = janamount + febamount + maramount + apramount + mayamount + juneamount +
+                                    julyamount + augamount + sepamount + octamount + novamount + decamount;
+
+                decimal? total = revenueitem.YearlyTarget;
+                short cMonth = 5;
+                decimal? yetToAchieve = cMonth == 12 ? 0 : (total - achieved) / (12 - cMonth);
+
                 prodRevenueByMonth.Add(new ProductRevenueByMonthVM()
                 {
                     Country = country,
                     CountryName = cname,
                     ProductName = item.ProductName,
                     Year = year,
-                    TotalRevenue = revenueitem.YearlyTarget,
-                    MonthlyTarget = revenueitem.MonthlyTarget,
+                    TotalRevenue = total,
+                    MonthlyTarget = yetToAchieve,
                     JanAmount = janamount,
-                    FebAmount = febamount ,
-                    MarAmount = maramount ,
-                    AprAmount = apramount ,
-                    MayAmount = mayamount ,
-                    JuneAmount =juneamount,
-                    JulyAmount =julyamount,
-                    AugAmount = augamount ,
-                    SepAmount = sepamount ,
-                    OctAmount = octamount ,
-                    NovAmount = novamount ,
+                    FebAmount = febamount,
+                    MarAmount = maramount,
+                    AprAmount = apramount,
+                    MayAmount = mayamount,
+                    JuneAmount = juneamount,
+                    JulyAmount = julyamount,
+                    AugAmount = augamount,
+                    SepAmount = sepamount,
+                    OctAmount = octamount,
+                    NovAmount = novamount,
                     DecAmount = decamount
                 });
 
@@ -324,22 +332,56 @@ namespace EDU.Web.Reports.Controllers
                             achievedRevenue += (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3);
                         }
                     }
-                    //var revenueitem = RevenueList.Where(x => x.Country == country && x.Product == item.Id).FirstOrDefault();
 
                     prodTotalRevenueByMonth.Add(new ProductTotalRevenueByMonthVM()
                     {
                         Year = year,
                         Country = country,
-                        CountryName = revenueitem.CountryName,
+                        CountryName = revenueitem == null ? "" : revenueitem.CountryName,
                         ProductName = item.ProductName,
-                        TotalRevenue = revenueitem.MonthlyTarget,
+                        TotalRevenue = revenueitem == null ? 0 : revenueitem.MonthlyTarget,
                         AchievedRevenue = achievedRevenue
                     });
                 }
             }
 
+
+            foreach (var item in prodRevenueByMonth)
+            {
+                decimal? achieved = item.JanAmount + item.FebAmount + item.MarAmount + item.AprAmount + item.MayAmount + item.JuneAmount +
+                                    item.JulyAmount + item.AugAmount + item.SepAmount + item.OctAmount + item.NovAmount + item.DecAmount;
+
+                decimal? total = item.TotalRevenue;
+                short cMonth = 5;
+                decimal? yetToAchieve = cMonth == 12 ? 0 : (total - achieved) / (12 - cMonth);
+
+                prodRevenuToAchieve.Add(new ProductRevenueByMonthVM()
+                {
+                    Month = cMonth,
+                    Country = item.Country,
+                    CountryName = item.CountryName,
+                    ProductName = item.ProductName,
+                    Year = item.Year,
+                    TotalRevenue = item.TotalRevenue,
+                    MonthlyTarget = item.MonthlyTarget,
+                    JanAmount = item.JanAmount,
+                    FebAmount = (cMonth >= 2 ? item.FebAmount : yetToAchieve),
+                    MarAmount = (cMonth >= 3 ? item.MarAmount : yetToAchieve),
+                    AprAmount = (cMonth >= 4 ? item.AprAmount : yetToAchieve),
+                    MayAmount = (cMonth >= 5 ? item.MayAmount : yetToAchieve),
+                    JuneAmount = (cMonth >= 6 ? item.JuneAmount : yetToAchieve),
+                    JulyAmount = (cMonth >= 7 ? item.JulyAmount : yetToAchieve),
+                    AugAmount = (cMonth >= 8 ? item.AugAmount : yetToAchieve),
+                    SepAmount = (cMonth >= 9 ? item.SepAmount : yetToAchieve),
+                    OctAmount = (cMonth >= 10 ? item.OctAmount : yetToAchieve),
+                    NovAmount = (cMonth >= 11 ? item.NovAmount : yetToAchieve),
+                    DecAmount = (cMonth >= 12 ? item.DecAmount : yetToAchieve)
+                });
+            }
+
             report.productTotalRevenueByMonth = prodTotalRevenueByMonth;
             report.productRevenueByMonth = prodRevenueByMonth;
+            report.productRevenueToAchieve = prodRevenuToAchieve;
 
             ViewData["CountryData"] = countrylist;
             return View(report);
