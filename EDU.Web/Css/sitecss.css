@@ -429,7 +429,7 @@ label.error {
     display: none !important;
 }
 
-input[type=text].error, input[type=email].error, input[type=password].error, textarea.error, select.error {
+input[type=text].error, input[type=email].error,input[type=file].error, input[type=password].error, textarea.error, select.error {
     /*border-color: #F44336;*/
     border-bottom-color: #F44336;
     /*border-color: #a94442;*/
