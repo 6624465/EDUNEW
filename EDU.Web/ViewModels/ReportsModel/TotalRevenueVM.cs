@@ -9,6 +9,7 @@ namespace EDU.Web.ViewModels.ReportsModel
     {
         public List<ProductTotalRevenueByMonthVM> productTotalRevenueByMonth { get; set; }
         public List<ProductRevenueByMonthVM> productRevenueByMonth { get; set; }
+        public List<ProductRevenueByMonthVM> productRevenueToAchieve { get; set; }
     }
 
     public class TotalRevenueVM
@@ -49,6 +50,7 @@ namespace EDU.Web.ViewModels.ReportsModel
 
     public class ProductRevenueByMonthVM
     {
+        public short Month { get; set; }
         public int Year { get; set; }
         public string ProductName { get; set; }
         public short Country { get; set; }
