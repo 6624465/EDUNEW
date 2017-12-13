@@ -132,7 +132,8 @@
                             </div>
                         </div>
                     </div>
-                    <div id="TrainingDetails" class="col-md-12  css10">
+                    <div class="row css10">
+                        <div id="TrainingDetails" class="col-md-12">
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-1">
@@ -154,47 +155,46 @@
                                         <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")" />
                                     </div>
                                 </div>
-                              </div>
+                            </div>
                             <div class="row css10">
-                            <div class="form-group">
-                                <div class="col-md-1 ">
-                                    <label class="control-label">Start Date:&nbsp;&nbsp;</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")" />
-                                </div>
-                                <div class="col-md-1">
-                                    <label class="control-label">End Date:&nbsp;&nbsp;    </label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")" />
-                                </div>
-                                <div class="col-md-1">
-                                    <label class="control-label"  style="white-space:nowrap">Total # of days:</label>
-                                </div>
-                                <div class="col-md-1">
-                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")" />
-                                </div>
-                                <div class="col-md-1">
-                                    <label class="control-label">Type:</label>
-                                </div>
-                                <div class="col-md-1">
-                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")" />
-                                </div>
-                                <div class="col-md-1">
-                                    <label class="control-label " style="white-space:nowrap">No of Students:</label>
-                                </div>
-                                <div class="col-md-1">
-                                    <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")" />
+                                <div class="form-group">
+                                    <div class="col-md-1 ">
+                                        <label class="control-label">Start Date:&nbsp;&nbsp;</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.StartDate != null ? Model.trainingconfDetail.StartDate.Value.ToString("dd/MM/yyyy") : "")" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="control-label">End Date:&nbsp;&nbsp;    </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.EndDate != null ? Model.trainingconfDetail.EndDate.Value.ToString("dd/MM/yyyy") : "")" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="control-label" style="white-space:nowrap">Total # of days:</label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.TotalNoOfDays.ToString() : "")" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="control-label">Type:</label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="control-label " style="white-space:nowrap">No of Students:</label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.NoOfStudents.ToString() : "")" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row" style="margin-top:20px;">
-                    </div>
-                    <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
-                        @grid.GetHtml(
+                    <div class="row css25">
+                        <div style="overflow-x: scroll; width: 100%" id="gridContent">
+                            @grid.GetHtml(
                                     columns: grid.Columns(
                                             grid.Column("StudentName", "Student Name", canSort: true,
                                                     format:
@@ -207,12 +207,12 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:70px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 @ConvertToInt64dollar(item.Amount)
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("WHTPercent", "WHT%", canSort: true,
+                                            grid.Column("WHTPercent", "WHT %", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:50px;'>
@@ -225,12 +225,12 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:80px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 @ConvertToInt64dollar(item.WHTAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
-                                            grid.Column("VATPercent", "VAT/TAX%",
+                                            grid.Column("VATPercent", "VAT/TAX %",
                                             format:
                                             @<text>
                                                 @ConvertToInt64percent(item.VATPercent)
@@ -240,7 +240,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 @ConvertToInt64dollar(item.VATAmount)
                                                             </span>
                                                         </div>
@@ -249,7 +249,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:75px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 @ConvertToInt64dollar(item.TotalAmount)
                                                             </span>
                                                         </div>
@@ -258,7 +258,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:70px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 <a style="cursor:pointer;text-decoration:underline;">
                                                                     <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
                                                                           onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment1)</span>
@@ -270,7 +270,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:70px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 <a style="cursor:pointer;text-decoration:underline;">
                                                                     <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
                                                                           onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment2)</span>
@@ -282,7 +282,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:70px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 <a style="cursor:pointer;text-decoration:underline;">
                                                                     <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
                                                                           onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment3)</span>
@@ -294,7 +294,7 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:100px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 @ConvertToInt64dollar(item.OtherDeductionsAmount)
                                                             </span>
                                                         </div>
@@ -303,14 +303,14 @@
                                                     format:
                                                     @<text>
                                                         <div style='width:70px;'>
-                                                            <span class="pull-right">
+                                                            <span class="center">
                                                                 @ConvertToInt64dollar(item.BalanceAmount)
                                                             </span>
                                                         </div>
                                                     </text>),
                                             grid.Column("Email", "Email", canSort: true),
                                             grid.Column("Contact", "Contact", canSort: true),
-                                            grid.Column("CompanyName", "CompanyName", canSort: true),
+                                            grid.Column("CompanyName", "Company Name", canSort: true),
                                             grid.Column("", "#Action", canSort: false,
                                                         format:
                                                         @<text>
@@ -323,6 +323,7 @@
                                                             </div>
                                                         </text>)),
                                                         tableStyle: "table")
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -345,7 +346,7 @@
             @if (reg > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="pull-right">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });
