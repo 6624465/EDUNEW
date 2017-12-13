@@ -420,6 +420,9 @@ body {
 .css5 {
     margin-top: 5px;
 }
+.css25 {
+    margin-top: 25px;
+}
 
 .app .off-canvas {
     background-color: rgba(255, 255, 255, .15);
@@ -429,7 +432,7 @@ label.error {
     display: none !important;
 }
 
-input[type=text].error, input[type=email].error, input[type=password].error, textarea.error, select.error {
+input[type=text].error, input[type=email].error,input[type=file].error, input[type=password].error, textarea.error, select.error {
     /*border-color: #F44336;*/
     border-bottom-color: #F44336;
     /*border-color: #a94442;*/
