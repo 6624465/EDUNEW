@@ -47,8 +47,7 @@
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-md-offset-3">
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Country,
                              new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
                              "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
@@ -63,18 +62,18 @@
                                 </div>*@
                             <div class="col-md-1">
                                 @Html.TextBoxFor(x => x.FirstOrDefault().CurrencyExRate, "{0:#.#}",
-           new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
+                                new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
                             </div>
                             <div class="col-md-3"></div>
                         </div>
                         <div class="row css10">
-                            <div class="col-md-12">
+                            <div class="col-md-6 col-md-offset-3 ">
                                 @{
                                     var grid = new WebGrid(Model);
                                 }
                                 <div id="gridContent">
                                     @grid.GetHtml(
-                                     tableStyle: "table table-striped",
+                                     tableStyle: "table table-striped table-bordered",
                                      headerStyle: "webgrid-header",
                                      mode: WebGridPagerModes.All,
                                      columns:
@@ -104,19 +103,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 css10">
+                            <div class="col-md-6 col-md-offset-3 css10">
                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                 {
                                     <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
                                 }
                             </div>
-                            <div class="col-md-12 css10">
+                            <div class="col-md-6 col-md-offset-3 css10">
                                 @{
                                     var grid1 = new WebGrid(Model);
                                 }
                                 <div id="gridContent1">
                                     @grid1.GetHtml(
-                                     tableStyle: "table table-striped",
+                                     tableStyle: "table table-striped table-bordered",
                                      mode: WebGridPagerModes.All,
                                      columns:
                                         grid1.Columns(
@@ -180,7 +179,7 @@
             $('#gridContent .MonthlyTarget').each(function () {
                 totalmt = totalmt + parseInt($(this)[0].innerText.replace('$', '').trim() == "" ? 0 : $(this)[0].innerText.replace('$', '').toLocaleString());
             });
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + "$ " + totalyt + '</td><td class="alignright">' + "$ " + totalhyt + '</td><td class="alignright">' + "$ " + totalqyt + '</td><td  class="alignright">' + "$ " + totalmt + '</td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + "$ " + totalyt + '</td><td class="alignright">' + "$ " + totalhyt + '</td><td class="alignright">' + "$ " + totalqyt + '</td><td  class="alignright">' + "$ " + totalmt + '</td><td></td></tr>');
 
             var totalytamt = 0;
             var totalhytamt = 0;
@@ -198,7 +197,7 @@
             $('#gridContent1 .MonthlyTargetAmt').each(function () {
                 totalmtamt = totalmtamt + parseInt($(this)[0].innerText.trim() == "" ? 0 : $(this)[0].innerText.toLocaleString());
             });
-            $('#gridContent1 tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + totalytamt + '</td><td class="alignright">' + totalhytamt + '</td><td class="alignright">' + totalqytamt + '</td><td class="alignright">' + totalmtamt + '</td></tr>');
+            $('#gridContent1 tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + totalytamt + '</td><td class="alignright">' + totalhytamt + '</td><td class="alignright">' + totalqytamt + '</td><td class="alignright">' + totalmtamt + '</td><td></td></tr>');
         });
     </script>
 
