@@ -114,8 +114,8 @@
                                     <label class="col-md-1 control-label">
                                         <span>Course:&nbsp;&nbsp;&nbsp;&nbsp; </span>
                                     </label>
-                                    <div class="col-md-5">
-                                        @Html.TextAreaFor(x => x.trainingconfDetail.CourseName,
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(x => x.trainingconfDetail.CourseName,
                                                 new { @class = "form-control", placeholder = "Course Name", @readonly = "readonly" })
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                                      format:
                                     @<text>
                                         <div style='width:88px;'>
-                                            <span class="pull-right">
+                                            <span class="center">
                                                 @ConvertToInt64dollar(item.InvoiceAmount)
                                             </span>
                                         </div>
@@ -147,7 +147,7 @@
                                      format:
                                     @<text>
                                         <div style='width:68px;'>
-                                            <span class="pull-right">
+                                            <span class="center">
                                                 @ConvertToInt64dollar(item.PaidAmount)
                                             </span>
                                         </div>
@@ -156,7 +156,7 @@
                                      format:
                                     @<text>
                                         <div style='width:90px;'>
-                                            <span class="pull-right">
+                                            <span class="center">
                                                 @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
                                         </div>
@@ -165,7 +165,7 @@
                                      format:
                                     @<text>
                                         <div style='width:150px;'>
-                                            <span class="pull-right">
+                                            <span class="center">
                                                 @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
                                         </div>
@@ -174,7 +174,7 @@
                                      format:
                                     @<text>
                                         <div style='width:75px;'>
-                                            <span class="pull-right">
+                                            <span class="center">
                                                 @ConvertToInt64dollar(item.TotalAmount)
                                             </span>
                                         </div>
@@ -213,9 +213,9 @@
             </div>
         </div>
     </div>
-
+ 
     <div id="myModal" class="modal fade" role="dialog">
-
+      
     </div>
 }
 @using (Html.BeginForm("DeleteCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmDeleteCustomerPaymentStatus", name = "frmDeleteCustomerPaymentStatus", enctype = "multipart/form-data" }))
@@ -233,7 +233,7 @@
             @if (cPayment > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="pull-right">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="pull-right">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });

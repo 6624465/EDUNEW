@@ -89,19 +89,20 @@
                     grid.Column("CourseName", "Course Name", canSort: true,
                                 format:
                                 @<text>
-                                    <div style='width:140px;'>
-                                        @if (item.CourseName != null && item.CourseName.ToString().Length > 20)
-                                        { <a style="cursor:pointer;text-decoration:underline;">
-                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Course Name" data-content="@(item.CourseName)" data-original-title="" title="">@item.CourseName.ToString().Substring(0, 20)...</span>
-                                        </a>
-                                        }
-                                        else
-                                        {
-                                            <span>@item.CourseName</span>
-                                        }
+                                    <div style='width:100%;'>
+                                        @*@if (item.CourseName != null && item.CourseName.ToString().Length > 20)
+                                            { <a style="cursor:pointer;text-decoration:underline;">
+                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Course Name" data-content="@(item.CourseName)" data-original-title="" title="">@item.CourseName.ToString().Substring(0, 20)...</span>
+                                            </a>
+                                            }
+                                            else
+                                            {*@
+                                        <span class="center">@item.CourseName</span>
+                                        @*}*@
                                     </div>
-                                </text>),
+                                </text>, style: ""),
                     grid.Column("NoOfStudents", "No Of Students", canSort: true,
+
                                 format:
                                 @<text>
                                     <div style='width:100px;'>
@@ -118,15 +119,24 @@
                                         @item.TotalNoOfDays
                                     </div>
                                 </text>, style: "center"),
-                    grid.Column("TrianerName", "Trianer Name", canSort: true),
+                    grid.Column("TrianerName", "Trianer Name", canSort: true,
+                    format:
+                    @<text>
+                        <div style='width:100px;'>
+                            @item.TrianerName
+                        </div>
+                    </text>, style: "center"),
                     grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
-                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                    {
-                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                    }
+                                    <div style="width:100px;">
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                             {
+                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                            }
+                                    </div>
+
                                 </text>)),
                                 tableStyle: "table")
                     </div>
@@ -136,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
     </div>
 </div>
@@ -144,7 +154,7 @@
 {
     <input type="hidden" id="id" name="id" />
 }
-@using (Html.BeginForm("SaveTrainingConfirmation", "Trainer", FormMethod.Post, new { id = "frmTrainerConfirmation", name = "frmTrainerConfirmation",autocomplete = "off"}))
+@using (Html.BeginForm("SaveTrainingConfirmation", "Trainer", FormMethod.Post, new { id = "frmTrainerConfirmation", name = "frmTrainerConfirmation", autocomplete = "off" }))
 {
     <div id="myModal" class="modal fade" role="dialog">
 
