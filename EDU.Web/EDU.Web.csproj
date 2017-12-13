@@ -1527,6 +1527,7 @@
     <Content Include="Scripts\Charts\highcharts.js" />
     <Content Include="Scripts\Charts\jquery-1.11.1.min.js" />
     <Content Include="Scripts\Charts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\Charts\jquery.jqChart.css" />
     <Content Include="Scripts\Charts\jquery.jqChart.min.js" />
     <Content Include="Scripts\Charts\jquery.jqRangeSlider.min.js" />
     <Content Include="Scripts\Charts\jquery.mousewheel.js" />
