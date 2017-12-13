@@ -250,6 +250,10 @@
 @section SectionScripts {
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
+        function ChangeMonth() {
+            window.location = '@Url.Action("Dashboard", "Reports", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
+        };
+
         $(document).ready(function () {
             $('#liReportsDashboard').addClass('active');
 

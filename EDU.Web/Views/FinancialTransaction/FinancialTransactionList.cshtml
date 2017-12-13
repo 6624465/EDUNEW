@@ -60,7 +60,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-md-1 control-label">
+                                <label class="col-md-1 col-md-offset-2 control-label">
                                     <span>Event No.</span>
                                 </label>
                                 <div class="col-md-2">
@@ -93,11 +93,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row css10">
-                            <div class="col-md-12">
+                        <div class="row css25">
+                            <div class="col-md-6 col-md-offset-3">
                                 <div id="gridContent">
                                     @grid.GetHtml(
-                                     tableStyle: "table table-striped",
+                                     tableStyle: "table table-striped table-bordered",
                                      mode: WebGridPagerModes.All,
                                      columns:
                                         grid.Columns(
@@ -122,19 +122,9 @@
                                         grid.Column("LocalAmount", "Local Amount", format:
                                         @<text>
                                             <div style='width:50px;'>
-                                                @if (item.LocalAmount != null)
-                                                {
-                                                    <span class="center">
-                                                        $&nbsp;@ConvertToInt64(item.LocalAmount)
-                                                    </span>
-                                                }
-                                                else
-                                                {
                                                     <span class="center">
                                                         @ConvertToInt64(item.LocalAmount)
                                                     </span>
-                                                }
-                                                
                                             </div>
                                         </text>, canSort: false),
                                         grid.Column("ReferenceDoc", "Reference Doc",
@@ -212,9 +202,10 @@
                     $('.btn_edit').attr('disabled', 'disabled');
                 }
                 var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
-                var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
-                $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td></td><td></td><td></td></tr>'+
-                    '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td></tr>');
+            var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
+            var lgp =gp*$('#financialTransaction_CurrencyExRate').val();
+            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td><span class="center">' +lgp + '</span></td><td></td><td></td><td></td></tr>'+
+                    '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td><td></td></tr>');
             </text>
             }
             else
