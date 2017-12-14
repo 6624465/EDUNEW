@@ -150,7 +150,7 @@
                     }
                 ]
             });
-          
+            var i = 0;
             $('#jqChart').jqChart({
                 title: { text: '' },
                 animation: { duration: 1 },
@@ -158,7 +158,35 @@
                     enabled: true
                 },
                 legend: {
-                    visible: false,
+                    visible: true,
+                    customItems: [
+                    @foreach (var item in Model.GroupBy(x => x.ProductName).ToList())
+                    {
+                                               <text>
+                                       {
+                                           marker: {
+                                               type: 'rectangle',
+                                               fillStyle: fillStyles[i++]
+                                           },
+                                           text: {
+                                               text: '@item.FirstOrDefault().ProductName'
+                                           }
+                                       },
+                                </text>
+                    }
+                    ],
+                    title: {
+                        text: 'Products',
+                        font: '14px sans-serif',
+                        fillStyle: 'red'
+                    },
+                    border: {
+                        lineWidth: 2,
+                        strokeStyle: 'green'
+                    },
+                    font: '12px sans-serif',
+                    background: '#eeeeee',
+                    margin: 10
                 },
                 axes: [
                     {
@@ -216,10 +244,6 @@
                     allowHideSeries: true,
                     location: 'right',
                     customItems: [
-                        //{
-                        //    text: 'No. of Issues: 25',
-                        //    marker: { visible: false }
-                        //},
                              @foreach (var info in Model.Where(x => x.Country == item.BranchID).ToList())
                              {
                                 <text>
