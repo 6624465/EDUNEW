@@ -121,17 +121,21 @@
                                         </text>, canSort: false),
                                         grid.Column("LocalAmount", "Local Amount", format:
                                         @<text>
-                                            <div style='width:50px;'>
-                                                    <span class="center">
-                                                        @ConvertToInt64(item.LocalAmount)
-                                                    </span>
+                                            <div style='width:90px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64(item.LocalAmount)
+                                                </span>
                                             </div>
                                         </text>, canSort: false),
                                         grid.Column("ReferenceDoc", "Reference Doc",
                                         format:
                                         @<text>
-                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
-                                        </text>,canSort: false),
+                                            <div style='width:90px;'>
+                                                <span class="center">
+                                                    <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                                </span>
+                                            </div>
+                                        </text>, canSort: false),
                                         grid.Column("Remarks", "Remarks",
                                          format:
                                         @<text>
