@@ -283,8 +283,9 @@ namespace EDU.Web.Reports.Controllers
                                     julyamount + augamount + sepamount + octamount + novamount + decamount;
 
                 decimal? total = revenueitem != null ? revenueitem.YearlyTarget : 0;
+                decimal? monthly = revenueitem != null ? revenueitem.MonthlyTarget : 0;
                 short cMonth = Convert.ToInt16(DateTime.Now.Month);
-                decimal? yetToAchieve = cMonth == 12 ? 0 : (total - achieved) / (12 - cMonth);
+                decimal? yetToAchieve = cMonth == 12 ? monthly : (total - achieved) / (12 - cMonth);
 
                 prodRevenueByMonth.Add(new ProductRevenueByMonthVM()
                 {
