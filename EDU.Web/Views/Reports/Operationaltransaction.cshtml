@@ -37,6 +37,9 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Country</span>
+                                </label>
                                 <div class="col-md-2">
                                     @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Country,
                                      new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
@@ -58,21 +61,14 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <div class="row">
+                                    <div class="row css25">
                                         <div class="col-md-12">
                                             <div id="container"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-12" style="text-align:center">
-                                            <h4>
-                                                <label>YTD</label>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="row">
+                                    <div class="row css25">
                                         <div class="col-md-10">
                                             <div id="jqChart"></div>
                                         </div>
@@ -95,6 +91,9 @@
         {
             display: none;
         }
+         .highcharts-button-box{
+             display:none;
+         }
     </style>
     @section SectionScripts{
         <script type="text/javascript">
@@ -112,7 +111,7 @@
             function ChangeMonth() {
                 window.location = '@Url.Action("Operationaltransaction", "Reports", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
             };
-
+           
             Highcharts.chart('container', {
                 chart: {
                     type: 'pie',
@@ -120,7 +119,9 @@
                         enabled: true,
                         alpha: 65,
                         beta: 0
-                    }
+                    },
+                    backgroundColor:'#d2e6c9' 
+                 
                 },
                 title: {
                     text: 'MTD'
@@ -171,7 +172,7 @@
                 };
 
                 $('#jqChart').jqChart({
-                    title: { text: '' },
+                    title: { text: 'YTD' },
                     border: { strokeStyle: '#6ba851' },
                     background: background,
                     animation: { duration: 3 },
