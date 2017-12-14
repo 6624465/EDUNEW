@@ -4072,7 +4072,7 @@ fieldset[disabled] .btn-youtube.active {
     overflow: hidden;
     width: 50px;
     position: fixed;
-    padding-left: 7px;
+    padding-left: 2px;
     z-index: 1000;
     -webkit-transition: 0.25s ease-in;
     -o-transition: 0.25s ease-in;
@@ -4095,7 +4095,7 @@ fieldset[disabled] .btn-youtube.active {
 .main-container .nav-wrap .nav-head .site-logo > span.text {
   position: absolute;
   top: 12.33333333px;
-  margin-left: 40px;
+  margin-left: 47px;
 }
 .main-container .nav-wrap .nav-foot {
   background: #f0f0f0;

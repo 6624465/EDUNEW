@@ -33,12 +33,17 @@ namespace EDU.Web.Controllers
             List<FinancialTransactionDetail> financialTransactionDetails = new List<FinancialTransactionDetail>();
 
             financialTransaction = dbContext.FinancialTransactions.Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
+            financialTransactionVM.currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
+            financialTransactionVM.countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+            financialTransactionVM.trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+
 
             if (financialTransaction == null)
             {
                 financialTransaction = new FinancialTransaction();
                 financialTransaction.FinancialTransactionId = -1;
                 financialTransaction.TrainingConfirmationID = trainingConfirmationID;
+                financialTransaction.Country = Convert.ToInt16(financialTransactionVM.trainingConfirmationList.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault() != null ? financialTransactionVM.trainingConfirmationList.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault().Country : 0);
             }
 
             financialTransactionVM.financialTransactionDetailList = dbContext.FinancialTransactionDetails
@@ -64,9 +69,9 @@ namespace EDU.Web.Controllers
 
             financialTransactionVM.financialTransaction = financialTransaction;
             //financialTransactionVM.financialTransactionDetailList = financialTransactionDetails;
-            financialTransactionVM.currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
-            financialTransactionVM.countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
-            financialTransactionVM.trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+            //financialTransactionVM.currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
+            //financialTransactionVM.countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+            //financialTransactionVM.trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
 
             var FinancialTransactionLookupList = dbContext.Lookups.Where(x => x.LookupCategory == "FinancialTransaction").ToList();
             decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == trainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
@@ -403,7 +408,7 @@ namespace EDU.Web.Controllers
         public JsonResult UpdateFinancialTransactionLocalAmount(FinancialTransaction ft)
         {
             if (ft.FinancialTransactionId == -1)
-            {                
+            {
                 return Json("Please update Financial Transaction Information before click on update button.", JsonRequestBehavior.AllowGet);
             }
             FinancialTransaction ftrans = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID && x.IsActive == true).First();
