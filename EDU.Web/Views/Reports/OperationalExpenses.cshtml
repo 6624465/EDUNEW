@@ -27,7 +27,7 @@
                         <div class="col-md-12 css10">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6  css10">
                                         <div id="jqChart0"></div>
                                     </div>
                                     <div class="col-md-6 css10">
@@ -73,6 +73,15 @@
             window.location = '@Url.Action("OperationalExpenses", "Reports", new { year = ""})' + '?year=' + $('#Year').val();
         };
         $(function () {
+            var background = {
+                type: 'linearGradient',
+                x0: 0,
+                y0: 0,
+                x1: 0,
+                y1: 1,
+                colorStops: [{ offset: 0, color: '#d2e6c9' },
+                { offset: 1, color: 'white' }]
+            };
             $('#liReportsOperationalExpenses').addClass('active');
 
             var count = 0;
@@ -81,7 +90,8 @@
                 <text>
             $('#jqChart' + count).jqChart({
                 title: { text: '@item.CountryName' },
-                        animation: { duration: 1 },
+                animation: { duration: 1 },
+                background:background,
                         shadows: {
                         enabled: true
                         },
