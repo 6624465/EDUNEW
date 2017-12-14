@@ -3702,10 +3702,10 @@ fieldset[disabled] .btn-youtube.active {
   width: 2%;
 }
 .site-head {
-  position: relative;
-  width: calc(100% - 65px);
-  height: 55px;
-  margin-left: 65px;
+    position: relative;
+    width: calc(100% - 65px);
+    height: 55px;
+    margin-left: 50px;
 }
 .site-head.fixedHeader {
   position: fixed;
@@ -3728,7 +3728,7 @@ fieldset[disabled] .btn-youtube.active {
   margin-top: 55px;
 }
 .main-container .nav-wrap {
-  width: 65px;
+  width: 50px;
   position: fixed;
   overflow-y: auto;
   top: 0;
@@ -4070,9 +4070,9 @@ fieldset[disabled] .btn-youtube.active {
     height: 55px;
     display: table;
     overflow: hidden;
-    width: 65px;
+    width: 50px;
     position: fixed;
-    padding-left: 22px;
+    padding-left: 7px;
     z-index: 1000;
     -webkit-transition: 0.25s ease-in;
     -o-transition: 0.25s ease-in;
@@ -4095,7 +4095,7 @@ fieldset[disabled] .btn-youtube.active {
 .main-container .nav-wrap .nav-head .site-logo > span.text {
   position: absolute;
   top: 12.33333333px;
-  margin-left: 22px;
+  margin-left: 40px;
 }
 .main-container .nav-wrap .nav-foot {
   background: #f0f0f0;
@@ -4157,7 +4157,7 @@ fieldset[disabled] .btn-youtube.active {
 .main-container .nav-wrap .site-nav .nav-list > li a {
   color: #464646;
   padding: 7px 15px;
-  padding-left: 12px;
+  padding-left: 7px;
   display: table;
   width: 100%;
   /*white-space: nowrap;*/
@@ -4335,7 +4335,7 @@ fieldset[disabled] .btn-youtube.active {
   }
 }
 .page {
-  padding: 15px;
+  /*padding: 15px;*/
   background-color:white !important;
 }
 @media (max-width: 320px) {

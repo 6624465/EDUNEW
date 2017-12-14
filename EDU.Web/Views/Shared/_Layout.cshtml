@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDUCATION</title>
     @RenderSection("StylesCharts", false)
-    <link rel="shortcut icon" href="@Url.Content("~/images/ezy-corporation-logo.png")" />
+    <link rel="shortcut icon" href="@Url.Content("~/images/EDU-Logo.png")" />
     <link rel="stylesheet" href="@Url.Content("~/Css/ionicons-2.0.1/css/ionicons.css")">
     <link rel="stylesheet" href="@Url.Content("~/Css/font-awesome-4.7.0/css/font-awesome.css")">
     @*<link rel="stylesheet" href="@Url.Content("~/Css/c3.css")">*@
@@ -94,7 +94,7 @@
             <div class="nav-head">
                 <!-- site logo -->
                 <a href="@Url.Content("~/Home/Index")" class="site-logo text-uppercase">
-                    <img src="@Url.Content("~/images/ezy-corporation-logo.png")" style="width:35px;" />
+                    <img src="@Url.Content("~/images/EDU-Logo.png")" style="width:35px;" />
                     <span class="text">EZY EDU</span>
                 </a>
             </div>
@@ -126,67 +126,67 @@
                             <li id="liCourse">
                                 <a href="@Url.Content("~/Master/CourseList")">
                                     <i class="fa fa-bars font20"></i>
-                                    <span class="text ptop7">Courses</span>
+                                    <span class="text ptop7">&nbsp;Courses</span>
                                 </a>
                             </li>
                             <li id="liRegionalLeads">
                                 <a href="@Url.Content("~/Master/CourseSalesMasterList")">
                                     <i class="fa fa-chain font20"></i>
-                                    <span class="text ptop7">Regional Leads</span>
+                                    <span class="text ptop7">&nbsp;Regional Leads</span>
                                 </a>
                             </li>
                             <li id="liTrainingConfirmationList">
                                 <a href="@Url.Content("~/Trainer/TrainingConfirmationList")">
                                     <i class="fa fa-thumbs-up font20"></i>
-                                    <span class="text ptop7">Training Confirmation</span>
+                                    <span class="text ptop7">&nbsp;Training Confirmation</span>
                                 </a>
                             </li>
                             <li id="liRegistrationList">
                                 <a href="@Url.Content("~/Registration/RegistrationList?trainingConfirmationID=")">
                                     <i class="fa fa-users font20"></i>
-                                    <span class="text ptop7">Registrations</span>
+                                    <span class="text ptop7">&nbsp;Registrations</span>
                                 </a>
                             </li>
                             <li id="liCustomerPaymentStatusList">
                                 <a href="@Url.Content("~/CustomerPaymentStatus/CustomerPaymentStatusList?trainingConfirmationID=")">
                                     <i class="fa fa-users font20"></i>
-                                    <span class="text ptop7">Customer Payment Status</span>
+                                    <span class="text ptop7">&nbsp;Customer Payment Status</span>
                                 </a>
                             </li>
                             <li id="liVendorPaymentStatusList">
                                 <a href="@Url.Content("~/VendorPaymentStatus/VendorPaymentStatusList?trainingConfirmationID=")">
                                     <i class="fa fa-users font20"></i>
-                                    <span class="text ptop7">Vendor Payment Status</span>
+                                    <span class="text ptop7">&nbsp;Vendor Payment Status</span>
                                 </a>
                             </li>
                             <li id="liFinancialTransactionList">
                                 <a href="@Url.Content("~/FinancialTransaction/FinancialTransactionList")">
                                     <i class="fa fa-money font20"></i>
-                                    <span class="text ptop7">Financial Transactions</span>
+                                    <span class="text ptop7">&nbsp;Financial Transactions</span>
                                 </a>
                             </li>
                             <li id="liOperationalTransactionList">
                                 <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionList?month="+month+"&year="+year+"&country="+Convert.ToInt16(Session["BranchId"]))">
                                     <i class="fa fa-money font20"></i>
-                                    <span class="text ptop7">Operational Transactions</span>
+                                    <span class="text ptop7">&nbsp;Operational Transactions</span>
                                 </a>
                             </li>
                             <li id="liTrainersList">
                                 <a href="@Url.Content("~/Trainer/TrainersList")">
                                     <i class="fa fa-user-o font20"></i>
-                                    <span class="text ptop7">Vendor and Trainers</span>
+                                    <span class="text ptop7">&nbsp;Vendor and Trainers</span>
                                 </a>
                             </li>
                             <li id="liEduProductList">
                                 <a href="@Url.Content("~/Master/EduProductList")">
                                     <i class="fa fa-book font20"></i>
-                                    <span class="text ptop7">Products</span>
+                                    <span class="text ptop7">&nbsp;Products</span>
                                 </a>
                             </li>
                             <li id="liRevenueList">
                                 <a href="@Url.Content("~/Revenue/RevenueList?country="+Convert.ToInt16(Session["BranchId"])+"&year="+year)">
                                     <i class="fa fa-money font20"></i>
-                                    <span class="text ptop7">Assign Revenue</span>
+                                    <span class="text ptop7">&nbsp;Assign Revenue</span>
                                 </a>
                             </li>
                         </ul>
@@ -201,44 +201,44 @@
                             <li id="liReportsAchievement" class="waves-effect">
                                 <a href="@Url.Content("~/Reports/Achievement?year=" + year)">
                                     <i class="fa fa-table font20"></i>
-                                    <span class="text ptop7">Performance Report</span>
+                                    <span class="text ptop7">&nbsp;Performance Report</span>
                                 </a>
                             </li>
 
                             <li id="liOperationalTransactionReportList">
                                 <a href="@Url.Content("~/OperationalTransaction/OperationalTransactionReport?year="+year+"&country="+Convert.ToInt16(Session["BranchId"]))">
                                     <i class="fa fa-table font20"></i>
-                                    <span class="text ptop0">Operational Transactions Report</span>
+                                    <span class="text ptop0">&nbsp;Operational Transactions Report</span>
                                 </a>
                             </li>
                             <li id="liReportsOperationaltransaction" class="waves-effect">
                                 <a href="@Url.Content("~/Reports/Operationaltransaction?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
                                     <i class="fa fa-table font20"></i>
-                                    <span class="text ptop7"> Operational Transaction</span>
+                                    <span class="text ptop7"> &nbsp;Operational Transaction</span>
                                 </a>
                             </li>
                             <li id="liReportsOperationalExpenses" class="waves-effect">
                                 <a href="@Url.Content("~/Reports/OperationalExpenses?year=" + year)">
                                     <i class="fa fa-table font20"></i>
-                                    <span class="text ptop7"> Operational Expenses</span>
+                                    <span class="text ptop7"> &nbsp;Operational Expenses</span>
                                 </a>
                             </li>
                             <li id="liDashboardOperationaltransaction" class="waves-effect">
                                 <a href="@Url.Content("~/Reports/DashboardOperationaltransaction?month=" + month + "&year=" + year)">
                                     <i class="fa fa-table font20"></i>
-                                    <span class="text ptop0">Dashboard Operational Transaction</span>
+                                    <span class="text ptop0">&nbsp;Dashboard Operational Transaction</span>
                                 </a>
                             </li>
                             <li id="liReportsTotalRevenue" class="waves-effect">
                                 <a href="@Url.Content("~/Reports/TotalRevenue?year=" + year)">
                                     <i class="fa fa-table font20"></i>
-                                    <span class="text ptop7">Total Revenue</span>
+                                    <span class="text ptop7">&nbsp;Total Revenue</span>
                                 </a>
                             </li>
                             <li id="liReportsDashboard" class="waves-effect">
                                 <a href="@Url.Content("~/Reports/Dashboard?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
                                     <i class="fa fa-table font20"></i>
-                                    <span class="text ptop0">DashBoard - Achievement YTD</span>
+                                    <span class="text ptop0">&nbsp;DashBoard - Achievement YTD</span>
                                 </a>
                             </li>
                         </ul>
