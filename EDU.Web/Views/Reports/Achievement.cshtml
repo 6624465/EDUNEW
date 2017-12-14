@@ -117,7 +117,13 @@
                         type: 'doughnut',
                         innerExtent: 0.5,
                         outerExtent: 1.0,
-                        fillStyles: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#BFBFBF'],
+                        fillStyles: [   '#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69','#0000FF',
+		                                '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E','#FF7F50',
+		                                '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B','#B8860B',
+		                                '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000','#FF1493',
+		                                '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082','#F08080',
+		                                '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32','#008080',
+                                       ],
                         labels: {
                             stringFormat: '%.1f%%',
                             valueType: 'percentage',
@@ -206,22 +212,50 @@
                     enabled: true
                 },
                 legend: {
-                    visible: false,
-                    //allowHideSeries: true,
-                    //location: 'right',
-                    //title: {
-                    //    text: 'Legend Title',
-                    //    font: '14px sans-serif',
-                    //    fillStyle: 'red'
-                    //},
-                    //border: {
-                    //    lineWidth: 2,
-                    //    strokeStyle: 'green'
-                    //},
-                    //font: '12px sans-serif',
-                    //textFillStyle: '#418CF0',
-                    //background: '#eeeeee',
-                    //margin: 10
+                    visible: true,
+                    allowHideSeries: true,
+                    location: 'right',
+                    customItems: [
+                          //{
+                          //    text: 'No. of Issues: 25',
+                          //    marker: { visible: false }
+                          //},
+                             
+                             @foreach (var info in Model.Where(x => x.Country == item.BranchID).ToList())
+                             {
+                                                <text>
+                                                     {
+                                                         text: {
+                                                             text: '@info.ProductName',
+                                                         },
+                                                         marker: {
+                                                             type: 'rectangle'
+                                                         }
+                                                     },
+                                                  </text>
+                                       
+                             }
+                               
+                        ],
+                    title: {
+                        text: 'Products',
+                        font: '14px sans-serif',
+                        fillStyle: 'red'
+                    },
+                    border: {
+                        lineWidth: 2,
+                        strokeStyle: 'green'
+                    },
+                    font: '12px sans-serif',
+                    textFillStyle: [ '#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69','#0000FF',
+		                                '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E','#FF7F50',
+		                                '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B','#B8860B',
+		                                '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000','#FF1493',
+		                                '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082','#F08080',
+		                                '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32','#008080',
+                             ],
+                    background: '#eeeeee',
+                    margin: 10
                 },
                 axes: [
                     {
