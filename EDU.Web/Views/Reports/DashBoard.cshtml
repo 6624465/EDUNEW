@@ -322,7 +322,7 @@
                     value: @item.MonthlyTarget,
                     label: '@item.MonthlyTarget.Value.ToString("#0.00")'
                 }],
-                maximum: @item.MonthlyTarget+@item.MonthlyTarget,
+                maximum: @item.MonthlyTarget*2,
             },
             data: [{
                 type: "line",
