@@ -101,66 +101,72 @@
                                      mode: WebGridPagerModes.All,
                                      columns:
                                         grid.Columns(
-                                        grid.Column("DESCRIPTION", "DESCRIPTION", canSort: false),
-                                        grid.Column("Amount", "Amount", format:
-                                        @<text>
-                                            <div style='width:50px;'>
-                                                @if (item.Amount != null)
-                                                {
-                                                    <span class="center">
-                                                        $&nbsp;@ConvertToInt64(item.Amount)
-                                                    </span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="center">
-                                                        @ConvertToInt64(item.Amount)
-                                                    </span>
-                                                }
-                                            </div>
-                                        </text>, canSort: false),
-                                        grid.Column("LocalAmount", "Local Amount", format:
-                                        @<text>
-                                            <div style='width:90px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64(item.LocalAmount)
-                                                </span>
-                                            </div>
-                                        </text>, canSort: false),
-                                        grid.Column("ReferenceDoc", "Reference Doc",
+                                        grid.Column("DESCRIPTION", "DESCRIPTION",
                                         format:
                                         @<text>
-                                            <div style='width:90px;'>
-                                                <span class="center">
-                                                    <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
-                                                </span>
-                                            </div>
-                                        </text>, canSort: false),
-                                        grid.Column("Remarks", "Remarks",
-                                         format:
-                                        @<text>
-                                            <div style='width:140px;'>
-                                                @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.Remarks</span>
-                                                }
-                                            </div>
-                                        </text>, canSort: false),
-                                        grid.Column("", format: @<text>
-                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    <div style='width:140px;'>
+                                        <span>@item.description</span>
+                                    </div>                                       
+                                     </text>, canSort: false),
+                                                grid.Column("Amount", "Amount", format:
+                                                @<text>
+                                                    <div style='width:50px;'>
+                                                        @if (item.Amount != null)
+                                                        {
+                                                            <span class="center">
+                                                                $&nbsp;@ConvertToInt64(item.Amount)
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="center">
+                                                                @ConvertToInt64(item.Amount)
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: false),
+                                                grid.Column("LocalAmount", "Local Amount", format:
+                                                @<text>
+                                                    <div style='width:90px;'>
+                                                        <span class="center">
+                                                            @ConvertToInt64(item.LocalAmount)
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: false),
+                                                grid.Column("ReferenceDoc", "Reference Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:90px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: false),
+                                                grid.Column("Remarks", "Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:140px;'>
+                                                        @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.Remarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: false),
+                                                grid.Column("", format: @<text>
+                                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                             {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
-                                                }
-                                        </text>, style: "col3Width", canSort: false)
-                                        ))
-                                </div>
+                                                    }
+                                                </text>, style: "col3Width", canSort: false)
+                                                ))
+                                            </div>
                             </div>
                         </div>
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
