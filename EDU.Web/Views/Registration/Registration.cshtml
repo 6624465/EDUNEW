@@ -76,7 +76,7 @@
                                         <span class="pull-right">WHT</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()" })
+                                        @Html.TextBoxFor(x => x.WHTPercent, new { @class = "form-control numCss", onkeyup = "ValidateWHTPercent();ValidateWHTAmountPercent()", @placeholder= "WHT Percent" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.WHTAmount, new { @class = "form-control", @disabled = "disabled" })
@@ -85,7 +85,7 @@
                                         <span class="pull-right">VAT/TAX</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss", onkeyup = "ValidateVATPercent();ValidateVATAmountPercent()" })
+                                        @Html.TextBoxFor(x => x.VATPercent, new { @class = "form-control numCss", onkeyup = "ValidateVATPercent();ValidateVATAmountPercent()", @placeholder = "VAT/TAX Percent" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.VATAmount, new { @class = "form-control", @disabled = "disabled" })

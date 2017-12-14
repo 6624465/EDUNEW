@@ -145,7 +145,7 @@ namespace EDU.Web.Controllers
                 if (RevenueList.Where(x => x.Product == ep.Id).Count() == 0)
                     RevenueList.Add(new Revenue() { Product = ep.Id, ProductName = ep.ProductName, RevenueId = -1, CurrencyCode = currencyCode == null ? "" : currencyCode.LookupCode });
             }
-            return RevenueList;
+            return RevenueList.OrderBy(x=>x.Product).ToList();
         }
     }
 }
