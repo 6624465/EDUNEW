@@ -18,7 +18,17 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="row">
+                    <div class="row css10">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row css10">
                         <div class="col-md-12">
                             <div class="col-md-4">
                                 <div class="row">
@@ -34,35 +44,35 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <div id="jqChart0"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart0" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart1"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart1" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart2"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart2" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart3"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart3" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart4"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart4" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart5"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart5" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart6"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart6" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart7"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart7" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart8"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart8" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-5 css10">
-                                        <div id="jqChart9"></div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart9" style="height: 150px; width: 100%;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -79,6 +89,9 @@
         $(function () {
             $('#liReportsAchievement').addClass('active');
         });
+        function ChangeMonth() {
+            window.location = '@Url.Action("Achievement", "Reports", new { year = "" })' + '?year=' + $('#Year').val();
+        };
         $(document).ready(function () {
             var background = {
                 type: 'linearGradient',

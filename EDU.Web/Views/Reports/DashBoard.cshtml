@@ -45,11 +45,12 @@
 }
 <style>
     .changecolor {
-    background-color:darkorange;
-    color:white;
+        background-color: darkorange;
+        color: white;
     }
+
     .center {
-    text-align:center !important;
+        text-align: center !important;
     }
 </style>
 <div class="page page-forms-elements">
@@ -196,7 +197,7 @@
                                         @foreach (var it in productRevenueByMonth)
                                         {
                                             decimal? amt = it.JanAmount + it.FebAmount + it.MarAmount + it.AprAmount + it.MayAmount + it.JuneAmount + it.JulyAmount + it.AugAmount + it.SepAmount + it.OctAmount + it.NovAmount + it.DecAmount;
-                                            decimal? percent = (amt * 100) / it.TotalRevenue;
+                                            decimal? percent = it.TotalRevenue == 0 ? 0 : (amt * 100) / it.TotalRevenue;
                                             <tr>
                                                 <td>@it.ProductName</td>
                                                 <td class="center">@it.TotalRevenue.Value.ToString("#0.00")</td>
@@ -263,18 +264,26 @@
         };
 
         $(document).ready(function () {
+
+            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            {
+                <text>
+            $('#Country').attr('disabled','disabled');
+             </text>
+            }
+
             $('#liReportsDashboard').addClass('active');
             $('.canvasjs-chart-credit').hide();
 
             var monthsArray = [1,2,3,4,5,6,7,8,9,10,11,12];
             var currentMonthNum = @Model.productRevenueToAchieve.FirstOrDefault().Month;
-            
+
             var querySelector = '';
             for (var i = 1; i < monthsArray.length; i++) {
                 if (monthsArray[i] > currentMonthNum)
                     querySelector += '.' + monthsArray[i] + '_Css' + (i < 11 ? ',' : '');
             }
-            
+
             $(querySelector).addClass('changecolor');
 
             var count = 0;

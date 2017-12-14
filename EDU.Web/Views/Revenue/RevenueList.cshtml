@@ -47,7 +47,10 @@
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-2 col-md-offset-3">
+                            <div class="col-md-1 col-md-offset-3">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2017, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                            </div>
+                            <div class="col-md-2">
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Country,
                              new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
                              "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
@@ -205,6 +208,9 @@
 
         $('#frmRevenue').validate({
             rules: {
+                'Year': {
+                    required: true
+                },
                 'Country': {
                     required: true
                 },
@@ -227,7 +233,7 @@
                         "CurrencyExRate": $('#CurrencyExRate').val(),
                         "Country": $('#Country').val(),
                         "CurrencyCode": $('#CurrencyCode').val(),
-                        "Year": 2017
+                        "Year": $('#Year').val()
                     };
                 $.ajax({
                     url: '@Url.Content("~/Revenue/updateRevenueInfoByExRate/")',
@@ -254,19 +260,8 @@
             Year = year;
         }
         function CountryChange(el) {
-            if (el.value) {
-                window.location = '@Url.Action("RevenueList", "Revenue", new { country = "", year="" })' + '?country=' + el.value + '&year=' + 2017;
-                @*$.ajax({
-                    url: '@Url.Content("~/Revenue/GetCurrency?Id=")' + el.value,
-                    method: 'GET',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        debugger;
-                        $("#CurrencyCode").val(data);
-                    },
-                    error: function (err) {
-                    }
-                });*@
+            if ($('#Country').val() != '' && $('#Year').val()!='') {
+                window.location = '@Url.Action("RevenueList", "Revenue", new { country = "", year="" })' + '?country=' + $('#Country').val() + '&year=' + $('#Year').val();
             }
             else {
                 $("#CurrencyCode").val('');
@@ -274,6 +269,12 @@
         };
 
         $(function () {
+            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            {
+                <text>
+            $('#Country').attr('disabled','disabled');
+             </text>
+            }
 
             $("#CurrencyCode").val('@Model.FirstOrDefault().CurrencyCode');
 

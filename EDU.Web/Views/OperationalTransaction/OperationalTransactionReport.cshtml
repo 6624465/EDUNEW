@@ -195,6 +195,8 @@
             window.location = '@Url.Action("OperationalTransactionReport", "OperationalTransaction", new { year = "", country = "" })' + '?year=' + $('#Year').val()+ "&country=" + $('#Country').val();
         };
         $(document).ready(function () {
+
+            $('#liOperationalTransactionReportList').addClass('active');
             @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
