@@ -150,7 +150,7 @@
                     }
                 ]
             });
-
+          
             $('#jqChart').jqChart({
                 title: { text: '' },
                 animation: { duration: 1 },
@@ -168,7 +168,7 @@
                                         @foreach (var item in Model.GroupBy(x => x.ProductName).ToList())
                                         {
                                                <text>
-                                             '@item.FirstOrDefault().ProductName',
+                                             '',
                                                  </text>
                                          }
                                     ],
@@ -255,11 +255,12 @@
                         labels: {
                             font: '12px sans-serif'
                         },
+                        allowHideSeries: false,
                         categories: [
                             @foreach (var info in Model.Where(x => x.Country == item.BranchID).ToList())
                             {
                                 <text>
-                                '@info.ProductName',
+                                '',
                                 </text>
                             }
                     ],
