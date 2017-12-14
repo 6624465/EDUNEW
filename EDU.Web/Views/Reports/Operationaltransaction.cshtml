@@ -99,6 +99,14 @@
     @section SectionScripts{
         <script type="text/javascript">
             $(function () {
+
+                 @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+                 {
+                     <text>
+                 $('#Country').attr('disabled','disabled');
+                     </text>
+                 }
+
                 $('#liReportsOperationaltransaction').addClass('active');
             });
 
