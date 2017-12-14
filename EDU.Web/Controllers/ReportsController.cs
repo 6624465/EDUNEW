@@ -412,14 +412,37 @@ namespace EDU.Web.Reports.Controllers
                     Year = year,
                     Country = item.Country,
                     CountryName = item.CountryName,
+                    ProductId = item.Product,
                     ProductName = item.ProductName,
                     TotalRevenue = item.YearlyTarget,
                     AchievedRevenue = achievedRevenue
                 });
             }
 
+
+            var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
+            foreach (var item in countrylist)
+            {
+                foreach (var pitem in productList)
+                {
+                    if (list.Where(x => x.ProductId == pitem.Id && x.Country == item.BranchID).Count() == 0)
+                    {
+                        list.Add(new ProductTotalRevenueVM()
+                        {
+                            Year = year,
+                            Country = item.BranchID,
+                            CountryName = item.BranchName,
+                            ProductId=pitem.Id,
+                            ProductName = pitem.ProductName,
+                            TotalRevenue = 0,
+                            AchievedRevenue = 0
+                        });
+                    }
+                }
+            }
+
             ViewData["CountryData"] = countrylist;
-            return View(list);
+            return View(list.OrderBy(x=>x.ProductId));
         }
 
     }
