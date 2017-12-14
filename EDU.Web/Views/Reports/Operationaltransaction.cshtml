@@ -59,14 +59,21 @@
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-md-12" style="border:1px solid #d2d6de">
+                                        <div class="col-md-12">
                                             <div id="container"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-md-10" style="text-align:center">
+                                        <div class="col-md-12" style="text-align:center">
+                                            <h4>
+                                                <label>YTD</label>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10">
                                             <div id="jqChart"></div>
                                         </div>
                                     </div>
@@ -100,17 +107,7 @@
                      </text>
                  }
 
-                 $('#liReportsOperationaltransaction').addClass('active');
-
-                 Highcharts.setOptions({
-                     colors: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69', '#0000FF',
-                         '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
-                         '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
-                         '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
-                         '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082', '#F08080',
-                         '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080'
-                     ]
-                 });
+                $('#liReportsOperationaltransaction').addClass('active');
             });
 
             function ChangeMonth() {
@@ -119,9 +116,6 @@
 
             Highcharts.chart('container', {
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'pie',
                     options3d: {
                         enabled: true,
@@ -141,14 +135,13 @@
                         cursor: 'pointer',
                         depth: 60,
                         dataLabels: {
-                            enabled: false
-                        },
-                        showInLegend: true
+                            enabled: false,
+                            format: '{point.name}'
+                        }
                     }
                 },
                 series: [{
                     type: 'pie',
-                    colorByPoint: true,
                     name: '',
                     data: [
                         @foreach (var item in Model.otReportByMonth)
@@ -169,7 +162,9 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#jqChart').jqChart({
-                    title: { text: 'YTD' },
+                    title: { text: '' },
+                    border: { strokeStyle: '#6ba851' },
+                    background: '#eeeeee',
                     animation: { duration: 3 },
                     shadows: {
                         enabled: false
