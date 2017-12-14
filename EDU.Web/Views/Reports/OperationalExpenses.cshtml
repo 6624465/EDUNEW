@@ -80,15 +80,17 @@
             {
                 <text>
             $('#jqChart' + count).jqChart({
-                        title: { text: '' },
+                title: { text: '@item.CountryName' },
                         animation: { duration: 1 },
                         shadows: {
                         enabled: true
                         },
+                        legend: {
+                            visible:false
+                        },
                         series: [
                             {
                                 type: 'column',
-                                title: '@item.CountryName',
                                 fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
                                 data: [
                                     ['JAN', @item.JanAmount], ['FEB', @item.FebAmount], ['MAR', @item.MarAmount],
