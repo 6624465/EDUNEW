@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6">
                                         <div id="jqChart0" style="height: 150px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10">
@@ -153,6 +153,8 @@
             var i = 0;
             $('#jqChart').jqChart({
                 title: { text: '' },
+                border: { strokeStyle: '#6ba851' },
+                background: background,
                 animation: { duration: 1 },
                 shadows: {
                     enabled: true
@@ -201,8 +203,7 @@
                                          }
                                     ],
                         labels: {
-                            font: '12px sans-serif',
-                            angle: -45
+                            
                         }
                     }
                 ],
@@ -235,6 +236,8 @@
             var i = 0;
             $('#jqChart' + count).jqChart({
                 title: { text: '@item.BranchName' },
+                border: { strokeStyle: '#6ba851' },
+                background: background,
                 animation: { duration: 1 },
                 shadows: {
                     enabled: true
