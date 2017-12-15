@@ -71,6 +71,20 @@
                     <div class="" style="overflow-x: scroll; width: 100%">
                         @grid.GetHtml(
                                 columns: grid.Columns(
+
+                             grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    <div style="width:100px;">
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                        {
+                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        }
+                                    </div>
+
+                                </text>),
+
                     grid.Column("TrainingConfirmationID", "Order No.", canSort: true),
                        grid.Column("CountryName", "Country Name", canSort: true,
                                 format:
@@ -116,19 +130,7 @@
                         <div style='width:100px;'>
                             @item.TrianerName
                         </div>
-                    </text>, style: "center"),
-                    grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    <div style="width:100px;">
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                             {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                            }
-                                    </div>
-
-                                </text>)),
+                    </text>, style: "center")),
                                 tableStyle: "table")
                     </div>
                     <div class="row">
