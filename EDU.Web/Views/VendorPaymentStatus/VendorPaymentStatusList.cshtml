@@ -109,6 +109,22 @@
                         <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
                             @grid.GetHtml(
                      columns: grid.Columns(
+
+                          grid.Column("", "#Action", canSort: false,
+                                         format:
+                                        @<text>
+                                            <div style='width:80px;'>
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                {
+                                                    <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    if (item.VendorPaymentId > 0)
+                                                    {
+                                                        <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    }
+                                                }
+                                            </div>
+                                        </text>),
+
                              grid.Column("VendorName", "Vendor Name", canSort: true,
                                      format:
                                     @<text>
@@ -167,21 +183,7 @@
                              format:
                             @<text>
                                 <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
-                            </text>, canSort: true),
-                             grid.Column("", "#Action", canSort: false,
-                                         format:
-                                        @<text>
-                                            <div style='width:80px;'>
-                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                                {
-                                                    <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                    if (item.VendorPaymentId > 0)
-                                                    {
-                                                        <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                    }
-                                                }
-                                            </div>
-                                        </text>)),
+                            </text>, canSort: true)),
                                          tableStyle: "table")
                         </div>
                         <div class="row css10">

@@ -31,6 +31,19 @@
                     <div class="" style="overflow-x: scroll; width: 100%">
                         @grid.GetHtml(
                                 columns: grid.Columns(
+
+                                    grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    <div style='width:80px;'>
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                        {
+                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Trainer?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        }
+                                    </div>
+                                </text>),
+
                     grid.Column("TrainerName", "Trainer Name", canSort: true),
                     grid.Column("Technology", "Technology", canSort: true),
                     grid.Column("CountryName", "Country Name", canSort: true),
@@ -76,18 +89,7 @@
                         @<text>
                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
                         </text>
-                         , canSort: true),
-                      grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Trainer?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </div>
-                                </text>)),
+                         , canSort: true)),
                                 tableStyle: "table")
                     </div>
                     <div class="row">

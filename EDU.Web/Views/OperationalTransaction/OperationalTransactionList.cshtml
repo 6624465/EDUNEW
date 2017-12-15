@@ -93,6 +93,17 @@
                             <div id="gridContent">
                                 @grid.GetHtml(
                                 columns: grid.Columns(
+
+                                      grid.Column("", "#Action", canSort: false,
+                                    format:
+                                    @<text>
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                        {
+                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        }
+                                    </text>),
+
                                 grid.Column("CategoryIdDesc", "Category", canSort: true),
                                 grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
                         grid.Column("Amount", "Amount", canSort: true,
@@ -103,15 +114,6 @@
                                                 @ConvertToInt64dollar(item.Amount)
                                             </span>
                                         </div>
-                                    </text>),
-                                grid.Column("", "#Action", canSort: false,
-                                    format:
-                                    @<text>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
                                     </text>)),
                                 tableStyle: "table table-striped table-bordered")
                             </div>
@@ -154,7 +156,7 @@
             @if (count > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="center">' + totalAmount + '</td><td></td><tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Total Opex</td><td></td><td class="center">' + totalAmount + '</td><td></td><tr>');
              </text>
              }
         });
