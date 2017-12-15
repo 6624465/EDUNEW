@@ -85,6 +85,16 @@
                                         grid.Column("HalfYearlyTargetAmt", header: "", format: @<input type="hidden" name="HalfYearlyTargetAmt" value="@item.HalfYearlyTargetAmt" />, style: "width0"),
                                         grid.Column("QuarterlyTargetAmt", header: "", format: @<input type="hidden" name="QuarterlyTargetAmt" value="@item.QuarterlyTargetAmt" />, style: "width0"),
                                         grid.Column("MonthlyTargetAmt", header: "", format: @<input type="hidden" name="MonthlyTargetAmt" value="@item.MonthlyTargetAmt" />, style: "width0"),
+
+                                          grid.Column("Action", format: @<text>
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                {
+                                                    <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                }
+                                                <button type="button" class="save-user edit-mode btn btn-success btn-xs waves-effect" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o" style="padding-left: 5px;"></i></button>
+                                                <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
+                                        </text>, style: "col3Width", canSort: false),
+
                                         grid.Column("ProductName", "Product Name", format: @<text>  @item.ProductName  </text>, style: ""),
                                         grid.Column("YearlyTarget", "YearlyTarget", format:
                                         @<text> <span class="display-mode"> @ConvertToInt64dollar(item.YearlyTarget) </span>  <input type="text" name="YearlyTarget" id="YearlyTarget" value="@(item.HalfYearlyTarget > 0 ?Convert.ToInt64(item.YearlyTarget) : "")" class="edit-mode numCss" /> </text>, style: "YearlyTarget alignright"),
@@ -93,15 +103,15 @@
                                         grid.Column("QuarterlyTarget", "Quarterly", format:
                                         @<text>  <span class="display-mode">@ConvertToInt64dollar(item.QuarterlyTarget)</span>   </text>, style: "QuarterlyTarget alignright"),
                                         grid.Column("MonthlyTarget", "Monthly", format:
-                                        @<text> <span class="display-mode">@ConvertToInt64dollar(item.MonthlyTarget)  </span> </text>, style: "MonthlyTarget alignright"),
-                                        grid.Column("Action", format: @<text>
+                                        @<text> <span class="display-mode">@ConvertToInt64dollar(item.MonthlyTarget)  </span> </text>, style: "MonthlyTarget alignright")
+                                        @*grid.Column("Action", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                 }
                                                 <button type="button" class="save-user edit-mode btn btn-success btn-xs waves-effect" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o" style="padding-left: 5px;"></i></button>
                                                 <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
-                                        </text>, style: "col3Width", canSort: false)
+                                        </text>, style: "col3Width", canSort: false)*@
                                         ))
                                 </div>
                             </div>
@@ -182,7 +192,7 @@
             $('#gridContent .MonthlyTarget').each(function () {
                 totalmt = totalmt + parseInt($(this)[0].innerText.replace('$', '').trim() == "" ? 0 : $(this)[0].innerText.replace('$', '').toLocaleString());
             });
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + "$ " + totalyt + '</td><td class="alignright">' + "$ " + totalhyt + '</td><td class="alignright">' + "$ " + totalqyt + '</td><td  class="alignright">' + "$ " + totalmt + '</td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td class="alignright">' + "$ " + totalyt + '</td><td class="alignright">' + "$ " + totalhyt + '</td><td class="alignright">' + "$ " + totalqyt + '</td><td  class="alignright">' + "$ " + totalmt + '</td><td></td></tr>');
 
             var totalytamt = 0;
             var totalhytamt = 0;
