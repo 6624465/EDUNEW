@@ -34,12 +34,6 @@
                                         <div id="jqChart1"></div>
                                     </div>
                                     <div class="col-md-6 css10">
-                                        <div id="jqChart2"></div>
-                                    </div>
-                                    <div class="col-md-6 css10">
-                                        <div id="jqChart3"></div>
-                                    </div>
-                                    <div class="col-md-6 css10">
                                         <div id="jqChart8"></div>
                                     </div>
                                     <div class="col-md-6 css10">
@@ -56,6 +50,12 @@
                                     </div>
                                     <div class="col-md-6 css10">
                                         <div id="jqChart9"></div>
+                                    </div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart2"></div>
+                                    </div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,10 @@
             {
                 <text>
             $('#jqChart' + count).jqChart({
-                title: { text: '@item.CountryName' },
+                title: {
+                    text: '@item.CountryName',
+                    font: '14px sans-serif'
+                },
                 animation: { duration: 1 },
                         shadows: {
                         enabled: true

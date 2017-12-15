@@ -52,6 +52,10 @@
     .center {
         text-align: center !important;
     }
+    table, th, td {
+        border-left: none;
+        border-right: none;
+    }
 </style>
 <div class="page page-forms-elements">
     <div class="page-wrap">
@@ -92,35 +96,35 @@
                                     <div class="row">
                                         <div class="pull-left">
                                             <div class="c100 p100 center">
-                                                <span>100%</span>
+                                                <span id="achieve0"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod0"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center green">
-                                                <span>100%</span>
+                                                <span id="achieve1"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod1"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center orange">
-                                                <span>100%</span>
+                                                <span id="achieve2"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod2"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center red">
-                                                <span>100%</span>
+                                                <span id="achieve3"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod3"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center orange">
-                                                <span>100%</span>
+                                                <span id="achieve4"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod4"></span></em></p>
@@ -199,7 +203,7 @@
                                             decimal? amt = it.JanAmount + it.FebAmount + it.MarAmount + it.AprAmount + it.MayAmount + it.JuneAmount + it.JulyAmount + it.AugAmount + it.SepAmount + it.OctAmount + it.NovAmount + it.DecAmount;
                                             decimal? percent = it.TotalRevenue == 0 ? 0 : (amt * 100) / it.TotalRevenue;
                                             <tr>
-                                                <td>@it.ProductName</td>
+                                                <td class="center">@it.ProductName</td>
                                                 <td class="center">@it.TotalRevenue.Value.ToString("#0.00")</td>
                                                 <td class="center">@amt.Value.ToString("#0.00")</td>
                                                 <td class="center">@percent.Value.ToString("#0.00")%</td>
@@ -231,7 +235,7 @@
                                         @foreach (var itm in productRevenueToAchieve)
                                         {
                                             <tr>
-                                                <td>@itm.ProductName</td>
+                                                <td class="center">@itm.ProductName</td>
                                                 <td class="center 1_Css">@itm.JanAmount.Value.ToString("#0.00")</td>
                                                 <td class="center 2_Css">@itm.FebAmount.Value.ToString("#0.00")</td>
                                                 <td class="center 3_Css">@itm.MarAmount.Value.ToString("#0.00")</td>
@@ -264,6 +268,9 @@
         };
 
         $(document).ready(function () {
+
+            $("tbody tr:even").css("background-color", "#eeeeee");
+            $("tbody tr:odd").css("background-color", "#ffffff");
 
             @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
             {

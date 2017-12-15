@@ -54,17 +54,11 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 css10">
                                         <div id="jqChart0" style="height: 150px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10">
                                         <div id="jqChart1" style="height: 150px; width: 100%;"></div>
-                                    </div>
-                                    <div class="col-md-6 css10">
-                                        <div id="jqChart2" style="height: 150px; width: 100%;"></div>
-                                    </div>
-                                    <div class="col-md-6 css10">
-                                        <div id="jqChart3" style="height: 150px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10">
                                         <div id="jqChart4" style="height: 150px; width: 100%;"></div>
@@ -83,6 +77,12 @@
                                     </div>
                                     <div class="col-md-6 css10">
                                         <div id="jqChart9" style="height: 150px; width: 100%;"></div>
+                                    </div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart2" style="height: 150px; width: 100%;"></div>
+                                    </div>
+                                    <div class="col-md-6 css10">
+                                        <div id="jqChart3" style="height: 150px; width: 100%;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -111,13 +111,12 @@
                 '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
             ];
 
-        var myArray = @Html.Raw(JsonConvert.SerializeObject(productData));
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(productData));
             var $container = $("#legend");
             for (var i = 0; i < @productData.Count(); i++) {
-                $container.append('<div class="row css10" style="height: 30px; padding-left:10px;" ><div class="col-md-1" style="height: 30px; background:' + fillStyles[i] + ';" id="answerdiv' + $container.children().length + '"><div class="css10 col-md-11" style="padding-left:35px; white-space:nowrap"><b>' + myArray[i].ProductName +'</b></div></div></div>');
-        }
-                //$("<div style='width=30px; height: 30px; background:"+fillStyles[i]+";' id='answerdiv-" + d_id + "'>This is div with id " + d_id + "</div>").insertAfter("#answerdiv-" + i);
-
+                $container.append('<div class="row css10" style="height: 30px; padding-left:10px;" ><div class="col-md-1" style="height: 30px; background:' + fillStyles[i] + ';" id="answerdiv' + $container.children().length + '"><div class="css10 col-md-11" style="padding-left:35px; white-space:nowrap"><b>' + myArray[i].ProductName + '</b></div></div></div>');
+            }
+                
             $('#jqChartdoughnut').jqChart({
                 title: { text: 'Products' },
                 legend: {
@@ -172,17 +171,17 @@
                     customItems: [
                     @foreach (var item in Model.GroupBy(x => x.ProductName).ToList())
                     {
-                                               <text>
-                                       {
-                                           marker: {
-                                               type: 'rectangle',
-                                               fillStyle: fillStyles[i++]
-                                           },
-                                           text: {
-                                               text: '@item.FirstOrDefault().ProductName'
-                                           }
-                                       },
-                                </text>
+                    <text>
+                        {
+                            marker: {
+                                type: 'rectangle',
+                                fillStyle: fillStyles[i++]
+                            },
+                            text: {
+                                text: '@item.FirstOrDefault().ProductName'
+                            }
+                        },
+                    </text>
                     }
                     ],
                     title: {
@@ -243,7 +242,10 @@
                    <text>
             var i = 0;
             $('#jqChart' + count).jqChart({
-                title: { text: '@item.BranchName' },
+                title: {
+                    text: '@item.BranchName',
+                    font: '14px sans-serif'
+                },
                 border: { strokeStyle: '#6ba851' },
                 animation: { duration: 1 },
                 shadows: {
