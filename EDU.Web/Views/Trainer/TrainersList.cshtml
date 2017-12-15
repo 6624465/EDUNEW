@@ -67,7 +67,13 @@
                                     </div>
                                 </text>),
                     grid.Column("Contact", "Contact", canSort: true),
-                    grid.Column("Remarks", "Remarks", canSort: true,
+                        grid.Column("Profile", "Profile", format:
+                        @<text>
+                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
+                        </text>
+                         , canSort: true),
+
+                                     grid.Column("Remarks", "Remarks", canSort: true,
                                 format:
                                 @<text>
                                     <div style='width:140px;'>
@@ -82,14 +88,9 @@
                                             <span>@item.Remarks</span>
                                         }
                                     </div>
-                                </text>),
+                                </text>)
 
-
-                        grid.Column("Profile", "Profile", format:
-                        @<text>
-                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
-                        </text>
-                         , canSort: true)),
+                         ),
                                 tableStyle: "table")
                     </div>
                     <div class="row">

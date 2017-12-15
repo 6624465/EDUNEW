@@ -67,7 +67,13 @@
                                 @Html.TextBoxFor(x => x.FirstOrDefault().CurrencyExRate, "{0:#.#}",
                                 new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
                             </div>
-                            <div class="col-md-3"></div>
+                            <div class="col-md-1">
+                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                {
+                                    <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
+                                }
+                            </div>
+                            <div class="col-md-2"></div>
                         </div>
                         <div class="row css10">
                             <div class="col-md-6 col-md-offset-3 ">
@@ -116,12 +122,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-md-offset-3 css10">
+                            @*<div class="col-md-6 col-md-offset-3 css10">
                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                 {
                                     <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
                                 }
-                            </div>
+                            </div>*@
                             <div class="col-md-6 col-md-offset-3 css10">
                                 @{
                                     var grid1 = new WebGrid(Model);
