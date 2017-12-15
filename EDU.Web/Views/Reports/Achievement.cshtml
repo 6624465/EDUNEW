@@ -103,7 +103,10 @@
 
             $('#jqChartdoughnut').jqChart({
                 title: { text: 'Products' },
-                legend: { title: 'Products' },
+                legend: {
+                    title: 'Products',
+                    visible:false
+                },
                 border: { strokeStyle: '#6ba851' },
                 animation: { duration: 1 },
                 shadows: {
@@ -148,7 +151,7 @@
                     enabled: true
                 },
                 legend: {
-                    visible: true,
+                    visible: false,
                     customItems: [
                     @foreach (var item in Model.GroupBy(x => x.ProductName).ToList())
                     {
@@ -230,7 +233,7 @@
                     enabled: true
                 },
                 legend: {
-                    visible: true,
+                    visible: false,
                     allowHideSeries: true,
                     location: 'right',
                     customItems: [
