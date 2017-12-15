@@ -132,9 +132,19 @@
                                         @item.NoOfDays
                                     </div>
                                 </text>, style: "center"),
-                                grid.Column("Month", "Month", format: @<text> @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
-                                grid.Column("StartDate", "Start Dt", format: @<text> @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
-                                grid.Column("EndDate", "End Dt", format: @<text> @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                                grid.Column("Month", "Month", format: @<text>
+                                 @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
+                                grid.Column("StartDate", "Start Dt", format:
+                                 @<text>
+                                 <div style='width:90px;'>
+                                @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
+                                 </div> 
+                                 </text>, style: "center"),
+                                grid.Column("EndDate", "End Dt", format: @<text>
+                            <div style='width:90px;'>
+                            @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
+                            </div> 
+                                </text>, canSort: true, style: "center"),
 
                                 grid.Column("MinimumReg", "Min. Reg", canSort: true,
                                 format:
@@ -195,36 +205,36 @@
                                      format:
                                     @<text>
                                         <div style='width:88px;'>
-                                            <span class="pull-right">
+                                            <span class="center">
                                                 @ConvertToInt64dollar(item.Revenue)
                                             </span>
                                         </div>
                                     </text>)
-                                @*grid.Column("Revenue", "Revenue", format: @<text>@ConvertToInt64dollar(item.Revenue)</text>, canSort: true, style: "center Revenue"),*@
-                                @*grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @if (item.IsConfirm == true)
-                                        {
-                                            <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
-                                        }
-                                        else if (item.IsDrop == true)
-                                        {
-                                            <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                        }
+                                        @*grid.Column("Revenue", "Revenue", format: @<text>@ConvertToInt64dollar(item.Revenue)</text>, canSort: true, style: "center Revenue"),*@
+                                        @*grid.Column("", "#Action", canSort: false,
+                        format:
+                        @<text>
+                            <div style='width:80px;'>
+                                @if (item.IsConfirm == true)
+                                {
+                                    <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
+                                }
+                                else if (item.IsDrop == true)
+                                {
+                                    <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                }
 
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </div>
-                                </text>)*@),
+                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                {
+                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                }
+                            </div>
+                        </text>)*@),
                                 tableStyle: "table")
                     </div>
                 </div>

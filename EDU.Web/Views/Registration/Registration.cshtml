@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row css10">
+                            @*<div class="row css10">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Payment #3</span>
@@ -226,7 +226,7 @@
                                     <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.Payment3Type, listItems, new { @class = "form-control", onchange = "Payment3TypeChange(this)" })
                                     </div>
-                                    <div id="cheque3" class="col-md-2">
+                                    <div id="cheque3" class="col-md-2">*@
                                         @*<label class="col-md-2 control-label">
                                                 <span class="pull-right"></span>
                                             </label>
@@ -239,11 +239,11 @@
                                                 <span class="pull-right">Transaction Id</span>
                                             </label>
                                             <div class="col-md-2">*@
-                                        @Html.TextBoxFor(x => x.ChequeNo3, new { @class = "form-control", @placeholder = "Check No/Transaction Id" })
+                                        @*@Html.TextBoxFor(x => x.ChequeNo3, new { @class = "form-control", @placeholder = "Check No/Transaction Id" })*@
                                         @*</div>*@
-                                    </div>
+                                    @*</div>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">

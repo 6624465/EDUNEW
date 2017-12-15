@@ -295,7 +295,7 @@
                                                                 </span>
                                                             </div>
                                                     </text>),
-                                            grid.Column("Payment3", "Payment 3", canSort: true,
+                                            @*grid.Column("Payment3", "Payment 3", canSort: true,
                                                     format:
                                                     @<text>
                                                         <div style='width:70px;'>
@@ -306,7 +306,7 @@
                                                                     </a>
                                                                 </span>
                                                             </div>
-                                                    </text>),
+                                                    </text>),*@
                                             grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
                                                     format:
                                                     @<text>
@@ -371,7 +371,9 @@
             @if (reg > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
+           // $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
+
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td>  <td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });
