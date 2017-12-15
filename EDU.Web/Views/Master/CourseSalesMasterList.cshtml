@@ -62,7 +62,7 @@
     }
 </style>
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
 
     var count = Model.Count();
@@ -95,19 +95,10 @@
                                     grid.Column("CourseName", "Course Name", canSort: true,
                                 format:
                                 @<text>
-                                    <div style='width:140px;'>
-                                        @if (item.CourseName != null && item.CourseName.ToString().Length > 20)
-                                        {
-                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Course Name" data-content="@(item.CourseName)" data-original-title="" title="">@item.CourseName.ToString().Substring(0, 20)...</span>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <span>@item.CourseName</span>
-                                        }
+                                    <div style='width:300px;'>
+                                        <span class="center">@item.CourseName</span>
                                     </div>
-                                </text>),
+                                </text>, style: ""),
                                 grid.Column("NoOfDays", "No Of Days", canSort: true,
                                 format:
                                 @<text>

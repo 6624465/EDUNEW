@@ -284,7 +284,7 @@ namespace EDU.Web.Reports.Controllers
 
                 decimal? total = revenueitem != null ? revenueitem.YearlyTarget : 0;
                 decimal? monthly = revenueitem != null ? revenueitem.MonthlyTarget : 0;
-                short cMonth = Convert.ToInt16(DateTime.Now.Month);
+                short cMonth = 5;// Convert.ToInt16(DateTime.Now.Month);
                 decimal? yetToAchieve = cMonth == 12 ? monthly : (total - achieved) / (12 - cMonth);
 
                 prodRevenueByMonth.Add(new ProductRevenueByMonthVM()
@@ -353,7 +353,7 @@ namespace EDU.Web.Reports.Controllers
                                     item.JulyAmount + item.AugAmount + item.SepAmount + item.OctAmount + item.NovAmount + item.DecAmount;
 
                 decimal? total = item.TotalRevenue;
-                short cMonth = Convert.ToInt16(DateTime.Now.Month);
+                short cMonth = 5;// Convert.ToInt16(DateTime.Now.Month);
                 decimal? yetToAchieve = cMonth == 12 ? 0 : (total - achieved) / (12 - cMonth);
 
                 prodRevenuToAchieve.Add(new ProductRevenueByMonthVM()

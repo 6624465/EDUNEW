@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 15, ajaxUpdateContainerId: "grid");
     grid.Pager(WebGridPagerModes.All);
 }
 @functions {

@@ -6,7 +6,7 @@
 
 <div class="page page-forms-elements">
 
-    @using (Html.BeginForm("SaveTrainer", "Trainer", FormMethod.Post, new { id = "frmTrainer", name = "frmTrainer", enctype = "multipart/form-data" , autocomplete = "off"}))
+    @using (Html.BeginForm("SaveTrainer", "Trainer", FormMethod.Post, new { id = "frmTrainer", name = "frmTrainer", enctype = "multipart/form-data", autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.TrianerId)
         @Html.HiddenFor(x => x.CountryName)
@@ -156,9 +156,18 @@
                     maxlength: 12
                 },
                 FileName: {
-                    required: true
+                    validateFile: true
                 }
             }
         });
+
+        $.validator.addMethod('validateFile', function (value, element, param) {
+            var Profile = '@Model.Profile';
+            if ((Profile == null || Profile == '') && (value == null || value=="")) {
+                return false;
+            }
+            else
+                return true;
+        }, 'Your error message!');
     </script>
 }
