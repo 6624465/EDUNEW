@@ -136,12 +136,12 @@
                                  @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
                                 grid.Column("StartDate", "Start Dt", format:
                                  @<text>
-                                 <div style='width:60px;'>
+                                 <div style='width:90px;'>
                                 @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
                                  </div> 
                                  </text>, style: "center"),
                                 grid.Column("EndDate", "End Dt", format: @<text>
-                            <div style='width:60px;'>
+                            <div style='width:90px;'>
                             @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
                             </div> 
                                 </text>, canSort: true, style: "center"),
