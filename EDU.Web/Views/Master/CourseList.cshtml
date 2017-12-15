@@ -35,7 +35,18 @@
                     <div>
                         @grid.GetHtml(
                                 columns: grid.Columns(
-                    grid.Column("CountryName", "Country", canSort: true),
+
+                                      grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                        <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                    }
+                                </text>),
+
+                     grid.Column("CountryName", "Country", canSort: true),
                     grid.Column("ProductName", "Product", canSort: true),
                     grid.Column("CourseName", "Course Name", canSort: true),
                     grid.Column("NoOfDays", "No Of Days",
@@ -51,16 +62,7 @@
                         </text>, style: "", canSort: true),
                     grid.Column("PrivatePrice", "Private Price", format: @<text> 
                          <span class="display-mode">@ConvertToInt64dollar(item.PrivatePrice) </span>
-                         </text>, style: "", canSort: true),
-                    grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    @if(Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                    {
-                                        <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                    }
-                                </text>)),
+                         </text>, style: "", canSort: true)),
                                 tableStyle: "table")
                     </div>
                     <div class="row">

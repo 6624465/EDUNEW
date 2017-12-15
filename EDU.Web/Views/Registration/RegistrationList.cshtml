@@ -196,6 +196,19 @@
                         <div style="overflow-x: scroll; width: 100%" id="gridContent">
                             @grid.GetHtml(
                                     columns: grid.Columns(
+
+                                        grid.Column("", "#Action", canSort: false,
+                                                        format:
+                                                        @<text>
+                                                            <div style='width:80px;'>
+                                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                            {
+                                                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                }
+                                                            </div>
+                                                        </text>),
+
                                             grid.Column("StudentName", "Student Name", canSort: true,
                                                     format:
                                                     @<text>
@@ -322,8 +335,8 @@
                                                                 @(item.CompanyName)
                                                             </span>
                                                         </div>
-                                                    </text>),
-                                            grid.Column("", "#Action", canSort: false,
+                                                    </text>)
+                                            @*grid.Column("", "#Action", canSort: false,
                                                         format:
                                                         @<text>
                                                             <div style='width:80px;'>
@@ -333,7 +346,7 @@
                                                                     <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                                 }
                                                             </div>
-                                                        </text>)),
+                                                        </text>)*@),
                                                         tableStyle: "table")
                         </div>
                     </div>
@@ -358,7 +371,7 @@
             @if (reg > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });
