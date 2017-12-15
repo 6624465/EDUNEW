@@ -101,6 +101,15 @@
                                      mode: WebGridPagerModes.All,
                                      columns:
                                         grid.Columns(
+
+                                              grid.Column("", format: @<text>
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                {
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+
+                                                }
+                                            </text>, style: "col3Width", canSort: false),
+
                                         grid.Column("DESCRIPTION", "DESCRIPTION",
                                         format:
                                         @<text>
@@ -157,14 +166,7 @@
                                                             <span>@item.Remarks</span>
                                                         }
                                                     </div>
-                                                </text>, canSort: false),
-                                                grid.Column("", format: @<text>
-                                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                            {
-                                                        <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-
-                                                    }
-                                                </text>, style: "col3Width", canSort: false)
+                                                </text>, canSort: false)
                                                 ))
                                             </div>
                             </div>
