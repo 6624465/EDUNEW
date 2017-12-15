@@ -305,7 +305,7 @@
                             "Country": $('#Country').val(),
                             "CountryName": $("#Country option:selected").text(),
                             "CurrencyCode": $('#CurrencyCode').val(),
-                            "Year": Year
+                            "Year": $('#Year').val()
                         };
                     $.ajax({
                         url: '@Url.Content("~/Revenue/SaveRevenueInfo/")',

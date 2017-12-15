@@ -119,9 +119,7 @@
                         enabled: true,
                         alpha: 65,
                         beta: 0
-                    },
-                    backgroundColor:'#d2e6c9' 
-                 
+                    }                 
                 },
                 title: {
                     text: 'MTD'
@@ -160,21 +158,10 @@
             });
        
             $(document).ready(function () {
-            
-                var background = {
-                    type: 'linearGradient',
-                    x0: 0,
-                    y0: 0,
-                    x1: 0,
-                    y1: 1,
-                    colorStops: [{ offset: 0, color: '#d2e6c9' },
-                    { offset: 1, color: 'white' }]
-                };
 
                 $('#jqChart').jqChart({
                     title: { text: 'YTD' },
                     border: { strokeStyle: '#6ba851' },
-                    background: background,
                     animation: { duration: 3 },
                     shadows: {
                         enabled: false

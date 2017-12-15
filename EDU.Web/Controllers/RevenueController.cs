@@ -139,11 +139,11 @@ namespace EDU.Web.Controllers
 
             var countryrow = ((List<Branch>)ViewData["CountryData"]).Where(x => x.IsActive == true && x.BranchID == country).FirstOrDefault();
             var currencyCode = ((List<EDU.Web.Models.Lookup>)ViewData["CurrencyList"]).Where(x => x.LookupCategory == "Currency" && x.MappingCode == countryrow.BranchCode).FirstOrDefault();
-
+            var currencyRate = RevenueList.Count() > 0 ? RevenueList.FirstOrDefault().CurrencyExRate:0;
             foreach (EduProduct ep in productList)
             {
                 if (RevenueList.Where(x => x.Product == ep.Id).Count() == 0)
-                    RevenueList.Add(new Revenue() { Product = ep.Id, ProductName = ep.ProductName, RevenueId = -1, CurrencyCode = currencyCode == null ? "" : currencyCode.LookupCode });
+                    RevenueList.Add(new Revenue() { Product = ep.Id, ProductName = ep.ProductName, RevenueId = -1, CurrencyCode = currencyCode == null ? "" : currencyCode.LookupCode, CurrencyExRate= currencyRate });
             }
             return RevenueList.OrderBy(x=>x.Product).ToList();
         }

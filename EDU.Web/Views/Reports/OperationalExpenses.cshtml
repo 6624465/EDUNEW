@@ -73,15 +73,6 @@
             window.location = '@Url.Action("OperationalExpenses", "Reports", new { year = ""})' + '?year=' + $('#Year').val();
         };
         $(function () {
-            var background = {
-                type: 'linearGradient',
-                x0: 0,
-                y0: 0,
-                x1: 0,
-                y1: 1,
-                colorStops: [{ offset: 0, color: '#d2e6c9' },
-                { offset: 1, color: 'white' }]
-            };
             $('#liReportsOperationalExpenses').addClass('active');
 
             var count = 0;
@@ -91,7 +82,6 @@
             $('#jqChart' + count).jqChart({
                 title: { text: '@item.CountryName' },
                 animation: { duration: 1 },
-                background:background,
                         shadows: {
                         enabled: true
                         },
