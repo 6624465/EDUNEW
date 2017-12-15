@@ -9,7 +9,7 @@
 
 
 @{
-    WebGrid grid = new WebGrid(Model.customerPayment, rowsPerPage: 10);
+    WebGrid grid = new WebGrid(Model.customerPayment, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
 
     var cPayment = Model.customerPayment.Count();

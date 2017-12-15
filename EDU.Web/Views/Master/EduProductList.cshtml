@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EZY.EDU.Contract.EduProduct>
 
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10, ajaxUpdateContainerId: "grid");
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 15, ajaxUpdateContainerId: "grid");
     grid.Pager(WebGridPagerModes.All);
 }
 <div class="page">
