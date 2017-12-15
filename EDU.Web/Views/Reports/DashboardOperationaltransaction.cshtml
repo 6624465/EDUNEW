@@ -108,7 +108,10 @@
         margin-left: 10px;
         border: 1px solid #d2d6de;
     }
-
+    /*.highcharts-legend-item highcharts-pie-series 
+    {
+        display:none;
+    }*/
     .highcharts-button-symbol {
         display: none;
     }
@@ -210,7 +213,8 @@
                         enabled: true,
                         alpha: 65,
                         beta: 0
-                    }
+                    },
+                   
                 },
                 title: {
                     text: '@item.BranchName'
@@ -226,7 +230,7 @@
                         dataLabels: {
                             enabled: false
                         },
-                        showInLegend: true
+                        showInLegend: false
                     }
                 },
                 series: [{
