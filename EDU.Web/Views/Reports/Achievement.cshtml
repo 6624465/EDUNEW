@@ -6,6 +6,8 @@
 
     var CountryData = (List<EZY.EDU.Contract.Branch>)ViewData["CountryData"];
 
+    var ProductData = (List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"];
+
 }
 
 <div class="page page-forms-elements">
@@ -41,6 +43,7 @@
                                         <div id="jqChart"></div>
                                     </div>
                                 </div>
+                                <div id="container">sdfsafsfd</div>
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
@@ -85,7 +88,7 @@
 </div>
 @section SectionScripts {
 
-<script lang="javascript" type="text/javascript">
+    <script lang="javascript" type="text/javascript">
         $(function () {
             $('#liReportsAchievement').addClass('active');
         });
@@ -100,6 +103,14 @@
                 '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082', '#F08080',
                 '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
             ];
+
+            var $container = $("#container");
+            @for (var i = 0; i < ProductData.Count(); i++) {
+                <text>
+                $container.append('<div class="css10" style="width=30px; height: 30px; background:'+fillStyles[i]+';" id="answerdiv' + $container.children().length + 1 + '">'+'@ProductData[i].ProductName'+'</div>');
+            </text>
+        }
+
 
             $('#jqChartdoughnut').jqChart({
                 title: { text: 'Products' },
@@ -194,7 +205,7 @@
                                          }
                                     ],
                         labels: {
-                            
+
                         }
                     }
                 ],
@@ -308,7 +319,7 @@
         }
 
         });
-</script>
+    </script>
 }
 
 

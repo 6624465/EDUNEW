@@ -443,6 +443,7 @@ namespace EDU.Web.Reports.Controllers
             }
 
             ViewData["CountryData"] = countrylist;
+            ViewData["ProductData"] = productList;
             return View(list.OrderBy(x=>x.ProductId));
         }
 
