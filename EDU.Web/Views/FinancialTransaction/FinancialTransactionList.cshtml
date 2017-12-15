@@ -91,6 +91,12 @@
                                     @Html.TextBoxFor(x => x.financialTransaction.CurrencyExRate, "{0:#.#}",
            new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss", onblur = "ValidateTheExValue()" })
                                 </div>
+                                <div class="col-md-2">
+                             @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                             {
+                                    <button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
+                             }
+                                </div>
                             </div>
                         </div>
                         <div class="row css25">
@@ -173,9 +179,10 @@
                         </div>
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <div class="modal-footer css10">
-                                <button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
+                            <div class="col-md-6 col-md-offset-9 css10">
                                 <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
+                                @*<button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>*@
+                                
                             </div>
                         }
                     </div>
@@ -216,8 +223,8 @@
                 var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
             var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
             var lgp =gp*$('#financialTransaction_CurrencyExRate').val();
-            $('#gridContent tbody').append('<tr class="bordertop"><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td><span class="center">' +lgp + '</span></td><td></td><td></td><td></td></tr>'+
-                    '<tr class="bordertop"><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td><span class="center">' +lgp + '</span></td><td></td><td></td><td></td></tr>'+
+                    '<tr class="bordertop"><td></td><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td><td></td></tr>');
             </text>
             }
             else
