@@ -141,16 +141,32 @@
         $(function () {
             $('#liDashboardOperationaltransaction').addClass('active');
 
-            Highcharts.setOptions({
-                colors: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69', '#0000FF',
-                        '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
-                        '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
-                        '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
-                        '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082', '#F08080',
-                        '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080'
-                ]
-            });
-
+            //Highcharts.setOptions({
+            //    colors: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69', '#0000FF',
+            //            '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
+            //            '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
+            //            '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
+            //            '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082', '#F08080',
+            //            '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080'
+            //    ]
+            //});
+            var getColor = {
+                'SALARIES': '#418CF0',
+                'TRAVELLING EXPENSES': '#FCB441',
+                'RENTAL': '#E0400A', 
+                'TELEPHONE EXPENSES': '#056492', 
+                'COURIER CHARGES': '#1A3B69', 
+                'INSURANCE': '#0000FF', 
+                'UTILITY': '#8A2BE2', 
+                'MARKETING EXPENSES': '#A52A2A', 
+                'DEPRECIATION': '#DEB887', 
+                'LEGAL EXPENSES/CONSULTANCY': '#5F9EA0', 
+                'REPAIR & MAINTENANCE': '#D2691E',
+                'BANK CHARGES': '#FF7F50', 
+                'PRINTING & STATIONERY': '#6495ED', 
+                'STAFF WELFARE': '#DC143C', 
+                'OTHER EXPENSES/INCOME': '#00FFFF'
+            };
             var fillStyles = ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69', '#0000FF',
                 '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
                 '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
@@ -201,7 +217,7 @@
                 },
                 series: [{
                     name: 'Brands',
-                    colorByPoint: true,
+                    //colorByPoint: true,
                     data: [
                 @foreach (var info in Model.Where(x=>x.Country==item.BranchID).ToList())
                         {
@@ -210,7 +226,8 @@
                     name:'@info.ParticularName',
                     y:@info.Amount,
                     sliced: true,
-                    selected:true
+                    selected:true,
+                    color: getColor['@info.ParticularName']
                 },
                 </text>
                             }
