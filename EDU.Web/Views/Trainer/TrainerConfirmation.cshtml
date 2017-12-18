@@ -169,7 +169,7 @@
                 up: 'fa fa-arrow-up',
                 down: 'fa fa-arrow-down'
             },
-            minDate: new Date(),
+            //minDate: new Date(),
             format: 'DD/MM/YYYY'
         });
 
@@ -186,7 +186,7 @@
 
         $("#StartDt").on("dp.change", function (e) {
             $('#EndDate').val('');
-            $('#EndDt').data("DateTimePicker").minDate(e.date);
+            //$('#EndDt').data("DateTimePicker").minDate(e.date);
         });
 
         @if (Model.Id != -1)

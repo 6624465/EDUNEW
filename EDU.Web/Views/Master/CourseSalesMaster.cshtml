@@ -310,7 +310,7 @@
                     up: 'fa fa-arrow-up',
                     down: 'fa fa-arrow-down'
                 },
-                minDate: new Date(),
+                //minDate: new Date(),
                 format: 'DD/MM/YYYY'
             });
 
@@ -352,14 +352,14 @@
                         <text>$('#courseSalesMaster_EndDate').val('@Model.courseSalesMaster.EndDate.Value.ToString("dd/MM/yyyy")');</text>
                      }
                     $('#courseSalesMaster_RegClosingDate').val('@Model.courseSalesMaster.RegClosingDate.Value.ToString("dd/MM/yyyy")');
-                    $('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
+                    //$('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
 
             </text>
             }
             else
             {
                  <text>
-            $('#EndDt').data("DateTimePicker").minDate(new Date());
+            //$('#EndDt').data("DateTimePicker").minDate(new Date());
             </text>
             }
 
@@ -369,7 +369,7 @@
                 var dmonth = parseInt(m);
                 $('#courseSalesMaster_Month').val(dmonth);
                 $('#courseSalesMaster_EndDate').val('');
-                $('#EndDt').data("DateTimePicker").minDate(e.date);
+                //$('#EndDt').data("DateTimePicker").minDate(e.date);
             });
         });
 

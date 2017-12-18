@@ -152,6 +152,8 @@ namespace EDU.Web.Controllers
             ViewData["totalleadsonhand"] = totalleadsonhand;
             ViewData["totalrevenue"] = totalrevenue;
 
+            var prodList = new EduProductBO().GetList().OrderBy(x => x.Id).ToList();
+            ViewData["ProductList"] = prodList;
             return View("CourseSalesMasterList", list.AsEnumerable());
         }
 

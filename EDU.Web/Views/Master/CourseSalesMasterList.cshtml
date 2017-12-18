@@ -4,8 +4,10 @@
     ViewBag.Title = "CourseSalesMasterList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    //var totalleadsonhand = (Int64)ViewData["totalleadsonhand"];
-    //var totalrevenue = (Int64)ViewData["totalrevenue"];
+    var ProductData = (List<EZY.EDU.Contract.EduProduct>)ViewData["ProductList"];
+    var count = 0;
+    
+    var totalrevenue =0;
 }
 @functions {
     public string GetMonthById(int id)
@@ -61,12 +63,7 @@
         width: 50px;
     }
 </style>
-@{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 15);
-    grid.Pager(WebGridPagerModes.All);
 
-    var count = Model.Count();
-}
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -80,96 +77,124 @@
                         }
                     </div>
                 </div>
+
                 <div class="box-body">
-                    <div style="overflow-x: scroll; width: 100%" id="gridContent">
-                        @grid.GetHtml(
+                    <div class="row">
+                        <div class="clearfix tabs-linearrow">
+                            <ul class="nav nav-tabs">
+                                @for (int i = 0; i < ProductData.Count(); i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                    <li class="active"><a href="#@i" data-toggle="tab">@ProductData[i].ProductName</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="#@i" data-toggle="tab">@ProductData[i].ProductName</a></li>
+                                    }
+                                }
+                            </ul>
+                            <div class="tab-content">
+                               @for (int j = 0; j < ProductData.Count(); j++)
+                               {
+                                    <div class="tab-pane" id="@j">
+                                        <div class="clearfix">
+                                            <div style="overflow-x: scroll; width: 100%" id="gridContent">
+                                                @{
+                                                    WebGrid grid = new WebGrid(Model.Where(x=>x.ProductName== @ProductData[j].ProductName), rowsPerPage: 15);
+                                                    grid.Pager(WebGridPagerModes.All);
+
+                                                    count = Model.Count();
+                                                }
+
+                                                @grid.GetHtml(
                                 columns: grid.Columns(
 
                                      grid.Column("", "#Action", canSort: false,
                                 format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @if (item.IsConfirm == true)
-                                        {
-                                            <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
-                                        }
-                                        else if (item.IsDrop == true)
-                                        {
-                                            <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                        }
+                                        @<text>
+                                            <div style='width:80px;'>
+                                                @if (item.IsConfirm == true)
+                                                {
+                                                    <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
+                                                }
+                                                else if (item.IsDrop == true)
+                                                {
+                                                    <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                                }
 
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </div>
-                                </text>),
+                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                {
+                                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                }
+                                            </div>
+                                        </text>),
 
                                 grid.Column("CountryName", "Country", canSort: true),
                                 grid.Column("ProductName", "Product Name", canSort: true,
                                 format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @item.ProductName
-                                    </div>
-                                </text>),
+                                        @<text>
+                                            <div style='width:110px;'>
+                                                @item.ProductName
+                                            </div>
+                                        </text>),
                                     grid.Column("CourseName", "Course Name", canSort: true,
                                 format:
-                                @<text>
-                                    <div style='width:300px;'>
-                                        <span class="center">@item.CourseName</span>
-                                    </div>
-                                </text>, style: ""),
+                                        @<text>
+                                            <div style='width:300px;'>
+                                                <span class="center">@item.CourseName</span>
+                                            </div>
+                                        </text>, style: ""),
                                 grid.Column("NoOfDays", "No Of Days", canSort: true,
                                 format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @item.NoOfDays
-                                    </div>
-                                </text>, style: "center"),
+                                        @<text>
+                                            <div style='width:80px;'>
+                                                @item.NoOfDays
+                                            </div>
+                                        </text>, style: "center"),
                                 grid.Column("Month", "Month", format: @<text>
-                                 @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
+                                            @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
                                 grid.Column("StartDate", "Start Dt", format:
-                                 @<text>
-                                 <div style='width:90px;'>
-                                @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
-                                 </div> 
-                                 </text>, style: "center"),
+                                        @<text>
+                                            <div style='width:90px;'>
+                                                @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
+                                            </div>
+                                        </text>, style: "center"),
                                 grid.Column("EndDate", "End Dt", format: @<text>
-                            <div style='width:90px;'>
-                            @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
-                            </div> 
-                                </text>, canSort: true, style: "center"),
+                                            <div style='width:90px;'>
+                                                @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
+                                            </div>
+                                        </text>, canSort: true, style: "center"),
 
                                 grid.Column("MinimumReg", "Min. Reg", canSort: true,
                                 format:
-                                @<text>
-                                    <div style='width:60px;'>
-                                        @item.MinimumReg
-                                    </div>
-                                </text>, style: "center"),
+                                        @<text>
+                                            <div style='width:60px;'>
+                                                @item.MinimumReg
+                                            </div>
+                                        </text>, style: "center"),
 
                                 grid.Column("LeadsOnHead", "Leads on hand",
                                 format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @if (string.IsNullOrWhiteSpace(item.LeadsOnHeadRemarks))
+                                        @<text>
+                                            <div style='width:110px;'>
+                                                @if (string.IsNullOrWhiteSpace(item.LeadsOnHeadRemarks))
                                     {
-                                            <span>@item.LeadsOnHead</span>
-                                        }
-                                        else
-                                        {
-                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
-                                            </a>
-                                        }
-                                    </div>
-                                </text>, canSort: true, style: "center LeadsOnHead"),
+                                                    <span>@item.LeadsOnHead</span>
+                                                }
+                                                else
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
+                                                    </a>
+                                                }
+                                            </div>
+                                        </text>, canSort: true, style: "center LeadsOnHead"),
                                 grid.Column("Registered", "Registered",
                                         format:
                                         @<text>
@@ -203,44 +228,29 @@
                                         </text>, style: "center"),
                                     grid.Column("Revenue", "Revenue", canSort: true,
                                      format:
-                                    @<text>
-                                        <div style='width:88px;'>
-                                            <span class="center">
-                                                @ConvertToInt64dollar(item.Revenue)
-                                            </span>
+                                        @<text>
+                                            <div style='width:80px;'>
+                                                <span class="">
+                                                    @ConvertToInt64dollar(item.Revenue)
+                                                </span>
+                                            </div>
+                                        </text>)),
+                                tableStyle: "table")
+                                            </div>
                                         </div>
-                                    </text>)
-                                        @*grid.Column("Revenue", "Revenue", format: @<text>@ConvertToInt64dollar(item.Revenue)</text>, canSort: true, style: "center Revenue"),*@
-                                        @*grid.Column("", "#Action", canSort: false,
-                        format:
-                        @<text>
-                            <div style='width:80px;'>
-                                @if (item.IsConfirm == true)
-                                {
-                                    <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
-                                }
-                                else if (item.IsDrop == true)
-                                {
-                                    <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                }
-                                else
-                                {
-                                    <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                    </div>
                                 }
 
-                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                {
-                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                }
                             </div>
-                        </text>)*@),
-                                tableStyle: "table")
+                        </div>
+                        <!-- tab style -->
+
                     </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                        @*<div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>*@
                     </div>
                 </div>
             </div>
@@ -256,22 +266,19 @@
 @section SectionScripts{
     <script type="text/javascript">
         $(function () {
+
+            $("#0").addClass('active');
             $('#liRegionalLeads').addClass('active');
         });
-        $(document).ready(function () {
-            var totalleadsonhand ="$ "+ @ViewData["totalleadsonhand"].ToString();
+        $(document).ready(function () {        
             var totalrevenue = "$ " + @ViewData["totalrevenue"].ToString();
             if(@count>0)
             {
-                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="pull-right">' + totalrevenue + '</td><td>');
+                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalrevenue + '</td><td>');
             }
         });
 
-        function DeleteCourseSalesMaster(Id) {
-            //if (confirm("Are you sure, do you want delete?")) {
-            //    $('#id').val(Id);
-            //    $('#frmDelete').submit();
-            //}
+        function DeleteCourseSalesMaster(Id) {            
             swal({
                 title: "Are you sure?",
                 text: "Do you want delete?",
