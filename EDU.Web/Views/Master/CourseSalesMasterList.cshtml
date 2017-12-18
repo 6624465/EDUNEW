@@ -171,12 +171,12 @@
                                                                                 <div style='width:90px;'>
                                                                                     @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
                                                                                 </div>
-                                                                            </text>, style: "center"),
+                                                                            </text>, style: ""),
                                                                              grid.Column("EndDate", "End Dt", format: @<text>
                                                                                     <div style='width:90px;'>
                                                                                         @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
                                                                                     </div>
-                                                                            </text>, canSort: true, style: "center"),
+                                                                            </text>, canSort: true, style: ""),
 
                                                                              grid.Column("MinimumReg", "Min. Reg", canSort: true,
                                                                              format:
