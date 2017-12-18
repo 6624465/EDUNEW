@@ -37,6 +37,7 @@ namespace EDU.Web.Models
         public virtual DbSet<VendorPayment> VendorPayments { get; set; }
         public virtual DbSet<OperationalTransaction> OperationalTransactions { get; set; }
         public virtual DbSet<TrainingConfirmation> TrainingConfirmations { get; set; }
+        public virtual DbSet<FinancialTransaction1> FinancialTransactions1 { get; set; }
     
         public virtual ObjectResult<usp_OperationalTransactionReport_Result> usp_OperationalTransactionReport(Nullable<int> year)
         {

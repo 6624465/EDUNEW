@@ -14,8 +14,8 @@ namespace EDU.Web.Models
     public partial class usp_OperationalTransactionReport_Result
     {
         public Nullable<short> Month { get; set; }
-        public int ParticularId { get; set; }
         public string ParticularName { get; set; }
+        public int ParticularsId { get; set; }
         public decimal Amount { get; set; }
         public string CountryName { get; set; }
         public short Country { get; set; }

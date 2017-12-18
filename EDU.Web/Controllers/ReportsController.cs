@@ -161,7 +161,7 @@ namespace EDU.Web.Reports.Controllers
                         {
                             reportListbyMonth.Add(new OperationalTransactionReportByMonth()
                             {
-                                ParticularId =it.ParticularId,
+                                ParticularId =it.ParticularsId,
                                 ParticularName = it.ParticularName,
                                 Amount = it.Amount,
                                 Month = month,

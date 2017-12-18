@@ -78,6 +78,48 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="FinancialTransactions">
+          <Key>
+            <PropertyRef Name="FinancialTransactionId" />
+          </Key>
+          <Property Name="FinancialTransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Country" Type="smallint" />
+          <Property Name="CurrencyCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="CurrencyExRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRevenueAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRevenueLocalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRevenueReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="TotalRevenueRemarks" Type="nvarchar(max)" />
+          <Property Name="TrainerExpensesAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerExpensesLocalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerExpensesReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="TrainerExpensesRemarks" Type="nvarchar(max)" />
+          <Property Name="TrainerTravelExpensesAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerTravelExpensesLocalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerTravelExpensesReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="TrainerTravelExpensesRemarks" Type="nvarchar(max)" />
+          <Property Name="LocalExpensesAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LocalExpensesLocalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LocalExpensesReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="LocalExpensesRemarks" Type="nvarchar(max)" />
+          <Property Name="CoursewareMaterialAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CoursewareMaterialLocalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CoursewareMaterialReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="CoursewareMaterialRemarks" Type="nvarchar(max)" />
+          <Property Name="MiscExpensesAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MiscExpensesLocalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MiscExpensesReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="MiscExpensesRemarks" Type="nvarchar(max)" />
+          <Property Name="GrossProfit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ProfitAndLossPercent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsSubmit" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="OperationalTransaction">
           <Key>
             <PropertyRef Name="OperationalTransactionId" />
@@ -231,6 +273,7 @@
           <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransaction" EntityType="Self.FinancialTransaction" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransactionDetails" EntityType="Self.FinancialTransactionDetails" Schema="Edu" store:Type="Tables" />
+          <EntitySet Name="FinancialTransactions" EntityType="Self.FinancialTransactions" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="OperationalTransaction" EntityType="Self.OperationalTransaction" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Registration" EntityType="Self.Registration" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
@@ -283,8 +326,10 @@
           <EntitySet Name="VendorPayments" EntityType="DB_9F30C5_edudevModel.VendorPayment" />
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
           <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
+          
+          <EntitySet Name="FinancialTransactions1" EntityType="DB_9F30C5_edudevModel.FinancialTransaction1" />
           <FunctionImport Name="usp_OperationalTransactionReport" ReturnType="Collection(DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result)">
-          <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="TrainerInformation">
@@ -491,9 +536,52 @@
           <Property Name="Country" Type="Int16" Nullable="false" />
           <Property Name="LVC" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="FinancialTransaction1">
+          <Key>
+            <PropertyRef Name="FinancialTransactionId" />
+          </Key>
+          <Property Name="FinancialTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingConfirmationID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="Int16" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyExRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRevenueAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRevenueLocalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRevenueReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TotalRevenueRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerExpensesAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerExpensesLocalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerExpensesReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerExpensesRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerTravelExpensesAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerTravelExpensesLocalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerTravelExpensesReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerTravelExpensesRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LocalExpensesAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LocalExpensesLocalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LocalExpensesReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LocalExpensesRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CoursewareMaterialAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CoursewareMaterialLocalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CoursewareMaterialReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CoursewareMaterialRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MiscExpensesAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MiscExpensesLocalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MiscExpensesReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MiscExpensesRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GrossProfit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProfitAndLossPercent" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsSubmit" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
         <ComplexType Name="usp_OperationalTransactionReport_Result">
           <Property Type="Int16" Name="Month" Nullable="true" />
           <Property Type="String" Name="ParticularName" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="ParticularsId" Nullable="false" />
           <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="CountryName" Nullable="false" MaxLength="255" />
           <Property Type="Int16" Name="Country" Nullable="false" />
@@ -732,11 +820,55 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FinancialTransactions1">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.FinancialTransaction1">
+              <MappingFragment StoreEntitySet="FinancialTransactions">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsSubmit" ColumnName="IsSubmit" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ProfitAndLossPercent" ColumnName="ProfitAndLossPercent" />
+                <ScalarProperty Name="GrossProfit" ColumnName="GrossProfit" />
+                <ScalarProperty Name="MiscExpensesRemarks" ColumnName="MiscExpensesRemarks" />
+                <ScalarProperty Name="MiscExpensesReferenceDoc" ColumnName="MiscExpensesReferenceDoc" />
+                <ScalarProperty Name="MiscExpensesLocalAmount" ColumnName="MiscExpensesLocalAmount" />
+                <ScalarProperty Name="MiscExpensesAmount" ColumnName="MiscExpensesAmount" />
+                <ScalarProperty Name="CoursewareMaterialRemarks" ColumnName="CoursewareMaterialRemarks" />
+                <ScalarProperty Name="CoursewareMaterialReferenceDoc" ColumnName="CoursewareMaterialReferenceDoc" />
+                <ScalarProperty Name="CoursewareMaterialLocalAmount" ColumnName="CoursewareMaterialLocalAmount" />
+                <ScalarProperty Name="CoursewareMaterialAmount" ColumnName="CoursewareMaterialAmount" />
+                <ScalarProperty Name="LocalExpensesRemarks" ColumnName="LocalExpensesRemarks" />
+                <ScalarProperty Name="LocalExpensesReferenceDoc" ColumnName="LocalExpensesReferenceDoc" />
+                <ScalarProperty Name="LocalExpensesLocalAmount" ColumnName="LocalExpensesLocalAmount" />
+                <ScalarProperty Name="LocalExpensesAmount" ColumnName="LocalExpensesAmount" />
+                <ScalarProperty Name="TrainerTravelExpensesRemarks" ColumnName="TrainerTravelExpensesRemarks" />
+                <ScalarProperty Name="TrainerTravelExpensesReferenceDoc" ColumnName="TrainerTravelExpensesReferenceDoc" />
+                <ScalarProperty Name="TrainerTravelExpensesLocalAmount" ColumnName="TrainerTravelExpensesLocalAmount" />
+                <ScalarProperty Name="TrainerTravelExpensesAmount" ColumnName="TrainerTravelExpensesAmount" />
+                <ScalarProperty Name="TrainerExpensesRemarks" ColumnName="TrainerExpensesRemarks" />
+                <ScalarProperty Name="TrainerExpensesReferenceDoc" ColumnName="TrainerExpensesReferenceDoc" />
+                <ScalarProperty Name="TrainerExpensesLocalAmount" ColumnName="TrainerExpensesLocalAmount" />
+                <ScalarProperty Name="TrainerExpensesAmount" ColumnName="TrainerExpensesAmount" />
+                <ScalarProperty Name="TotalRevenueRemarks" ColumnName="TotalRevenueRemarks" />
+                <ScalarProperty Name="TotalRevenueReferenceDoc" ColumnName="TotalRevenueReferenceDoc" />
+                <ScalarProperty Name="TotalRevenueLocalAmount" ColumnName="TotalRevenueLocalAmount" />
+                <ScalarProperty Name="TotalRevenueAmount" ColumnName="TotalRevenueAmount" />
+                <ScalarProperty Name="CurrencyExRate" ColumnName="CurrencyExRate" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
+                <ScalarProperty Name="FinancialTransactionId" ColumnName="FinancialTransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_OperationalTransactionReport" FunctionName="DB_9F30C5_edudevModel.Store.usp_OperationalTransactionReport">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result">
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="ParticularName" ColumnName="ParticularName" />
+                <ScalarProperty Name="ParticularsId" ColumnName="ParticularsId" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
