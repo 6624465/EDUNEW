@@ -13,6 +13,7 @@ namespace EDU.Web.ViewModels.OperationalTransaction
 
     public class OperationalTransactionReportByMonth
     {
+        public int ParticularId { get; set; }
         public string ParticularName { get; set; }
         public decimal Amount { get; set; }
         public Nullable<short> Month { get; set; }

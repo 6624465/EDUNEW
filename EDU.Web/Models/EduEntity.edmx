@@ -284,7 +284,7 @@
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
           <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
           <FunctionImport Name="usp_OperationalTransactionReport" ReturnType="Collection(DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result)">
-            <Parameter Name="Year" Mode="In" Type="Int32" />
+          <Parameter Name="Year" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="TrainerInformation">

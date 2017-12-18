@@ -145,15 +145,15 @@ namespace EDU.Web.Reports.Controllers
                 {
                     if (list.Where(x => x.Country == item.BranchID && x.Month == month).Count() == 0)
                     {
-                        reportListbyMonth.Add(new OperationalTransactionReportByMonth()
-                        {
-                            ParticularName = "",
-                            Amount = 0,
-                            Month = month,
-                            Country = item.BranchID,
-                            Year = year,
-                            CountryName = item.BranchName
-                        });
+                        //reportListbyMonth.Add(new OperationalTransactionReportByMonth()
+                        //{
+                        //    ParticularName = "",
+                        //    Amount = 0,
+                        //    Month = month,
+                        //    Country = item.BranchID,
+                        //    Year = year,
+                        //    CountryName = item.BranchName
+                        //});
                     }
                     else
                     {
@@ -161,6 +161,7 @@ namespace EDU.Web.Reports.Controllers
                         {
                             reportListbyMonth.Add(new OperationalTransactionReportByMonth()
                             {
+                                ParticularId =it.ParticularId,
                                 ParticularName = it.ParticularName,
                                 Amount = it.Amount,
                                 Month = month,
@@ -174,9 +175,31 @@ namespace EDU.Web.Reports.Controllers
 
 
                 var ParticularsList = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").OrderBy(y => y.LookupID).ToList();
+
+                foreach (var item in countrylist)
+                {
+                    foreach (var pitem in ParticularsList)
+                    {
+                        if (reportListbyMonth.Where(x => x.ParticularName == pitem.LookupDescription && x.Country == item.BranchID).Count() == 0)
+                        {
+                            reportListbyMonth.Add(new OperationalTransactionReportByMonth()
+                            {
+                                ParticularId = pitem.LookupID,
+                                ParticularName = pitem.LookupDescription,
+                                Amount = 0,
+                                Month = month,
+                                Country = item.BranchID,
+                                Year = year,
+                                CountryName = item.BranchName
+                            });
+                        }
+                    }
+                }
+
+
                 ViewData["CountryData"] = countrylist;
                 ViewData["ParticularsData"] = ParticularsList;
-                return View(reportListbyMonth);
+                return View(reportListbyMonth.OrderBy(x=>x.ParticularId));
             }
             catch (Exception ex)
             {
