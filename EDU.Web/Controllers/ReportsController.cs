@@ -172,7 +172,10 @@ namespace EDU.Web.Reports.Controllers
                     }
                 }
 
+
+                var ParticularsList = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").OrderBy(y => y.LookupID).ToList();
                 ViewData["CountryData"] = countrylist;
+                ViewData["ParticularsData"] = ParticularsList;
                 return View(reportListbyMonth);
             }
             catch (Exception ex)
@@ -433,7 +436,7 @@ namespace EDU.Web.Reports.Controllers
                             Year = year,
                             Country = item.BranchID,
                             CountryName = item.BranchName,
-                            ProductId=pitem.Id,
+                            ProductId = pitem.Id,
                             ProductName = pitem.ProductName,
                             TotalRevenue = 0,
                             AchievedRevenue = 0
@@ -444,7 +447,7 @@ namespace EDU.Web.Reports.Controllers
 
             ViewData["CountryData"] = countrylist;
             ViewData["ProductData"] = productList;
-            return View(list.OrderBy(x=>x.ProductId));
+            return View(list.OrderBy(x => x.ProductId));
         }
 
     }
