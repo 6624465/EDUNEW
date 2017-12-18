@@ -1,5 +1,5 @@
 ﻿@using Newtonsoft.Json;
-@model EDU.Web.ViewModels.FinancialTransactionModel.FinancialTransactionVM
+@model IEnumerable<EDU.Web.ViewModels.FinancialTransactionModel.FinancialTransactionsVM>
 
 @{
     ViewBag.Title = "FinancialTransactionList";
@@ -7,7 +7,7 @@
 }
 
 @{
-    var grid = new WebGrid(Model.financialTransactionDetailList);
+    var grid = new WebGrid(Model);
 }
 @functions {
     public string CheckString(string remarks)
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <div class="row">
+                        @*<div class="row">
                             <div class="form-group">
                                 <label class="col-md-1 col-md-offset-2 control-label">
                                     <span>Event No.</span>
@@ -71,17 +71,11 @@
           new SelectList(Model.trainingConfirmationList, "TrainingConfirmationID", "TrainingConfirmationID"),
           "Select Event No.", new { @class = "form-control input-sm ", onchange = "ChangeEventID(this);" })
                                 </div>
-                                @*<label class="col-md-1 control-label">
-                                        <span>Country</span>
-                                    </label>*@
                                 <div class="col-md-2">
                                     @Html.DropDownListFor(x => x.financialTransaction.Country,
       new SelectList(Model.countryList, "BranchID", "BranchName"),
       "Select Country", new { @class = "form-control input-sm ", onchange = "CountryChange(this);" })
                                 </div>
-                                @*<label class="col-md-1 control-label">
-                                        <span>Currency</span>
-                                    </label>*@
                                 <div class="col-md-1">
                                     @Html.DropDownListFor(x => x.financialTransaction.CurrencyCode,
       new SelectList(Model.currencyList, "LookupCode", "LookupCode"),
@@ -98,10 +92,10 @@
                              }
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="row css25">
-                            <div class="col-md-6 col-md-offset-3">
-                                <div id="gridContent">
+                            <div class="col-md-12">
+                                <div id="gridContent"  style="overflow-x: scroll; width: 100%" >
                                     @grid.GetHtml(
                                      tableStyle: "table table-striped table-bordered",
                                      mode: WebGridPagerModes.All,
@@ -111,65 +105,87 @@
                                               grid.Column("", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.DescriptionId,'@item.Description',@item.FinancialTransactionDetailId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
 
                                                 }
                                             </text>, style: "col3Width", canSort: false),
 
-                                        grid.Column("DESCRIPTION", "DESCRIPTION",
+                                        grid.Column("TrainingConfirmationID", "Training Confirmation ID",
                                         format:
                                         @<text>
                                     <div style='width:170px;'>
-                                        <span>@item.description</span>
+                                        <span>@item.TrainingConfirmationID</span>
                                     </div>                                       
                                      </text>, canSort: false),
-                                                grid.Column("Amount", "Amount", format:
+                                            grid.Column("CountryName", "Country Name",
+                                        format:
+                                        @<text>
+                                            <div style='width:170px;'>
+                                                <span>@item.CountryName</span>
+                                            </div>
+                                        </text>, canSort: false),
+                                            grid.Column("CurrencyCode", "Currency Code",
+                                        format:
+                                        @<text>
+                                            <div style='width:170px;'>
+                                                <span>@item.CurrencyCode</span>
+                                            </div>
+                                        </text>, canSort: false),
+
+                                            grid.Column("CurrencyExRate", "Currency Ex. Rate",
+                                        format:
+                                        @<text>
+                                            <div style='width:170px;'>
+                                                <span>@item.CurrencyExRate</span>
+                                            </div>
+                                        </text>, canSort: false),
+                                                grid.Column("TotalRevenueAmount", "Amount", format:
                                                 @<text>
                                                     <div style='width:50px;'>
-                                                        @if (item.Amount != null)
+                                                        @if (item.TotalRevenueAmount != null)
                                                         {
                                                             <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.Amount)
+                                                                $&nbsp;@ConvertToInt64(item.TotalRevenueAmount)
                                                             </span>
                                                         }
                                                         else
                                                         {
                                                             <span class="center">
-                                                                @ConvertToInt64(item.Amount)
+                                                                @ConvertToInt64(item.TotalRevenueAmount)
                                                             </span>
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("LocalAmount", "Local Amount", format:
+                                                grid.Column("TotalRevenueLocalAmount", "Local Amount", format:
                                                 @<text>
                                                     <div style='width:90px;'>
                                                         <span class="center">
-                                                            @ConvertToInt64(item.LocalAmount)
+                                                            @ConvertToInt64(item.TotalRevenueLocalAmount)
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("ReferenceDoc", "Reference Doc",
+                                                grid.Column("TotalRevenueReferenceDoc", "Reference Doc",
                                                 format:
                                                 @<text>
                                                     <div style='width:90px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.DescriptionId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("Remarks", "Remarks",
+                                                grid.Column("TotalRevenueRemarks", "Remarks",
                                                 format:
                                                 @<text>
                                                     <div style='width:140px;'>
-                                                        @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
+                                                        @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TotalRevenueRemarks)" data-original-title="" title="">@item.TotalRevenueRemarks.ToString().Substring(0, 20)...</span>
                                                             </a>
                                                         }
                                                         else
                                                         {
-                                                            <span>@item.Remarks</span>
+                                                            <span>@item.TotalRevenueRemarks</span>
                                                         }
                                                     </div>
                                                 </text>, canSort: false)
@@ -211,7 +227,7 @@
 
             
 
-            @if (Model.financialTransaction.FinancialTransactionId != -1)
+            @*@if (Model.financialTransaction.FinancialTransactionId != -1)
             {
             <text>
                 if ($('#financialTransaction_IsSubmit').val() != "True")
@@ -230,7 +246,7 @@
             else
             {
                 <text>$('.btndisable').attr('disabled', 'disabled');</text>
-            }
+            }*@
             //class="pull-right"
         });
 
