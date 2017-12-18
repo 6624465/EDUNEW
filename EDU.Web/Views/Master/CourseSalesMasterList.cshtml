@@ -8,6 +8,9 @@
     var count = 0;
 
     var totalrevenue = 0;
+
+    var totalRevenueArray = new List<Decimal>();
+        
 }
 @functions {
     public string GetMonthById(int id)
@@ -30,6 +33,7 @@
         else
             return null;
     }
+
 }
 <style>
     .bordertop {
@@ -85,20 +89,14 @@
                                 <ul class="nav nav-tabs">
                                     @for (int i = 0; i < ProductData.Count(); i++)
                                     {
-                                        if (i == 0)
-                                        {
-                                            <li class="active"><a href="#@i" data-toggle="tab">@ProductData[i].ProductName</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li><a href="#@i" data-toggle="tab">@ProductData[i].ProductName</a></li>
-                                        }
+                                        <li id="li_@i"><a href="#div_@i" data-toggle="tab">@ProductData[i].ProductName</a></li>
                                     }
                                 </ul>
                                 <div class="tab-content">
                                     @for (int j = 0; j < ProductData.Count(); j++)
                                     {
-                                        <div class="tab-pane" id="@j">
+                                        totalrevenue = 0;
+                                        <div class="tab-pane" id="div_@j">
                                             <div class="clearfix">
                                                 <div class="row">
                                                     <div class="col-sm-12">
@@ -112,136 +110,139 @@
                                                                 {
                                                                     totalrevenue += Convert.ToInt32(ritem.Revenue);
                                                                 }
+
+                                                                var tblId = "table_" + j;
+                                                                <input type="hidden" id="hdn_@j" value="@totalrevenue">
                                                             }
 
                                                             @grid.GetHtml(
-                                columns: grid.Columns(
+                                                                             columns: grid.Columns(
 
-                                     grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                        @if (item.IsConfirm == true)
-                                        {
-                                            <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
-                                        }
-                                        else if (item.IsDrop == true)
-                                        {
-                                            <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                        }
-                                    </div>
-                                </text>),
+                                                                                  grid.Column("", "#Action", canSort: false,
+                                                                             format:
+                                                                            @<text>
+                                                                                <div style='width:80px;'>
+                                                                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                                                    {
+                                                                                        <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                                    }
+                                                                                    @if (item.IsConfirm == true)
+                                                                                    {
+                                                                                        <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
+                                                                                    }
+                                                                                    else if (item.IsDrop == true)
+                                                                                    {
+                                                                                        <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                                                                    }
+                                                                                </div>
+                                                                            </text>),
 
-                                grid.Column("CountryName", "Country", canSort: true),
-                                grid.Column("ProductName", "Product Name", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @item.ProductName
-                                    </div>
-                                </text>),
-                                    grid.Column("CourseName", "Course Name", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:300px;'>
-                                        <span class="center">@item.CourseName</span>
-                                    </div>
-                                </text>, style: ""),
-                                grid.Column("NoOfDays", "No Of Days", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @item.NoOfDays
-                                    </div>
-                                </text>, style: "center"),
-                                grid.Column("Month", "Month", format: @<text>
-                                        @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
-                                grid.Column("StartDate", "Start Dt", format:
-                                @<text>
-                                    <div style='width:90px;'>
-                                        @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
-                                    </div>
-                                </text>, style: ""),
-                                grid.Column("EndDate", "End Dt", format: @<text>
-                                        <div style='width:90px;'>
-                                            @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
-                                        </div>
-                                </text>, canSort: true, style: ""),
+                                                                             grid.Column("CountryName", "Country", canSort: true),
+                                                                             grid.Column("ProductName", "Product Name", canSort: true,
+                                                                             format:
+                                                                            @<text>
+                                                                                <div style='width:110px;'>
+                                                                                    @item.ProductName
+                                                                                </div>
+                                                                            </text>),
+                                                                                 grid.Column("CourseName", "Course Name", canSort: true,
+                                                                             format:
+                                                                            @<text>
+                                                                                <div style='width:300px;'>
+                                                                                    <span class="center">@item.CourseName</span>
+                                                                                </div>
+                                                                            </text>, style: ""),
+                                                                             grid.Column("NoOfDays", "No Of Days", canSort: true,
+                                                                             format:
+                                                                            @<text>
+                                                                                <div style='width:80px;'>
+                                                                                    @item.NoOfDays
+                                                                                </div>
+                                                                            </text>, style: "center"),
+                                                                             grid.Column("Month", "Month", format: @<text>
+                                                                                    @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
+                                                                             grid.Column("StartDate", "Start Dt", format:
+                                                                            @<text>
+                                                                                <div style='width:90px;'>
+                                                                                    @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
+                                                                                </div>
+                                                                            </text>, style: "center"),
+                                                                             grid.Column("EndDate", "End Dt", format: @<text>
+                                                                                    <div style='width:90px;'>
+                                                                                        @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
+                                                                                    </div>
+                                                                            </text>, canSort: true, style: "center"),
 
-                                grid.Column("MinimumReg", "Min. Reg", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:60px;'>
-                                        @item.MinimumReg
-                                    </div>
-                                </text>, style: "center"),
+                                                                             grid.Column("MinimumReg", "Min. Reg", canSort: true,
+                                                                             format:
+                                                                            @<text>
+                                                                                <div style='width:60px;'>
+                                                                                    @item.MinimumReg
+                                                                                </div>
+                                                                            </text>, style: "center"),
 
-                                grid.Column("LeadsOnHead", "Leads on hand",
-                                format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @if (string.IsNullOrWhiteSpace(item.LeadsOnHeadRemarks))
-                                    {
-                                            <span>@item.LeadsOnHead</span>
-                                        }
-                                        else
-                                        {
-                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
-                                            </a>
-                                        }
-                                    </div>
-                                </text>, canSort: true, style: "center LeadsOnHead"),
-                                grid.Column("Registered", "Registered",
-                                        format:
-                                        @<text>
-                                            @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
-                                            {
-                                                <span>@item.Registered</span>
-                                            }
-                                            else
-                                            {
-                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.RegisteredRemarks)"
-                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
-                                                    </a>
-                                            }
-                                        </text>, canSort: true, style: "center"),
+                                                                             grid.Column("LeadsOnHead", "Leads on hand",
+                                                                             format:
+                                                                            @<text>
+                                                                                <div style='width:110px;'>
+                                                                                    @if (string.IsNullOrWhiteSpace(item.LeadsOnHeadRemarks))
+                                                                                    {
+                                                                                        <span>@item.LeadsOnHead</span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <a style="cursor:pointer;text-decoration:underline;">
+                                                                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
+                                                                                        </a>
+                                                                                    }
+                                                                                </div>
+                                                                            </text>, canSort: true, style: "center LeadsOnHead"),
+                                                                             grid.Column("Registered", "Registered",
+                                                                                     format:
+                                                                                    @<text>
+                                                                                        @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
+                                                                            {
+                                                                                            <span>@item.Registered</span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                                                <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.RegisteredRemarks)"
+                                                                                                      onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
+                                                                                                </a>
+                                                                                        }
+                                                                                    </text>, canSort: true, style: "center"),
 
-                                grid.Column("AvailableSeats", "Avl. Seats", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:70px;'>
-                                                @item.AvailableSeats
-                                            </div>
-                                        </text>, style: "center"),
+                                                                             grid.Column("AvailableSeats", "Avl. Seats", canSort: true,
+                                                                                     format:
+                                                                                    @<text>
+                                                                                        <div style='width:70px;'>
+                                                                                            @item.AvailableSeats
+                                                                                        </div>
+                                                                                    </text>, style: "center"),
 
-                                grid.Column("RegClosingDate", "Reg. Closing Dt.", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:110px;'>
-                                                @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
-                                            </div>
-                                        </text>, style: "center"),
-                                    grid.Column("Revenue", "Revenue", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:80px;'>
-                                            <span class="">
-                                                @ConvertToInt64dollar(item.Revenue)
-                                            </span>
-                                        </div>
-                                    </text>)),
-                                tableStyle: "table")
+                                                                             grid.Column("RegClosingDate", "Reg. Closing Dt.", canSort: true,
+                                                                                     format:
+                                                                                    @<text>
+                                                                                        <div style='width:110px;'>
+                                                                                            @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
+                                                                                        </div>
+                                                                                    </text>, style: "center"),
+                                                                                 grid.Column("Revenue", "Revenue", canSort: true,
+                                                                                  format:
+                                                                                @<text>
+                                                                                    <div style='width:80px;'>
+                                                                                        <span class="">
+                                                                                            @ConvertToInt64dollar(item.Revenue)
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </text>)),
+                                                                         tableStyle: "table tblCss", htmlAttributes: new { id = tblId })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,16 +275,17 @@
 @section SectionScripts{
     <script type="text/javascript">
         $(function () {
-
-            $("#0").addClass('active');
+            $("#div_0").addClass('active');
+            $("#li_0").addClass('active');
             $('#liRegionalLeads').addClass('active');
         });
+
         $(document).ready(function () {
-            var tr = "$ " + @totalrevenue.ToString();
-            if(@count>0)
-            {
-                $('#gridContent tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + tr + '</td><td>');
-            }
+            var tbls = $('.tblCss');
+            $.each(tbls, function (index, item) {
+                var totalRevenue = '$ '+$('#hdn_' + index).val();
+                $('#table_' + index + ' tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalRevenue + '</td><td>');
+            });
         });
 
         function DeleteCourseSalesMaster(Id) {
