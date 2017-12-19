@@ -109,7 +109,7 @@
                                                 }
                                             </text>, style: "col3Width", canSort: false),
 
-                                        grid.Column("TrainingConfirmationID", "Training Confirmation ID",
+                                        grid.Column("TrainingConfirmationID", "Event ID",
                                         format:
                                         @<text>
                                     <div style='width:140px;'>
@@ -123,22 +123,22 @@
                                                 <span>@item.CountryName</span>
                                             </div>
                                         </text>, canSort: false),
-                                            grid.Column("CurrencyCode", "Currency Code",
+                                            @*grid.Column("CurrencyCode", "Currency Code",
                                         format:
                                         @<text>
                                             <div style='width:90px;'>
                                                 <span>@item.CurrencyCode</span>
                                             </div>
-                                        </text>, canSort: false),
+                                        </text>, canSort: false),*@
 
-                                            grid.Column("CurrencyExRate", "Currency Ex. Rate",
+                                            @*grid.Column("CurrencyExRate", "Currency Ex. Rate",
                                         format:
                                         @<text>
                                             <div style='width:110px;'>
                                                 <span>@item.CurrencyExRate</span>
                                             </div>
-                                        </text>, canSort: false),
-                                                grid.Column("TotalRevenueAmount", "Total Revenue Amount", format:
+                                        </text>, canSort: false),*@
+                                                grid.Column("TotalRevenueAmount", "Revenue Amount", format:
                                                 @<text>
                                                     <div style='width:140px;'>
                                                         @if (item.TotalRevenueAmount != null)
@@ -155,15 +155,15 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("TotalRevenueLocalAmount", "Total Revenue Local Amount", format:
+                                                @*grid.Column("TotalRevenueLocalAmount", "Total Revenue Local Amount", format:
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
                                                             @ConvertToInt64(item.TotalRevenueLocalAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
-                                                grid.Column("TotalRevenueReferenceDoc", "Total Revenue Reference Doc",
+                                                </text>, canSort: false),*@
+                                                grid.Column("TotalRevenueReferenceDoc", "Revenue Reference Doc",
                                                 format:
                                                 @<text>
                                                     <div style='width:170px;'>
@@ -172,7 +172,7 @@
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("TotalRevenueRemarks", "Total Revenue Remarks",
+                                                grid.Column("TotalRevenueRemarks", "Revenue Remarks",
                                                 format:
                                                 @<text>
                                                     <div style='width:140px;'>
@@ -208,14 +208,14 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("TrainerExpensesLocalAmount", "Trainer Expenses Local Amount", format:
+                                                @*grid.Column("TrainerExpensesLocalAmount", "Trainer Expenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:180px;'>
                                                         <span class="center">
                                                             @ConvertToInt64(item.TrainerExpensesLocalAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false),*@
                                                 grid.Column("TrainerExpensesReferenceDoc", "Trainer Expenses Reference Doc",
                                                 format:
                                                 @<text>
@@ -262,14 +262,14 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("TrainerTravelExpensesLocalAmount", "Trainer Travel Expenses Local Amount", format:
+                                                @*grid.Column("TrainerTravelExpensesLocalAmount", "Trainer Travel Expenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:220px;'>
                                                         <span class="center">
                                                             @ConvertToInt64(item.TrainerTravelExpensesLocalAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false),*@
                                                 grid.Column("TrainerTravelExpensesReferenceDoc", "Trainer TravelExpenses ReferenceDoc",
                                                 format:
                                                 @<text>
@@ -316,14 +316,14 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("LocalExpensesLocalAmount", "LocalExpenses LocalAmount", format:
+                                                @*grid.Column("LocalExpensesLocalAmount", "LocalExpenses LocalAmount", format:
                                                 @<text>
                                                     <div style='width:180px;'>
                                                         <span class="center">
                                                             @ConvertToInt64(item.LocalExpensesLocalAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false),*@
                                                 grid.Column("LocalExpensesReferenceDoc", "LocalExpenses ReferenceDoc",
                                                 format:
                                                 @<text>
@@ -370,14 +370,14 @@
                                                     }
                                                 </div>
                                             </text>, canSort: false),
-                                                grid.Column("CoursewareMaterialLocalAmount", "Courseware Material Local Amount", format:
+                                                @*grid.Column("CoursewareMaterialLocalAmount", "Courseware Material Local Amount", format:
                                                 @<text>
                                                     <div style='width:200px;'>
                                                         <span class="center">
                                                             @ConvertToInt64(item.CoursewareMaterialLocalAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false),*@
                                                 grid.Column("CoursewareMaterialReferenceDoc", "Courseware Material ReferenceDoc",
                                                 format:
                                                 @<text>
@@ -424,14 +424,14 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                grid.Column("MiscExpensesLocalAmount", "MiscExpenses Local Amount", format:
+                                                @*grid.Column("MiscExpensesLocalAmount", "MiscExpenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
                                                             @ConvertToInt64(item.MiscExpensesLocalAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false),*@
                                                 grid.Column("MiscExpensesReferenceDoc", "MiscExpenses ReferenceDoc",
                                                 format:
                                                 @<text>

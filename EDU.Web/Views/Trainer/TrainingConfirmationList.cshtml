@@ -59,11 +59,11 @@
         <div class="panel panel-default">
             <div class="box" id="grid">
                 <div class="box-header">
-                    <h4>Training Confirmation List</h4>
+                    <h4>Event Confirmation List</h4>
                     <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="TrainerConfirmation()"><i class="fa fa-plus"></i>Add New Training Confirmation</button>
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="TrainerConfirmation()"><i class="fa fa-plus"></i>Add New Event Confirmation</button>
                         }
                     </div>
                 </div>
@@ -85,7 +85,7 @@
 
                                 </text>),
 
-                    grid.Column("TrainingConfirmationID", "Order No.", canSort: true),
+                    grid.Column("TrainingConfirmationID", "Event ID", canSort: true),
                        grid.Column("CountryName", "Country Name", canSort: true,
                                 format:
                                 @<text>
