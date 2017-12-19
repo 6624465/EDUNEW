@@ -131,17 +131,56 @@ namespace EDU.Web.Controllers
         {
             var currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
             var countryList = new BranchBO().GetList();
-            FinancialTransaction financialtransaction = new FinancialTransaction();
+            FinancialTransactionsVM financialtransaction = new FinancialTransactionsVM();
             if (Id == -1)
             {
-                financialtransaction = new FinancialTransaction { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount };
+                financialtransaction = new FinancialTransactionsVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount };
                 ViewBag.Title = "New Financial Transaction";
 
             }
             else
             {
                 ViewBag.Title = "Update Financial Transaction";
-                financialtransaction = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == Id && x.IsActive == true).FirstOrDefault();
+                financialtransaction = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == Id && x.IsActive == true)
+                                       .Select(x => new FinancialTransactionsVM()
+                                       {
+                                           FinancialTransactionId = x.FinancialTransactionId,
+                                           TrainingConfirmationID = x.TrainingConfirmationID,
+                                           Country = x.Country,
+                                           CurrencyCode = x.CurrencyCode,
+                                           CurrencyExRate = x.CurrencyExRate,
+                                           TotalRevenueAmount = x.TotalRevenueAmount,
+                                           TotalRevenueLocalAmount = x.TotalRevenueLocalAmount,
+                                           TotalRevenueReferenceDoc = x.TotalRevenueReferenceDoc,
+                                           TotalRevenueRemarks = x.TotalRevenueRemarks,
+                                           TrainerExpensesAmount = x.TrainerExpensesAmount,
+                                           TrainerExpensesLocalAmount = x.TrainerExpensesLocalAmount,
+                                           TrainerExpensesReferenceDoc = x.TrainerExpensesReferenceDoc,
+                                           TrainerExpensesRemarks = x.TrainerExpensesRemarks,
+                                           TrainerTravelExpensesAmount = x.TrainerTravelExpensesAmount,
+                                           TrainerTravelExpensesLocalAmount = x.TrainerTravelExpensesLocalAmount,
+                                           TrainerTravelExpensesReferenceDoc = x.TrainerTravelExpensesReferenceDoc,
+                                           TrainerTravelExpensesRemarks = x.TrainerTravelExpensesRemarks,
+                                           LocalExpensesAmount = x.LocalExpensesAmount,
+                                           LocalExpensesLocalAmount = x.LocalExpensesLocalAmount,
+                                           LocalExpensesReferenceDoc = x.LocalExpensesReferenceDoc,
+                                           LocalExpensesRemarks = x.LocalExpensesRemarks,
+                                           CoursewareMaterialAmount = x.CoursewareMaterialAmount,
+                                           CoursewareMaterialLocalAmount = x.CoursewareMaterialLocalAmount,
+                                           CoursewareMaterialReferenceDoc = x.CoursewareMaterialReferenceDoc,
+                                           CoursewareMaterialRemarks = x.CoursewareMaterialRemarks,
+                                           MiscExpensesAmount = x.MiscExpensesAmount,
+                                           MiscExpensesLocalAmount = x.MiscExpensesLocalAmount,
+                                           MiscExpensesReferenceDoc = x.MiscExpensesReferenceDoc,
+                                           MiscExpensesRemarks = x.MiscExpensesRemarks,
+                                           GrossProfit = x.GrossProfit,
+                                           ProfitAndLossPercent = x.ProfitAndLossPercent,
+                                           IsActive = true,
+                                           IsSubmit = x.IsSubmit,
+
+                                           ModifiedBy = USER_ID,
+                                           ModifiedOn = UTILITY.SINGAPORETIME,
+                                       }).FirstOrDefault();
             }
             ViewData["CurrencyList"] = currencyList;
             ViewData["CountryData"] = countryList;
@@ -149,19 +188,50 @@ namespace EDU.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveFinancialTransactionDetail(FinancialTransaction ftInfo)
+        public ActionResult SaveFinancialTransactionDetail(FinancialTransactionsVM ftInfo)
         {
             try
             {
                 FinancialTransaction financialtransactions = new FinancialTransaction();
                 if (ftInfo.FinancialTransactionId == -1)
                 {
+                    financialtransactions.FinancialTransactionId = ftInfo.FinancialTransactionId;
+                    financialtransactions.TrainingConfirmationID = ftInfo.TrainingConfirmationID;
+                    financialtransactions.Country = ftInfo.Country;
+                    financialtransactions.CurrencyCode = ftInfo.CurrencyCode;
+                    financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
+                    financialtransactions.TotalRevenueAmount = ftInfo.TotalRevenueAmount;
+                    financialtransactions.TotalRevenueLocalAmount = ftInfo.TotalRevenueLocalAmount;
+                    financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
+                    financialtransactions.TotalRevenueRemarks = ftInfo.TotalRevenueRemarks;
+                    financialtransactions.TrainerExpensesAmount = ftInfo.TrainerExpensesAmount;
+                    financialtransactions.TrainerExpensesLocalAmount = ftInfo.TrainerExpensesLocalAmount;
+                    financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
+                    financialtransactions.TrainerExpensesRemarks = ftInfo.TrainerExpensesRemarks;
+                    financialtransactions.TrainerTravelExpensesAmount = ftInfo.TrainerTravelExpensesAmount;
+                    financialtransactions.TrainerTravelExpensesLocalAmount = ftInfo.TrainerTravelExpensesLocalAmount;
+                    financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
+                    financialtransactions.TrainerTravelExpensesRemarks = ftInfo.TrainerTravelExpensesRemarks;
+                    financialtransactions.LocalExpensesAmount = ftInfo.LocalExpensesAmount;
+                    financialtransactions.LocalExpensesLocalAmount = ftInfo.LocalExpensesLocalAmount;
+                    financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
+                    financialtransactions.LocalExpensesRemarks = ftInfo.LocalExpensesRemarks;
+                    financialtransactions.CoursewareMaterialAmount = ftInfo.CoursewareMaterialAmount;
+                    financialtransactions.CoursewareMaterialLocalAmount = ftInfo.CoursewareMaterialLocalAmount;
+                    financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
+                    financialtransactions.CoursewareMaterialRemarks = ftInfo.CoursewareMaterialRemarks;
+                    financialtransactions.MiscExpensesAmount = ftInfo.MiscExpensesAmount;
+                    financialtransactions.MiscExpensesLocalAmount = ftInfo.MiscExpensesLocalAmount;
+                    financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
+                    financialtransactions.MiscExpensesRemarks = ftInfo.MiscExpensesRemarks;
+                    financialtransactions.GrossProfit = ftInfo.GrossProfit;
+                    financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
+                    financialtransactions.IsActive = true;
+                    financialtransactions.IsSubmit = ftInfo.IsSubmit;
 
-
-                    ftInfo.IsActive = true;
-                    ftInfo.CreatedBy = USER_ID;
-                    ftInfo.CreatedOn = UTILITY.SINGAPORETIME;
-                    dbContext.FinancialTransactions.Add(ftInfo);
+                    financialtransactions.CreatedBy = USER_ID;
+                    financialtransactions.CreatedOn = UTILITY.SINGAPORETIME;
+                    dbContext.FinancialTransactions.Add(financialtransactions);
 
                 }
                 else {
