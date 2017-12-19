@@ -181,7 +181,10 @@
     <script type="text/javascript">
         $('#frmFinancialTransaction').validate({
             rules: {
-                TotalRevenueAmount: {
+                CurrencyCode: {
+                    required: true
+                },
+                CurrencyExRate: {
                     required: true
                 }
             }
