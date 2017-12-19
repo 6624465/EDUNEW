@@ -192,7 +192,7 @@
                                 <table class="table-responsive" style="width:100%" border="2">
                                     <thead>
                                         <tr style="background:blue;color:white">
-                                            <th class="center">PRODUCT</th>
+                                            <th class="">PRODUCT</th>
                                             <th class="center">GOAL</th>
                                             <th class="center">ACHIEVED</th>
                                             <th class="center">%</th>
@@ -204,7 +204,7 @@
                                             decimal? amt = it.JanAmount + it.FebAmount + it.MarAmount + it.AprAmount + it.MayAmount + it.JuneAmount + it.JulyAmount + it.AugAmount + it.SepAmount + it.OctAmount + it.NovAmount + it.DecAmount;
                                             decimal? percent = it.TotalRevenue == 0 ? 0 : (amt * 100) / it.TotalRevenue;
                                             <tr>
-                                                <td class="center">@it.ProductName</td>
+                                                <td class="">@it.ProductName</td>
                                                 <td class="center">@it.TotalRevenue.Value.ToString("#0")</td>
                                                 <td class="center">@amt.Value.ToString("#0")</td>
                                                 <td class="center">@percent.Value.ToString("#0")%</td>
@@ -217,7 +217,7 @@
                                 <table class="table-responsive" style="width:100%" border="2">
                                     <thead>
                                         <tr style="background:blue;color:white">
-                                            <th class="center">PRODUCT</th>
+                                            <th class="">PRODUCT</th>
                                             <th class="center">JAN</th>
                                             <th class="center">FEB</th>
                                             <th class="center">MAR</th>
@@ -236,7 +236,7 @@
                                         @foreach (var itm in productRevenueToAchieve)
                                         {
                                             <tr>
-                                                <td class="center">@itm.ProductName</td>
+                                                <td class="">@itm.ProductName</td>
                                                 <td class="center 1_Css">@itm.JanAmount.Value.ToString("#0")</td>
                                                 <td class="center 2_Css">@itm.FebAmount.Value.ToString("#0")</td>
                                                 <td class="center 3_Css">@itm.MarAmount.Value.ToString("#0")</td>
@@ -269,6 +269,16 @@
         };
 
         $(document).ready(function () {
+
+            CanvasJS.addColorSet("greenShades",
+                [//colorSet Array
+
+                    "#2F4F4F",
+                    "#008080",
+                    "#2E8B57",
+                    "#3CB371",
+                    "#90EE90"
+                ]);
 
             $("tbody tr:even").css("background-color", "#eeeeee");
             $("tbody tr:odd").css("background-color", "#ffffff");
@@ -330,7 +340,8 @@
                 valueFormatString: "$#0",
                 stripLines: [{
                     value: @item.MonthlyTarget,
-                    label: '@item.MonthlyTarget.Value.ToString("#0")'
+                    label: '@item.MonthlyTarget.Value.ToString("#0")',
+                    labelFontSize: 9,
                 }],
                 maximum: @item.MonthlyTarget*2,
             },
@@ -363,16 +374,17 @@
 
         var chart5 = new CanvasJS.Chart("chartContainer5", {
             animationEnabled: true,
+            colorSet: "greenShades",
             title: {
                 text: 'Total Revenue - @totalrevenue.Value.ToString("#0")'
             },
             data: [{
                 type: "pie",
                 startAngle: 240,
-                indexLabel: "{label} {y}",
+                indexLabel: "{label} {y}",                
                 dataPoints: [
-                    { y: @achievedtotal, label: "Achieved" },
-                    { y: @yettoachieve, label: "Yet To Achieve" }
+                    { y: @achievedtotal, label: "Achieved", color: "Red"},
+                    { y: @yettoachieve, label: "Yet To Achieve", color: "Black"}
                 ]
             }]
         });
