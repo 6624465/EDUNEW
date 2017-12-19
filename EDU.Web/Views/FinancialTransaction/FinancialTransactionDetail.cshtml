@@ -17,7 +17,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-2 col-md-offset-1">
-                                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", @disabled = "disabled" })
+                                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.Country,
@@ -54,10 +54,10 @@
                                         <span class="pull-right">Total Revenue</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TotalRevenueAmount, "{0:#.#}", new { @class = "form-control numCss", @disabled = "disabled" })
+                                        @Html.TextBoxFor(x => x.TotalRevenueAmount, "{0:#.#}", new { @class = "form-control numCss",  @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TotalRevenueLocalAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TotalRevenueLocalAmount, "{0:#.#}", new { @class = "form-control numCss", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TotalRevenueReferenceDoc, new { @class = "form-control", @type = "file" })
@@ -76,7 +76,7 @@
                                         @Html.TextBoxFor(x => x.TrainerExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TrainerExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
@@ -95,7 +95,7 @@
                                         @Html.TextBoxFor(x => x.TrainerTravelExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerTravelExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
@@ -114,7 +114,7 @@
                                         @Html.TextBoxFor(x => x.LocalExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.LocalExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.LocalExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.LocalExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
@@ -133,7 +133,7 @@
                                         @Html.TextBoxFor(x => x.CoursewareMaterialAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.CoursewareMaterialLocalAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.CoursewareMaterialLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.CoursewareMaterialReferenceDoc, new { @class = "form-control", @type = "file" })
@@ -152,7 +152,7 @@
                                         @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.MiscExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
