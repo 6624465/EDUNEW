@@ -202,27 +202,63 @@ namespace EDU.Web.Controllers
                     financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
                     financialtransactions.TotalRevenueAmount = ftInfo.TotalRevenueAmount;
                     financialtransactions.TotalRevenueLocalAmount = ftInfo.TotalRevenueLocalAmount;
-                    financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
+                    if (ftInfo.TotalRevenueFileName != null && ftInfo.TotalRevenueFileName.ContentLength > 0)
+                    {
+                        financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueFileName.FileName;
+                    }
+                    else
+                        financialtransactions.TotalRevenueReferenceDoc = null;
+                    //financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
                     financialtransactions.TotalRevenueRemarks = ftInfo.TotalRevenueRemarks;
                     financialtransactions.TrainerExpensesAmount = ftInfo.TrainerExpensesAmount;
                     financialtransactions.TrainerExpensesLocalAmount = ftInfo.TrainerExpensesLocalAmount;
-                    financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
+                    if (ftInfo.TrainerExpensesFileName != null && ftInfo.TrainerExpensesFileName.ContentLength > 0)
+                    {
+                        financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesFileName.FileName;
+                    }
+                    else
+                        financialtransactions.TrainerExpensesReferenceDoc = null;
+                    //financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
                     financialtransactions.TrainerExpensesRemarks = ftInfo.TrainerExpensesRemarks;
                     financialtransactions.TrainerTravelExpensesAmount = ftInfo.TrainerTravelExpensesAmount;
                     financialtransactions.TrainerTravelExpensesLocalAmount = ftInfo.TrainerTravelExpensesLocalAmount;
-                    financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
+                    if (ftInfo.TrainerTravelExpensesFileName != null && ftInfo.TrainerTravelExpensesFileName.ContentLength > 0)
+                    {
+                        financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesFileName.FileName;
+                    }
+                    else
+                        financialtransactions.TrainerTravelExpensesReferenceDoc = null;
+                    //financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
                     financialtransactions.TrainerTravelExpensesRemarks = ftInfo.TrainerTravelExpensesRemarks;
                     financialtransactions.LocalExpensesAmount = ftInfo.LocalExpensesAmount;
                     financialtransactions.LocalExpensesLocalAmount = ftInfo.LocalExpensesLocalAmount;
-                    financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
+                    if (ftInfo.LocalExpensesFileName != null && ftInfo.LocalExpensesFileName.ContentLength > 0)
+                    {
+                        financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesFileName.FileName;
+                    }
+                    else
+                        financialtransactions.LocalExpensesReferenceDoc = null;
+                    //financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
                     financialtransactions.LocalExpensesRemarks = ftInfo.LocalExpensesRemarks;
                     financialtransactions.CoursewareMaterialAmount = ftInfo.CoursewareMaterialAmount;
                     financialtransactions.CoursewareMaterialLocalAmount = ftInfo.CoursewareMaterialLocalAmount;
-                    financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
+                    if (ftInfo.CoursewareMaterialFileName != null && ftInfo.CoursewareMaterialFileName.ContentLength > 0)
+                    {
+                        financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialFileName.FileName;
+                    }
+                    else
+                        financialtransactions.CoursewareMaterialReferenceDoc = null;
+                    // financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
                     financialtransactions.CoursewareMaterialRemarks = ftInfo.CoursewareMaterialRemarks;
                     financialtransactions.MiscExpensesAmount = ftInfo.MiscExpensesAmount;
                     financialtransactions.MiscExpensesLocalAmount = ftInfo.MiscExpensesLocalAmount;
-                    financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
+                    if (ftInfo.MiscExpensesFileName != null && ftInfo.MiscExpensesFileName.ContentLength > 0)
+                    {
+                        financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesFileName.FileName;
+                    }
+                    else
+                        financialtransactions.MiscExpensesReferenceDoc = null;
+                    //financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
                     financialtransactions.MiscExpensesRemarks = ftInfo.MiscExpensesRemarks;
                     financialtransactions.GrossProfit = ftInfo.GrossProfit;
                     financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
@@ -232,7 +268,68 @@ namespace EDU.Web.Controllers
                     financialtransactions.CreatedBy = USER_ID;
                     financialtransactions.CreatedOn = UTILITY.SINGAPORETIME;
                     dbContext.FinancialTransactions.Add(financialtransactions);
+                    dbContext.SaveChanges();
 
+                    if (ftInfo.TotalRevenueFileName != null && ftInfo.TotalRevenueFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + financialtransactions.FinancialTransactionId + "/TotalRevenue/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TotalRevenueFileName.SaveAs(path + ftInfo.TotalRevenueFileName.FileName);
+                    }
+                    if (ftInfo.TrainerExpensesFileName != null && ftInfo.TrainerExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + financialtransactions.FinancialTransactionId + "/TrainerExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TrainerExpensesFileName.SaveAs(path + ftInfo.TrainerExpensesFileName.FileName);
+                    }
+                    if (ftInfo.TrainerTravelExpensesFileName != null && ftInfo.TrainerTravelExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + financialtransactions.FinancialTransactionId + "/TrainerTravelExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TrainerTravelExpensesFileName.SaveAs(path + ftInfo.TrainerTravelExpensesFileName.FileName);
+                    }
+                    if (ftInfo.LocalExpensesFileName != null && ftInfo.LocalExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + financialtransactions.FinancialTransactionId + "/LocalExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.LocalExpensesFileName.SaveAs(path + ftInfo.LocalExpensesFileName.FileName);
+                    }
+                    if (ftInfo.CoursewareMaterialFileName != null && ftInfo.CoursewareMaterialFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + financialtransactions.FinancialTransactionId + "/CoursewareMaterial/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.CoursewareMaterialFileName.SaveAs(path + ftInfo.CoursewareMaterialFileName.FileName);
+                    }
+                    if (ftInfo.MiscExpensesFileName != null && ftInfo.MiscExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + financialtransactions.FinancialTransactionId + "/MiscExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.MiscExpensesFileName.SaveAs(path + ftInfo.MiscExpensesFileName.FileName);
+                    }
                 }
                 else {
                     financialtransactions = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ftInfo.FinancialTransactionId).FirstOrDefault();
@@ -245,27 +342,93 @@ namespace EDU.Web.Controllers
                     financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
                     financialtransactions.TotalRevenueAmount = ftInfo.TotalRevenueAmount;
                     financialtransactions.TotalRevenueLocalAmount = ftInfo.TotalRevenueLocalAmount;
-                    financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
+                    if (ftInfo.TotalRevenueFileName != null && ftInfo.TotalRevenueFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + ftInfo.FinancialTransactionId + "/TotalRevenue/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TotalRevenueFileName.SaveAs(path + ftInfo.TotalRevenueFileName.FileName);
+                        financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueFileName.FileName;
+                    }
+                    // financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
                     financialtransactions.TotalRevenueRemarks = ftInfo.TotalRevenueRemarks;
                     financialtransactions.TrainerExpensesAmount = ftInfo.TrainerExpensesAmount;
                     financialtransactions.TrainerExpensesLocalAmount = ftInfo.TrainerExpensesLocalAmount;
-                    financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
+                    if (ftInfo.TrainerExpensesFileName != null && ftInfo.TrainerExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + ftInfo.FinancialTransactionId + "/TrainerExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TrainerExpensesFileName.SaveAs(path + ftInfo.TrainerExpensesFileName.FileName);
+                        financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesFileName.FileName;
+                    }
+                    //financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
                     financialtransactions.TrainerExpensesRemarks = ftInfo.TrainerExpensesRemarks;
                     financialtransactions.TrainerTravelExpensesAmount = ftInfo.TrainerTravelExpensesAmount;
                     financialtransactions.TrainerTravelExpensesLocalAmount = ftInfo.TrainerTravelExpensesLocalAmount;
-                    financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
+                    if (ftInfo.TrainerTravelExpensesFileName != null && ftInfo.TrainerTravelExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + ftInfo.FinancialTransactionId + "/TrainerTravelExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TrainerTravelExpensesFileName.SaveAs(path + ftInfo.TrainerTravelExpensesFileName.FileName);
+                        financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesFileName.FileName;
+                    }
+                    //financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
                     financialtransactions.TrainerTravelExpensesRemarks = ftInfo.TrainerTravelExpensesRemarks;
                     financialtransactions.LocalExpensesAmount = ftInfo.LocalExpensesAmount;
                     financialtransactions.LocalExpensesLocalAmount = ftInfo.LocalExpensesLocalAmount;
-                    financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
+                    if (ftInfo.LocalExpensesFileName != null && ftInfo.LocalExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + ftInfo.FinancialTransactionId + "/LocalExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.LocalExpensesFileName.SaveAs(path + ftInfo.LocalExpensesFileName.FileName);
+                        financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesFileName.FileName;
+                    }
+                    //financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
                     financialtransactions.LocalExpensesRemarks = ftInfo.LocalExpensesRemarks;
                     financialtransactions.CoursewareMaterialAmount = ftInfo.CoursewareMaterialAmount;
                     financialtransactions.CoursewareMaterialLocalAmount = ftInfo.CoursewareMaterialLocalAmount;
-                    financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
+                    if (ftInfo.CoursewareMaterialFileName != null && ftInfo.CoursewareMaterialFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + ftInfo.FinancialTransactionId + "/CoursewareMaterial/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.CoursewareMaterialFileName.SaveAs(path + ftInfo.CoursewareMaterialFileName.FileName);
+                        financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialFileName.FileName;
+                    }
+                    // financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
                     financialtransactions.CoursewareMaterialRemarks = ftInfo.CoursewareMaterialRemarks;
                     financialtransactions.MiscExpensesAmount = ftInfo.MiscExpensesAmount;
                     financialtransactions.MiscExpensesLocalAmount = ftInfo.MiscExpensesLocalAmount;
-                    financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
+                    if (ftInfo.MiscExpensesFileName != null && ftInfo.MiscExpensesFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + ftInfo.FinancialTransactionId + "/MiscExpenses/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.MiscExpensesFileName.SaveAs(path + ftInfo.MiscExpensesFileName.FileName);
+                        financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesFileName.FileName;
+                    }
+                    //financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
                     financialtransactions.MiscExpensesRemarks = ftInfo.MiscExpensesRemarks;
                     financialtransactions.GrossProfit = ftInfo.GrossProfit;
                     financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
@@ -274,10 +437,10 @@ namespace EDU.Web.Controllers
 
                     financialtransactions.ModifiedBy = USER_ID;
                     financialtransactions.ModifiedOn = UTILITY.SINGAPORETIME;
-
                     dbContext.Entry(financialtransactions).State = EntityState.Modified;
-                }
                 dbContext.SaveChanges();
+                    
+                }
             }
             catch (Exception ex)
             {

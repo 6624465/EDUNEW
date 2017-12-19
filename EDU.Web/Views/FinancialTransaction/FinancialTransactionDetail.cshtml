@@ -5,7 +5,7 @@
 }
 
 <div class="page page-forms-elements">
-    @using (Html.BeginForm("SaveFinancialTransactionDetail", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancialTransaction", name = "frmFinancialTransaction", autocomplete = "off" }))
+    @using (Html.BeginForm("SaveFinancialTransactionDetail", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancialTransaction", name = "frmFinancialTransaction",  enctype = "multipart/form-data", autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.FinancialTransactionId)
         <div class="page-wrap">
@@ -60,7 +60,7 @@
                                         @Html.TextBoxFor(x => x.TotalRevenueLocalAmount, "{0:#.#}", new { @class = "form-control numCss", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TotalRevenueReferenceDoc, new { @class = "form-control", @type = "file" })
+                                        @Html.TextBoxFor(x => x.TotalRevenueFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TotalRevenueReferenceDoc
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextAreaFor(x => x.TotalRevenueRemarks, new { @class = "form-control" })
@@ -79,7 +79,7 @@
                                         @Html.TextBoxFor(x => x.TrainerExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
+                                        @Html.TextBoxFor(x => x.TrainerExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextAreaFor(x => x.TrainerExpensesRemarks, new { @class = "form-control" })
@@ -98,7 +98,7 @@
                                         @Html.TextBoxFor(x => x.TrainerTravelExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
+                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerTravelExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextAreaFor(x => x.TrainerTravelExpensesRemarks, new { @class = "form-control" })
@@ -117,7 +117,7 @@
                                         @Html.TextBoxFor(x => x.LocalExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.LocalExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
+                                        @Html.TextBoxFor(x => x.LocalExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.LocalExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextAreaFor(x => x.LocalExpensesRemarks, new { @class = "form-control" })
@@ -136,7 +136,7 @@
                                         @Html.TextBoxFor(x => x.CoursewareMaterialLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.CoursewareMaterialReferenceDoc, new { @class = "form-control", @type = "file" })
+                                        @Html.TextBoxFor(x => x.CoursewareMaterialFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.CoursewareMaterialReferenceDoc
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextAreaFor(x => x.CoursewareMaterialRemarks, new { @class = "form-control" })
@@ -155,7 +155,7 @@
                                         @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesReferenceDoc, new { @class = "form-control", @type = "file" })
+                                        @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control" })
