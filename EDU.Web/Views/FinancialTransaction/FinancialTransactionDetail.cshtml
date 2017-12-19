@@ -30,27 +30,28 @@
                                               "Select Currency", new { @class = "form-control " })
                                     </div>
                                     <div class="col-md-1">
-                                        @Html.TextBoxFor(x => x.CurrencyExRate, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Currency Ex Rate" })
+                                        @Html.TextBoxFor(x => x.CurrencyExRate, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Currency Ex Rate" ,onkeyup="calculateLocalAmount()"})
                                     </div>
                                 </div>
                             </div>
+                            <hr />
                             <div class="row">
-                                <div class="col-md-1 col-md-offset-1">
+                                <div class="col-md-2 col-md-offset-2">
                                     <h4>Amount</h4>
                                 </div>
-                                <div class="col-md-1 col-md-offset-1">
+                                <div class="col-md-2">
                                     <h4>Local Amount</h4>
                                 </div>
-                                <div class="col-md-1 col-md-offset-1">
+                                <div class="col-md-2">
                                     <h4>Reference Doc</h4>
                                 </div>
-                                <div class="col-md-1 col-md-offset-1">
+                                <div class="col-md-2">
                                     <h4>Remarks</h4>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-1 control-label">
+                                    <label class="col-md-2 control-label">
                                         <span class="pull-right">Total Revenue</span>
                                     </label>
                                     <div class="col-md-2">
@@ -62,18 +63,18 @@
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TotalRevenueFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TotalRevenueReferenceDoc
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.TotalRevenueRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-1 control-label">
+                                    <label class="col-md-2 control-label">
                                         <span class="pull-right"> Trainer Expenses</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TrainerExpensesAmount, "{0:#.#}", new { @class = "form-control numCss",onkeyup="calculateLocalAmount()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss", @readonly = true })
@@ -81,18 +82,18 @@
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerExpensesReferenceDoc
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.TrainerExpensesRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-1 control-label">
+                                    <label class="col-md-2 control-label">
                                         <span style="width:135px" class="pull-right"> Trainer Travel Expenses</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerTravelExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
@@ -100,18 +101,18 @@
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerTravelExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerTravelExpensesReferenceDoc
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.TrainerTravelExpensesRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-1 control-label">
+                                    <label class="col-md-2 control-label">
                                         <span class="pull-right"> Local Expenses</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.LocalExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.LocalExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.LocalExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
@@ -119,18 +120,18 @@
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.LocalExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.LocalExpensesReferenceDoc
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.LocalExpensesRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-1 control-label">
+                                    <label class="col-md-2 control-label">
                                         <span class="pull-right">Courseware Material</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.CoursewareMaterialAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.CoursewareMaterialAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.CoursewareMaterialLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
@@ -138,18 +139,18 @@
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.CoursewareMaterialFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.CoursewareMaterialReferenceDoc
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.CoursewareMaterialRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-1 control-label">
+                                    <label class="col-md-2 control-label">
                                         <span class="pull-right">Misc Expenses</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount()" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
@@ -157,7 +158,7 @@
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
@@ -197,6 +198,75 @@
                 $('#TrainingConfirmationID').removeAttr('disabled');
                 $('#TotalRevenueAmount').removeAttr('disabled');
                 $('#frmFinancialTransaction').submit();
+            }
+        }
+        function calculateLocalAmount()
+        {
+            var currencyrt=parseInt($('#CurrencyExRate').val());
+            var totalRevenueAmount= parseInt($('#TotalRevenueAmount').val());
+            var trainerExpensesAmount= parseInt($('#TrainerExpensesAmount').val());
+            var trainerTravelExpensesAmount= parseInt($('#TrainerTravelExpensesAmount').val());
+            var localExpensesAmount= parseInt($('#LocalExpensesAmount').val());
+            var coursewareMaterialAmount= parseInt($('#CoursewareMaterialAmount').val());
+            var miscExpensesAmount= parseInt($('#MiscExpensesAmount').val());
+            if(currencyrt &&totalRevenueAmount)
+            {
+                var result=currencyrt*totalRevenueAmount;
+                $('#TotalRevenueLocalAmount').val(result);
+            }
+            if(trainerExpensesAmount &&currencyrt)
+            {
+                var result=currencyrt*trainerExpensesAmount;
+                $('#TrainerExpensesLocalAmount').val(result);
+            }
+            if(isNaN(trainerExpensesAmount))
+            {
+                $('#TrainerExpensesLocalAmount').val('');
+            }
+            if(trainerTravelExpensesAmount &&currencyrt)
+            {
+                var result=currencyrt*trainerTravelExpensesAmount;
+                $('#TrainerTravelExpensesLocalAmount').val(result);
+            }
+            if(isNaN(trainerTravelExpensesAmount))
+            {
+                $('#TrainerTravelExpensesLocalAmount').val('');
+            }
+            if(localExpensesAmount &&currencyrt)
+            {
+                var result=currencyrt*localExpensesAmount;
+                $('#LocalExpensesLocalAmount').val(result);
+            }
+            if(isNaN(localExpensesAmount))
+            {
+                $('#LocalExpensesLocalAmount').val('');
+            }
+            if(coursewareMaterialAmount &&currencyrt)
+            {
+                var result=currencyrt*coursewareMaterialAmount;
+                $('#CoursewareMaterialLocalAmount').val(result);
+            }
+            if(isNaN(coursewareMaterialAmount))
+            {
+                $('#CoursewareMaterialLocalAmount').val('');
+            }
+            if(miscExpensesAmount &&currencyrt)
+            {
+                var result=currencyrt*miscExpensesAmount;
+                $('#MiscExpensesLocalAmount').val(result);
+            }
+            if(isNaN(miscExpensesAmount))
+            {
+                $('#MiscExpensesLocalAmount').val('');
+            }
+            if(isNaN(currencyrt))
+            {
+                $('#TrainerExpensesLocalAmount').val('');
+                $('#TotalRevenueLocalAmount').val('');
+                $('#TrainerTravelExpensesLocalAmount').val('');
+                $('#LocalExpensesLocalAmount').val('');
+                $('#CoursewareMaterialLocalAmount').val('');
+                $('#MiscExpensesLocalAmount').val('');
             }
         }
     </script>
