@@ -1625,12 +1625,6 @@
     <Compile Include="Models\FinancialTransaction.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FinancialTransaction1.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FinancialTransactionDetail.cs">
-      <DependentUpon>EduEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Lookup.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
     </Compile>

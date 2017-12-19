@@ -19,6 +19,30 @@ namespace EDU.Web.Models
         public Nullable<short> Country { get; set; }
         public string CurrencyCode { get; set; }
         public Nullable<decimal> CurrencyExRate { get; set; }
+        public Nullable<decimal> TotalRevenueAmount { get; set; }
+        public Nullable<decimal> TotalRevenueLocalAmount { get; set; }
+        public string TotalRevenueReferenceDoc { get; set; }
+        public string TotalRevenueRemarks { get; set; }
+        public Nullable<decimal> TrainerExpensesAmount { get; set; }
+        public Nullable<decimal> TrainerExpensesLocalAmount { get; set; }
+        public string TrainerExpensesReferenceDoc { get; set; }
+        public string TrainerExpensesRemarks { get; set; }
+        public Nullable<decimal> TrainerTravelExpensesAmount { get; set; }
+        public Nullable<decimal> TrainerTravelExpensesLocalAmount { get; set; }
+        public string TrainerTravelExpensesReferenceDoc { get; set; }
+        public string TrainerTravelExpensesRemarks { get; set; }
+        public Nullable<decimal> LocalExpensesAmount { get; set; }
+        public Nullable<decimal> LocalExpensesLocalAmount { get; set; }
+        public string LocalExpensesReferenceDoc { get; set; }
+        public string LocalExpensesRemarks { get; set; }
+        public Nullable<decimal> CoursewareMaterialAmount { get; set; }
+        public Nullable<decimal> CoursewareMaterialLocalAmount { get; set; }
+        public string CoursewareMaterialReferenceDoc { get; set; }
+        public string CoursewareMaterialRemarks { get; set; }
+        public Nullable<decimal> MiscExpensesAmount { get; set; }
+        public Nullable<decimal> MiscExpensesLocalAmount { get; set; }
+        public string MiscExpensesReferenceDoc { get; set; }
+        public string MiscExpensesRemarks { get; set; }
         public Nullable<decimal> GrossProfit { get; set; }
         public Nullable<decimal> ProfitAndLossPercent { get; set; }
         public Nullable<bool> IsActive { get; set; }

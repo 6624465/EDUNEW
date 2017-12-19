@@ -51,42 +51,6 @@
           <Property Name="Country" Type="smallint" />
           <Property Name="CurrencyCode" Type="nvarchar" MaxLength="25" />
           <Property Name="CurrencyExRate" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="GrossProfit" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="ProfitAndLossPercent" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="IsSubmit" Type="bit" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="ModifiedOn" Type="datetime" />
-        </EntityType>
-        <EntityType Name="FinancialTransactionDetails">
-          <Key>
-            <PropertyRef Name="FinancialTransactionDetailId" />
-          </Key>
-          <Property Name="FinancialTransactionDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FinancialTransactionId" Type="int" Nullable="false" />
-          <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DescriptionId" Type="smallint" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="LocalAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="ReferenceDoc" Type="nvarchar" MaxLength="100" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="ModifiedOn" Type="datetime" />
-        </EntityType>
-        <EntityType Name="FinancialTransactions">
-          <Key>
-            <PropertyRef Name="FinancialTransactionId" />
-          </Key>
-          <Property Name="FinancialTransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TrainingConfirmationID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Country" Type="smallint" />
-          <Property Name="CurrencyCode" Type="nvarchar" MaxLength="25" />
-          <Property Name="CurrencyExRate" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalRevenueAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalRevenueLocalAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalRevenueReferenceDoc" Type="nvarchar" MaxLength="100" />
@@ -272,8 +236,6 @@
           <EntitySet Name="Lookup" EntityType="Self.Lookup" Schema="Config" store:Type="Tables" />
           <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="FinancialTransaction" EntityType="Self.FinancialTransaction" Schema="Edu" store:Type="Tables" />
-          <EntitySet Name="FinancialTransactionDetails" EntityType="Self.FinancialTransactionDetails" Schema="Edu" store:Type="Tables" />
-          <EntitySet Name="FinancialTransactions" EntityType="Self.FinancialTransactions" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="OperationalTransaction" EntityType="Self.OperationalTransaction" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Registration" EntityType="Self.Registration" Schema="Edu" store:Type="Tables" />
           <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="Edu" store:Type="Tables" />
@@ -316,21 +278,14 @@
           <EntitySet Name="TrainerInformations" EntityType="DB_9F30C5_edudevModel.TrainerInformation" />
           <EntitySet Name="Registrations" EntityType="DB_9F30C5_edudevModel.Registration" />
           <EntitySet Name="Lookups" EntityType="DB_9F30C5_edudevModel.Lookup" />
-          <EntitySet Name="FinancialTransactions" EntityType="DB_9F30C5_edudevModel.FinancialTransaction" />
-          <EntitySet Name="FinancialTransactionDetails" EntityType="DB_9F30C5_edudevModel.FinancialTransactionDetail" />
-          <AssociationSet Name="FinancialTransactionFinancialTransactionDetail" Association="DB_9F30C5_edudevModel.FinancialTransactionFinancialTransactionDetail">
-            <End Role="FinancialTransaction" EntitySet="FinancialTransactions" />
-            <End Role="FinancialTransactionDetail" EntitySet="FinancialTransactionDetails" />
-          </AssociationSet>
           <EntitySet Name="CustomerPayments" EntityType="DB_9F30C5_edudevModel.CustomerPayment" />
           <EntitySet Name="VendorPayments" EntityType="DB_9F30C5_edudevModel.VendorPayment" />
           <EntitySet Name="OperationalTransactions" EntityType="DB_9F30C5_edudevModel.OperationalTransaction" />
           <EntitySet Name="TrainingConfirmations" EntityType="DB_9F30C5_edudevModel.TrainingConfirmation" />
-          
-          <EntitySet Name="FinancialTransactions1" EntityType="DB_9F30C5_edudevModel.FinancialTransaction1" />
           <FunctionImport Name="usp_OperationalTransactionReport" ReturnType="Collection(DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result)">
-            <Parameter Name="Year" Mode="In" Type="Int32" />
+          <Parameter Name="Year" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="FinancialTransactions" EntityType="DB_9F30C5_edudevModel.FinancialTransaction" />
           </EntityContainer>
         <EntityType Name="TrainerInformation">
           <Key>
@@ -405,54 +360,6 @@
           <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="FinancialTransaction">
-          <Key>
-            <PropertyRef Name="FinancialTransactionId" />
-          </Key>
-          <Property Name="FinancialTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TrainingConfirmationID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Country" Type="Int16" />
-          <Property Name="CurrencyCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="CurrencyExRate" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="GrossProfit" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ProfitAndLossPercent" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsSubmit" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="FinancialTransactionDetail">
-          <Key>
-            <PropertyRef Name="FinancialTransactionDetailId" />
-          </Key>
-          <Property Name="FinancialTransactionDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FinancialTransactionId" Type="Int32" Nullable="false" />
-          <Property Name="TrainingConfirmationID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionId" Type="Int16" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="LocalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FinancialTransactionFinancialTransactionDetail">
-          <End Type="DB_9F30C5_edudevModel.FinancialTransaction" Role="FinancialTransaction" Multiplicity="1" />
-          <End Type="DB_9F30C5_edudevModel.FinancialTransactionDetail" Role="FinancialTransactionDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FinancialTransaction">
-              <PropertyRef Name="FinancialTransactionId" />
-            </Principal>
-            <Dependent Role="FinancialTransactionDetail">
-              <PropertyRef Name="FinancialTransactionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="CustomerPayment">
           <Key>
             <PropertyRef Name="CustomerPaymentId" />
@@ -536,7 +443,15 @@
           <Property Name="Country" Type="Int16" Nullable="false" />
           <Property Name="LVC" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="FinancialTransaction1">
+        <ComplexType Name="usp_OperationalTransactionReport_Result">
+          <Property Type="Int16" Name="Month" Nullable="true" />
+          <Property Type="String" Name="ParticularName" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="ParticularsId" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="CountryName" Nullable="false" MaxLength="255" />
+          <Property Type="Int16" Name="Country" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="FinancialTransaction">
           <Key>
             <PropertyRef Name="FinancialTransactionId" />
           </Key>
@@ -578,14 +493,6 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
-        <ComplexType Name="usp_OperationalTransactionReport_Result">
-          <Property Type="Int16" Name="Month" Nullable="true" />
-          <Property Type="String" Name="ParticularName" Nullable="false" MaxLength="255" />
-          <Property Type="Int32" Name="ParticularsId" Nullable="false" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="CountryName" Nullable="false" MaxLength="255" />
-          <Property Type="Int16" Name="Country" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -695,44 +602,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FinancialTransactions">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.FinancialTransaction">
-              <MappingFragment StoreEntitySet="FinancialTransaction">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsSubmit" ColumnName="IsSubmit" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ProfitAndLossPercent" ColumnName="ProfitAndLossPercent" />
-                <ScalarProperty Name="GrossProfit" ColumnName="GrossProfit" />
-                <ScalarProperty Name="CurrencyExRate" ColumnName="CurrencyExRate" />
-                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
-                <ScalarProperty Name="FinancialTransactionId" ColumnName="FinancialTransactionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FinancialTransactionDetails">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.FinancialTransactionDetail">
-              <MappingFragment StoreEntitySet="FinancialTransactionDetails">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="ReferenceDoc" ColumnName="ReferenceDoc" />
-                <ScalarProperty Name="LocalAmount" ColumnName="LocalAmount" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DescriptionId" ColumnName="DescriptionId" />
-                <ScalarProperty Name="TrainingConfirmationID" ColumnName="TrainingConfirmationID" />
-                <ScalarProperty Name="FinancialTransactionId" ColumnName="FinancialTransactionId" />
-                <ScalarProperty Name="FinancialTransactionDetailId" ColumnName="FinancialTransactionDetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CustomerPayments">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.CustomerPayment">
               <MappingFragment StoreEntitySet="CustomerPayment">
@@ -820,9 +689,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FinancialTransactions1">
-            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.FinancialTransaction1">
-              <MappingFragment StoreEntitySet="FinancialTransactions">
+          <FunctionImportMapping FunctionImportName="usp_OperationalTransactionReport" FunctionName="DB_9F30C5_edudevModel.Store.usp_OperationalTransactionReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result">
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="ParticularName" ColumnName="ParticularName" />
+                <ScalarProperty Name="ParticularsId" ColumnName="ParticularsId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="FinancialTransactions">
+            <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.FinancialTransaction">
+              <MappingFragment StoreEntitySet="FinancialTransaction">
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -863,18 +744,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="usp_OperationalTransactionReport" FunctionName="DB_9F30C5_edudevModel.Store.usp_OperationalTransactionReport">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DB_9F30C5_edudevModel.usp_OperationalTransactionReport_Result">
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="ParticularName" ColumnName="ParticularName" />
-                <ScalarProperty Name="ParticularsId" ColumnName="ParticularsId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           
         </EntityContainerMapping>
       </Mapping>

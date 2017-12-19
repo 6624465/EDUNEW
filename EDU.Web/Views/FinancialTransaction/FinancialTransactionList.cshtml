@@ -105,8 +105,7 @@
                                               grid.Column("", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="EditFinancialTransactionDetail(@item.FinancialTransactionId,'@item.TrainingConfirmationID')"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.trainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                 }
                                             </text>, style: "col3Width", canSort: false),
 
@@ -207,9 +206,9 @@
         </div>
     </div>
 
-    <div id="myModal" class="modal fade" role="dialog">
+    @*<div id="myModal" class="modal fade" role="dialog">
 
-    </div>
+    </div>*@
 }
 @section SectionScripts {
     <script type="text/javascript">
@@ -220,8 +219,8 @@
             debugger;
             if ($('#financialTransaction_TrainingConfirmationID').val() != '' && $('#financialTransaction_TrainingConfirmationID').val() != null)
                 $('.btn_edit').removeAttr('disabled');
-            else
-                $('.btn_edit').attr('disabled', 'disabled');
+           // else
+               // $('.btn_edit').attr('disabled', 'disabled');
 
 
 
@@ -312,24 +311,16 @@
             }
         }
 
-        function EditFinancialTransactionDetail(Id, trainingConfirmationID, descriptionId, description, financialTransactionDetailId) {
+        function EditFinancialTransactionDetail(Id) {
             debugger;
             if($('#frmFinancial').valid())
             {
-                var currencyExRate = $('#financialTransaction_CurrencyExRate').val();
+                //var currencyExRate = $('#financialTransaction_CurrencyExRate').val();
                 $.ajax({
-                    url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?financialTransactionId=")' + Id + "&trainingConfirmationID=" + trainingConfirmationID + "&descriptionId=" + descriptionId + "&description=" + description
-                                        + "&currencyExRate=" + currencyExRate + "&financialTransactionDetailId=" + financialTransactionDetailId,
+                    url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=")' + Id ,
                     method: 'get',
                     contentType: 'text/html',
                     success: function (html) {
-                        $('#myModal').html(html);
-                        $('#myModal').modal('show');
-                        if (descriptionId == 1050)
-                            $('#Amount').attr('disabled', 'disabled');
-                        else
-                            $('#Amount').removeAttr('disabled');
-                        CalculateLocalAmount();
                     },
                     error: function (err) {
 

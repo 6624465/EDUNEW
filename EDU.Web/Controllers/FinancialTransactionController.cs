@@ -19,11 +19,11 @@ namespace EDU.Web.Controllers
 
 
         [HttpGet]
-        public ActionResult FinancialTransactionList(string trainingConfirmationID)
+        public ActionResult FinancialTransactionList()
         {
             List<FinancialTransactionsVM> financialTransactionList = new List<FinancialTransactionsVM>();
             List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
-            List<FinancialTransaction1> financialTransaction1List = dbContext.FinancialTransactions1.Where(x => x.IsActive == true).ToList();
+            List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions.Where(x => x.IsActive == true).ToList();
             var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 
 
@@ -122,8 +122,98 @@ namespace EDU.Web.Controllers
                     });
                 }
             }
-            
+
             return View(financialTransactionList);
+        }
+
+        [HttpGet]
+        public ActionResult FinancialTransactionDetail(int Id, string trainingConfirmationID, Int16? country, decimal? totalRevenueAmount)
+        {
+            var currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
+            var countryList = new BranchBO().GetList();
+            FinancialTransaction financialtransaction = new FinancialTransaction();
+            if (Id == -1)
+            {
+                financialtransaction = new FinancialTransaction { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount };
+                ViewBag.Title = "New Financial Transaction";
+
+            }
+            else
+            {
+                ViewBag.Title = "Update Financial Transaction";
+                financialtransaction = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == Id && x.IsActive == true).FirstOrDefault();
+            }
+            ViewData["CurrencyList"] = currencyList;
+            ViewData["CountryData"] = countryList;
+            return View(financialtransaction);
+        }
+
+        [HttpPost]
+        public ActionResult SaveFinancialTransactionDetail(FinancialTransaction ftInfo)
+        {
+            try
+            {
+                FinancialTransaction financialtransactions = new FinancialTransaction();
+                if (ftInfo.FinancialTransactionId == -1)
+                {
+
+
+                    ftInfo.IsActive = true;
+                    ftInfo.CreatedBy = USER_ID;
+                    ftInfo.CreatedOn = UTILITY.SINGAPORETIME;
+                    dbContext.FinancialTransactions.Add(ftInfo);
+
+                }
+                else {
+                    financialtransactions = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ftInfo.FinancialTransactionId).FirstOrDefault();
+
+
+                    financialtransactions.FinancialTransactionId = ftInfo.FinancialTransactionId;
+                    financialtransactions.TrainingConfirmationID = ftInfo.TrainingConfirmationID;
+                    financialtransactions.Country = ftInfo.Country;
+                    financialtransactions.CurrencyCode = ftInfo.CurrencyCode;
+                    financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
+                    financialtransactions.TotalRevenueAmount = ftInfo.TotalRevenueAmount;
+                    financialtransactions.TotalRevenueLocalAmount = ftInfo.TotalRevenueLocalAmount;
+                    financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
+                    financialtransactions.TotalRevenueRemarks = ftInfo.TotalRevenueRemarks;
+                    financialtransactions.TrainerExpensesAmount = ftInfo.TrainerExpensesAmount;
+                    financialtransactions.TrainerExpensesLocalAmount = ftInfo.TrainerExpensesLocalAmount;
+                    financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
+                    financialtransactions.TrainerExpensesRemarks = ftInfo.TrainerExpensesRemarks;
+                    financialtransactions.TrainerTravelExpensesAmount = ftInfo.TrainerTravelExpensesAmount;
+                    financialtransactions.TrainerTravelExpensesLocalAmount = ftInfo.TrainerTravelExpensesLocalAmount;
+                    financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
+                    financialtransactions.TrainerTravelExpensesRemarks = ftInfo.TrainerTravelExpensesRemarks;
+                    financialtransactions.LocalExpensesAmount = ftInfo.LocalExpensesAmount;
+                    financialtransactions.LocalExpensesLocalAmount = ftInfo.LocalExpensesLocalAmount;
+                    financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
+                    financialtransactions.LocalExpensesRemarks = ftInfo.LocalExpensesRemarks;
+                    financialtransactions.CoursewareMaterialAmount = ftInfo.CoursewareMaterialAmount;
+                    financialtransactions.CoursewareMaterialLocalAmount = ftInfo.CoursewareMaterialLocalAmount;
+                    financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
+                    financialtransactions.CoursewareMaterialRemarks = ftInfo.CoursewareMaterialRemarks;
+                    financialtransactions.MiscExpensesAmount = ftInfo.MiscExpensesAmount;
+                    financialtransactions.MiscExpensesLocalAmount = ftInfo.MiscExpensesLocalAmount;
+                    financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
+                    financialtransactions.MiscExpensesRemarks = ftInfo.MiscExpensesRemarks;
+                    financialtransactions.GrossProfit = ftInfo.GrossProfit;
+                    financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
+                    financialtransactions.IsActive = true;
+                    financialtransactions.IsSubmit = ftInfo.IsSubmit;
+
+                    financialtransactions.ModifiedBy = USER_ID;
+                    financialtransactions.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                    dbContext.Entry(financialtransactions).State = EntityState.Modified;
+                }
+                dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction("FinancialTransactionList");
         }
 
         //[HttpGet]
@@ -445,46 +535,46 @@ namespace EDU.Web.Controllers
         }
 
 
-        [HttpPost]
-        public JsonResult UpdateFinancialTransactionLocalAmount(FinancialTransaction ft)
-        {
-            if (ft.FinancialTransactionId == -1)
-            {
-                return Json("Please update Financial Transaction Information before click on update button.", JsonRequestBehavior.AllowGet);
-            }
-            FinancialTransaction ftrans = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID && x.IsActive == true).First();
+        //[HttpPost]
+        //public JsonResult UpdateFinancialTransactionLocalAmount(FinancialTransaction ft)
+        //{
+        //    if (ft.FinancialTransactionId == -1)
+        //    {
+        //        return Json("Please update Financial Transaction Information before click on update button.", JsonRequestBehavior.AllowGet);
+        //    }
+        //    FinancialTransaction ftrans = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID && x.IsActive == true).First();
 
-            ftrans.CurrencyCode = ft.CurrencyCode;
-            ftrans.Country = ft.Country;
-            ftrans.CurrencyExRate = ft.CurrencyExRate;
-            ftrans.ModifiedBy = USER_ID;
-            ftrans.ModifiedOn = UTILITY.SINGAPORETIME;
-            dbContext.Entry(ftrans).State = EntityState.Modified;
+        //    ftrans.CurrencyCode = ft.CurrencyCode;
+        //    ftrans.Country = ft.Country;
+        //    ftrans.CurrencyExRate = ft.CurrencyExRate;
+        //    ftrans.ModifiedBy = USER_ID;
+        //    ftrans.ModifiedOn = UTILITY.SINGAPORETIME;
+        //    dbContext.Entry(ftrans).State = EntityState.Modified;
 
-            List<FinancialTransactionDetail> FinancialTransactionDetailList = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID).ToList(); //&& x.CurrencyCode == revenue.CurrencyCode
+        //    List<FinancialTransactionDetail> FinancialTransactionDetailList = dbContext.FinancialTransactionDetails.Where(x => x.FinancialTransactionId == ft.FinancialTransactionId && x.TrainingConfirmationID == ft.TrainingConfirmationID).ToList(); //&& x.CurrencyCode == revenue.CurrencyCode
 
-            try
-            {
-                foreach (FinancialTransactionDetail ftd in FinancialTransactionDetailList)
-                {
-                    ftd.LocalAmount = ftd.Amount * ftrans.CurrencyExRate;
+        //    try
+        //    {
+        //        foreach (FinancialTransactionDetail ftd in FinancialTransactionDetailList)
+        //        {
+        //            ftd.LocalAmount = ftd.Amount * ftrans.CurrencyExRate;
 
-                    ftd.ModifiedBy = USER_ID;
-                    ftd.ModifiedOn = UTILITY.SINGAPORETIME;
+        //            ftd.ModifiedBy = USER_ID;
+        //            ftd.ModifiedOn = UTILITY.SINGAPORETIME;
 
-                    dbContext.Entry(ftd).State = EntityState.Modified;
-                }
+        //            dbContext.Entry(ftd).State = EntityState.Modified;
+        //        }
 
-                dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+        //        dbContext.SaveChanges();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
 
-            string message = "Local Amount Updated Successfully.";
-            return Json(message, JsonRequestBehavior.AllowGet);
-        }
+        //    string message = "Local Amount Updated Successfully.";
+        //    return Json(message, JsonRequestBehavior.AllowGet);
+        //}
 
         [HttpPost]
         public JsonResult SubmitFinancialTransaction(FinancialTransaction ft)
