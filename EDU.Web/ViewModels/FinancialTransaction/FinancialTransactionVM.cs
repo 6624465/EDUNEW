@@ -59,6 +59,8 @@ namespace EDU.Web.ViewModels.FinancialTransactionModel
         public System.Web.HttpPostedFileBase LocalExpensesFileName { get; set; }
         public System.Web.HttpPostedFileBase CoursewareMaterialFileName { get; set; }
         public System.Web.HttpPostedFileBase MiscExpensesFileName { get; set; }
+        public int? Year { get; set; }
+        public Nullable<short> Month { get; set; }
     }
     
 }

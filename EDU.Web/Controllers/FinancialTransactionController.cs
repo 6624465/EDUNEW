@@ -19,13 +19,15 @@ namespace EDU.Web.Controllers
 
 
         [HttpGet]
-        public ActionResult FinancialTransactionList()
+        public ActionResult FinancialTransactionList(short? month, int year)
         {
             List<FinancialTransactionsVM> financialTransactionList = new List<FinancialTransactionsVM>();
-            List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
-            List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions.Where(x => x.IsActive == true).ToList();
-            var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+            List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.StartDate.Value.Year == year && x.StartDate.Value.Month == month).ToList();
 
+            List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
+            List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
+                                                                     .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID)).ToList();
+            var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 
             financialTransactionList = financialTransaction1List
                 .Select(x => new FinancialTransactionsVM
@@ -67,7 +69,9 @@ namespace EDU.Web.Controllers
                     CreatedBy = x.CreatedBy,
                     CreatedOn = x.CreatedOn,
                     ModifiedBy = x.ModifiedBy,
-                    ModifiedOn = x.ModifiedOn
+                    ModifiedOn = x.ModifiedOn,
+                    Year = year,
+                    Month = month
                 })
                 .ToList();
 
@@ -123,7 +127,7 @@ namespace EDU.Web.Controllers
                 }
             }
 
-            return View(financialTransactionList);
+            return View(financialTransactionList.OrderBy(x => x.TrainingConfirmationID));
         }
 
         [HttpGet]
@@ -331,7 +335,8 @@ namespace EDU.Web.Controllers
                         ftInfo.MiscExpensesFileName.SaveAs(path + ftInfo.MiscExpensesFileName.FileName);
                     }
                 }
-                else {
+                else
+                {
                     financialtransactions = dbContext.FinancialTransactions.Where(x => x.FinancialTransactionId == ftInfo.FinancialTransactionId).FirstOrDefault();
 
 
@@ -438,8 +443,8 @@ namespace EDU.Web.Controllers
                     financialtransactions.ModifiedBy = USER_ID;
                     financialtransactions.ModifiedOn = UTILITY.SINGAPORETIME;
                     dbContext.Entry(financialtransactions).State = EntityState.Modified;
-                dbContext.SaveChanges();
-                    
+                    dbContext.SaveChanges();
+
                 }
             }
             catch (Exception ex)

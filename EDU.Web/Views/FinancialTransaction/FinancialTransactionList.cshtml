@@ -22,6 +22,25 @@
             return null;
     }
 }
+
+@{
+    var listMonths = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "Select Month",   Value = "0"},
+                                           new SelectListItem {Text = "Janaury",   Value = "1"},
+                                           new SelectListItem {Text = "February", Value = "2"},
+                                           new SelectListItem {Text = "March", Value = "3"},
+                                           new SelectListItem {Text = "April",   Value = "4"},
+                                           new SelectListItem {Text = "May", Value = "5"},
+                                           new SelectListItem {Text = "June", Value = "6"},
+                                           new SelectListItem {Text = "July",   Value = "7"},
+                                           new SelectListItem {Text = "August", Value = "8"},
+                                           new SelectListItem {Text = "September", Value = "9"},
+                                           new SelectListItem {Text = "October",   Value = "10"},
+                                           new SelectListItem {Text = "November", Value = "11"},
+                                           new SelectListItem {Text = "December", Value = "12"}
+                                       };
+}
 <style>
     .centerbox {
         margin: auto;
@@ -58,51 +77,32 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        @*<div class="row">
+                        <div class="row">
                             <div class="form-group">
-                                <label class="col-md-1 col-md-offset-2 control-label">
-                                    <span>Event No.</span>
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Year</span>
                                 </label>
-                                <div class="col-md-2">
-                                    @Html.HiddenFor(x => x.financialTransaction.FinancialTransactionId)
-                                    <input type="hidden" id="eventid" name="eventid" />
-                                    @Html.HiddenFor(x => x.financialTransaction.IsSubmit)
-                                    @Html.DropDownListFor(x => x.financialTransaction.TrainingConfirmationID,
-          new SelectList(Model.trainingConfirmationList, "TrainingConfirmationID", "TrainingConfirmationID"),
-          "Select Event No.", new { @class = "form-control input-sm ", onchange = "ChangeEventID(this);" })
-                                </div>
-                                <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.financialTransaction.Country,
-      new SelectList(Model.countryList, "BranchID", "BranchName"),
-      "Select Country", new { @class = "form-control input-sm ", onchange = "CountryChange(this);" })
-                                </div>
                                 <div class="col-md-1">
-                                    @Html.DropDownListFor(x => x.financialTransaction.CurrencyCode,
-      new SelectList(Model.currencyList, "LookupCode", "LookupCode"),
-      "Select Currency", new { @class = "form-control input-sm " })
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Month</span>
+                                </label>
                                 <div class="col-md-1">
-                                    @Html.TextBoxFor(x => x.financialTransaction.CurrencyExRate, "{0:#.#}",
-           new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss", onblur = "ValidateTheExValue()" })
-                                </div>
-                                <div class="col-md-2">
-                             @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                             {
-                                    <button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
-                             }
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
                             </div>
-                        </div>*@
+                        </div>
                         <div class="row css25">
                             <div class="col-md-12">
-                                <div id="gridContent"  style="overflow-x: scroll; width: 100%" >
+                                <div id="gridContent" style="overflow-x: scroll; width: 100%">
                                     @grid.GetHtml(
                                      tableStyle: "table table-striped table-bordered",
                                      mode: WebGridPagerModes.All,
                                      columns:
                                         grid.Columns(
 
-                                              grid.Column("", format: @<text>
+                                              grid.Column("","Action", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.trainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
@@ -112,10 +112,10 @@
                                         grid.Column("TrainingConfirmationID", "Event ID",
                                         format:
                                         @<text>
-                                    <div style='width:140px;'>
-                                        <span>@item.TrainingConfirmationID</span>
-                                    </div>                                       
-                                     </text>, canSort: false),
+                                            <div style='width:140px;'>
+                                                <span>@item.TrainingConfirmationID</span>
+                                            </div>
+                                        </text>, canSort: false),
                                             grid.Column("CountryName", "Country Name",
                                         format:
                                         @<text>
@@ -124,20 +124,20 @@
                                             </div>
                                         </text>, canSort: false),
                                             @*grid.Column("CurrencyCode", "Currency Code",
-                                        format:
-                                        @<text>
-                                            <div style='width:90px;'>
-                                                <span>@item.CurrencyCode</span>
-                                            </div>
-                                        </text>, canSort: false),*@
+                                                format:
+                                                @<text>
+                                                    <div style='width:90px;'>
+                                                        <span>@item.CurrencyCode</span>
+                                                    </div>
+                                                </text>, canSort: false),*@
 
                                             @*grid.Column("CurrencyExRate", "Currency Ex. Rate",
-                                        format:
-                                        @<text>
-                                            <div style='width:110px;'>
-                                                <span>@item.CurrencyExRate</span>
-                                            </div>
-                                        </text>, canSort: false),*@
+                                                format:
+                                                @<text>
+                                                    <div style='width:110px;'>
+                                                        <span>@item.CurrencyExRate</span>
+                                                    </div>
+                                                </text>, canSort: false),*@
                                                 grid.Column("TotalRevenueAmount", "Revenue Amount", format:
                                                 @<text>
                                                     <div style='width:140px;'>
@@ -155,14 +155,14 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                @*grid.Column("TotalRevenueLocalAmount", "Total Revenue Local Amount", format:
-                                                @<text>
-                                                    <div style='width:170px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64(item.TotalRevenueLocalAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),*@
+                                    @*grid.Column("TotalRevenueLocalAmount", "Total Revenue Local Amount", format:
+                                        @<text>
+                                            <div style='width:170px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64(item.TotalRevenueLocalAmount)
+                                                </span>
+                                            </div>
+                                        </text>, canSort: false),*@
                                                 grid.Column("TotalRevenueReferenceDoc", "Revenue Reference Doc",
                                                 format:
                                                 @<text>
@@ -189,7 +189,7 @@
                                                     </div>
                                                 </text>, canSort: false),
 
-                                            //2
+                                                //2
 
                                                 grid.Column("TrainerExpensesAmount", " Trainer Expenses Amount", format:
                                                 @<text>
@@ -208,7 +208,7 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                @*grid.Column("TrainerExpensesLocalAmount", "Trainer Expenses Local Amount", format:
+                                            @*grid.Column("TrainerExpensesLocalAmount", "Trainer Expenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:180px;'>
                                                         <span class="center">
@@ -242,7 +242,7 @@
                                                     </div>
                                                 </text>, canSort: false),
 
-                                                     //3
+                                                   //3
 
 
                                                    grid.Column("TrainerTravelExpensesAmount", " Trainer Travel Expenses Amount", format:
@@ -262,7 +262,7 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                @*grid.Column("TrainerTravelExpensesLocalAmount", "Trainer Travel Expenses Local Amount", format:
+                                            @*grid.Column("TrainerTravelExpensesLocalAmount", "Trainer Travel Expenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:220px;'>
                                                         <span class="center">
@@ -296,7 +296,7 @@
                                                     </div>
                                                 </text>, canSort: false),
 
-                                                     //4
+                                                //4
 
 
                                                 grid.Column("LocalExpensesAmount", " Local Expenses Amount", format:
@@ -316,7 +316,7 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                @*grid.Column("LocalExpensesLocalAmount", "LocalExpenses LocalAmount", format:
+                                            @*grid.Column("LocalExpensesLocalAmount", "LocalExpenses LocalAmount", format:
                                                 @<text>
                                                     <div style='width:180px;'>
                                                         <span class="center">
@@ -370,7 +370,7 @@
                                                     }
                                                 </div>
                                             </text>, canSort: false),
-                                                @*grid.Column("CoursewareMaterialLocalAmount", "Courseware Material Local Amount", format:
+                                            @*grid.Column("CoursewareMaterialLocalAmount", "Courseware Material Local Amount", format:
                                                 @<text>
                                                     <div style='width:200px;'>
                                                         <span class="center">
@@ -404,7 +404,7 @@
                                                     </div>
                                                 </text>, canSort: false),
 
-                                                     //6
+                                                 //6
 
 
                                                  grid.Column("MiscExpensesAmount", " MiscExpenses Amount", format:
@@ -424,7 +424,7 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-                                                @*grid.Column("MiscExpensesLocalAmount", "MiscExpenses Local Amount", format:
+                                            @*grid.Column("MiscExpensesLocalAmount", "MiscExpenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
@@ -460,7 +460,7 @@
 
 
                                                 ))
-                                            </div>
+                                </div>
                             </div>
                         </div>
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
@@ -468,7 +468,7 @@
                             <div class="col-md-6 col-md-offset-9 css10">
                                 <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
                                 @*<button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>*@
-                                
+
                             </div>
                         }
                     </div>
@@ -479,46 +479,17 @@
 
     @*<div id="myModal" class="modal fade" role="dialog">
 
-    </div>*@
+        </div>*@
 }
 @section SectionScripts {
     <script type="text/javascript">
         $(function () {
             $('#liFinancialTransactionList').addClass('active');
         });
-        $(function () {
-            debugger;
-            if ($('#financialTransaction_TrainingConfirmationID').val() != '' && $('#financialTransaction_TrainingConfirmationID').val() != null)
-                $('.btn_edit').removeAttr('disabled');
-           // else
-               // $('.btn_edit').attr('disabled', 'disabled');
 
-
-
-            
-
-            @*@if (Model.financialTransaction.FinancialTransactionId != -1)
-            {
-            <text>
-                if ($('#financialTransaction_IsSubmit').val() != "True")
-                    $('.btndisable').removeAttr('disabled');
-                else {
-                    $('.btndisable').attr('disabled', 'disabled');
-                    $('.btn_edit').attr('disabled', 'disabled');
-                }
-                var gp = @Model.financialTransaction.GrossProfit != null ?parseInt(@Model.financialTransaction.GrossProfit) : 0;
-            var pl = @Model.financialTransaction.ProfitAndLossPercent != null ? parseInt(@Model.financialTransaction.ProfitAndLossPercent) : 0;
-            var lgp =gp*$('#financialTransaction_CurrencyExRate').val();
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>GROSS PROFIT</td><td><span class="center">' +"$ "+ gp + '</span></td><td><span class="center">' +lgp + '</span></td><td></td><td></td><td></td></tr>'+
-                    '<tr class="bordertop"><td></td><td>P&L</td><td><span class="center">' + pl + '%</span></td><td></td><td></td><td></td><td></td></tr>');
-            </text>
-            }
-            else
-            {
-                <text>$('.btndisable').attr('disabled', 'disabled');</text>
-            }*@
-            //class="pull-right"
-        });
+        function ChangeMonth() {
+            window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
+        };
 
         function UpdateFinancialTransactionLocalAmount() {
             debugger;
@@ -543,13 +514,6 @@
                 });
             }
         }
-
-        function ChangeEventID(el) {
-
-            $('#eventid').val(el.value);
-            window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
-
-        };
 
         function SaveFinancialTransaction() {
             if ($('#frmFinancial').valid()) {
