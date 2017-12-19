@@ -189,8 +189,6 @@
                                                     </div>
                                                 </text>, canSort: false),
 
-                                                //2
-
                                                 grid.Column("TrainerExpensesAmount", " Trainer Expenses Amount", format:
                                                 @<text>
                                                     <div style='width:150px;'>
@@ -296,9 +294,6 @@
                                                     </div>
                                                 </text>, canSort: false),
 
-                                                //4
-
-
                                                 grid.Column("LocalExpensesAmount", " Local Expenses Amount", format:
                                                 @<text>
                                                     <div style='width:150px;'>
@@ -349,9 +344,6 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-
-                                             //5
-
 
                                              grid.Column("CoursewareMaterialAmount", " Courseware Material Amount", format:
                                             @<text>
@@ -404,9 +396,6 @@
                                                     </div>
                                                 </text>, canSort: false),
 
-                                                 //6
-
-
                                                  grid.Column("MiscExpensesAmount", " MiscExpenses Amount", format:
                                                 @<text>
                                                     <div style='width:140px;'>
@@ -457,10 +446,9 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false)
-
-
-                                                ))
-                                </div>
+                                                     ))
+                                                
+                                        </div>
                             </div>
                         </div>
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
