@@ -50,7 +50,7 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult OperationalTransactionDetail(int? operationalTransactionId, short? month, int? year, short country)
+        public ActionResult OperationalTransaction(int? operationalTransactionId, short? month, int? year, short country)
         {
             OTVM operationalTransactionvm = new OTVM();
             if (operationalTransactionId == -1)
@@ -119,7 +119,7 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult OperationalTransaction(int? operationalTransactionId, short? month, int? year, short country)
+        public PartialViewResult OperationalTransaction1(int? operationalTransactionId, short? month, int? year, short country)
         {
 
             ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();

@@ -479,7 +479,7 @@
             window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
-        function UpdateFinancialTransactionLocalAmount() {
+        @*function UpdateFinancialTransactionLocalAmount() {
             debugger;
             if ($('#frmFinancial').valid()) {
                 var FinancialTransaction =
@@ -501,7 +501,7 @@
                     }
                 });
             }
-        }
+        }*@
 
         function SaveFinancialTransaction() {
             if ($('#frmFinancial').valid()) {
@@ -534,7 +534,7 @@
             }
         }*@
 
-        function EditFinancialTransactionDetail(Id) {
+        @*function EditFinancialTransactionDetail(Id) {
             debugger;
             if($('#frmFinancial').valid())
             {
@@ -551,9 +551,9 @@
                 });
             }
 
-        }
+        }*@
 
-        function CountryChange(el) {
+        @*function CountryChange(el) {
             if (el.value) {
                 $.ajax({
                     url: '@Url.Content("~/FinancialTransaction/GetCurrency?Id=")' + el.value,
@@ -570,17 +570,17 @@
             else {
                 $("#financialTransaction_CurrencyCode").val('');
             }
-        };
-        function CalculateLocalAmount() {
-            debugger;
-            var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
-            var Amount = parseInt($('#Amount').val());
-            var result = currencyrate * Amount;
-            $('#LocalAmount').val(result);
-            if (isNaN(Amount)) {
-                $('#LocalAmount').val('');
-            }
-        }
+        };*@
+        //function CalculateLocalAmount() {
+        //    debugger;
+        //    var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
+        //    var Amount = parseInt($('#Amount').val());
+        //    var result = currencyrate * Amount;
+        //    $('#LocalAmount').val(result);
+        //    if (isNaN(Amount)) {
+        //        $('#LocalAmount').val('');
+        //    }
+        //}
         $('#frmFinancial').validate({
             rules: {
                 'financialTransaction.Country': {
@@ -608,13 +608,13 @@
         function mouseover(el) {
             $(el).popover("show");
         }
-        function ValidateTheExValue()
-        {
-            var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
-            if(currencyrate==0)
-            {
-                parseInt($('#financialTransaction_CurrencyExRate').val(''));
-            }
-        }
+        //function ValidateTheExValue()
+        //{
+        //    var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
+        //    if(currencyrate==0)
+        //    {
+        //        parseInt($('#financialTransaction_CurrencyExRate').val(''));
+        //    }
+        //}
     </script>
 }

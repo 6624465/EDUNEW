@@ -165,24 +165,12 @@
         };
 
         function AddOperationalTransaction() {
-            debugger;
             if ($('#frmOperationalTransaction').valid()) {
-                $.ajax({
-                    url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val(),
-                    method: 'get',
-                    contentType: 'text/html',
-                    success: function (html) {
-                        debugger;
-                        $('#myModal').html(html);
-                        $('#myModal').modal('show');
-                    },
-                    error: function (err) {
-                    }
-                });
+                location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
             }
         }
 
-        function GetParticularsByCategory(Id) {
+        @*function GetParticularsByCategory(Id) {
             debugger;
             if (Id.value) {
                 debugger;
@@ -210,9 +198,9 @@
                 $('#ParticularsId').attr('disabled', 'disabled');
                 $('#ParticularsId').append($('<option></option>').val('').html(''));
             }
-        }
+        }*@
 
-        function EditOperationalTransaction(Id) {
+        @*function EditOperationalTransaction(Id) {
             $.ajax({
                 url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val(),
                 method: 'get',
@@ -226,14 +214,9 @@
 
                 }
             });
-        }
+        }*@
         function DeleteOperationalTransaction(Id) {
             debugger;
-            //if (confirm("Are you sure, do you want delete?"))
-            //{
-            //    $('#operationalTransactionId').val(Id);
-            //    $('#frmOperationalTransactionDelete').submit();
-            //}
             swal({
                 title: "Are you sure?",
                 text: "Do you want delete?",
