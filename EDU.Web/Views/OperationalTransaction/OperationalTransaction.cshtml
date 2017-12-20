@@ -41,13 +41,17 @@
                                      </label>
                                         <div class="col-md-2">
                                             @*@Html.DropDownListFor(x => x.CountryName, new { @class = "form-control" })*@
-                                        </div>
+                                       @Html.DropDownListFor(x => x.Country,
+                             new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
+                             "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                                         </div>
 
 
                                     <label class="col-md-1 control-label">
                                         <span class="pull-left">Year</span>
                                     </label>
                                     <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm" })
                                         @*@Html.DropDownListFor(x => x.Year,)*@
                                     </div>
 
