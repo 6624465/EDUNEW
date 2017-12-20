@@ -34,12 +34,12 @@ namespace EDU.Web.Controllers
 
 
                 TrainingConfirmDtl tcd = new TrainingConfirmDtl();
-                string trianerName = "";
+                string VendorName = "";
                 if (tcdtl != null)
                 {
                     string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
                     string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault().CourseName : "";
-                    trianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName;
+                    VendorName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().VendorName;
 
                     tcd = new TrainingConfirmDtl()
                     {
@@ -73,7 +73,7 @@ namespace EDU.Web.Controllers
                         CreatedOn = x.CreatedOn,
                         ModifiedBy = x.ModifiedBy,
                         ModifiedOn = x.ModifiedOn,
-                        VendorName = trianerName
+                        VendorName = VendorName
                     })
                     .ToList();
 
@@ -109,7 +109,7 @@ namespace EDU.Web.Controllers
                         CreatedOn = DateTime.Now,
                         ModifiedBy = null,
                         ModifiedOn = null,
-                        VendorName = trianerName
+                        VendorName = VendorName
                     });
                 }
 

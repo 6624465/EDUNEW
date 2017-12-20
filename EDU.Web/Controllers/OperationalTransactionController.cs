@@ -262,21 +262,33 @@ namespace EDU.Web.Controllers
                         OperationalTransaction otInfo = dbContext.OperationalTransactions.
                             Where(x => x.OperationId == otvm.OperationId && x.ParticularsId == perticulars.Key && x.Month == otvm.Month && x.Year == otvm.Year).FirstOrDefault();
 
-                        //otInfo = operationalTransactionInfo;
-                        //otInfo.OperationId = operationalTransactionInfo.OperationId;
-                        //otInfo.Country = operationalTransactionInfo.Country;
-                        //otInfo.CountryName = countryname;
-                        //otInfo.Year = operationalTransactionInfo.Year;
-                        //otInfo.Month = operationalTransactionInfo.Month;
+                        if (otInfo != null)
+                        {
+                            otInfo.ModifiedBy = USER_ID;
+                            otInfo.ModifiedOn = UTILITY.SINGAPORETIME;
+                            otInfo.IsActive = true;
 
-                        otInfo.ModifiedBy = USER_ID;
-                        otInfo.ModifiedOn = UTILITY.SINGAPORETIME;
-                        otInfo.IsActive = true;
+                            otInfo.Amount = perticulars.Value.Value;
+                            dbContext.Entry(otInfo).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            otInfo.OperationId = operationalTransactionInfo.OperationId;
+                            otInfo.Country = operationalTransactionInfo.Country;
+                            otInfo.CountryName = countryname;
+                            otInfo.Year = operationalTransactionInfo.Year;
+                            otInfo.Month = operationalTransactionInfo.Month;
 
-                        //otInfo.CategoryId = (perticulars.Key >= 1200 && perticulars.Key < 1300) ? 1100 : 1101;
-                        //otInfo.ParticularsId = perticulars.Key;
-                        otInfo.Amount = perticulars.Value.Value;
-                        dbContext.Entry(otInfo).State = EntityState.Modified;
+                            otInfo.CategoryId = (perticulars.Key >= 1200 && perticulars.Key < 1300) ? 1100 : 1101;
+                            otInfo.ParticularsId = perticulars.Key;
+                            otInfo.Amount = perticulars.Value.Value;
+
+                            otInfo.CreatedBy = USER_ID;
+                            otInfo.CreatedOn = UTILITY.SINGAPORETIME;
+                            otInfo.IsActive = true;
+
+                            dbContext.OperationalTransactions.Add(otInfo);
+                        }
                         dbContext.SaveChanges();
                     }
                 }

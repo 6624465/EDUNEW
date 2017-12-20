@@ -48,6 +48,9 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+    .center {
+        text-align: center !important;
+    }
 </style>
 <div class="page page-forms-elements">
     <div class="page-wrap">
@@ -66,7 +69,6 @@
                             {
                                 <button type="button" id="btnAdd" class="btn btn-info btn-sm waves-effect" onclick="AddOperationalTransaction()"><i class="fa fa-pencil"></i>Update Operational Transactions</button>
                             }
-
                         }
                     </div>
                 </div>
@@ -104,7 +106,7 @@
                                 columns: grid.Columns(
                                 grid.Column("CategoryIdDesc", "Category", canSort: true),
                                 grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
-                        grid.Column("Amount", "Amount", canSort: true,
+                                grid.Column("Amount", "Amount", canSort: true,
                                      format:
                                     @<text>
                                         <div style='width:88px;'>
