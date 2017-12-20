@@ -128,6 +128,7 @@ namespace EDU.Web.Controllers
             {
                 string countryname = otvm.Country > 0 ? new BranchBO().GetList().Where(x => x.BranchID == otvm.Country).FirstOrDefault().BranchName : "";
                 OperationalTransaction operationalTransactionInfo = new OperationalTransaction();
+                List<OperationalTransaction> otList = new List<OperationalTransaction>();
 
                 if (otvm.OperationId == -1)
                 {
@@ -170,24 +171,49 @@ namespace EDU.Web.Controllers
 
                 else
                 {
-                    //operationalTransactionInfo = dbContext.OperationalTransactions.
-                    //    Where(x => x.OperationalTransactionId == operationalTransaction.OperationalTransactionId).FirstOrDefault();
 
-                    //operationalTransactionInfo.CountryName = countryname;
-                    //operationalTransactionInfo.CategoryId = operationalTransaction.CategoryId;
-                    //operationalTransactionInfo.ParticularsId = operationalTransaction.ParticularsId;
-                    //operationalTransactionInfo.Month = operationalTransaction.Month;
-                    //operationalTransactionInfo.Year = operationalTransaction.Year;
-                    //operationalTransactionInfo.Amount = operationalTransaction.Amount;
-                    //operationalTransactionInfo.Country = operationalTransaction.Country;
-                    //operationalTransactionInfo.CountryName = operationalTransaction.CountryName;
+                    operationalTransactionInfo.OperationId = otvm.OperationId;
+                    operationalTransactionInfo.Country = otvm.Country;
+                    operationalTransactionInfo.CountryName = countryname;
+                    operationalTransactionInfo.Year = otvm.Year;
+                    operationalTransactionInfo.Month = otvm.Month;
 
-                    //operationalTransactionInfo.IsActive = true;
+                    operationalTransactionInfo.ModifiedBy = USER_ID;
+                    operationalTransactionInfo.ModifiedOn = UTILITY.SINGAPORETIME;
+                    operationalTransactionInfo.IsActive = true;
 
-                    //operationalTransactionInfo.ModifiedBy = USER_ID;
-                    //operationalTransactionInfo.ModifiedOn = UTILITY.SINGAPORETIME;
+                    Dictionary<int, decimal?> PerticularsList = new Dictionary<int, decimal?>();
+                    PerticularsList.Add(otvm.SalariesId, otvm.SalariesAmount);
+                    PerticularsList.Add(otvm.TravellingexpId, otvm.TravellingexpAmount);
+                    PerticularsList.Add(otvm.RentalId, otvm.RentalAmount);
+                    PerticularsList.Add(otvm.TelephoneexpId, otvm.TelephoneexpAmount);
+                    PerticularsList.Add(otvm.CourierchargesId, otvm.CourierchargesAmount);
+                    PerticularsList.Add(otvm.InsuranceId, otvm.InsuranceAmount);
+                    PerticularsList.Add(otvm.UtilityId, otvm.UtilityAmount);
+                    PerticularsList.Add(otvm.MarketingexpId, otvm.MarketingexpAmount);
+                    PerticularsList.Add(otvm.DepreciationId, otvm.DepreciationAmount);
+                    PerticularsList.Add(otvm.LegalexpId, otvm.LegalexpAmount);
+                    PerticularsList.Add(otvm.RepairmaintenanceId, otvm.RepairmaintenanceAmount);
+                    PerticularsList.Add(otvm.BankchargesId, otvm.BankchargesAmount);
+                    PerticularsList.Add(otvm.PrintingstationeryId, otvm.PrintingstationeryAmount);
+                    PerticularsList.Add(otvm.StaffwelfareId, otvm.StaffwelfareAmount);
+                    PerticularsList.Add(otvm.OtherexpensesincomeId, otvm.OtherexpensesincomeAmount);
 
-                    //dbContext.Entry(operationalTransactionInfo).State = EntityState.Modified;
+                    foreach (KeyValuePair<int, decimal?> perticulars in PerticularsList)
+                    {
+                        operationalTransactionInfo.CategoryId = (perticulars.Key >= 1200 && perticulars.Key < 1300) ? 1100 : 1101;
+                        operationalTransactionInfo.ParticularsId = perticulars.Key;
+                        operationalTransactionInfo.Amount = perticulars.Value.Value;
+
+
+                        OperationalTransaction otInfo = dbContext.OperationalTransactions.
+                            Where(x => x.OperationId == otvm.OperationId && x.ParticularsId == perticulars.Key && x.Month == otvm.Month && x.Year == otvm.Year).FirstOrDefault();
+                        //otInfo = operationalTransactionInfo;
+                        
+                        dbContext.Entry(otInfo).State = EntityState.Modified;
+                    }
+
+
                 }
                 dbContext.SaveChanges();
             }
