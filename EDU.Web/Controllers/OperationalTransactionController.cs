@@ -50,13 +50,14 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult OperationalTransaction(int? operationalTransactionId, short? month, int? year, short country)
+        public ActionResult OperationalTransaction(int? operationId, short? month, int? year, short country)
         {
             OTVM operationalTransactionvm = new OTVM();
-            if (operationalTransactionId == -1)
+            if (operationId == -1)
             {
                 ViewBag.Title = "New Operational Transaction";
                 operationalTransactionvm.OperationalTransactionId = -1;
+                operationalTransactionvm.OperationId = -1;
 
                 operationalTransactionvm.OperationalExpId = 1100;
                 operationalTransactionvm.OtherExpId = 1101;
