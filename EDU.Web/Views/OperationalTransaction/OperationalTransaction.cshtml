@@ -35,6 +35,171 @@
                         <div class="panel-heading">@ViewBag.Title</div>
                         <div class="panel-body">
                             <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-left">Country</span>
+                                     </label>
+                                        <div class="col-md-2">
+                                            @*@Html.DropDownListFor(x => x.CountryName, new { @class = "form-control" })*@
+                                       @Html.DropDownListFor(x => x.Country,
+                             new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
+                             "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                                         </div>
+
+
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-left">Year</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm" })
+                                        @*@Html.DropDownListFor(x => x.Year,)*@
+                                    </div>
+
+                                    <label class="col-md-1 control-label">
+                                        <span class="pull-left">Month</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control" })
+                                    </div>
+                                 </div>
+                            </div>
+                                <hr />
+                                <div class="row">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-left">Operational Expenses</span>
+                                      </label>
+                              </div>
+                                <div class="row">
+
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Salaries</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.SalariesAmount, new { @class = "form-control numCss" })
+                                    </div>
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Travelling Expenses</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.TravellingexpAmount, new { @class = "form-control numCss" })
+                                    </div>
+                                </div>
+                            
+                                <div class="row">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Rental</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.RentalAmount, new { @class = "form-control numCss" })
+                                    </div>
+
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Telephone Expenses</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.TelephoneexpAmount, new { @class = "form-control numCss" })
+                                    </div>
+                                </div>
+                          
+                                <div class="row">
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Courier Charges</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.CourierchargesAmount, new { @class = "form-control numCss" })
+                                    </div>
+
+                                    <label class="col-md-2 control-label">
+                                        <span class="pull-right">Insurance</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.InsuranceAmount, new { @class = "form-control numCss" })
+                                    </div>
+
+                                </div>
+
+                            <div class="row">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">Utility</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.UtilityAmount, new { @class = "form-control numCss" })
+                                </div>
+
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">Marketingexp</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.MarketingexpAmount, new { @class = "form-control numCss" })
+                                </div>
+
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Depreciation</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.DepreciationAmount, new { @class = "form-control numCss" })
+                                </div>
+
+                            </div>
+
+                            <hr/>
+                            <div class="row">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">other Expenses</span>
+                                </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">LegalExpenses/Consultancy </span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.LegalexpAmount, new { @class = "form-control numCss" })
+                                </div>
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">Repair&Maintenance </span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.RepairmaintenanceAmount, new { @class = "form-control numCss" })
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">Bankcharges </span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.BankchargesAmount, new { @class = "form-control numCss" })
+                                </div>
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">Printing&Stationery </span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.PrintingstationeryAmount, new { @class = "form-control numCss" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">StaffWelfare </span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.StaffwelfareAmount, new { @class = "form-control numCss" })
+                                </div>
+                                <label class="col-md-2 control-label">
+                                    <span class="pull-right">OtherExpenses/Income </span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(x => x.OtherexpensesincomeAmount, new { @class = "form-control numCss" })
+                                </div>
+
+                            </div>
+                                
+
+
+
+
+
+
                                 @*<div class="form-group">
                                     <div class="col-md-2 col-md-offset-1">
                                         @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", @readonly = true })
@@ -68,6 +233,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+     
     }
 </div>

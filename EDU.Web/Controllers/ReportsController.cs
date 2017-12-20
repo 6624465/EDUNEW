@@ -220,7 +220,7 @@ namespace EDU.Web.Reports.Controllers
                     {
                         Year = year,
                         Country = item.BranchID,
-                        CountryName = item.BranchName,
+                        CountryName = item.BranchCode,
                         TotalRevenue = 0,
                         AchievedRevenue = 0,
                         YetToAchieveRevenue = 0
@@ -247,7 +247,7 @@ namespace EDU.Web.Reports.Controllers
                     {
                         Year = year,
                         Country = item.BranchID,
-                        CountryName = item.BranchName,
+                        CountryName = item.BranchCode,
                         TotalRevenue = totalrevenue,
                         AchievedRevenue = achievedRevenue,
                         YetToAchieveRevenue = yetToAchieveRevenue
