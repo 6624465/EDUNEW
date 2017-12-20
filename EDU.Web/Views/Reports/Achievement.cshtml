@@ -12,7 +12,12 @@
 
 
 }
-
+<style>
+    .round {
+        border-radius: 10px;
+        width: 10px;
+    }
+</style>
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -114,7 +119,7 @@
             var myArray = @Html.Raw(JsonConvert.SerializeObject(productData));
             var $container = $("#legend");
             for (var i = 0; i < @productData.Count(); i++) {
-                $container.append('<div class="row css10" style="height: 30px; padding-left:10px;" ><div class="col-md-1" style="height: 30px; background:' + fillStyles[i] + ';" id="answerdiv' + $container.children().length + '"><div class="css10 col-md-11" style="padding-left:35px; white-space:nowrap"><b>' + myArray[i].ProductName + '</b></div></div></div>');
+                $container.append('<div class="row css10" style="height: 20px; padding-left:10px;" ><div class="col-md-1 round" style="height: 20px; background:' + fillStyles[i] + ';" id="answerdiv' + $container.children().length + '"><div class="col-md-11" style="padding-left:35px; padding-top:2px; white-space:nowrap"><b>' + myArray[i].ProductName + '</b></div></div></div>');
             }
                 
             $('#jqChartdoughnut').jqChart({
