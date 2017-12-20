@@ -27,5 +27,6 @@ namespace EDU.Web.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public short Country { get; set; }
         public string CountryName { get; set; }
+        public Nullable<int> OperationId { get; set; }
     }
 }

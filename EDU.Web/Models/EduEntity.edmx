@@ -103,6 +103,7 @@
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="Country" Type="smallint" Nullable="false" />
           <Property Name="CountryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperationId" Type="int" />
         </EntityType>
         <EntityType Name="Registration">
           <Key>
@@ -421,6 +422,7 @@
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="Country" Type="Int16" Nullable="false" />
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OperationId" Type="Int32" />
         </EntityType>
         <EntityType Name="TrainingConfirmation">
           <Key>
@@ -653,6 +655,7 @@
           <EntitySetMapping Name="OperationalTransactions">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.OperationalTransaction">
               <MappingFragment StoreEntitySet="OperationalTransaction">
+                <ScalarProperty Name="OperationId" ColumnName="OperationId" />
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />

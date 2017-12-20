@@ -24,6 +24,7 @@ namespace EDU.Web.ViewModels.OperationalTransactionModel
         public string MonthDesc { get; set; }
         public short Country { get; set; }
         public string CountryName { get; set; }
+        public int? OperationId { get; set; }
     }
 
     public class OperationalTransactionReportVM
@@ -48,6 +49,7 @@ namespace EDU.Web.ViewModels.OperationalTransactionModel
         public decimal? YTD { get; set; }
         public short Country { get; set; }
         public string CountryName { get; set; }
+        public int? OperationId { get; set; }
     }
 
 
@@ -93,5 +95,6 @@ namespace EDU.Web.ViewModels.OperationalTransactionModel
         public bool IsActive { get; set; }
         public short Country { get; set; }
         public string CountryName { get; set; }
+        public int? OperationId { get; set; }
     }
 }
