@@ -26,8 +26,24 @@
     @using (Html.BeginForm("SaveOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransaction", name = "frmOperationalTransaction", enctype = "multipart/form-data", autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.OperationalTransactionId)
+        @Html.HiddenFor(x => x.OperationId)
         @Html.HiddenFor(x => x.Year)
         @Html.HiddenFor(x => x.Month)
+        @Html.HiddenFor(x => x.SalariesId)
+        @Html.HiddenFor(x => x.TravellingexpId)
+        @Html.HiddenFor(x => x.RentalId)
+        @Html.HiddenFor(x => x.TelephoneexpId)
+        @Html.HiddenFor(x => x.CourierchargesId)
+        @Html.HiddenFor(x => x.InsuranceId)
+        @Html.HiddenFor(x => x.UtilityId)
+        @Html.HiddenFor(x => x.MarketingexpId)
+        @Html.HiddenFor(x => x.DepreciationId)
+        @Html.HiddenFor(x => x.LegalexpId)
+        @Html.HiddenFor(x => x.RepairmaintenanceId)
+        @Html.HiddenFor(x => x.BankchargesId)
+        @Html.HiddenFor(x => x.PrintingstationeryId)
+        @Html.HiddenFor(x => x.StaffwelfareId)
+        @Html.HiddenFor(x => x.OtherexpensesincomeId)
         <div class="page-wrap">
             <div class="row">
                 <div class="col-md-12">
@@ -37,26 +53,26 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-1 control-label">
-                                        <span class="pull-left">Country</span>
+                                        <span class="pull-right">Country</span>
                                     </label>
                                     <div class="col-md-2">
                                         @*@Html.DropDownListFor(x => x.CountryName, new { @class = "form-control" })*@
                                         @Html.DropDownListFor(x => x.Country,
                              new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-                             "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                             "Select Country", new { @class = "form-control", onchange = "CountryChange(this);" })
                                     </div>
 
 
                                     <label class="col-md-1 control-label">
-                                        <span class="pull-left">Year</span>
+                                        <span class="pull-right">Year</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm" })
+                                        @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control" })
                                         @*@Html.DropDownListFor(x => x.Year,)*@
                                     </div>
 
                                     <label class="col-md-1 control-label">
-                                        <span class="pull-left">Month</span>
+                                        <span class="pull-right">Month</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control" })

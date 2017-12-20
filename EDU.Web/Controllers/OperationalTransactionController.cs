@@ -165,6 +165,8 @@ namespace EDU.Web.Controllers
                         operationalTransactionInfo.Amount = perticulars.Value.Value;
 
                         dbContext.OperationalTransactions.Add(operationalTransactionInfo);
+
+                        dbContext.SaveChanges();
                     }
                 }
 
@@ -189,7 +191,7 @@ namespace EDU.Web.Controllers
 
                     //dbContext.Entry(operationalTransactionInfo).State = EntityState.Modified;
                 }
-                dbContext.SaveChanges();
+                //dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
