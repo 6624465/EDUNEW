@@ -22,6 +22,7 @@ namespace EDU.Web.Controllers
                 .Where(x => x.IsActive == true && x.Month == month && x.Year == year && x.Country == country)
                 .Select(y => new OperationalTransactionVM
                 {
+                    OperationId = y.OperationId,
                     OperationalTransactionId = y.OperationalTransactionId,
                     CategoryId = y.CategoryId,
                     ParticularsId = y.ParticularsId,
@@ -114,7 +115,62 @@ namespace EDU.Web.Controllers
             else
             {
                 ViewBag.Title = "Update Financial Transaction";
+                //operationalTransactionvm.OperationalTransactionId = -1;
+                List<OperationalTransaction> otList = dbContext.OperationalTransactions.Where(x => x.OperationId == operationId && x.IsActive == true).ToList();
 
+                operationalTransactionvm.OperationId = operationId;
+
+                operationalTransactionvm.OperationalExpId = 1100;
+                operationalTransactionvm.OtherExpId = 1101;
+                operationalTransactionvm.Year = year;
+                operationalTransactionvm.Month = month;
+
+                operationalTransactionvm.SalariesId = 1200;
+                operationalTransactionvm.SalariesAmount = otList.Where(x => x.ParticularsId == 1200).FirstOrDefault().Amount;
+
+                operationalTransactionvm.TravellingexpId = 1201;
+                operationalTransactionvm.TravellingexpAmount = otList.Where(x => x.ParticularsId == 1201).FirstOrDefault().Amount;
+
+                operationalTransactionvm.RentalId = 1202;
+                operationalTransactionvm.RentalAmount = otList.Where(x => x.ParticularsId == 1202).FirstOrDefault().Amount;
+
+                operationalTransactionvm.TelephoneexpId = 1203;
+                operationalTransactionvm.TelephoneexpAmount = otList.Where(x => x.ParticularsId == 1203).FirstOrDefault().Amount;
+
+                operationalTransactionvm.CourierchargesId = 1204;
+                operationalTransactionvm.CourierchargesAmount = otList.Where(x => x.ParticularsId == 1204).FirstOrDefault().Amount;
+
+                operationalTransactionvm.InsuranceId = 1205;
+                operationalTransactionvm.InsuranceAmount = otList.Where(x => x.ParticularsId == 1205).FirstOrDefault().Amount;
+
+                operationalTransactionvm.UtilityId = 1206;
+                operationalTransactionvm.UtilityAmount = otList.Where(x => x.ParticularsId == 1206).FirstOrDefault().Amount;
+
+                operationalTransactionvm.MarketingexpId = 1207;
+                operationalTransactionvm.MarketingexpAmount = otList.Where(x => x.ParticularsId == 1207).FirstOrDefault().Amount;
+
+                operationalTransactionvm.DepreciationId = 1208;
+                operationalTransactionvm.DepreciationAmount = otList.Where(x => x.ParticularsId == 1208).FirstOrDefault().Amount;
+
+                operationalTransactionvm.LegalexpId = 1300;
+                operationalTransactionvm.LegalexpAmount = otList.Where(x => x.ParticularsId == 1300).FirstOrDefault().Amount;
+
+                operationalTransactionvm.RepairmaintenanceId = 1301;
+                operationalTransactionvm.RepairmaintenanceAmount = otList.Where(x => x.ParticularsId == 1301).FirstOrDefault().Amount;
+
+                operationalTransactionvm.BankchargesId = 1302;
+                operationalTransactionvm.BankchargesAmount = otList.Where(x => x.ParticularsId == 1302).FirstOrDefault().Amount;
+
+                operationalTransactionvm.PrintingstationeryId = 1303;
+                operationalTransactionvm.PrintingstationeryAmount = otList.Where(x => x.ParticularsId == 1303).FirstOrDefault().Amount;
+
+                operationalTransactionvm.StaffwelfareId = 1304;
+                operationalTransactionvm.StaffwelfareAmount = otList.Where(x => x.ParticularsId == 1304).FirstOrDefault().Amount;
+
+                operationalTransactionvm.OtherexpensesincomeId = 1305;
+                operationalTransactionvm.OtherexpensesincomeAmount = otList.Where(x => x.ParticularsId == 1305).FirstOrDefault().Amount;
+
+                operationalTransactionvm.Country = country;
             }
 
             ViewData["CountryData"] = new BranchBO().GetList();
@@ -173,7 +229,6 @@ namespace EDU.Web.Controllers
 
                 else
                 {
-
                     operationalTransactionInfo.OperationId = otvm.OperationId;
                     operationalTransactionInfo.Country = otvm.Country;
                     operationalTransactionInfo.CountryName = countryname;
@@ -203,21 +258,28 @@ namespace EDU.Web.Controllers
 
                     foreach (KeyValuePair<int, decimal?> perticulars in PerticularsList)
                     {
-                        operationalTransactionInfo.CategoryId = (perticulars.Key >= 1200 && perticulars.Key < 1300) ? 1100 : 1101;
-                        operationalTransactionInfo.ParticularsId = perticulars.Key;
-                        operationalTransactionInfo.Amount = perticulars.Value.Value;
-
 
                         OperationalTransaction otInfo = dbContext.OperationalTransactions.
                             Where(x => x.OperationId == otvm.OperationId && x.ParticularsId == perticulars.Key && x.Month == otvm.Month && x.Year == otvm.Year).FirstOrDefault();
+
                         //otInfo = operationalTransactionInfo;
-                        
+                        //otInfo.OperationId = operationalTransactionInfo.OperationId;
+                        //otInfo.Country = operationalTransactionInfo.Country;
+                        //otInfo.CountryName = countryname;
+                        //otInfo.Year = operationalTransactionInfo.Year;
+                        //otInfo.Month = operationalTransactionInfo.Month;
+
+                        otInfo.ModifiedBy = USER_ID;
+                        otInfo.ModifiedOn = UTILITY.SINGAPORETIME;
+                        otInfo.IsActive = true;
+
+                        //otInfo.CategoryId = (perticulars.Key >= 1200 && perticulars.Key < 1300) ? 1100 : 1101;
+                        //otInfo.ParticularsId = perticulars.Key;
+                        otInfo.Amount = perticulars.Value.Value;
                         dbContext.Entry(otInfo).State = EntityState.Modified;
+                        dbContext.SaveChanges();
                     }
-
-
                 }
-                //dbContext.SaveChanges();
             }
             catch (Exception ex)
             {

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    var grid = new WebGrid(Model, rowsPerPage: 10);
+    var grid = new WebGrid(Model, rowsPerPage: 50);
     grid.Pager(WebGridPagerModes.All);
 
     var count = Model.Count();
@@ -58,7 +58,15 @@
                     <div class="box-tools">
                         @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddOperationalTransaction()"><i class="fa fa-plus"></i>Add New Operational Transaction</button>
+                            if (Model.FirstOrDefault() == null)
+                            {
+                                <button type="button" id="btnAdd" class="btn btn-info btn-sm waves-effect" onclick="AddOperationalTransaction()"><i class="fa fa-plus"></i>Add Operational Transactions</button>
+                            }
+                            else
+                            {
+                                <button type="button" id="btnAdd" class="btn btn-info btn-sm waves-effect" onclick="AddOperationalTransaction()"><i class="fa fa-pencil"></i>Update Operational Transactions</button>
+                            }
+
                         }
                     </div>
                 </div>
@@ -70,6 +78,7 @@
                             </label>
                             <div class="col-md-2">
                                 @Html.HiddenFor(x => x.FirstOrDefault().CountryName)
+                                @Html.HiddenFor(x => x.FirstOrDefault().OperationId)
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Country,
                                      new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
                                  "Select Country", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
@@ -93,17 +102,6 @@
                             <div id="gridContent">
                                 @grid.GetHtml(
                                 columns: grid.Columns(
-
-                                      @*grid.Column("", "#Action", canSort: false,
-                                    format:
-                                    @<text>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteOperationalTransaction(@item.OperationalTransactionId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </text>),*@
-
                                 grid.Column("CategoryIdDesc", "Category", canSort: true),
                                 grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
                         grid.Column("Amount", "Amount", canSort: true,
@@ -119,32 +117,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@*@using (Html.BeginForm("SaveOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransaction", name = "frmOperationalTransaction" }))
-{
-    <div id="myModal" class="modal fade" role="dialog">
 
-    </div>
-}*@
-
-@using (Html.BeginForm("DeleteOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransactionDelete", name = "frmOperationalTransactionDelete" }))
-{
-    <input type="hidden" id="operationalTransactionId" name="operationalTransactionId" />
-}
 @section SectionScripts
     {
     <script type="text/javascript">
 
         $(function () {
+            @*@Model.FirstOrDefault().OperationId==''? Add Operational Transactions:Add Operational Transactions
+            btnAdd*@
+
             @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
@@ -156,7 +142,7 @@
             @if (count > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="center">' + totalAmount + '</td><td></td><tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="center">' + totalAmount + '</td><tr>');
              </text>
              }
         });
@@ -165,84 +151,16 @@
         };
 
         function AddOperationalTransaction() {
-            location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
+            var operationId = $('#OperationId').val() == '' ? -1 : $('#OperationId').val();
+            debugger;
+            location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationId=")' + operationId+"&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
 
             @*if ($('#frmOperationalTransaction').valid()) {
                 location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
             }*@
         }
 
-        @*function GetParticularsByCategory(Id) {
-            debugger;
-            if (Id.value) {
-                debugger;
-                $.ajax({
-                    url: '@Url.Content("~/OperationalTransaction/GetParticularsByCategory?CategoryId=")' + Id.value + "&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val(),
-                    method: 'get',
-                    contentType: 'text/html',
-                    success: function (data) {
-                        debugger;
-                        $('#ParticularsId').empty();
-                        $('#ParticularsId').append($('<option></option>').val('').html(''));
-                        $.each(data, function (key, value) {
-                            $('#ParticularsId').append($('<option></option>').val(value.LookupID).html(value.LookupDescription));
-                        });
-                        $('#ParticularsId').removeAttr('disabled');
-                    },
-                    error: function (err) {
 
-                    }
-                });
-            }
-
-            else {
-                $('#ParticularsId').empty();
-                $('#ParticularsId').attr('disabled', 'disabled');
-                $('#ParticularsId').append($('<option></option>').val('').html(''));
-            }
-        }*@
-
-        @*function EditOperationalTransaction(Id) {
-            $.ajax({
-                url: '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + Id + "&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val(),
-                method: 'get',
-                contentType: 'text/html',
-                success: function (html) {
-                    debugger;
-                    $('#myModal').html(html);
-                    $('#myModal').modal('show');
-                },
-                error: function (err) {
-
-                }
-            });
-        }*@
-        function DeleteOperationalTransaction(Id) {
-            debugger;
-            swal({
-                title: "Are you sure?",
-                text: "Do you want delete?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            },
-       function () {
-           $('#operationalTransactionId').val(Id);
-           $('#frmOperationalTransactionDelete').submit();
-           swal("Deleted!", "Your Operational Transaction record has been deleted.", "success");
-
-       });
-        }
-
-        //function SaveOperationalTransaction() {
-        //    debugger;
-        //    if ($('#frmOperationalTransaction').valid()) {
-        //        $('#CountryName').val($("#Country option:selected").text());
-        //        $('#frmOperationalTransaction').submit();
-        //    }
-        //}
 
         //$('#frmOperationalTransaction').validate({
         //    rules: {
