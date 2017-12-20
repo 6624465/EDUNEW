@@ -140,7 +140,7 @@
                                                 </text>, canSort: false),*@
                                                 grid.Column("TotalRevenueAmount", "Revenue Amount", format:
                                                 @<text>
-                                                    <div style='width:140px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.TotalRevenueAmount != null)
                                                         {
                                                             <span class="center">
@@ -154,7 +154,7 @@
                                                             </span>
                                                         }
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false, style: "center"),
                                     @*grid.Column("TotalRevenueLocalAmount", "Total Revenue Local Amount", format:
                                         @<text>
                                             <div style='width:170px;'>
@@ -168,14 +168,14 @@
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft-@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc"  target="_blank">@item.TotalRevenueReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
                                                 grid.Column("TotalRevenueRemarks", "Revenue Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:140px;'>
+                                                    <div style='width:110px;'>
                                                         @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -205,7 +205,7 @@
                                                             </span>
                                                         }
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false, style: "center"),
                                             @*grid.Column("TrainerExpensesLocalAmount", "Trainer Expenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:180px;'>
@@ -219,7 +219,7 @@
                                                 @<text>
                                                     <div style='width:190px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
@@ -259,7 +259,7 @@
                                                             </span>
                                                         }
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false, style: "center"),
                                             @*grid.Column("TrainerTravelExpensesLocalAmount", "Trainer Travel Expenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:220px;'>
@@ -273,7 +273,7 @@
                                                 @<text>
                                                     <div style='width:220px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
@@ -310,7 +310,7 @@
                                                             </span>
                                                         }
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false, style: "center"),
                                             @*grid.Column("LocalExpensesLocalAmount", "LocalExpenses LocalAmount", format:
                                                 @<text>
                                                     <div style='width:180px;'>
@@ -324,7 +324,7 @@
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;"  href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
@@ -361,7 +361,7 @@
                                                         </span>
                                                     }
                                                 </div>
-                                            </text>, canSort: false),
+                                            </text>, canSort: false, style: "center"),
                                             @*grid.Column("CoursewareMaterialLocalAmount", "Courseware Material Local Amount", format:
                                                 @<text>
                                                     <div style='width:200px;'>
@@ -375,7 +375,7 @@
                                                 @<text>
                                                     <div style='width:210px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
@@ -412,7 +412,7 @@
                                                             </span>
                                                         }
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: false, style: "center"),
                                             @*grid.Column("MiscExpensesLocalAmount", "MiscExpenses Local Amount", format:
                                                 @<text>
                                                     <div style='width:170px;'>
@@ -426,7 +426,7 @@
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
