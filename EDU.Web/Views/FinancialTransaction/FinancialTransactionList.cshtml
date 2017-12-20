@@ -451,14 +451,14 @@
                                         </div>
                             </div>
                         </div>
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        @*@if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
                             <div class="col-md-6 col-md-offset-9 css10">
                                 <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
-                                @*<button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>*@
+                                <button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
 
                             </div>
-                        }
+                        }*@
                     </div>
                 </div>
             </div>
@@ -514,7 +514,7 @@
         };
 
 
-        function SubmitFinancialTransaction() {
+        @*function SubmitFinancialTransaction() {
             if ($('#frmFinancial').valid()) {
                 var FinancialTransaction =
                     {
@@ -532,7 +532,7 @@
                     }
                 });
             }
-        }
+        }*@
 
         function EditFinancialTransactionDetail(Id) {
             debugger;
