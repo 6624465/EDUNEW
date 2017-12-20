@@ -121,54 +121,6 @@ namespace EDU.Web.Controllers
             return View(operationalTransactionvm);
         }
 
-        //[HttpGet]
-        //public PartialViewResult OperationalTransaction1(int? operationalTransactionId, short? month, int? year, short country)
-        //{
-
-        //    ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
-        //    //ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").ToList();
-        //    if (operationalTransactionId == -1)
-        //    {
-        //        ViewBag.Title = "New Operational Transaction";
-        //        ViewData["ParticularsData"] = null;
-        //        ViewData["CountryData"] = new BranchBO().GetList();
-        //        return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month, Year = year, Country = country });
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Title = "Update Operational Transaction";
-        //        OperationalTransaction operationalTransaction = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
-        //        string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == operationalTransaction.CategoryId).FirstOrDefault().LookupCode;
-
-        //        var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId && x.IsActive == true && x.Country == country).ToList();
-
-        //        var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-        //        foreach (var item in list)
-        //        {
-        //            result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
-
-        //        }
-        //        ViewData["ParticularsData"] = result;
-        //        ViewData["CountryData"] = new BranchBO().GetList();
-        //        return PartialView(operationalTransaction);
-        //    }
-        //}
-
-        //[HttpGet]
-        //public JsonResult GetParticularsByCategory(int CategoryId, short? month, int? year, int country)
-        //{
-
-        //    string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
-        //    var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-        //    var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.Country == country && x.IsActive == true).ToList();
-        //    foreach (var item in list)
-        //    {
-        //        result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
-
-        //    }
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
-
         [HttpPost]
         public ActionResult SaveOperationalTransaction(OTVM otvm)
         {
@@ -176,18 +128,44 @@ namespace EDU.Web.Controllers
             {
                 string countryname = otvm.Country > 0 ? new BranchBO().GetList().Where(x => x.BranchID == otvm.Country).FirstOrDefault().BranchName : "";
                 OperationalTransaction operationalTransactionInfo = new OperationalTransaction();
-               List<OperationalTransaction> otList = new List<OperationalTransaction>();
 
-                if (otvm.OperationalTransactionId == -1)
+                if (otvm.OperationId == -1)
                 {
+                    operationalTransactionInfo.OperationId = Convert.ToInt32(otvm.Year.ToString() + otvm.Month.ToString());
+                    operationalTransactionInfo.Country = otvm.Country;
                     operationalTransactionInfo.CountryName = countryname;
+                    operationalTransactionInfo.Year = otvm.Year;
+                    operationalTransactionInfo.Month = otvm.Month;
+
                     operationalTransactionInfo.CreatedBy = USER_ID;
                     operationalTransactionInfo.CreatedOn = UTILITY.SINGAPORETIME;
                     operationalTransactionInfo.IsActive = true;
 
+                    Dictionary<int, decimal?> PerticularsList = new Dictionary<int, decimal?>();
+                    PerticularsList.Add(otvm.SalariesId, otvm.SalariesAmount);
+                    PerticularsList.Add(otvm.TravellingexpId, otvm.TravellingexpAmount);
+                    PerticularsList.Add(otvm.RentalId, otvm.RentalAmount);
+                    PerticularsList.Add(otvm.TelephoneexpId, otvm.TelephoneexpAmount);
+                    PerticularsList.Add(otvm.CourierchargesId, otvm.CourierchargesAmount);
+                    PerticularsList.Add(otvm.InsuranceId, otvm.InsuranceAmount);
+                    PerticularsList.Add(otvm.UtilityId, otvm.UtilityAmount);
+                    PerticularsList.Add(otvm.MarketingexpId, otvm.MarketingexpAmount);
+                    PerticularsList.Add(otvm.DepreciationId, otvm.DepreciationAmount);
+                    PerticularsList.Add(otvm.LegalexpId, otvm.LegalexpAmount);
+                    PerticularsList.Add(otvm.RepairmaintenanceId, otvm.RepairmaintenanceAmount);
+                    PerticularsList.Add(otvm.BankchargesId, otvm.BankchargesAmount);
+                    PerticularsList.Add(otvm.PrintingstationeryId, otvm.PrintingstationeryAmount);
+                    PerticularsList.Add(otvm.StaffwelfareId, otvm.StaffwelfareAmount);
+                    PerticularsList.Add(otvm.OtherexpensesincomeId, otvm.OtherexpensesincomeAmount);
 
+                    foreach (KeyValuePair<int, decimal?> perticulars in PerticularsList)
+                    {
+                        operationalTransactionInfo.CategoryId = (perticulars.Key >= 1200 && perticulars.Key < 1300) ? 1100 : 1101;
+                        operationalTransactionInfo.ParticularsId = perticulars.Key;
+                        operationalTransactionInfo.Amount = perticulars.Value.Value;
 
-                    dbContext.OperationalTransactions.Add(operationalTransactionInfo);
+                        dbContext.OperationalTransactions.Add(operationalTransactionInfo);
+                    }
                 }
 
                 else
@@ -204,12 +182,12 @@ namespace EDU.Web.Controllers
                     //operationalTransactionInfo.Country = operationalTransaction.Country;
                     //operationalTransactionInfo.CountryName = operationalTransaction.CountryName;
 
-                    operationalTransactionInfo.IsActive = true;
+                    //operationalTransactionInfo.IsActive = true;
 
-                    operationalTransactionInfo.ModifiedBy = USER_ID;
-                    operationalTransactionInfo.ModifiedOn = UTILITY.SINGAPORETIME;
+                    //operationalTransactionInfo.ModifiedBy = USER_ID;
+                    //operationalTransactionInfo.ModifiedOn = UTILITY.SINGAPORETIME;
 
-                    dbContext.Entry(operationalTransactionInfo).State = EntityState.Modified;
+                    //dbContext.Entry(operationalTransactionInfo).State = EntityState.Modified;
                 }
                 dbContext.SaveChanges();
             }
