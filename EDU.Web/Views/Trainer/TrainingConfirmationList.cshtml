@@ -21,6 +21,17 @@
             return "LVC";
         return "";
     }
+    public string validateDate(DateTime? date)
+    {
+        return date == null ? "" : date.Value.ToString("dd/MM/yyyy");
+    }
+    public string ConvertToInt64(decimal? data)
+    {
+        if (data!=0)
+            return Convert.ToInt64(data.Value).ToString();
+        else
+            return "";
+    }
 }
 <style>
     .bordertop {
@@ -115,13 +126,13 @@
                                     </div>
                                 </text>, style: "center"),
                     grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public, item.LVC)</text>, canSort: true),
-                    grid.Column("StartDate", "Start Date", format:@<text> @item.StartDate.ToString("dd/MM/yyyy")</text>, canSort: true),
-                    grid.Column("EndDate", "End Date", format:@<text> @item.EndDate.ToString("dd/MM/yyyy")</text>, canSort: true),
+                    grid.Column("StartDate", "Start Date", format:@<text>@validateDate(item.StartDate)</text>, canSort: true),
+                    grid.Column("EndDate", "End Date", format:@<text> @validateDate(item.EndDate) </text>, canSort: true),
                     grid.Column("TotalNoOfDays", "Total # of days", canSort: true,
                                 format:
                                 @<text>
                                     <div style='width:100px;'>
-                                        @item.TotalNoOfDays
+                                        @ConvertToInt64(item.TotalNoOfDays)
                                     </div>
                                 </text>, style: "center"),
                     grid.Column("TrianerName", "Trianer Name", canSort: true,
@@ -139,7 +150,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 </div>
@@ -223,6 +234,9 @@
                 Product: {
                     required: true
                 },
+                Country: {
+                    required: true
+                },
                 Course: {
                     required: true
                 },
@@ -251,6 +265,47 @@
 
         function mouseover(el) {
             $(el).popover("show");
+        }
+        function ExamOrVocherDisbledFileds() {
+            debugger;
+            var product = $('#Product').find("option:selected").text();
+            var coursetext = $("#Course").find("option:selected").text();
+
+            if (product.toLowerCase() == "other" && (coursetext.toLowerCase().indexOf("exam") != -1 || coursetext.toLowerCase().indexOf("voucher") != -1)) {
+                DisbledExamOrVocherFields();
+            }
+            else {
+                EnabledExamOrVocherFieldsFileds();
+                $('#rdoPublic').prop('checked', true);
+            }
+
+        }
+
+        function DisbledExamOrVocherFields() {
+            $('#rdoPrivate').prop('checked', false);
+            $('#rdoPublic').prop('checked', false);
+            $('#rdoPublic').prop('checked', false);
+            $('#StartDate').val('');
+            $('#EndDate').val('');
+            $('#TotalNoOfDays').val('');
+            $('#TrianerId').val('');
+            $('#rdoPrivate').attr('disabled', 'disabled');
+            $('#rdoPublic').attr('disabled', 'disabled');
+            $('#rdoLvc').attr('disabled', 'disabled');
+            $('#StartDate').attr('disabled', 'disabled');
+            $('#EndDate').attr('disabled', 'disabled');
+            $('#TotalNoOfDays').attr('disabled', 'disabled');
+            $('#TrianerId').attr('disabled', 'disabled');
+        }
+
+        function EnabledExamOrVocherFieldsFileds() {
+            $('#rdoPrivate').removeAttr('disabled');
+            $('#rdoPublic').removeAttr('disabled');
+            $('#rdoLvc').removeAttr('disabled');
+            $('#StartDate').removeAttr('disabled');
+            $('#EndDate').removeAttr('disabled');
+            $('#TotalNoOfDays').removeAttr('disabled');
+            $('#TrianerId').removeAttr('disabled');
         }
     </script>
 

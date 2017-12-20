@@ -115,6 +115,8 @@ namespace EDU.Web.Controllers
                 ViewBag.Title = "Update Financial Transaction";
 
             }
+
+            ViewData["CountryData"] = new BranchBO().GetList();
             return View(operationalTransactionvm);
         }
 

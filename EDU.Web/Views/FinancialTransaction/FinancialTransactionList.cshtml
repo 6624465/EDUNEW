@@ -102,7 +102,7 @@
                                      columns:
                                         grid.Columns(
 
-                                              grid.Column("","Action", format: @<text>
+                                              grid.Column("", "Action", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.trainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
@@ -123,21 +123,6 @@
                                                 <span>@item.CountryName</span>
                                             </div>
                                         </text>, canSort: false),
-                                            @*grid.Column("CurrencyCode", "Currency Code",
-                                                format:
-                                                @<text>
-                                                    <div style='width:90px;'>
-                                                        <span>@item.CurrencyCode</span>
-                                                    </div>
-                                                </text>, canSort: false),*@
-
-                                            @*grid.Column("CurrencyExRate", "Currency Ex. Rate",
-                                                format:
-                                                @<text>
-                                                    <div style='width:110px;'>
-                                                        <span>@item.CurrencyExRate</span>
-                                                    </div>
-                                                </text>, canSort: false),*@
                                                 grid.Column("TotalRevenueAmount", "Revenue Amount", format:
                                                 @<text>
                                                     <div style='width:100px;'>
@@ -155,20 +140,12 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false, style: "center"),
-                                    @*grid.Column("TotalRevenueLocalAmount", "Total Revenue Local Amount", format:
-                                        @<text>
-                                            <div style='width:170px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64(item.TotalRevenueLocalAmount)
-                                                </span>
-                                            </div>
-                                        </text>, canSort: false),*@
                                                 grid.Column("TotalRevenueReferenceDoc", "Revenue Reference Doc",
                                                 format:
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc"  target="_blank">@item.TotalRevenueReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
@@ -206,14 +183,6 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false, style: "center"),
-                                            @*grid.Column("TrainerExpensesLocalAmount", "Trainer Expenses Local Amount", format:
-                                                @<text>
-                                                    <div style='width:180px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64(item.TrainerExpensesLocalAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),*@
                                                 grid.Column("TrainerExpensesReferenceDoc", "Trainer Expenses Reference Doc",
                                                 format:
                                                 @<text>
@@ -239,10 +208,6 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false),
-
-                                                   //3
-
-
                                                    grid.Column("TrainerTravelExpensesAmount", " Trainer Travel Expenses Amount", format:
                                                 @<text>
                                                     <div style='width:190px;'>
@@ -260,14 +225,6 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false, style: "center"),
-                                            @*grid.Column("TrainerTravelExpensesLocalAmount", "Trainer Travel Expenses Local Amount", format:
-                                                @<text>
-                                                    <div style='width:220px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64(item.TrainerTravelExpensesLocalAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),*@
                                                 grid.Column("TrainerTravelExpensesReferenceDoc", "Trainer TravelExpenses ReferenceDoc",
                                                 format:
                                                 @<text>
@@ -311,20 +268,12 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false, style: "center"),
-                                            @*grid.Column("LocalExpensesLocalAmount", "LocalExpenses LocalAmount", format:
-                                                @<text>
-                                                    <div style='width:180px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64(item.LocalExpensesLocalAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),*@
                                                 grid.Column("LocalExpensesReferenceDoc", "LocalExpenses ReferenceDoc",
                                                 format:
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;"  href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),
@@ -362,14 +311,6 @@
                                                     }
                                                 </div>
                                             </text>, canSort: false, style: "center"),
-                                            @*grid.Column("CoursewareMaterialLocalAmount", "Courseware Material Local Amount", format:
-                                                @<text>
-                                                    <div style='width:200px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64(item.CoursewareMaterialLocalAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),*@
                                                 grid.Column("CoursewareMaterialReferenceDoc", "Courseware Material ReferenceDoc",
                                                 format:
                                                 @<text>
@@ -413,14 +354,6 @@
                                                         }
                                                     </div>
                                                 </text>, canSort: false, style: "center"),
-                                            @*grid.Column("MiscExpensesLocalAmount", "MiscExpenses Local Amount", format:
-                                                @<text>
-                                                    <div style='width:170px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64(item.MiscExpensesLocalAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),*@
                                                 grid.Column("MiscExpensesReferenceDoc", "MiscExpenses ReferenceDoc",
                                                 format:
                                                 @<text>
@@ -445,29 +378,55 @@
                                                             <span>@item.MiscExpensesRemarks</span>
                                                         }
                                                     </div>
+                                                </text>, canSort: false),
+                                            grid.Column("GrossProfit", "Gross Profit",
+                                                format:
+                                                @<text>
+                                                    <div style='width:140px;'>
+                                                        @if (item.GrossProfit != null)
+                                                        {
+                                                            <span class="center">
+                                                                $&nbsp;@ConvertToInt64(item.GrossProfit)
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="center">
+                                                                @ConvertToInt64(item.GrossProfit)
+                                                            </span>
+                                                        }
+                                                    </div>
+
+                                                </text>, canSort: false),
+                                            grid.Column("ProfitAndLossPercent", "Profit And Loss Percent",
+                                                format:
+                                                @<text>
+                                                    <div style='width:140px;'>
+                                                        @if (item.ProfitAndLossPercent != null)
+                                                        {
+                                                            <span class="center">
+                                                                @ConvertToInt64(item.ProfitAndLossPercent)&nbsp;%
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="center">
+                                                                @ConvertToInt64(item.ProfitAndLossPercent)
+                                                            </span>
+                                                        }
+                                                    </div>
+
                                                 </text>, canSort: false)
                                                      ))
-                                                
-                                        </div>
+
+                                </div>
                             </div>
                         </div>
-                        @*@if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                        {
-                            <div class="col-md-6 col-md-offset-9 css10">
-                                <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button>
-                                <button type="button" onclick="UpdateFinancialTransactionLocalAmount()" class="btn btn-primary btn-sm btndisable "><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
-
-                            </div>
-                        }*@
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    @*<div id="myModal" class="modal fade" role="dialog">
-
-        </div>*@
 }
 @section SectionScripts {
     <script type="text/javascript">
