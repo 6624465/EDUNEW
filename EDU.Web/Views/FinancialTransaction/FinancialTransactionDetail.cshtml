@@ -8,6 +8,8 @@
     @using (Html.BeginForm("SaveFinancialTransactionDetail", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancialTransaction", name = "frmFinancialTransaction", enctype = "multipart/form-data", autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.FinancialTransactionId)
+        @Html.HiddenFor(x=>x.Year)
+        @Html.HiddenFor(x => x.Month)
         <div class="page-wrap">
             <div class="row">
                 <div class="col-md-12">

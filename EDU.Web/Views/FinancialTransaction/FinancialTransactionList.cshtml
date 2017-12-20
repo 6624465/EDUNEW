@@ -105,7 +105,7 @@
                                               grid.Column("","Action", format: @<text>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.trainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.trainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                 }
                                             </text>, style: "col3Width", canSort: false),
 
@@ -168,7 +168,7 @@
                                                 @<text>
                                                     <div style='width:170px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrainingConfirmationID/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft-@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
                                                         </span>
                                                     </div>
                                                 </text>, canSort: false),

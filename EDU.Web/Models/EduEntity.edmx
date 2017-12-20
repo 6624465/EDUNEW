@@ -83,6 +83,8 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Month" Type="smallint" />
         </EntityType>
         <EntityType Name="OperationalTransaction">
           <Key>
@@ -492,6 +494,8 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Month" Type="Int16" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -704,6 +708,8 @@
           <EntitySetMapping Name="FinancialTransactions">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.FinancialTransaction">
               <MappingFragment StoreEntitySet="FinancialTransaction">
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />

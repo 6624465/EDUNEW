@@ -131,14 +131,14 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult FinancialTransactionDetail(int Id, string trainingConfirmationID, Int16? country, decimal? totalRevenueAmount)
+        public ActionResult FinancialTransactionDetail(int Id, string trainingConfirmationID, Int16? country, decimal? totalRevenueAmount,short? month,int? year)
         {
             var currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
             var countryList = new BranchBO().GetList();
             FinancialTransactionsVM financialtransaction = new FinancialTransactionsVM();
             if (Id == -1)
             {
-                financialtransaction = new FinancialTransactionsVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount };
+                financialtransaction = new FinancialTransactionsVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount,Month=month,Year=year };
                 ViewBag.Title = "New Financial Transaction";
 
             }
@@ -266,6 +266,8 @@ namespace EDU.Web.Controllers
                     financialtransactions.MiscExpensesRemarks = ftInfo.MiscExpensesRemarks;
                     financialtransactions.GrossProfit = ftInfo.GrossProfit;
                     financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
+                    financialtransactions.Year = ftInfo.Year;
+                    financialtransactions.Month = ftInfo.Month;
                     financialtransactions.IsActive = true;
                     financialtransactions.IsSubmit = ftInfo.IsSubmit;
 
@@ -343,6 +345,8 @@ namespace EDU.Web.Controllers
                     financialtransactions.FinancialTransactionId = ftInfo.FinancialTransactionId;
                     financialtransactions.TrainingConfirmationID = ftInfo.TrainingConfirmationID;
                     financialtransactions.Country = ftInfo.Country;
+                    financialtransactions.Year = ftInfo.Year;
+                    financialtransactions.Month = ftInfo.Month;
                     financialtransactions.CurrencyCode = ftInfo.CurrencyCode;
                     financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
                     financialtransactions.TotalRevenueAmount = ftInfo.TotalRevenueAmount;
@@ -451,7 +455,7 @@ namespace EDU.Web.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("FinancialTransactionList");
+            return RedirectToAction("FinancialTransactionList", new { month = ftInfo.Month, year = ftInfo.Year});
         }
 
         //[HttpGet]
