@@ -59,7 +59,7 @@
                                         @*@Html.DropDownListFor(x => x.CountryName, new { @class = "form-control" })*@
                                         @Html.DropDownListFor(x => x.Country,
                              new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-                             "Select Country", new { @class = "form-control", onchange = "CountryChange(this);" })
+                             "Select Country", new { @class = "form-control", onchange = "CountryChange(this);",@disabled=true })
                                     </div>
 
 
@@ -67,7 +67,7 @@
                                         <span class="pull-right">Year</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control" })
+                                        @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control", @disabled = true })
                                         @*@Html.DropDownListFor(x => x.Year,)*@
                                     </div>
 
@@ -75,7 +75,7 @@
                                         <span class="pull-right">Month</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control" })
+                                        @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control", @disabled = true })
                                     </div>
                                 </div>
                             </div>
@@ -225,12 +225,10 @@
 @section SectionScripts{
     <script type="text/javascript">
         function SaveOperationalTransaction() {
-            debugger;
+            $('#Country').removeAttr('disabled');
+            $('#Year').removeAttr('disabled');
+            $('#Month').removeAttr('disabled');
             $('#frmOperationalTransaction').submit();
-            //if ($('#frmOperationalTransaction').valid()) {
-            //    $('#CountryName').val($("#Country option:selected").text());
-            //    $('#frmOperationalTransaction').submit();
-            //}
         }
 
         function navigateToList() {
