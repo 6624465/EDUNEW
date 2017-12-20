@@ -54,7 +54,7 @@
                             @Html.DropDownListFor(x => x.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control", disabled = "disabled" })
+                                new { @class = "form-control", disabled = "disabled", onchange="ExamOrVocherDisbledFileds()"})
                         }
                         else
                         {
@@ -202,9 +202,34 @@
             }
                 $('#Product').attr('disabled', 'disabled');
                 $('#Course').attr('disabled', 'disabled');
+
+                var product = $('#Product').find("option:selected").text();
+                var coursetext = $("#Course").find("option:selected").text();
+
+                if (product.toLowerCase() == "other" && (coursetext.toLowerCase().indexOf("exam") != -1 || coursetext.toLowerCase().indexOf("voucher") != -1)) {
+                    DisbledExamOrVocherFields();
+                }
+
             </text>
         }
     });
+
+    function DisbledExamOrVocherFields() {
+        $('#rdoPrivate').prop('checked', false);
+        $('#rdoPublic').prop('checked', false);
+        $('#rdoPublic').prop('checked', false);
+        $('#StartDate').val('');
+        $('#EndDate').val('');
+        $('#TotalNoOfDays').val('');
+        $('#TrianerId').val('');
+        $('#rdoPrivate').attr('disabled', 'disabled');
+        $('#rdoPublic').attr('disabled', 'disabled');
+        $('#rdoLvc').attr('disabled', 'disabled');
+        $('#StartDate').attr('disabled', 'disabled');
+        $('#EndDate').attr('disabled', 'disabled');
+        $('#TotalNoOfDays').attr('disabled', 'disabled');
+        $('#TrianerId').attr('disabled', 'disabled');
+    }
 
     function ProductChange(el) {
         if (el.value) {
