@@ -1,4 +1,8 @@
-﻿@model EDU.Web.Models.OperationalTransaction
+﻿@model EDU.Web.ViewModels.OperationalTransactionModel.OTVM
+@{
+    // ViewBag.Title = "FinancialTransactionDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @{
 
     var listMonths = new List<SelectListItem>()
@@ -18,103 +22,52 @@
                                            new SelectListItem {Text = "December", Value = "12"}
                                        };
 }
-<div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">@ViewBag.Title</h4>
-        </div>
-        <div class="modal-body" id="ProductCategoryModalBody">
-                        @Html.HiddenFor(x => x.OperationalTransactionId)
-                        @Html.HiddenFor(x => x.Month)
-                        @Html.HiddenFor(x => x.Year)
-                        @Html.HiddenFor(x=>x.Country)
-                        @Html.HiddenFor(x => x.CountryName)
+<div class="page page-forms-elements">
+    @using (Html.BeginForm("SaveFinancialTransactionDetail", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancialTransaction", name = "frmFinancialTransaction", enctype = "multipart/form-data", autocomplete = "off" }))
+    {
+        @Html.HiddenFor(x => x.OperationalTransactionId)
+        @Html.HiddenFor(x => x.Year)
+        @Html.HiddenFor(x => x.Month)
+        <div class="page-wrap">
             <div class="row">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Country</span>
-                    </label>
-                    <div class="col-md-6">
-                        @Html.DropDownListFor(x => x.Country,
+                <div class="col-md-12">
+                    <div class="panel panel-default panel-hovered panel-stacked mb30">
+                        <div class="panel-heading">@ViewBag.Title</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                @*<div class="form-group">
+                                    <div class="col-md-2 col-md-offset-1">
+                                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", @readonly = true })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(x => x.Country,
                         new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
                         "Select Country", new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                    <div class="col-md-1">
+                                        @Html.DropDownListFor(x => x.CurrencyCode,
+                                        new SelectList((List<EDU.Web.Models.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
+                                              "Select Currency", new { @class = "form-control " })
+                                    </div>
+                                    <div class="col-md-1">
+                                        @Html.TextBoxFor(x => x.CurrencyExRate, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Currency Ex Rate", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                    </div>
+                                </div>*@
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button> &nbsp;&nbsp;&nbsp;
+                                        <button type="button"  class="btn btn-success btn-frmt green btn-sm editdisable"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-default btn-sm" type="button" ><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Year</span>
-                    </label>
-                    <div class="col-md-6">
-                        @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control " ,@disabled= "disabled" })
-                    </div>
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Month</span>
-                    </label>
-                    <div class="col-md-6">
-                        @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control", @disabled= "disabled" })
-                    </div>
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Category</span>
-                    </label>
-                    <div class="col-md-6">
-                        @Html.DropDownListFor(x => x.CategoryId,
-                    new SelectList((List<EDU.Web.Models.Lookup>)ViewData["CategoryData"], "LookupID", "LookupDescription"),
-                    "Select Category", new { @class = "form-control" ,onchange= "GetParticularsByCategory(this)" })
-                    </div>
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Particulars</span>
-                    </label>
-                    <div class="col-md-6">
-                        @if (Model.OperationalTransactionId == -1)
-                        {
-                            @Html.DropDownListFor(x => x.ParticularsId,
-                                Enumerable.Empty<SelectListItem>(),
-                                "Select Category",
-                                new { @class = "form-control", disabled = "disabled" })
-                        }
-                        else
-                        {
-                            @Html.DropDownListFor(x => x.ParticularsId,
-                    new SelectList((List<EDU.Web.Models.Lookup>)ViewData["ParticularsData"], "LookupID", "LookupDescription"),
-                    "Select Category", new { @class = "form-control" })
-                        }
-                    </div>
-                </div>
-            </div>
-            <div class="row css10">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Amount</span>
-                    </label>
-                    <div class="col-md-6">
-                       @Html.TextBoxFor(x => x.Amount, "{0:#.#}", new { @class= "form-control numCss", @placeholder="Amount"})
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer css10">
-                <button type="button" onclick="SaveOperationalTransaction()" class="btn btn-success btn-frmt btn-sm"> <i class="fa fa-floppy-o"></i>&nbsp;Save</button>
-                <button type="button" class="btn btn-default btn-frmt btn-sm" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
             </div>
         </div>
-    </div>
+    }
 </div>
-
-    <script type="text/javascript">
-    </script>
-   
