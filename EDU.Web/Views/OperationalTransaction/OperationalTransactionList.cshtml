@@ -166,7 +166,7 @@
 
         function AddOperationalTransaction() {
             if ($('#frmOperationalTransaction').valid()) {
-                location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationalTransactionId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
+                location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
             }
         }
 
