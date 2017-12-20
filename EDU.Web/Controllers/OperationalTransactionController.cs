@@ -120,83 +120,88 @@ namespace EDU.Web.Controllers
             return View(operationalTransactionvm);
         }
 
-        [HttpGet]
-        public PartialViewResult OperationalTransaction1(int? operationalTransactionId, short? month, int? year, short country)
-        {
+        //[HttpGet]
+        //public PartialViewResult OperationalTransaction1(int? operationalTransactionId, short? month, int? year, short country)
+        //{
 
-            ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
-            //ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").ToList();
-            if (operationalTransactionId == -1)
-            {
-                ViewBag.Title = "New Operational Transaction";
-                ViewData["ParticularsData"] = null;
-                ViewData["CountryData"] = new BranchBO().GetList();
-                return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month, Year = year, Country = country });
-            }
-            else
-            {
-                ViewBag.Title = "Update Operational Transaction";
-                OperationalTransaction operationalTransaction = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
-                string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == operationalTransaction.CategoryId).FirstOrDefault().LookupCode;
+        //    ViewData["CategoryData"] = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction").ToList();
+        //    //ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").ToList();
+        //    if (operationalTransactionId == -1)
+        //    {
+        //        ViewBag.Title = "New Operational Transaction";
+        //        ViewData["ParticularsData"] = null;
+        //        ViewData["CountryData"] = new BranchBO().GetList();
+        //        return PartialView(new OperationalTransaction { OperationalTransactionId = -1, IsActive = true, Month = month, Year = year, Country = country });
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Title = "Update Operational Transaction";
+        //        OperationalTransaction operationalTransaction = dbContext.OperationalTransactions.Where(x => x.OperationalTransactionId == operationalTransactionId).FirstOrDefault();
+        //        string categorymappingCode = dbContext.Lookups.Where(x => x.LookupCategory == "OperationalTransaction" && x.LookupID == operationalTransaction.CategoryId).FirstOrDefault().LookupCode;
 
-                var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId && x.IsActive == true && x.Country == country).ToList();
+        //        var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.OperationalTransactionId != operationalTransaction.OperationalTransactionId && x.IsActive == true && x.Country == country).ToList();
 
-                var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-                foreach (var item in list)
-                {
-                    result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
+        //        var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+        //        foreach (var item in list)
+        //        {
+        //            result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
 
-                }
-                ViewData["ParticularsData"] = result;
-                ViewData["CountryData"] = new BranchBO().GetList();
-                return PartialView(operationalTransaction);
-            }
-        }
+        //        }
+        //        ViewData["ParticularsData"] = result;
+        //        ViewData["CountryData"] = new BranchBO().GetList();
+        //        return PartialView(operationalTransaction);
+        //    }
+        //}
 
-        [HttpGet]
-        public JsonResult GetParticularsByCategory(int CategoryId, short? month, int? year, int country)
-        {
+        //[HttpGet]
+        //public JsonResult GetParticularsByCategory(int CategoryId, short? month, int? year, int country)
+        //{
 
-            string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
-            var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
-            var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.Country == country && x.IsActive == true).ToList();
-            foreach (var item in list)
-            {
-                result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
+        //    string categorymappingCode = dbContext.Lookups.Where(x => x.LookupID == CategoryId).FirstOrDefault().LookupCode;
+        //    var result = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars" && x.MappingCode == categorymappingCode).ToList();
+        //    var list = dbContext.OperationalTransactions.Where(x => x.Month == month && x.Year == year && x.Country == country && x.IsActive == true).ToList();
+        //    foreach (var item in list)
+        //    {
+        //        result = result.Where(x => x.LookupID != item.ParticularsId).ToList();
 
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //    }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         [HttpPost]
-        public ActionResult SaveOperationalTransaction(OperationalTransaction operationalTransaction)
+        public ActionResult SaveOperationalTransaction(OTVM otvm)
         {
             try
             {
-                string countryname = operationalTransaction.Country > 0 ? new BranchBO().GetList().Where(x => x.BranchID == operationalTransaction.Country).FirstOrDefault().BranchName : "";
-                if (operationalTransaction.OperationalTransactionId == -1)
-                {
-                    operationalTransaction.CountryName = countryname;
-                    operationalTransaction.CreatedBy = USER_ID;
-                    operationalTransaction.CreatedOn = UTILITY.SINGAPORETIME;
-                    operationalTransaction.IsActive = true;
+                string countryname = otvm.Country > 0 ? new BranchBO().GetList().Where(x => x.BranchID == otvm.Country).FirstOrDefault().BranchName : "";
+                OperationalTransaction operationalTransactionInfo = new OperationalTransaction();
+               List<OperationalTransaction> otList = new List<OperationalTransaction>();
 
-                    dbContext.OperationalTransactions.Add(operationalTransaction);
+                if (otvm.OperationalTransactionId == -1)
+                {
+                    operationalTransactionInfo.CountryName = countryname;
+                    operationalTransactionInfo.CreatedBy = USER_ID;
+                    operationalTransactionInfo.CreatedOn = UTILITY.SINGAPORETIME;
+                    operationalTransactionInfo.IsActive = true;
+
+
+
+                    dbContext.OperationalTransactions.Add(operationalTransactionInfo);
                 }
 
                 else
                 {
-                    OperationalTransaction operationalTransactionInfo = dbContext.OperationalTransactions.
-                        Where(x => x.OperationalTransactionId == operationalTransaction.OperationalTransactionId).FirstOrDefault();
+                    //operationalTransactionInfo = dbContext.OperationalTransactions.
+                    //    Where(x => x.OperationalTransactionId == operationalTransaction.OperationalTransactionId).FirstOrDefault();
 
-                    operationalTransactionInfo.CountryName = countryname;
-                    operationalTransactionInfo.CategoryId = operationalTransaction.CategoryId;
-                    operationalTransactionInfo.ParticularsId = operationalTransaction.ParticularsId;
-                    operationalTransactionInfo.Month = operationalTransaction.Month;
-                    operationalTransactionInfo.Year = operationalTransaction.Year;
-                    operationalTransactionInfo.Amount = operationalTransaction.Amount;
-                    operationalTransactionInfo.Country = operationalTransaction.Country;
-                    operationalTransactionInfo.CountryName = operationalTransaction.CountryName;
+                    //operationalTransactionInfo.CountryName = countryname;
+                    //operationalTransactionInfo.CategoryId = operationalTransaction.CategoryId;
+                    //operationalTransactionInfo.ParticularsId = operationalTransaction.ParticularsId;
+                    //operationalTransactionInfo.Month = operationalTransaction.Month;
+                    //operationalTransactionInfo.Year = operationalTransaction.Year;
+                    //operationalTransactionInfo.Amount = operationalTransaction.Amount;
+                    //operationalTransactionInfo.Country = operationalTransaction.Country;
+                    //operationalTransactionInfo.CountryName = operationalTransaction.CountryName;
 
                     operationalTransactionInfo.IsActive = true;
 
@@ -211,7 +216,7 @@ namespace EDU.Web.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("OperationalTransactionList", new { month = operationalTransaction.Month, year = operationalTransaction.Year, country = operationalTransaction.Country });
+            return RedirectToAction("OperationalTransactionList", new { month = otvm.Month, year = otvm.Year, country = otvm.Country });
         }
 
         [HttpPost]
