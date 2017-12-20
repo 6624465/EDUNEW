@@ -129,12 +129,12 @@
         </div>
     </div>
 </div>
-@using (Html.BeginForm("SaveOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransaction", name = "frmOperationalTransaction" }))
+@*@using (Html.BeginForm("SaveOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransaction", name = "frmOperationalTransaction" }))
 {
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
-}
+}*@
 
 @using (Html.BeginForm("DeleteOperationalTransaction", "OperationalTransaction", FormMethod.Post, new { id = "frmOperationalTransactionDelete", name = "frmOperationalTransactionDelete" }))
 {
@@ -165,9 +165,11 @@
         };
 
         function AddOperationalTransaction() {
-            if ($('#frmOperationalTransaction').valid()) {
+            location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
+
+            @*if ($('#frmOperationalTransaction').valid()) {
                 location.href = '@Url.Content("~/OperationalTransaction/OperationalTransaction?operationId=")' + "-1&month=" + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
-            }
+            }*@
         }
 
         @*function GetParticularsByCategory(Id) {
@@ -234,31 +236,31 @@
        });
         }
 
-        function SaveOperationalTransaction() {
-            debugger;
-            if ($('#frmOperationalTransaction').valid()) {
-                $('#CountryName').val($("#Country option:selected").text());
-                $('#frmOperationalTransaction').submit();
-            }
-        }
+        //function SaveOperationalTransaction() {
+        //    debugger;
+        //    if ($('#frmOperationalTransaction').valid()) {
+        //        $('#CountryName').val($("#Country option:selected").text());
+        //        $('#frmOperationalTransaction').submit();
+        //    }
+        //}
 
-        $('#frmOperationalTransaction').validate({
-            rules: {
-                Country: {
-                    required: true
-                },
-                CategoryId: {
-                    required: true
-                },
-                ParticularsId: {
-                    required: true
-                },
-                Amount: {
-                    required: true
-                },
+        //$('#frmOperationalTransaction').validate({
+        //    rules: {
+        //        Country: {
+        //            required: true
+        //        },
+        //        CategoryId: {
+        //            required: true
+        //        },
+        //        ParticularsId: {
+        //            required: true
+        //        },
+        //        Amount: {
+        //            required: true
+        //        },
 
-            }
-        });
+        //    }
+        //});
 
 
     </script>
