@@ -48,6 +48,62 @@ namespace EDU.Web.Controllers
             ViewData["CountryData"] = new BranchBO().GetList();
             return View(list);
         }
+
+        [HttpGet]
+        public ActionResult OperationalTransactionDetail(int? operationalTransactionId, short? month, int? year, short country)
+        {
+            OTVM operationalTransactionvm = new OTVM();
+            if (operationalTransactionId == -1)
+            {
+                ViewBag.Title = "New Operational Transaction";
+                operationalTransactionvm.OperationalTransactionId = -1;
+
+                operationalTransactionvm.OperationalExpId = 1100;
+                operationalTransactionvm.OtherExpId = 1101;
+                operationalTransactionvm.Year = year;
+                operationalTransactionvm.Month = month;
+
+                operationalTransactionvm.SalariesId = 1200;
+                operationalTransactionvm.TravellingexpId = 1201;
+                operationalTransactionvm.RentalId = 1202;
+                operationalTransactionvm.TelephoneexpId = 1203;
+                operationalTransactionvm.CourierchargesId = 1204;
+                operationalTransactionvm.InsuranceId = 1205;
+                operationalTransactionvm.UtilityId = 1206;
+                operationalTransactionvm.MarketingexpId = 1207;
+                operationalTransactionvm.DepreciationId = 1208;
+                operationalTransactionvm.LegalexpId = 1300;
+                operationalTransactionvm.RepairmaintenanceId = 1301;
+                operationalTransactionvm.BankchargesId = 1302;
+                operationalTransactionvm.PrintingstationeryId = 1303;
+                operationalTransactionvm.StaffwelfareId = 1304;
+                operationalTransactionvm.OtherexpensesincomeId = 1305;
+
+                operationalTransactionvm.SalariesAmount = 0;
+                operationalTransactionvm.TravellingexpAmount = 0;
+                operationalTransactionvm.RentalAmount = 0;
+                operationalTransactionvm.TelephoneexpAmount = 0;
+                operationalTransactionvm.CourierchargesAmount = 0;
+                operationalTransactionvm.InsuranceAmount = 0;
+                operationalTransactionvm.UtilityAmount = 0;
+                operationalTransactionvm.MarketingexpAmount = 0;
+                operationalTransactionvm.DepreciationAmount = 0;
+                operationalTransactionvm.LegalexpAmount = 0;
+                operationalTransactionvm.RepairmaintenanceAmount = 0;
+                operationalTransactionvm.BankchargesAmount = 0;
+                operationalTransactionvm.PrintingstationeryAmount = 0;
+                operationalTransactionvm.StaffwelfareAmount = 0;
+                operationalTransactionvm.OtherexpensesincomeAmount = 0;
+                operationalTransactionvm.Country = country;
+            }
+            else
+            {
+                ViewBag.Title = "Update Financial Transaction";
+
+            }
+            return View(operationalTransactionvm);
+        }
+
         [HttpGet]
         public PartialViewResult OperationalTransaction(int? operationalTransactionId, short? month, int? year, short country)
         {
