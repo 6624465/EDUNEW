@@ -8,8 +8,9 @@
     @using (Html.BeginForm("SaveFinancialTransactionDetail", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancialTransaction", name = "frmFinancialTransaction", enctype = "multipart/form-data", autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.FinancialTransactionId)
-        @Html.HiddenFor(x=>x.Year)
+        @Html.HiddenFor(x => x.Year)
         @Html.HiddenFor(x => x.Month)
+        @Html.HiddenFor(x => x.IsSubmit)
         <div class="page-wrap">
             <div class="row">
                 <div class="col-md-12">
@@ -184,8 +185,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <button type="button" onclick="SaveFinancialTransactionDetail()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                        <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button> &nbsp;&nbsp;&nbsp;
+                                        <button type="button" onclick="SaveFinancialTransactionDetail()" class="btn btn-success btn-frmt green btn-sm editdisable"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-default btn-sm" type="button" onclick="navigateToList();"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -218,6 +220,11 @@
                 $('#frmFinancialTransaction').submit();
             }
         }
+        function navigateToList() {
+            var month = $('#Month').val();
+            var year = $('#Year').val();
+            location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionList?month=")' + month + '&year=' + year;
+        }
         function calculateLocalAmount() {
             var currencyrt = ($('#CurrencyExRate').val() != null && !isNaN($('#CurrencyExRate').val()) ? parseInt($('#CurrencyExRate').val()) : 0);
             var totalRevenueAmount = parseInt($('#TotalRevenueAmount').val());
@@ -226,7 +233,7 @@
             var localExpensesAmount = ($('#LocalExpensesAmount').val() != null && !isNaN($('#LocalExpensesAmount').val()) ? parseInt($('#LocalExpensesAmount').val()) : 0);
             var coursewareMaterialAmount = ($('#CoursewareMaterialAmount').val() != null && !isNaN($('#CoursewareMaterialAmount').val()) ? parseInt($('#CoursewareMaterialAmount').val()) : 0);
             var miscExpensesAmount = ($('#MiscExpensesAmount').val() != null && !isNaN($('#MiscExpensesAmount').val()) ? parseInt($('#MiscExpensesAmount').val()) : 0);
-         
+
             $('#TotalRevenueLocalAmount').val('');
             $('#TrainerExpensesLocalAmount').val('');
             $('#TrainerTravelExpensesLocalAmount').val('');
@@ -273,6 +280,42 @@
             var pro = ((result * 100) / totalRevenueAmount).toFixed();
             $('#GrossProfit').val(result);
             $('#ProfitAndLossPercent').val(pro);
+        }
+        function SubmitFinancialTransaction() {
+            if ($('#frmFinancialTransaction').valid()) {
+                var FinancialTransaction =
+                    {
+                        "FinancialTransactionId": $('#FinancialTransactionId').val(),
+                        "TrainingConfirmationID": $('#TrainingConfirmationID').val()
+                    };
+                $.ajax({
+                    url: '@Url.Content("~/FinancialTransaction/SubmitFinancialTransaction/")',
+                    data: JSON.stringify(FinancialTransaction),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        @if (Model.FinancialTransactionId != -1)
+            {
+                <text>
+        debugger;
+        if ($('#IsSubmit').val() != "True")
+            $('.btndisable').removeAttr('disabled');
+        else {
+            $('.btndisable').attr('disabled', 'disabled');
+            $('.editdisable').attr('disabled', 'disabled');
+        }
+        </text>
+             }
+        else
+        {
+            <text>$('.btndisable').attr('disabled', 'disabled');</text>
         }
     </script>
 }
