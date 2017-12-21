@@ -62,7 +62,7 @@
                         {
                             @Html.DropDownListFor(x => x.Course,
                     new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
-                    "Select Course", new { @class = "form-control" })
+                    "Select Course", new { @class = "form-control", onchange = "ExamOrVocherDisbledFileds()" })
                         }
 
 
@@ -232,6 +232,7 @@
         $('#TotalNoOfDays').attr('disabled', 'disabled');
         $('#TrianerId').attr('disabled', 'disabled');
     }
+
 
     function ProductChange(el) {
         if (el.value) {

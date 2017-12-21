@@ -211,6 +211,8 @@ namespace EDU.Web.Controllers
                     TrainerConfInfo.CreatedBy = USER_ID;
                     TrainerConfInfo.CreatedOn = UTILITY.SINGAPORETIME;
                     TrainerConfInfo.IsActive = true;
+                    TrainerConfInfo.Year = (TrainerConfInfo.StartDate != null ? TrainerConfInfo.StartDate.Value.Year : TrainerConfInfo.Year);
+                    TrainerConfInfo.Month = (TrainerConfInfo.StartDate != null ? Convert.ToInt16(TrainerConfInfo.StartDate.Value.Month) : (TrainerConfInfo.Month == 0 ? Convert.ToInt16(DateTime.UtcNow.Month) : TrainerConfInfo.Month));
 
                     dbContext.TrainingConfirmations.Add(TrainerConfInfo);
                 }
