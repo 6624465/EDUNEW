@@ -38,7 +38,6 @@ namespace EDU.Web.Controllers
                 List<Registration> List = GetList(trainingConfirmationID);
                 TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
 
-
                 TrainingConfirmDtl tcd = new TrainingConfirmDtl();
                 if (tcdtl != null)
                 {
@@ -48,8 +47,6 @@ namespace EDU.Web.Controllers
                     {
                         Id = tcdtl.Id,
                         TrainingConfirmationID = tcdtl.TrainingConfirmationID,
-                        Product = tcdtl.Product,
-                        Course = tcdtl.Course,
                         TotalNoOfDays = tcdtl.TotalNoOfDays,
                         NoOfStudents = tcdtl.NoOfStudents,
                         Private = tcdtl.Private,
@@ -58,18 +55,19 @@ namespace EDU.Web.Controllers
                         StartDate = tcdtl.StartDate,
                         EndDate = tcdtl.EndDate,
                         TrianerId = tcdtl.TrianerId,
-                        IsActive = tcdtl.IsActive,
-                        CreatedBy = tcdtl.CreatedBy,
-                        CreatedOn = tcdtl.CreatedOn,
-                        ModifiedBy = tcdtl.ModifiedBy,
-                        ModifiedOn = tcdtl.ModifiedOn,
                         ProductName = productName,
                         CourseName = courseName,
                         TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
                     };
+
+                    for (int i = 0; i < tcdtl.NoOfStudents; i++)
+                    {
+                        if (List.Count() != tcdtl.NoOfStudents)
+                            List.Add(new Registration { RegistrationId = -1, TrainingConfirmationID = tcdtl.TrainingConfirmationID });
+                    }
                 }
 
-                result.registration = List;
+                result.registration = List == null ? new List<Registration>() : List;
                 result.trainingconf = tc;
                 result.trainingconfDetail = tcd;
                 result.Year = year;
@@ -137,6 +135,78 @@ namespace EDU.Web.Controllers
             ViewData["year"] = year;
             ViewData["month"] = month;
             return View(registration);
+        }
+
+        [HttpPost]
+        public ActionResult SaveRegistrationList(List<Registration> registration)
+        {
+            string trainingConfirmationId = registration.FirstOrDefault().TrainingConfirmationID;
+            foreach (var item in registration)
+            {
+                if (item.RegistrationId == -1)
+                {
+                    item.IsActive = true;
+                    item.CreatedBy = USER_ID;
+                    item.CreatedOn = UTILITY.SINGAPORETIME;
+
+                    dbContext.Registrations.Add(item);
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    Registration regObj = dbContext.Registrations.Where(x => x.RegistrationId == item.RegistrationId && x.TrainingConfirmationID == item.TrainingConfirmationID).FirstOrDefault();
+                    if (regObj != null)
+                    {
+                        regObj.StudentName = item.StudentName;
+                        regObj.Email = item.Email;
+                        regObj.Contact = item.Contact;
+                        regObj.CompanyName = item.CompanyName;
+                        regObj.Amount = item.Amount;
+                        regObj.WHTPercent = item.WHTPercent;
+                        regObj.VATPercent = item.VATPercent;
+                        regObj.WHTAmount = item.WHTAmount;
+                        regObj.VATAmount = item.VATAmount;
+                        regObj.OtherDeductionsAmount = item.OtherDeductionsAmount;
+                        regObj.TotalAmount = item.TotalAmount;
+                        regObj.Payment1 = item.Payment1;
+                        regObj.Payment2 = item.Payment2;
+                        regObj.Payment3 = item.Payment3;
+                        regObj.Payment1Date = item.Payment1Date;
+                        regObj.Payment2Date = item.Payment2Date;
+                        regObj.Payment3Date = item.Payment3Date;
+                        regObj.Payment1Type = item.Payment1Type;
+                        regObj.Payment2Type = item.Payment2Type;
+                        regObj.Payment3Type = item.Payment3Type;
+
+                        if (item.Payment1Type == 2 || item.Payment1Type == 3)
+                            regObj.ChequeNo1 = item.ChequeNo1;
+                        else
+                            regObj.ChequeNo1 = "";
+                        if (item.Payment2Type == 2 || item.Payment2Type == 3)
+                            regObj.ChequeNo2 = item.ChequeNo2;
+                        else
+                            regObj.ChequeNo2 = "";
+
+                        if (item.Payment3Type == 2 || item.Payment3Type == 3)
+                            regObj.ChequeNo3 = item.ChequeNo3;
+                        else
+                            regObj.ChequeNo3 = "";
+
+                        regObj.BalanceAmount = item.BalanceAmount;
+                        regObj.TrainingConfirmationID = item.TrainingConfirmationID;
+
+                        regObj.IsActive = true;
+
+                        regObj.ModifiedBy = USER_ID;
+                        regObj.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                        dbContext.Entry(regObj).State = EntityState.Modified;
+                        dbContext.SaveChanges();
+                    }
+                }
+            }
+            TrainingConfirmation tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == trainingConfirmationId).FirstOrDefault();
+            return RedirectToAction("RegistrationList", new { trainingConfirmationID = trainingConfirmationId, year = tcdtl.Year, month = tcdtl.Month });
         }
 
         [HttpPost]

@@ -142,10 +142,7 @@
                         &nbsp;&nbsp;<span id="lblmsg">(&nbsp;<label style="color:red;margin-top:14px"> Pending Registrations :@remainReg</label>&nbsp;)</span>
                     </div>
                     <div class="box-tools">
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                        {
-                            <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-plus"></i>New Registration</button>
-                        }
+                        
                     </div>
                 </div>
                 <div class="box-body">
@@ -171,6 +168,12 @@
                                 @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
                                  new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
                                  "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
+                            </div>
+                            <div class="col-md-2">
+                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                {
+                                    <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-pencil"></i>Update Registration Info</button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -234,162 +237,240 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row css25">
+                    <div class="row css25" id="webGridEdit">
+                        @using (Html.BeginForm("SaveRegistrationList", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration", autocomplete = "off" }))
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>S No.</td>
+                                        <td>Student Name</td>
+                                        <td>Email Id</td>
+                                        <td>Contact</td>
+                                        <td>Company/Individual</td>
+                                        <td>Amount</td>
+                                        <td>VAT/TAX</td>
+                                        <td>WHT</td>
+                                        <td>Payment #1</td>
+                                        <td>Payment #2</td>
+                                        <td>Payment #3</td>
+                                        <td>Total Amount</td>
+                                        <td>Balance Amount</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.registration.Count(); i++)
+                                {
+                                    @Html.HiddenFor(x => x.registration[i].RegistrationId)
+                                    @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
+                                    <tr>
+                                        <td>@i.</td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm" })
+                                        </td>
+                                    </tr>
+                                }
+                                    <tr>
+                                        <td colspan="15">
+                                            <div class="row css25">
+                                                <div class="col-md-12">
+                                                    <div class="text-center">
+                                                        <button id="btnSave" type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        }
+                    </div>
+                    <div class="row css25" id="webGridDisplay">
                         <div style="overflow-x: scroll; width: 100%" id="gridContent">
                             @grid.GetHtml(
-                                    columns: grid.Columns(
+                        columns: grid.Columns(
 
-                                        grid.Column("", "#Action", canSort: false,
-                                                        format:
-                                                        @<text>
-                                                            <div style='width:80px;'>
-                                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                                            {
-                                                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                                }
-                                                            </div>
-                                                        </text>),
-
-                                            grid.Column("StudentName", "Student Name", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:150px;'>
-                                                            @(item.StudentName)
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("Amount", "Amount", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:70px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64dollar(item.Amount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("WHTPercent", "WHT %", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:50px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64percent(item.WHTPercent)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("WHTAmount", "WHT Amount", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:80px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64dollar(item.WHTAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("VATPercent", "VAT/TAX %",
-                                            format:
-                                            @<text>
-                                                <div style='width:80px;'>
-                                                    <span class="center">
-                                                        @ConvertToInt64dollar(item.VATPercent)
+                            @*grid.Column("", "#Action", canSort: false,
+                                format:
+                                @<text>
+                                    <div style='width:80px;'>
+                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                        }
+                                    </div>
+                                </text>),*@
+                            grid.Column("", "S No.", canSort: false,
+                                        format:
+                                        @<text>
+                                            <div style='width:35px;'>
+                                                @(item.WebGrid.Rows.IndexOf(item) + 1).
+                                            </div>
+                                        </text>),
+                                grid.Column("StudentName", "Student Name", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:150px;'>
+                                                @(item.StudentName)
+                                            </div>
+                                        </text>),
+                                grid.Column("Amount", "Amount", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:70px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64dollar(item.Amount)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                grid.Column("WHTPercent", "WHT %", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:50px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64percent(item.WHTPercent)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                grid.Column("WHTAmount", "WHT Amount", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:80px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64dollar(item.WHTAmount)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                grid.Column("VATPercent", "VAT/TAX %",
+                                format:
+                                @<text>
+                                    <div style='width:80px;'>
+                                        <span class="center">
+                                            @ConvertToInt64dollar(item.VATPercent)
+                                        </span>
+                                    </div>
+                                </text>
+                                , canSort: true, style: "center"),
+                                grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:100px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64dollar(item.VATAmount)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                 grid.Column("TotalAmount", "Total Amount", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:75px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64dollar(item.TotalAmount)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                grid.Column("Payment1", "Payment 1", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:70px;'>
+                                                <span class="center">
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
+                                                              onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment1)</span>
+                                                        </a>
                                                     </span>
                                                 </div>
-                                            </text>
-                                            , canSort: true, style: "center"),
-                                            grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64dollar(item.VATAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                             grid.Column("TotalAmount", "Total Amount", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:75px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64dollar(item.TotalAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("Payment1", "Payment 1", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:70px;'>
-                                                            <span class="center">
-                                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment1)</span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                    </text>),
-                                            grid.Column("Payment2", "Payment 2", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:70px;'>
-                                                            <span class="center">
-                                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment2)</span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                    </text>),
-                                            grid.Column("Payment3", "Payment 3", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:70px;'>
-                                                            <span class="center">
-                                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
-                                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment3)</span>
-                                                                    </a>
-                                                                </span>
-                                                            </div>
-                                                    </text>),
-                                            grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64dollar(item.OtherDeductionsAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("BalanceAmount", "Balance", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:70px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64dollar(item.BalanceAmount)
-                                                            </span>
-                                                        </div>
-                                                    </text>),
-                                            grid.Column("Email", "Email", canSort: true),
-                                            grid.Column("Contact", "Contact", canSort: true),
-                                            grid.Column("CompanyName", "Company Name", canSort: true,
-                                                    format:
-                                                    @<text>
-                                                        <div style='width:100px;'>
-                                                            <span class="center">
-                                                                @(item.CompanyName)
-                                                            </span>
-                                                        </div>
-                                                    </text>)
-                                                        @*grid.Column("", "#Action", canSort: false,
-                                                            format:
-                                                            @<text>
-                                                                <div style='width:80px;'>
-                                                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                                                {
-                                                                        <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                                    }
-                                                                </div>
-                                                            </text>)*@),
-                                                        tableStyle: "table")
+                                        </text>),
+                                grid.Column("Payment2", "Payment 2", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:70px;'>
+                                                <span class="center">
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
+                                                              onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment2)</span>
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                        </text>),
+                                grid.Column("Payment3", "Payment 3", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:70px;'>
+                                                <span class="center">
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
+                                                              onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment3)</span>
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                        </text>),
+                            @*grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
+                                format:
+                                @<text>
+                                    <div style='width:100px;'>
+                                        <span class="center">
+                                            @ConvertToInt64dollar(item.OtherDeductionsAmount)
+                                        </span>
+                                    </div>
+                                </text>),*@
+                                grid.Column("BalanceAmount", "Balance", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:70px;'>
+                                                <span class="center">
+                                                    @ConvertToInt64dollar(item.BalanceAmount)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                grid.Column("Email", "Email", canSort: true),
+                                grid.Column("Contact", "Contact", canSort: true),
+                                grid.Column("CompanyName", "Company Name", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:100px;'>
+                                                <span class="center">
+                                                    @(item.CompanyName)
+                                                </span>
+                                            </div>
+                                        </text>)),
+                                            tableStyle: "table")
                         </div>
                     </div>
                     <div class="row">
@@ -406,6 +487,7 @@
     {
     <script type="text/javascript">
         $(function () {
+            $('#webGridEdit').hide();
             $('#liRegistrationList').addClass('active');
 
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
@@ -418,22 +500,30 @@
 
             $('#lblmsg').hide();
             $('#TrainingDetails').hide();
-            $('#addbtn').attr('disabled', 'disabled');
+            //$('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
             debugger;
             if (trid != null && trid != '') {
                 $('#TrainingDetails').show();
                 $('#lblmsg').show();
-                @if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
+                @*@if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
                     {
                     <text>$('#addbtn').attr('disabled', 'disabled');</text>
                 }
                 else
                 {
                     <text>$('#addbtn').removeAttr('disabled', 'disabled');</text>
-                }
+                }*@
             }
         });
+
+        function SaveRegistration() {
+            if ($('#frmRegistration').valid()) {
+                //$('#btnSave').attr('disabled', 'disabled');
+                //RemoveDisabledFields();
+                $('#frmRegistration').submit();
+            }
+        }
 
         function ChangeMonth() {
             window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = "", month = "", year = "" })' + '?trainingConfirmationID=&month=' + $('#Month').val() + "&year=" + $('#Year').val();
@@ -448,18 +538,25 @@
             $(el).popover("show");
         }
 
-
         function ChangeEventID(el) {
             $('#eventid').val(el.value);
             window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = "", month = "", year = "" })' + '?trainingConfirmationID=' + el.value + '&month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
         function navigatetoDetail() {
-            var trid = $('#TrainingConfirmationID').val();
-            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid+ '&month=' + $('#Month').val() + "&year=" + $('#Year').val();;
+            $('#webGridEdit').show();
+            $('#webGridDisplay').hide();
+            @*var trid = $('#TrainingConfirmationID').val();
+            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid+ '&month=' + $('#Month').val() + "&year=" + $('#Year').val();*@
+        };
+        function navigatetoList() {
+            $('#webGridEdit').hide();
+            $('#webGridDisplay').show();
+            @*var trid = $('#TrainingConfirmationID').val();
+            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid + '&month=' + $('#Month').val() + "&year=" + $('#Year').val();*@
         };
 
-        function DeleteRegistration(id) {
+        @*function DeleteRegistration(id) {
             swal({
                 title: "Are you sure?",
                 text: "Do you want delete?",
@@ -485,6 +582,6 @@
         });
 
     });
-        }
+        }*@
     </script>
 }
