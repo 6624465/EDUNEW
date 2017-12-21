@@ -104,7 +104,7 @@
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-1">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Month</span>
@@ -224,8 +224,8 @@
             });
         }
 
-         function ChangeMonth() {
-            window.location = '@Url.Action("Trainer", "TrainingConfirmationList", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
+        function ChangeMonth() {
+            window.location = '@Url.Action("TrainingConfirmationList", "Trainer", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
         function EditTrainerConfirmation(Id) {
