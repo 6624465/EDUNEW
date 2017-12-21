@@ -21,7 +21,6 @@ namespace EDU.Web.Controllers
         {
             RegistrationVM result = new RegistrationVM();
             result = getListData(trainingConfirmationID, month, year);
-
             return View(result);
         }
 
@@ -126,7 +125,7 @@ namespace EDU.Web.Controllers
 
 
 
-        public ActionResult Registration(int Id, string trainingConfirmationID)
+        public ActionResult Registration(int Id, string trainingConfirmationID, short? month, int year)
         {
             Registration registration = dbContext.Registrations.Where(x => x.RegistrationId == Id && x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
             if (registration == null)
@@ -135,6 +134,8 @@ namespace EDU.Web.Controllers
                 registration.RegistrationId = Id;
                 registration.TrainingConfirmationID = trainingConfirmationID;
             }
+            ViewData["year"] = year;
+            ViewData["month"] = month;
             return View(registration);
         }
 

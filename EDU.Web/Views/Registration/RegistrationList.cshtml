@@ -451,12 +451,12 @@
 
         function ChangeEventID(el) {
             $('#eventid').val(el.value);
-            window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = "", month = "", year = "" })' + '?trainingConfirmationID=' + el.value + '&month=' + $('#Month').val() + "&year=" + $('#Year').val();;
+            window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = "", month = "", year = "" })' + '?trainingConfirmationID=' + el.value + '&month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
         function navigatetoDetail() {
             var trid = $('#TrainingConfirmationID').val();
-            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid;
+            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid+ '&month=' + $('#Month').val() + "&year=" + $('#Year').val();;
         };
 
         function DeleteRegistration(id) {

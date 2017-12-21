@@ -3,6 +3,8 @@
     ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var Student = Model.Payment1Date;
+    var year = (int)ViewData["year"];
+    var month = (short?)ViewData["month"];
 }
 
 @{
@@ -443,7 +445,7 @@
 
         function navigatetoList() {
             var trid = $('#TrainingConfirmationID').val();
-            window.location = '@Url.Content("~/Registration/RegistrationList")' + "?trainingConfirmationID=" + trid;
+            window.location = '@Url.Content("~/Registration/RegistrationList")' + "?trainingConfirmationID=" + trid+'&month=' + @month + '&year=' + @year;
         };
 
         function RemoveDisabledFields() {
