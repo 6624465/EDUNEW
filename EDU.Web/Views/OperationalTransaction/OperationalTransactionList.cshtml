@@ -109,12 +109,12 @@
                                 grid.Column("Amount", "Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:88px;'>
+                                        <div style='width:60px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.Amount)
                                             </span>
                                         </div>
-                                    </text>)),
+                                    </text>,style: "center")),
                                 tableStyle: "table table-striped table-bordered")
                             </div>
                         </div>
@@ -144,7 +144,7 @@
             @if (count > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="center">' + totalAmount + '</td><tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="left">' + totalAmount + '</td><tr>');
              </text>
              }
         });
