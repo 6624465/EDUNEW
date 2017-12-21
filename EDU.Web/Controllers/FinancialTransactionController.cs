@@ -21,124 +21,132 @@ namespace EDU.Web.Controllers
         [HttpGet]
         public ActionResult FinancialTransactionList(short? month, int year)
         {
-            List<FinancialTransactionsVM> financialTransactionList = new List<FinancialTransactionsVM>();
-            List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
-
-            List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
-            List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
-                                                                     .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID)).ToList();
-            var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
-
-            financialTransactionList = financialTransaction1List
-                .Select(x => new FinancialTransactionsVM
-                {
-                    FinancialTransactionId = x.FinancialTransactionId,
-                    TrainingConfirmationID = x.TrainingConfirmationID,
-                    Country = x.Country,
-                    CountryName = countryList.Where(y => y.BranchID == x.Country).FirstOrDefault().BranchName,
-                    CurrencyCode = x.CurrencyCode,
-                    CurrencyExRate = x.CurrencyExRate,
-                    TotalRevenueAmount = x.TotalRevenueAmount,
-                    TotalRevenueLocalAmount = x.TotalRevenueLocalAmount,
-                    TotalRevenueReferenceDoc = x.TotalRevenueReferenceDoc,
-                    TotalRevenueRemarks = x.TotalRevenueRemarks,
-                    TrainerExpensesAmount = x.TrainerExpensesAmount,
-                    TrainerExpensesLocalAmount = x.TrainerExpensesLocalAmount,
-                    TrainerExpensesReferenceDoc = x.TrainerExpensesReferenceDoc,
-                    TrainerExpensesRemarks = x.TrainerExpensesRemarks,
-                    TrainerTravelExpensesAmount = x.TrainerTravelExpensesAmount,
-                    TrainerTravelExpensesLocalAmount = x.TrainerTravelExpensesLocalAmount,
-                    TrainerTravelExpensesReferenceDoc = x.TrainerTravelExpensesReferenceDoc,
-                    TrainerTravelExpensesRemarks = x.TrainerTravelExpensesRemarks,
-                    LocalExpensesAmount = x.LocalExpensesAmount,
-                    LocalExpensesLocalAmount = x.LocalExpensesLocalAmount,
-                    LocalExpensesReferenceDoc = x.LocalExpensesReferenceDoc,
-                    LocalExpensesRemarks = x.LocalExpensesRemarks,
-                    CoursewareMaterialAmount = x.CoursewareMaterialAmount,
-                    CoursewareMaterialLocalAmount = x.CoursewareMaterialLocalAmount,
-                    CoursewareMaterialReferenceDoc = x.CoursewareMaterialReferenceDoc,
-                    CoursewareMaterialRemarks = x.CoursewareMaterialRemarks,
-                    MiscExpensesAmount = x.MiscExpensesAmount,
-                    MiscExpensesLocalAmount = x.MiscExpensesLocalAmount,
-                    MiscExpensesReferenceDoc = x.MiscExpensesReferenceDoc,
-                    MiscExpensesRemarks = x.MiscExpensesRemarks,
-                    GrossProfit = x.GrossProfit,
-                    ProfitAndLossPercent = x.ProfitAndLossPercent,
-                    IsActive = x.IsActive,
-                    IsSubmit = x.IsSubmit,
-                    CreatedBy = x.CreatedBy,
-                    CreatedOn = x.CreatedOn,
-                    ModifiedBy = x.ModifiedBy,
-                    ModifiedOn = x.ModifiedOn,
-                    Year = year,
-                    Month = month
-                })
-                .ToList();
-
-
-            foreach (var item in trainingConfirmationList)
+            try
             {
-                if (financialTransaction1List.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).Count() == 0)
-                {
-                    decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
 
+                List<FinancialTransactionsVM> financialTransactionList = new List<FinancialTransactionsVM>();
+                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
-                    financialTransactionList.Add(new FinancialTransactionsVM()
+                List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
+                List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
+                                                                         .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID)).ToList();
+                var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+
+                financialTransactionList = financialTransaction1List
+                    .Select(x => new FinancialTransactionsVM
                     {
-                        FinancialTransactionId = -1,
-                        TrainingConfirmationID = item.TrainingConfirmationID,
-                        Country = item.Country,
-                        CountryName = countryList.Where(y => y.BranchID == item.Country).FirstOrDefault().BranchName,
-                        CurrencyCode = null,
-                        CurrencyExRate = null,
-                        TotalRevenueAmount = TotalAmount,
-                        TotalRevenueLocalAmount = null,
-                        TotalRevenueReferenceDoc = null,
-                        TotalRevenueRemarks = null,
-                        TrainerExpensesAmount = null,
-                        TrainerExpensesLocalAmount = null,
-                        TrainerExpensesReferenceDoc = null,
-                        TrainerExpensesRemarks = null,
-                        TrainerTravelExpensesAmount = null,
-                        TrainerTravelExpensesLocalAmount = null,
-                        TrainerTravelExpensesReferenceDoc = null,
-                        TrainerTravelExpensesRemarks = null,
-                        LocalExpensesAmount = null,
-                        LocalExpensesLocalAmount = null,
-                        LocalExpensesReferenceDoc = null,
-                        LocalExpensesRemarks = null,
-                        CoursewareMaterialAmount = null,
-                        CoursewareMaterialLocalAmount = null,
-                        CoursewareMaterialReferenceDoc = null,
-                        CoursewareMaterialRemarks = null,
-                        MiscExpensesAmount = null,
-                        MiscExpensesLocalAmount = null,
-                        MiscExpensesReferenceDoc = null,
-                        MiscExpensesRemarks = null,
-                        GrossProfit = null,
-                        ProfitAndLossPercent = null,
-                        IsActive = true,
-                        IsSubmit = null,
-                        CreatedBy = null,
-                        CreatedOn = null,
-                        ModifiedBy = null,
-                        ModifiedOn = null
-                    });
-                }
-            }
+                        FinancialTransactionId = x.FinancialTransactionId,
+                        TrainingConfirmationID = x.TrainingConfirmationID,
+                        Country = x.Country,
+                        CountryName = countryList.Where(y => y.BranchID == x.Country).FirstOrDefault().BranchName,
+                        CurrencyCode = x.CurrencyCode,
+                        CurrencyExRate = x.CurrencyExRate,
+                        TotalRevenueAmount = x.TotalRevenueAmount,
+                        TotalRevenueLocalAmount = x.TotalRevenueLocalAmount,
+                        TotalRevenueReferenceDoc = x.TotalRevenueReferenceDoc,
+                        TotalRevenueRemarks = x.TotalRevenueRemarks,
+                        TrainerExpensesAmount = x.TrainerExpensesAmount,
+                        TrainerExpensesLocalAmount = x.TrainerExpensesLocalAmount,
+                        TrainerExpensesReferenceDoc = x.TrainerExpensesReferenceDoc,
+                        TrainerExpensesRemarks = x.TrainerExpensesRemarks,
+                        TrainerTravelExpensesAmount = x.TrainerTravelExpensesAmount,
+                        TrainerTravelExpensesLocalAmount = x.TrainerTravelExpensesLocalAmount,
+                        TrainerTravelExpensesReferenceDoc = x.TrainerTravelExpensesReferenceDoc,
+                        TrainerTravelExpensesRemarks = x.TrainerTravelExpensesRemarks,
+                        LocalExpensesAmount = x.LocalExpensesAmount,
+                        LocalExpensesLocalAmount = x.LocalExpensesLocalAmount,
+                        LocalExpensesReferenceDoc = x.LocalExpensesReferenceDoc,
+                        LocalExpensesRemarks = x.LocalExpensesRemarks,
+                        CoursewareMaterialAmount = x.CoursewareMaterialAmount,
+                        CoursewareMaterialLocalAmount = x.CoursewareMaterialLocalAmount,
+                        CoursewareMaterialReferenceDoc = x.CoursewareMaterialReferenceDoc,
+                        CoursewareMaterialRemarks = x.CoursewareMaterialRemarks,
+                        MiscExpensesAmount = x.MiscExpensesAmount,
+                        MiscExpensesLocalAmount = x.MiscExpensesLocalAmount,
+                        MiscExpensesReferenceDoc = x.MiscExpensesReferenceDoc,
+                        MiscExpensesRemarks = x.MiscExpensesRemarks,
+                        GrossProfit = x.GrossProfit,
+                        ProfitAndLossPercent = x.ProfitAndLossPercent,
+                        IsActive = x.IsActive,
+                        IsSubmit = x.IsSubmit,
+                        CreatedBy = x.CreatedBy,
+                        CreatedOn = x.CreatedOn,
+                        ModifiedBy = x.ModifiedBy,
+                        ModifiedOn = x.ModifiedOn,
+                        Year = year,
+                        Month = month
+                    })
+                    .ToList();
 
-            return View(financialTransactionList.OrderBy(x => x.TrainingConfirmationID));
+
+                foreach (var item in trainingConfirmationList)
+                {
+                    if (financialTransaction1List.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).Count() == 0)
+                    {
+                        decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
+
+
+                        financialTransactionList.Add(new FinancialTransactionsVM()
+                        {
+                            FinancialTransactionId = -1,
+                            TrainingConfirmationID = item.TrainingConfirmationID,
+                            Country = item.Country,
+                            CountryName = countryList.Where(y => y.BranchID == item.Country).FirstOrDefault().BranchName,
+                            CurrencyCode = null,
+                            CurrencyExRate = null,
+                            TotalRevenueAmount = TotalAmount,
+                            TotalRevenueLocalAmount = null,
+                            TotalRevenueReferenceDoc = null,
+                            TotalRevenueRemarks = null,
+                            TrainerExpensesAmount = null,
+                            TrainerExpensesLocalAmount = null,
+                            TrainerExpensesReferenceDoc = null,
+                            TrainerExpensesRemarks = null,
+                            TrainerTravelExpensesAmount = null,
+                            TrainerTravelExpensesLocalAmount = null,
+                            TrainerTravelExpensesReferenceDoc = null,
+                            TrainerTravelExpensesRemarks = null,
+                            LocalExpensesAmount = null,
+                            LocalExpensesLocalAmount = null,
+                            LocalExpensesReferenceDoc = null,
+                            LocalExpensesRemarks = null,
+                            CoursewareMaterialAmount = null,
+                            CoursewareMaterialLocalAmount = null,
+                            CoursewareMaterialReferenceDoc = null,
+                            CoursewareMaterialRemarks = null,
+                            MiscExpensesAmount = null,
+                            MiscExpensesLocalAmount = null,
+                            MiscExpensesReferenceDoc = null,
+                            MiscExpensesRemarks = null,
+                            GrossProfit = null,
+                            ProfitAndLossPercent = null,
+                            IsActive = true,
+                            IsSubmit = null,
+                            CreatedBy = null,
+                            CreatedOn = null,
+                            ModifiedBy = null,
+                            ModifiedOn = null
+                        });
+                    }
+                }
+
+                return View(financialTransactionList.OrderBy(x => x.TrainingConfirmationID));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpGet]
-        public ActionResult FinancialTransactionDetail(int Id, string trainingConfirmationID, Int16? country, decimal? totalRevenueAmount,short? month,int? year)
+        public ActionResult FinancialTransactionDetail(int Id, string trainingConfirmationID, Int16? country, decimal? totalRevenueAmount, short? month, int? year)
         {
             var currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
             var countryList = new BranchBO().GetList();
             FinancialTransactionsVM financialtransaction = new FinancialTransactionsVM();
             if (Id == -1)
             {
-                financialtransaction = new FinancialTransactionsVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount,Month=month,Year=year };
+                financialtransaction = new FinancialTransactionsVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount, Month = month, Year = year };
                 ViewBag.Title = "New Financial Transaction";
 
             }
@@ -455,9 +463,9 @@ namespace EDU.Web.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("FinancialTransactionList", new { month = ftInfo.Month, year = ftInfo.Year});
+            return RedirectToAction("FinancialTransactionList", new { month = ftInfo.Month, year = ftInfo.Year });
         }
-        
+
         [HttpGet]
         public JsonResult GetCurrency(Int16 Id)
         {
@@ -467,7 +475,7 @@ namespace EDU.Web.Controllers
             return Json(currencyCode == null ? "" : currencyCode.LookupCode, JsonRequestBehavior.AllowGet);
 
         }
-        
+
         [HttpPost]
         public JsonResult SubmitFinancialTransaction(FinancialTransaction ft)
         {
