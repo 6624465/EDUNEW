@@ -125,7 +125,9 @@ namespace EDU.Web.Controllers
                             CreatedBy = null,
                             CreatedOn = null,
                             ModifiedBy = null,
-                            ModifiedOn = null
+                            ModifiedOn = null,
+                            Year = year,
+                            Month = month
                         });
                     }
                 }
@@ -187,6 +189,8 @@ namespace EDU.Web.Controllers
                                            MiscExpensesRemarks = x.MiscExpensesRemarks,
                                            GrossProfit = x.GrossProfit,
                                            ProfitAndLossPercent = x.ProfitAndLossPercent,
+                                           Year=x.Year,
+                                           Month=x.Month,
                                            IsActive = true,
                                            IsSubmit = x.IsSubmit,
 
