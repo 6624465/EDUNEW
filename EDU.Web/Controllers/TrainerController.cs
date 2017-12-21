@@ -174,7 +174,8 @@ namespace EDU.Web.Controllers
 
         #region TrainerConfirmation
         // GET: Trainer
-        public PartialViewResult TrainerConfirmation(int Id = -1)
+
+        public PartialViewResult TrainerConfirmation(short? month, int year, int Id = -1)
         {
             TrainingConfirmation TrainingConfInfo = dbContext.TrainingConfirmations.
                 Where(x => x.Id == Id && x.IsActive == true).FirstOrDefault();
@@ -189,6 +190,9 @@ namespace EDU.Web.Controllers
                 TrainingConfInfo = new TrainingConfirmation();
                 TrainingConfInfo.Id = -1;
                 TrainingConfInfo.Public = true;
+                TrainingConfInfo.Year = year;
+                TrainingConfInfo.Month = month;
+
                 return PartialView(TrainingConfInfo);
             }
             else
@@ -202,7 +206,6 @@ namespace EDU.Web.Controllers
         {
             try
             {
-
                 if (TrainerConfInfo.Id == -1)
                 {
                     TrainerConfInfo.CreatedBy = USER_ID;
@@ -211,15 +214,14 @@ namespace EDU.Web.Controllers
 
                     dbContext.TrainingConfirmations.Add(TrainerConfInfo);
                 }
-
                 else
                 {
                     TrainingConfirmation traininfConfDetail = dbContext.TrainingConfirmations.
                         Where(x => x.TrainingConfirmationID == TrainerConfInfo.TrainingConfirmationID).FirstOrDefault();
 
                     traininfConfDetail.Country = TrainerConfInfo.Country;
-                    //traininfConfDetail.Product = TrainerConfInfo.Product;
-                    //traininfConfDetail.Course = TrainerConfInfo.Course;
+                    traininfConfDetail.Product = TrainerConfInfo.Product;
+                    traininfConfDetail.Course = TrainerConfInfo.Course;
                     traininfConfDetail.TotalNoOfDays = TrainerConfInfo.TotalNoOfDays;
                     traininfConfDetail.NoOfStudents = TrainerConfInfo.NoOfStudents;
                     traininfConfDetail.Private = TrainerConfInfo.Private;
@@ -227,6 +229,8 @@ namespace EDU.Web.Controllers
                     traininfConfDetail.LVC = TrainerConfInfo.LVC;
                     traininfConfDetail.StartDate = TrainerConfInfo.StartDate;
                     traininfConfDetail.EndDate = TrainerConfInfo.EndDate;
+                    traininfConfDetail.Year = (TrainerConfInfo.StartDate != null ? TrainerConfInfo.StartDate.Value.Year : TrainerConfInfo.Year);
+                    traininfConfDetail.Month = (TrainerConfInfo.StartDate != null ? Convert.ToInt16(TrainerConfInfo.StartDate.Value.Month) : (TrainerConfInfo.Month == 0 ? Convert.ToInt16(DateTime.UtcNow.Month) : TrainerConfInfo.Month));
                     traininfConfDetail.TrianerId = TrainerConfInfo.TrianerId;
 
                     traininfConfDetail.IsActive = true;
@@ -242,13 +246,17 @@ namespace EDU.Web.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("TrainingConfirmationList");
+            return RedirectToAction("TrainingConfirmationList", new { month = TrainerConfInfo.Month, year = TrainerConfInfo.Year });
         }
 
         [HttpGet]
-        public ActionResult TrainingConfirmationList()
+        public ActionResult TrainingConfirmationList(short? month, int year)
         {
-            List<TrainingConfirmation> trainingConfList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+            List<TrainingConfirmation> trainingConfList = new List<TrainingConfirmation>();
+            if (month == 0)
+                trainingConfList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year).ToList();
+            else
+                trainingConfList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
             List<TrainingConfirmationVM> list = new List<TrainingConfirmationVM>();
             foreach (var item in trainingConfList)
@@ -267,6 +275,8 @@ namespace EDU.Web.Controllers
                 trainingConfirmationVM.LVC = item.LVC;
                 trainingConfirmationVM.StartDate = item.StartDate;
                 trainingConfirmationVM.EndDate = item.EndDate;
+                trainingConfirmationVM.Year = item.Year;
+                trainingConfirmationVM.Month = item.Month;
                 trainingConfirmationVM.TrianerId = item.TrianerId;
                 trainingConfirmationVM.TrianerName = dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault() != null ? dbContext.TrainerInformations.Where(x => x.TrianerId == item.TrianerId).FirstOrDefault().TrainerName : "";
                 trainingConfirmationVM.Country = item.Country;
@@ -291,7 +301,7 @@ namespace EDU.Web.Controllers
                 dbContext.SaveChanges();
             }
             //List<TrainingConfirmationVM> list = new List<TrainingConfirmationVM>();
-            return RedirectToAction("TrainingConfirmationList");
+            return RedirectToAction("TrainingConfirmationList", new { month = trainingConfDetail.Month, year = trainingConfDetail.Year });
         }
         #endregion
     }

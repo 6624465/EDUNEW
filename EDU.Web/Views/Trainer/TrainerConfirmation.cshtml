@@ -9,6 +9,8 @@
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.TrainingConfirmationID)
             @Html.HiddenFor(x => x.IsActive)
+            @Html.HiddenFor(x => x.Year)
+            @Html.HiddenFor(x => x.Month)
             <div class="row">
                 <div class="form-group">
                     <label class="col-md-3 control-label">
@@ -54,7 +56,7 @@
                             @Html.DropDownListFor(x => x.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control", disabled = "disabled", onchange="ExamOrVocherDisbledFileds()"})
+                                new { @class = "form-control", disabled = "disabled", onchange = "ExamOrVocherDisbledFileds()" })
                         }
                         else
                         {
@@ -200,9 +202,9 @@
                         <text>
                 $('#EndDate').val('@Model.EndDate.Value.ToString("dd/MM/yyyy")');</text>
             }
-                $('#Product').attr('disabled', 'disabled');
-                $('#Course').attr('disabled', 'disabled');
-
+                //$('#Product').attr('disabled', 'disabled');
+                //$('#Course').attr('disabled', 'disabled');
+                ProductChangeOnLoad();
                 var product = $('#Product').find("option:selected").text();
                 var coursetext = $("#Course").find("option:selected").text();
 
@@ -256,6 +258,27 @@
             $('#Course').attr('disabled', 'disabled');
             $('#Course').append($('<option></option>').val('').html(''));
         }
+    }
+
+    function ProductChangeOnLoad() {
+            debugger;
+                $.ajax({
+                    url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + $("#Product").val(),
+                method: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    var courseid = $('#Course').val();
+                    $('#Course').empty();
+                    $('#Course').append($('<option></option>').val('').html(''));
+                    $.each(data, function (key, value) {
+                        $('#Course').append($('<option></option>').val(value.Id).html(value.CourseName));
+                    });
+                    $('#Course').val(courseid);
+                },
+                error: function (err) {
+
+                }
+            });
     }
 
 </script>

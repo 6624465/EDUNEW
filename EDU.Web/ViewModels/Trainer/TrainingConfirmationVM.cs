@@ -29,5 +29,7 @@ namespace EDU.Web.ViewModels.Trainer
         public Int16 Country { get; set; }
         public string CountryName { get; set; }
         public bool LVC { get; set; }
+        public Nullable<int> Year { get; set; }
+        public Nullable<short> Month { get; set; }
     }
 }

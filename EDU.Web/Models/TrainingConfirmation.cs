@@ -32,5 +32,7 @@ namespace EDU.Web.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public short Country { get; set; }
         public bool LVC { get; set; }
+        public Nullable<int> Year { get; set; }
+        public Nullable<short> Month { get; set; }
     }
 }

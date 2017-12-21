@@ -210,6 +210,8 @@
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="Country" Type="smallint" Nullable="false" />
           <Property Name="LVC" Type="bit" Nullable="false" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Month" Type="smallint" />
         </EntityType>
         <EntityType Name="VendorPayment">
           <Key>
@@ -446,6 +448,8 @@
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="Country" Type="Int16" Nullable="false" />
           <Property Name="LVC" Type="Boolean" Nullable="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Month" Type="Int16" />
         </EntityType>
         <ComplexType Name="usp_OperationalTransactionReport_Result">
           <Property Type="Int16" Name="Month" Nullable="true" />
@@ -675,6 +679,8 @@
           <EntitySetMapping Name="TrainingConfirmations">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.TrainingConfirmation">
               <MappingFragment StoreEntitySet="TrainingConfirmation">
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="LVC" ColumnName="LVC" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
