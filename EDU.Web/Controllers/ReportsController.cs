@@ -234,7 +234,7 @@ namespace EDU.Web.Reports.Controllers
 
                     totalrevenue = RevenueList.Where(x => x.Country == item.BranchID).Sum(a => a.YearlyTarget);
 
-                    foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == item.BranchID && x.StartDate.Value.Year == year && x.IsActive == true).ToList())
+                    foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == item.BranchID && x.Year == year && x.IsActive == true).ToList())
                     {
                         foreach (var regitem in dbContext.Registrations.Where(x => x.TrainingConfirmationID == tcitem.TrainingConfirmationID && x.IsActive == true).ToList())
                         {
@@ -286,22 +286,22 @@ namespace EDU.Web.Reports.Controllers
                 decimal? novamount = 0;
                 decimal? decamount = 0;
 
-                foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == country && x.StartDate.Value.Year == year && x.IsActive == true && x.Product == item.Id).ToList())
+                foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == country && x.Year == year && x.IsActive == true && x.Product == item.Id).ToList())
                 {
                     foreach (var regitem in dbContext.Registrations.Where(x => x.TrainingConfirmationID == tcitem.TrainingConfirmationID && x.IsActive == true).ToList())
                     {
-                        janamount += tcitem.StartDate.Value.Month == 1 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        febamount += tcitem.StartDate.Value.Month == 2 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        maramount += tcitem.StartDate.Value.Month == 3 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        apramount += tcitem.StartDate.Value.Month == 4 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        mayamount += tcitem.StartDate.Value.Month == 5 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        juneamount += tcitem.StartDate.Value.Month == 6 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        julyamount += tcitem.StartDate.Value.Month == 7 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        augamount += tcitem.StartDate.Value.Month == 8 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        sepamount += tcitem.StartDate.Value.Month == 9 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        octamount += tcitem.StartDate.Value.Month == 10 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        novamount += tcitem.StartDate.Value.Month == 11 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
-                        decamount += tcitem.StartDate.Value.Month == 12 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        janamount += tcitem.Month == 1 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        febamount += tcitem.Month == 2 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        maramount += tcitem.Month == 3 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        apramount += tcitem.Month == 4 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        mayamount += tcitem.Month == 5 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        juneamount += tcitem.Month == 6 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        julyamount += tcitem.Month == 7 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        augamount += tcitem.Month == 8 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        sepamount += tcitem.Month == 9 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        octamount += tcitem.Month == 10 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        novamount += tcitem.Month == 11 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
+                        decamount += tcitem.Month == 12 ? (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3) : 0;
                     }
                 }
 
@@ -352,7 +352,7 @@ namespace EDU.Web.Reports.Controllers
                 else
                 {
                     decimal? achievedRevenue = 0;
-                    foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == country && x.StartDate.Value.Year == year && x.StartDate.Value.Month == month && x.IsActive == true && x.Product == item.Id).ToList())
+                    foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == country && x.Year == year && x.Month == month && x.IsActive == true && x.Product == item.Id).ToList())
                     {
                         foreach (var regitem in dbContext.Registrations.Where(x => x.TrainingConfirmationID == tcitem.TrainingConfirmationID && x.IsActive == true).ToList())
                         {
@@ -426,7 +426,7 @@ namespace EDU.Web.Reports.Controllers
             foreach (var item in RevenueList)
             {
                 decimal? achievedRevenue = 0;
-                foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == item.Country && x.StartDate.Value.Year == year && x.IsActive == true && x.Product == item.Product).ToList())
+                foreach (var tcitem in dbContext.TrainingConfirmations.Where(x => x.Country == item.Country && x.Year == year && x.IsActive == true && x.Product == item.Product).ToList())
                 {
                     foreach (var regitem in dbContext.Registrations.Where(x => x.TrainingConfirmationID == tcitem.TrainingConfirmationID && x.IsActive == true).ToList())
                     {

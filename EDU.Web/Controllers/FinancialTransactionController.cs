@@ -22,7 +22,7 @@ namespace EDU.Web.Controllers
         public ActionResult FinancialTransactionList(short? month, int year)
         {
             List<FinancialTransactionsVM> financialTransactionList = new List<FinancialTransactionsVM>();
-            List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.StartDate.Value.Year == year && x.StartDate.Value.Month == month).ToList();
+            List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
             List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
             List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
