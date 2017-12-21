@@ -7,6 +7,8 @@ namespace EDU.Web.ViewModels.Registration
 {
     public class RegistrationVM
     {
+        public Nullable<int> Year { get; set; }
+        public Nullable<short> Month { get; set; }
         public List<Web.Models.Registration> registration { get; set; }
         public List<Web.Models.TrainingConfirmation> trainingconf { get; set; }
         public TrainingConfirmDtl trainingconfDetail { get; set; }
@@ -35,5 +37,6 @@ namespace EDU.Web.ViewModels.Registration
         public string ProductName { get; set; }
         public string CourseName { get; set; }
         public string TrianerName { get; set; }
+        public bool LVC { get; set; }
     }
 }

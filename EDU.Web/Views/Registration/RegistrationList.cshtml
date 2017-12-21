@@ -76,7 +76,7 @@
     }
     public string ConvertToInt64dollar(decimal? data)
     {
-        if (data != null && data != 0 )
+        if (data != null && data != 0)
             return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
         else
             return null;
@@ -102,6 +102,36 @@
         return x;
     }
 }
+@{
+    var listMonths = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "All",   Value = "0"},
+                                           new SelectListItem {Text = "Janaury",   Value = "1"},
+                                           new SelectListItem {Text = "February", Value = "2"},
+                                           new SelectListItem {Text = "March", Value = "3"},
+                                           new SelectListItem {Text = "April",   Value = "4"},
+                                           new SelectListItem {Text = "May", Value = "5"},
+                                           new SelectListItem {Text = "June", Value = "6"},
+                                           new SelectListItem {Text = "July",   Value = "7"},
+                                           new SelectListItem {Text = "August", Value = "8"},
+                                           new SelectListItem {Text = "September", Value = "9"},
+                                           new SelectListItem {Text = "October",   Value = "10"},
+                                           new SelectListItem {Text = "November", Value = "11"},
+                                           new SelectListItem {Text = "December", Value = "12"}
+                                       };
+}
+@functions {
+    public string TypeColumn(bool isPrivate, bool isPublic, bool islvc)
+    {
+        if (isPrivate)
+            return "Private";
+        else if (isPublic)
+            return "Public";
+        else if (islvc)
+            return "LVC/TOD";
+        return "";
+    }
+}
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -121,6 +151,18 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-1">
+                                @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                            </div>
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Month</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                            </div>
                             <label class="col-md-1 control-label">
                                 <span>Event No.</span>
                             </label>
@@ -180,7 +222,7 @@
                                         <label class="control-label">Type:</label>
                                     </div>
                                     <div class="col-md-1">
-                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? (Model.trainingconfDetail.Private ? "Private" : "Public") : "")" />
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? TypeColumn(Model.trainingconfDetail.Private, Model.trainingconfDetail.Public, Model.trainingconfDetail.LVC) : "")" />
                                     </div>
                                     <div class="col-md-1">
                                         <label class="control-label " style="white-space:nowrap">No of Students:</label>
@@ -245,13 +287,13 @@
                                                     </text>),
                                             grid.Column("VATPercent", "VAT/TAX %",
                                             format:
-                                                    @<text>
-                                                        <div style='width:80px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64dollar(item.VATPercent)
-                                                            </span>
-                                                        </div>
-                                                    </text>
+                                            @<text>
+                                                <div style='width:80px;'>
+                                                    <span class="center">
+                                                        @ConvertToInt64dollar(item.VATPercent)
+                                                    </span>
+                                                </div>
+                                            </text>
                                             , canSort: true, style: "center"),
                                             grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
                                                     format:
@@ -336,17 +378,17 @@
                                                             </span>
                                                         </div>
                                                     </text>)
-                                            @*grid.Column("", "#Action", canSort: false,
-                                                        format:
-                                                        @<text>
-                                                            <div style='width:80px;'>
-                                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                                            {
-                                                                    <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                                }
-                                                            </div>
-                                                        </text>)*@),
+                                                        @*grid.Column("", "#Action", canSort: false,
+                                                            format:
+                                                            @<text>
+                                                                <div style='width:80px;'>
+                                                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                                {
+                                                                        <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                    }
+                                                                </div>
+                                                            </text>)*@),
                                                         tableStyle: "table")
                         </div>
                     </div>
@@ -365,8 +407,7 @@
     <script type="text/javascript">
         $(function () {
             $('#liRegistrationList').addClass('active');
-        });
-        $(document).ready(function () {
+
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (reg > 0)
         {
@@ -374,18 +415,7 @@
             $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
-        });
 
-        function mouseleave(el) {
-            $(el).popover("hide");
-        }
-
-        function mouseover(el) {
-            debugger;
-            $(el).popover("show");
-        }
-
-        $(function () {
             $('#lblmsg').hide();
             $('#TrainingDetails').hide();
             $('#addbtn').attr('disabled', 'disabled');
@@ -405,9 +435,23 @@
             }
         });
 
+        function ChangeMonth() {
+            window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = "", month = "", year = "" })' + '?trainingConfirmationID=&month=' + $('#Month').val() + "&year=" + $('#Year').val();
+        };
+
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            debugger;
+            $(el).popover("show");
+        }
+
+
         function ChangeEventID(el) {
             $('#eventid').val(el.value);
-            window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+            window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = "", month = "", year = "" })' + '?trainingConfirmationID=' + el.value + '&month=' + $('#Month').val() + "&year=" + $('#Year').val();;
         };
 
         function navigatetoDetail() {
@@ -416,21 +460,6 @@
         };
 
         function DeleteRegistration(id) {
-            @*if (confirm("Are you sure, You want to delete")) {
-                $.ajax({
-                    url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data) {
-                            alert("Deleted Successfully");
-                            location.reload();
-                        }
-                    },
-                    error: function (e) {
-                    }
-                });
-            }*@
             swal({
                 title: "Are you sure?",
                 text: "Do you want delete?",

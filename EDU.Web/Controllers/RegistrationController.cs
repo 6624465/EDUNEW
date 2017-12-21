@@ -17,20 +17,25 @@ namespace EDU.Web.Controllers
         EducationEntities dbContext = new EducationEntities();
 
         [HttpGet]
-        public ActionResult RegistrationList(string trainingConfirmationID)
+        public ActionResult RegistrationList(string trainingConfirmationID, short? month, int year)
         {
             RegistrationVM result = new RegistrationVM();
-            result = getListData(trainingConfirmationID);
+            result = getListData(trainingConfirmationID, month, year);
 
             return View(result);
         }
 
-        private RegistrationVM getListData(string trainingConfirmationID)
+        private RegistrationVM getListData(string trainingConfirmationID, short? month, int year)
         {
             RegistrationVM result = new RegistrationVM();
             try
             {
-                List<TrainingConfirmation> tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+                List<TrainingConfirmation> tc = new List<TrainingConfirmation>();
+                if (month == 0)
+                    tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year).ToList();
+                else
+                    tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+
                 List<Registration> List = GetList(trainingConfirmationID);
                 TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
 
@@ -50,6 +55,7 @@ namespace EDU.Web.Controllers
                         NoOfStudents = tcdtl.NoOfStudents,
                         Private = tcdtl.Private,
                         Public = tcdtl.Public,
+                        LVC = tcdtl.LVC,
                         StartDate = tcdtl.StartDate,
                         EndDate = tcdtl.EndDate,
                         TrianerId = tcdtl.TrianerId,
@@ -60,13 +66,15 @@ namespace EDU.Web.Controllers
                         ModifiedOn = tcdtl.ModifiedOn,
                         ProductName = productName,
                         CourseName = courseName,
-                        TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
+                        TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
                     };
                 }
 
                 result.registration = List;
                 result.trainingconf = tc;
                 result.trainingconfDetail = tcd;
+                result.Year = year;
+                result.Month = month;
 
                 long amounttotal = 0;
                 long whttotal = 0;
@@ -215,7 +223,7 @@ namespace EDU.Web.Controllers
                 decimal? BalanceAmount = 0;
                 foreach (var item in regList)
                 {
-                    PaidAmount+= (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
+                    PaidAmount += (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
                     BalanceAmount += item.BalanceAmount;
                 }
 
@@ -231,7 +239,8 @@ namespace EDU.Web.Controllers
                     dbContext.SaveChanges();
                 }
             }
-            return RedirectToAction("RegistrationList", new { trainingConfirmationID = registration.TrainingConfirmationID });
+            TrainingConfirmation tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == registration.TrainingConfirmationID).FirstOrDefault();
+            return RedirectToAction("RegistrationList", new { trainingConfirmationID = registration.TrainingConfirmationID, year = tcdtl.Year, month = tcdtl.Month });
         }
 
         [HttpPost]
