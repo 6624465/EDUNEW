@@ -147,37 +147,40 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-md-1 control-label">
-                                <span class="pull-right">Year</span>
-                            </label>
-                            <div class="col-md-1">
-                                @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
-                            </div>
-                            <label class="col-md-1 control-label">
-                                <span class="pull-right">Month</span>
-                            </label>
-                            <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
-                            </div>
-                            <label class="col-md-1 control-label">
-                                <span>Event No.</span>
-                            </label>
-                            <div class="col-md-2">
-                                <input type="hidden" id="eventid" name="eventid" />
-                                @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
+                    <form id="frmregistration">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Year</span>
+                                </label>
+                                <div class="col-md-1">
+                                    @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Month</span>
+                                </label>
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    <span>Event No.</span>
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="hidden" id="eventid" name="eventid" />
+                                    @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
                                  new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
                                  "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
-                            </div>
-                            <div class="col-md-2">
-                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                {
-                                    <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-pencil"></i>Update Registration Info</button>
-                                }
+                                </div>
+                                <div class="col-md-2">
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                        <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-pencil"></i>Update Registration Info</button>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
+
                     <div class="row css10">
                         <div id="TrainingDetails" class="col-md-12">
                             <div class="row">
@@ -648,7 +651,10 @@
         };
 
         function navigatetoDetail() {
-            @if (Model.trainingconfDetail.Private) {
+            if($('#frmregistration').valid())
+            {
+
+                @if (Model.trainingconfDetail.Private) {
                 <text>
 
             $('#webGridPrivateEdit').show();
@@ -662,8 +668,9 @@
 
             </text>
             }
-            $('#webGridDisplay').hide();
-        };
+                $('#webGridDisplay').hide();
+            };
+        }
         function navigatetoList() {
 
             $('#webGridPrivateEdit').hide();
@@ -673,13 +680,32 @@
 
         function calculateTotalAmount(el)
         {
-
+            debugger;
             var id=el.id;
             var row=id.split("_")
             var rowvalue=row[1];
             var amount=($('#registration_'+rowvalue+'__Amount').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Amount').val())?parseInt($('#registration_'+rowvalue+'__Amount').val()):0);
             var vatpercent=($('#registration_'+rowvalue+'__VATPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__VATPercent').val())?parseInt($('#registration_'+rowvalue+'__VATPercent').val()):0)
             var whtpercent=($('#registration_'+rowvalue+'__WHTPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__WHTPercent').val())?parseInt($('#registration_'+rowvalue+'__WHTPercent').val()):0)
+           
+            //if(vatpercent>100)
+            //{
+            //    var vatpercent=0;
+            //    swal("Here's a message!", "It's pretty, isn't it?");
+            //    $('#registration_'+rowvalue+'__VATPercent').val('')
+            //    $('#registration_'+rowvalue+'__VATAmount').val('')
+                
+            //}
+            //if(whtpercent>100)
+            //{
+            //    var whtpercent=0;
+            //    swal("Here's a message!", "It's pretty, isn't it?");
+            //    $('#registration_'+rowvalue+'__WHTPercent').val('')
+            //    $('#registration_'+rowvalue+'__WHTAmount').val('')
+                
+            //}
+           
+
             var vatamount=0;
             if(amount!=0 &&vatpercent!=0)
             {
@@ -709,7 +735,7 @@
             $('#registration_'+rowvalue+'__TotalAmount').val(totalamount);
             var balanceamount=totalamount-(Payment1+Payment2+Payment3);
             balanceamount=$('#registration_'+rowvalue+'__BalanceAmount').val(balanceamount);
-
+           
         }
 
         function calculateTotalAmoutPrivate()
@@ -747,5 +773,13 @@
             var balanceamount=totalamount-(payment1+payment2+payment3);
             $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
         }
+
+        $('#frmregistration').validate({
+            rules:{
+                TrainingConfirmationID:{
+                    required:true
+                }
+            }
+        })
     </script>
 }
