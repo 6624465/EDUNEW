@@ -18,7 +18,7 @@
                     </label>
                     <div class="col-md-4">
                         @Html.DropDownListFor(x => x.Country,
-                    new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchCode", "BranchName"),
+                    new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
                     "Select Country", new { @class = "form-control" })
                     </div>
                 </div>
