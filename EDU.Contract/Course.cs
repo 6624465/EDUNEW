@@ -27,10 +27,12 @@ namespace EZY.EDU.Contract
     public class CourseVm : IContract
     {
         public int Id { get; set; }
+        public int Product { get; set; }
         public string ProductName { get; set; }
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
         public Int16 NoOfDays { get; set; }
+        public short Country { get; set; }
         public string CountryName { get; set; }
         public Int16 AvailableSeats { get; set; }
         public decimal PublicPrice { get; set; }

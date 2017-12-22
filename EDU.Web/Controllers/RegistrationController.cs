@@ -42,7 +42,7 @@ namespace EDU.Web.Controllers
                 if (tcdtl != null)
                 {
                     string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
-                    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course).FirstOrDefault().CourseName : "";
+                    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault().CourseName : "";
                     tcd = new TrainingConfirmDtl()
                     {
                         Id = tcdtl.Id,
