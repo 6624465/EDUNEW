@@ -28,10 +28,10 @@ namespace EZY.EDU.BusinessFactory
             return courseDAL.Save(newItem);
         }
 
-        public List<Course> GetCoursesByProduct(int Id)
-        {
-            return courseDAL.GetCoursesByProduct(Id);
-        }
+        //public List<Course> GetCoursesByProduct(int Id)
+        //{
+        //    return courseDAL.GetCoursesByProduct(Id);
+        //}
         public List<Course> GetCoursesByProductCoutry(int Id, short country)
         {
             return courseDAL.GetCoursesByProductCoutry(Id, country);

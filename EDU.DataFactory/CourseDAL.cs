@@ -48,7 +48,7 @@ namespace EZY.EDU.DataFactory
                 db.AddInParameter(savecommand, "CourseDescription", System.Data.DbType.String, course.CourseDescription);
                 db.AddInParameter(savecommand, "CourseName", System.Data.DbType.String, course.CourseName);
                 db.AddInParameter(savecommand, "NoOfDays", System.Data.DbType.Int16, course.NoOfDays);
-                db.AddInParameter(savecommand, "Country", System.Data.DbType.String, course.Country);
+                db.AddInParameter(savecommand, "Country", System.Data.DbType.Int16, course.Country);
                 db.AddInParameter(savecommand, "AvailableSeats", System.Data.DbType.Int16, course.AvailableSeats);
                 db.AddInParameter(savecommand, "PublicPrice", System.Data.DbType.Decimal, course.PublicPrice);
                 db.AddInParameter(savecommand, "PrivatePrice", System.Data.DbType.Decimal, course.PrivatePrice);
@@ -110,7 +110,7 @@ namespace EZY.EDU.DataFactory
 
             var command = db.GetStoredProcCommand(DBRoutine.COURSECOUNT);
             db.AddInParameter(command, "CourseName", DbType.String, course.CourseName);
-            db.AddInParameter(command, "Country", DbType.String, course.Country);
+            db.AddInParameter(command, "Country", DbType.Int16, course.Country);
             db.AddInParameter(command, "Product", DbType.Int32, course.Product);
 
             result = Convert.ToInt32(db.ExecuteScalar(command));
@@ -129,13 +129,13 @@ namespace EZY.EDU.DataFactory
             return courseItem;
         }
 
-        public List<Course> GetCoursesByProduct(int Id)
-        {
-            var courseItem = db.ExecuteSprocAccessor(DBRoutine.COURSESBYPRODUCT,
-                                                    MapBuilder<Course>.BuildAllProperties(),
-                                                    Id).ToList();
-            return courseItem;
-        }
+        //public List<Course> GetCoursesByProduct(int Id)
+        //{
+        //    var courseItem = db.ExecuteSprocAccessor(DBRoutine.COURSESBYPRODUCT,
+        //                                            MapBuilder<Course>.BuildAllProperties(),
+        //                                            Id).ToList();
+        //    return courseItem;
+        //}
         public List<Course> GetCoursesByProductCoutry(int Id, short country)
         {
             var courseItem = db.ExecuteSprocAccessor(DBRoutine.COURSESBYPRODUCTCOUNTRY,

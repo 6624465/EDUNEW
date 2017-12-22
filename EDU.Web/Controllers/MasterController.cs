@@ -14,6 +14,16 @@ namespace EDU.Web.Controllers
     [SessionFilter]
     public class MasterController : BaseController
     {
+
+        [HttpGet]
+        public JsonResult GetCoursesByProductCoutry(int Id, short country)
+        {
+            var courseList = new CourseBO().GetCoursesByProductCoutry(Id, country);
+            return Json(courseList, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         #region EduProduct
         [HttpGet]
         public ViewResult EduProductList()
@@ -129,7 +139,7 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
-        public bool IsEduCourseExists(string courseName, string country, int product)
+        public bool IsEduCourseExists(string courseName, short country, int product)
         {
             return new CourseBO().IsEduCourseExists(new Course { CourseName = courseName, Country = country, Product = product, });
         }
@@ -185,7 +195,7 @@ namespace EDU.Web.Controllers
                                             .GetCourseSalesMaster(new CourseSalesMaster { Id = Id });
 
                 courseSalesMasterVm.courseList = new CourseBO()
-                                                    .GetCoursesByProduct(courseSalesMaster.Product)
+                                                    .GetCoursesByProductCoutry(courseSalesMaster.Product, courseSalesMaster.Country)
                                                     .AsEnumerable();
             }
 

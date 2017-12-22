@@ -10,7 +10,7 @@ namespace EZY.EDU.Contract
     {
         public int Id { get; set; }
 
-        public string Country { get; set; }
+        public short Country { get; set; }
 
         public int Product { get; set; }
 

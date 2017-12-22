@@ -13,7 +13,7 @@ namespace EZY.EDU.Contract
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
         public Int16 NoOfDays { get; set; }
-        public string Country { get; set; }
+        public short Country { get; set; }
         public Int16 AvailableSeats { get; set; }
         public decimal PublicPrice { get; set; }
         public decimal PrivatePrice { get; set; }
