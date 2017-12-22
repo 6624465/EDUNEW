@@ -29,7 +29,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Country,
                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                    "Select Country", new { @class = "form-control" })
+                    "Select Country", new { @class = "form-control", onchange = "CountryChange(this);" })
                     </div>
                 </div>
             </div>
@@ -232,13 +232,16 @@
         $('#TotalNoOfDays').attr('disabled', 'disabled');
         $('#TrianerId').attr('disabled', 'disabled');
     }
-
+    function CountryChange(el) {
+        $('#Product').val('');
+        $('#Course').empty();
+        $('#Course').append($('<option></option>').val('').html(''));
+    }
 
     function ProductChange(el) {
         if (el.value) {
-            debugger;
                 $.ajax({
-                    url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + el.value,
+                    url: '@Url.Content("~/Master/GetCoursesByProductCoutry?Id=")' + el.value + '&country=' + $("#Country").val(),
                 method: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
@@ -264,7 +267,7 @@
     function ProductChangeOnLoad() {
             debugger;
                 $.ajax({
-                    url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + $("#Product").val(),
+                    url: '@Url.Content("~/Master/GetCoursesByProductCoutry?Id=")' + $("#Product").val() + '&country=' + $("#Country").val(),
                 method: 'GET',
                 contentType: 'application/json',
                 success: function (data) {

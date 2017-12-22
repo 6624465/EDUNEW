@@ -44,9 +44,9 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Country,
-                                          new SelectList(Model.branchList, "BranchCode", "BranchName"),
+                                          new SelectList(Model.branchList, "BranchID", "BranchName"),
                                        "Select Country",
-                                      new { @class = "form-control" })
+                                      new { @class = "form-control", onchange = "CountryChange(this);" })
                                     </div>
                                 </div>
                             </div>
@@ -530,10 +530,16 @@
             }
         });
 
+        function CountryChange(el) {
+            $('#courseSalesMaster_Product').val('');
+            $('#courseSalesMaster_Course').empty();
+            $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+        }
+
         function ProductChange(el) {
             if (el.value) {
                 $.ajax({
-                    url: '@Url.Content("~/CourseDetail/GetCoursesByProduct?Id=")' + el.value,
+                    url: '@Url.Content("~/Master/GetCoursesByProductCoutry?Id=")' + el.value + '&country=' + $('#courseSalesMaster_Country').val(),
                     method: 'GET',
                     contentType: 'application/json',
                     success: function (data) {
