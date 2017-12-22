@@ -250,7 +250,9 @@
                                         <td>Company/Individual</td>
                                         <td>Amount</td>
                                         <td>VAT/TAX</td>
+                                        <td>VAT/TAX Amount</td>
                                         <td>WHT</td>
+                                        <td>WHT Amount</td>
                                         <td>Payment #1</td>
                                         <td>Payment #2</td>
                                         <td>Payment #3</td>
@@ -278,28 +280,34 @@
                                                 @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm" })
+                                                @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
                                             </td>
                                         </tr>
                                     }
@@ -641,5 +649,36 @@
             $('#webGridDisplay').show();
         };
 
+        function calculateTotalAmount(el)
+        {
+           
+            var id=el.id;
+            var row=id.split("_")
+            var rowvalue=row[1];
+            var amount=($('#registration_'+rowvalue+'__Amount').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Amount').val())?parseInt($('#registration_'+rowvalue+'__Amount').val()):0);
+            var vatpercent=($('#registration_'+rowvalue+'__VATPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__VATPercent').val())?parseInt($('#registration_'+rowvalue+'__VATPercent').val()):0)
+            var whtpercent=($('#registration_'+rowvalue+'__WHTPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__WHTPercent').val())?parseInt($('#registration_'+rowvalue+'__WHTPercent').val()):0)
+            var vatamount=0;
+            if(amount!=0 &&vatpercent!=0)
+            {
+               vatamount=(amount*vatpercent/100);
+                $('#registration_'+rowvalue+'__VATAmount').val(vatamount)
+            }
+            var whtamount=0;
+            if(amount!=0 &&whtpercent!=0)
+            {
+                whtamount=(amount*whtpercent/100);
+                $('#registration_'+rowvalue+'__WHTAmount').val(whtamount)
+            }
+            var Payment1=($('#registration_'+rowvalue+'__Payment1').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment1').val())?parseInt($('#registration_'+rowvalue+'__Payment1').val()):0);
+            var Payment2=($('#registration_'+rowvalue+'__Payment2').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment2').val())?parseInt($('#registration_'+rowvalue+'__Payment2').val()):0);
+            var Payment3=($('#registration_'+rowvalue+'__Payment3').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment3').val())?parseInt($('#registration_'+rowvalue+'__Payment3').val()):0);
+
+            var totalamount=((amount+vatamount)-(whtamount));
+            $('#registration_'+rowvalue+'__TotalAmount').val(totalamount);
+            var balanceamount=totalamount-(Payment1+Payment2+Payment3);
+            balanceamount=$('#registration_'+rowvalue+'__BalanceAmount').val(balanceamount);
+
+        }
     </script>
 }
