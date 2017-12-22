@@ -10,6 +10,7 @@ namespace EDU.Web.ViewModels.Registration
         public Nullable<int> Year { get; set; }
         public Nullable<short> Month { get; set; }
         public List<Web.Models.Registration> registration { get; set; }
+        public List<Web.Models.Registration> registrationPrivate { get; set; }
         public List<Web.Models.TrainingConfirmation> trainingconf { get; set; }
         public TrainingConfirmDtl trainingconfDetail { get; set; }
 

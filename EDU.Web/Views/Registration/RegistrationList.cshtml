@@ -12,6 +12,7 @@
 
     var Student = Model.trainingconfDetail.NoOfStudents;
     var reg = Model.registration.Count();
+    
     var remainReg = Student - reg;
 
     var myArray = (List<decimal?>)ViewData["Summary"];
@@ -237,36 +238,38 @@
                             </div>
                         </div>
                     </div>
-                    @using (Html.BeginForm("SaveRegistrationList", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration", autocomplete = "off" }))
+                    <hr />
+                    @using (Html.BeginForm("SaveRegistrationPublicList", "Registration", FormMethod.Post, new { id = "frmRegistrationPublic", name = "frmRegistrationPublic", autocomplete = "off" }))
                     {
                         <div class="row css25" id="webGridPublicEdit">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <td>S No.</td>
-                                        <td>Student Name</td>
-                                        <td>Email Id</td>
-                                        <td>Contact</td>
-                                        <td>Company/Individual</td>
-                                        <td>Amount</td>
-                                        <td>VAT/TAX</td>
-                                        <td>VAT/TAX Amount</td>
-                                        <td>WHT</td>
-                                        <td>WHT Amount</td>
-                                        <td>Payment #1</td>
-                                        <td>Payment #2</td>
-                                        <td>Payment #3</td>
-                                        <td>Total Amount</td>
-                                        <td>Balance Amount</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (int i = 0; i < Model.registration.Count(); i++)
-                                    {
+                            <div class="col-sm-12">
+                                <table class="table" style="overflow-x: scroll; width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <td>S No.</td>
+                                            <td>Student Name</td>
+                                            <td>Email Id</td>
+                                            <td>Contact</td>
+                                            <td>Company/Individual</td>
+                                            <td>Amount</td>
+                                            <td>VAT/TAX</td>
+                                            <td>VAT/TAX Amount</td>
+                                            <td>WHT</td>
+                                            <td>WHT Amount</td>
+                                            <td>Payment #1</td>
+                                            <td>Payment #2</td>
+                                            <td>Payment #3</td>
+                                            <td>Total Amount</td>
+                                            <td>Balance Amount</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.registration.Count(); i++)
+                                        {
                                         @Html.HiddenFor(x => x.registration[i].RegistrationId)
                                         @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
                                         <tr>
-                                            <td>@i.</td>
+                                            <td>@(i + 1).</td>
                                             <td>
                                                 @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
                                             </td>
@@ -310,127 +313,139 @@
                                                 @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
                                             </td>
                                         </tr>
-                                    }
-                                    <tr>
-                                        <td colspan="15">
-                                            <div class="row css25">
-                                                <div class="col-md-12">
-                                                    <div class="text-center">
-                                                        <button id="btnSave" type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                        }
+                                        <tr>
+                                            <td colspan="15">
+                                                <div class="row css25">
+                                                    <div class="col-md-12">
+                                                        <div class="text-center">
+                                                            <button id="btnSave" type="button" onclick="SaveRegistrationPublic()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                            <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row css10" id="PrivateElementsOnly">
-                            <table class="table">
-                                <thead>
-                                    <tr class="center">
-                                        <td>Amount</td>
-                                        <td>VAT/TAX</td>
-                                        <td>VAT/TAX Amout</td>
-                                        <td>WHT</td>
-                                        <td>WHT Amount</td>
-                                        <td>Payment #1</td>
-                                        <td>Payment #2</td>
-                                        <td>Payment #3</td>
-                                        <td>Total Amount</td>
-                                        <td>Balance Amount</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @Html.HiddenFor(x => x.registration.FirstOrDefault().TrainingConfirmationID)
-                                    @Html.HiddenFor(x => x.registration.FirstOrDefault().RegistrationId)
-                                    <tr>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().VATAmount, new { @class = "form-control input-sm", @readonly = true })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().WHTAmount, new { @class = "form-control input-sm", @readonly = true })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().TotalAmount, new { @class = "form-control input-sm", @readonly = true })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row css25" id="webGridPrivateEdit">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <td>S No.</td>
-                                        <td>Student Name</td>
-                                        <td>Email Id</td>
-                                        <td>Contact</td>
-                                        <td>Company/Individual</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (int i = 0; i < Model.registration.Count(); i++)
-                                    {
-                                        @Html.HiddenFor(x => x.registration[i].RegistrationId)
-                                        @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
-                                        <tr>
-                                            <td>@i.</td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
                                             </td>
                                         </tr>
-                                    }
-                                    <tr>
-                                        <td colspan="15">
-                                            <div class="row css25">
-                                                <div class="col-md-12">
-                                                    <div class="text-center">
-                                                        <button id="btnSave" type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    @using (Html.BeginForm("SaveRegistrationPrivateList", "Registration", FormMethod.Post, new { id = "frmRegistrationPrivate", name = "frmRegistrationPrivate", autocomplete = "off" }))
+                    {
+                        <div class="row css25" id="webGridPrivateEdit">
+                            <div class="col-sm-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="center">
+                                            <td>Amount</td>
+                                            <td>VAT/TAX</td>
+                                            <td>VAT/TAX Amout</td>
+                                            <td>WHT</td>
+                                            <td>WHT Amount</td>
+                                            <td>Payment #1</td>
+                                            <td>Payment #2</td>
+                                            <td>Payment #3</td>
+                                            <td>Total Amount</td>
+                                            <td>Balance Amount</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @for (int i = 0; i < 1; i++)
+                                        {
+                                            if (Model.registrationPrivate.Count() > 0)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="row css25">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td>S No.</td>
+                                                <td>Student Name</td>
+                                                <td>Email Id</td>
+                                                <td>Contact</td>
+                                                <td>Company/Individual</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 0; i < Model.registrationPrivate.Count(); i++)
+                                            {
+                                                @Html.HiddenFor(x => x.registrationPrivate[i].RegistrationId)
+                                                @Html.HiddenFor(x => x.registrationPrivate[i].TrainingConfirmationID)
+                                                <tr>
+                                                    <td>@(i + 1).</td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].StudentName, new { @class = "form-control input-sm" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Email, new { @class = "form-control input-sm" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Contact, new { @class = "form-control input-sm" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].CompanyName, new { @class = "form-control input-sm" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td colspan="15">
+                                                    <div class="row css25">
+                                                        <div class="col-md-12">
+                                                            <div class="text-center">
+                                                                <button id="btnSave" type="button" onclick="SaveRegistrationPrivate()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                                <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     }
                     <div class="row css25" id="webGridDisplay">
-                        <div style="overflow-x: scroll; width: 100%" id="gridContent">
-                            @grid.GetHtml(
+                        <div class="col-sm-12">
+                            <div style="overflow-x: scroll; width: 100%" id="gridContent">
+                                @grid.GetHtml(
                         columns: grid.Columns(
                             grid.Column("", "S No.", canSort: false,
                                         format:
@@ -558,6 +573,7 @@
                                             </div>
                                         </text>)),
                                             tableStyle: "table")
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -576,14 +592,14 @@
         $(function () {
             $('#webGridPublicEdit').hide();
             $('#webGridPrivateEdit').hide();
-            $('#PrivateElementsOnly').hide();
+
             $('#liRegistrationList').addClass('active');
 
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (reg > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[7]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0])</span></td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td></td><td><span class="center">         @ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[4]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[5])</span></td><td><span class="center">         @ConvertToInt64dollar(myArray[6]) </span></td><td><span class="center">         @ConvertToInt64dollar(myArray[8]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
 
@@ -594,20 +610,18 @@
             if (trid != null && trid != '') {
                 $('#TrainingDetails').show();
                 $('#lblmsg').show();
-                @*@if(Model.registration.Count() >= Model.trainingconfDetail.NoOfStudents)
-                    {
-                    <text>$('#addbtn').attr('disabled', 'disabled');</text>
-                }
-                else
-                {
-                    <text>$('#addbtn').removeAttr('disabled', 'disabled');</text>
-                }*@
             }
         });
 
-        function SaveRegistration() {
-            if ($('#frmRegistration').valid()) {
-                $('#frmRegistration').submit();
+        function SaveRegistrationPublic() {
+            if ($('#frmRegistrationPublic').valid()) {
+                $('#frmRegistrationPublic').submit();
+            }
+        }
+        function SaveRegistrationPrivate() {
+            debugger;
+            if ($('#frmRegistrationPrivate').valid()) {
+                $('#frmRegistrationPrivate').submit();
             }
         }
 
@@ -636,7 +650,7 @@
         function navigatetoDetail() {
             @if (Model.trainingconfDetail.Private) {
                 <text>
-            $('#PrivateElementsOnly').show();
+
             $('#webGridPrivateEdit').show();
             $('#webGridPublicEdit').hide();
             </text>
@@ -645,13 +659,13 @@
                 <text>
             $('#webGridPublicEdit').show();
             $('#webGridPrivateEdit').hide();
-            $('#PrivateElementsOnly').hide();
+
             </text>
             }
             $('#webGridDisplay').hide();
         };
         function navigatetoList() {
-            $('#PrivateElementsOnly').hide();
+
             $('#webGridPrivateEdit').hide();
             $('#webGridPublicEdit').hide();
             $('#webGridDisplay').show();
@@ -700,37 +714,38 @@
 
         function calculateTotalAmoutPrivate()
         {
+            var p = $('#registrationPrivate_0__Amount').val();
             debugger;
-            var amount=($('#Amount').val()!="" && !isNaN($('#Amount').val())?parseInt($('#Amount').val()):0)
-            var vatpercent=($('#VATPercent').val()!="" && !isNaN($('#VATPercent').val())?parseInt($('#VATPercent').val()):0)
-            var whtpercent=($('#WHTPercent').val()!="" && !isNaN($('#WHTPercent').val())?parseInt($('#WHTPercent').val()):0)
+            var amount = ($('#registrationPrivate_0__Amount').val() != "" && !isNaN($('#registrationPrivate_0__Amount').val()) ? parseInt($('#registrationPrivate_0__Amount').val()):0)
+            var vatpercent = ($('#registrationPrivate_0__VATPercent').val() != "" && !isNaN($('#registrationPrivate_0__VATPercent').val()) ? parseInt($('#registrationPrivate_0__VATPercent').val()):0)
+            var whtpercent = ($('#registrationPrivate_0__WHTPercent').val() != "" && !isNaN($('#registrationPrivate_0__WHTPercent').val()) ? parseInt($('#registrationPrivate_0__WHTPercent').val()):0)
             var vatamount=0;
             if(amount!=0 &&vatpercent!=0)
             {
                 vatamount=(amount*vatpercent/100);
-                $('#VATAmount').val(vatamount);
+                $('#registrationPrivate_0__VATAmount').val(vatamount);
             }
             else
             {
-                $('#VATAmount').val('');
+                $('#registrationPrivate_0__VATAmount').val('');
             }
 
             var whtamount=0;
             if(amount!=0 &&whtpercent!=0)
             {
                 whtamount=(amount*whtpercent/100);
-                $('#WHTAmount').val(whtamount);
+                $('#registrationPrivate_0__WHTAmount').val(whtamount);
             }
             else{
-                $('#WHTAmount').val('');
+                $('#registrationPrivate_0__WHTAmount').val('');
             }
-            var payment1=($('#Payment1').val()!="" && !isNaN($('#Payment1').val())?parseInt($('#Payment1').val()):0);
-            var payment2=($('#Payment2').val()!="" && !isNaN($('#Payment2').val())?parseInt($('#Payment2').val()):0);
-            var payment3=($('#Payment3').val()!="" && !isNaN($('#Payment3').val())?parseInt($('#Payment3').val()):0);
+            var payment1 = ($('#registrationPrivate_0__Payment1').val() != "" && !isNaN($('#registrationPrivate_0__Payment1').val()) ? parseInt($('#registrationPrivate_0__Payment1').val()):0);
+            var payment2 = ($('#registrationPrivate_0__Payment2').val() != "" && !isNaN($('#registrationPrivate_0__Payment2').val()) ? parseInt($('#registrationPrivate_0__Payment2').val()):0);
+            var payment3 = ($('#registrationPrivate_0__Payment3').val() != "" && !isNaN($('#registrationPrivate_0__Payment3').val()) ? parseInt($('#registrationPrivate_0__Payment3').val()):0);
             var totalamount=((amount+vatamount)-(whtamount));
-            $('#TotalAmount').val(totalamount);
+            $('#registrationPrivate_0__TotalAmount').val(totalamount);
             var balanceamount=totalamount-(payment1+payment2+payment3);
-            $('#BalanceAmount').val(balanceamount);
+            $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
         }
     </script>
 }
