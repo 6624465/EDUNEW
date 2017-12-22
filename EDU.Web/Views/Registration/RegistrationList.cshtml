@@ -332,7 +332,9 @@
                                     <tr class="center">
                                         <td>Amount</td>
                                         <td>VAT/TAX</td>
+                                        <td>VAT/TAX Amout</td>
                                         <td>WHT</td>
+                                        <td>WHT Amount</td>
                                         <td>Payment #1</td>
                                         <td>Payment #2</td>
                                         <td>Payment #3</td>
@@ -345,28 +347,34 @@
                                     @Html.HiddenFor(x => x.registration.FirstOrDefault().RegistrationId)
                                     <tr>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Amount, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().WHTPercent, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().VATPercent, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().VATAmount, new { @class = "form-control input-sm", @readonly = true })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment1, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment2, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().WHTAmount, new { @class = "form-control input-sm", @readonly = true })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment3, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().TotalAmount, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().BalanceAmount, new { @class = "form-control input-sm" })
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().TotalAmount, new { @class = "form-control input-sm", @readonly = true })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.registration.FirstOrDefault().BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
                                         </td>
                                     </tr>
                                 </tbody>
@@ -651,7 +659,7 @@
 
         function calculateTotalAmount(el)
         {
-           
+
             var id=el.id;
             var row=id.split("_")
             var rowvalue=row[1];
@@ -661,8 +669,12 @@
             var vatamount=0;
             if(amount!=0 &&vatpercent!=0)
             {
-               vatamount=(amount*vatpercent/100);
+                vatamount=(amount*vatpercent/100);
                 $('#registration_'+rowvalue+'__VATAmount').val(vatamount)
+            }
+            else
+            {
+                $('#registration_'+rowvalue+'__VATAmount').val('')
             }
             var whtamount=0;
             if(amount!=0 &&whtpercent!=0)
@@ -670,6 +682,11 @@
                 whtamount=(amount*whtpercent/100);
                 $('#registration_'+rowvalue+'__WHTAmount').val(whtamount)
             }
+            else{
+                $('#registration_'+rowvalue+'__WHTAmount').val('')
+
+            }
+
             var Payment1=($('#registration_'+rowvalue+'__Payment1').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment1').val())?parseInt($('#registration_'+rowvalue+'__Payment1').val()):0);
             var Payment2=($('#registration_'+rowvalue+'__Payment2').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment2').val())?parseInt($('#registration_'+rowvalue+'__Payment2').val()):0);
             var Payment3=($('#registration_'+rowvalue+'__Payment3').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment3').val())?parseInt($('#registration_'+rowvalue+'__Payment3').val()):0);
@@ -679,6 +696,41 @@
             var balanceamount=totalamount-(Payment1+Payment2+Payment3);
             balanceamount=$('#registration_'+rowvalue+'__BalanceAmount').val(balanceamount);
 
+        }
+
+        function calculateTotalAmoutPrivate()
+        {
+            debugger;
+            var amount=($('#Amount').val()!="" && !isNaN($('#Amount').val())?parseInt($('#Amount').val()):0)
+            var vatpercent=($('#VATPercent').val()!="" && !isNaN($('#VATPercent').val())?parseInt($('#VATPercent').val()):0)
+            var whtpercent=($('#WHTPercent').val()!="" && !isNaN($('#WHTPercent').val())?parseInt($('#WHTPercent').val()):0)
+            var vatamount=0;
+            if(amount!=0 &&vatpercent!=0)
+            {
+                vatamount=(amount*vatpercent/100);
+                $('#VATAmount').val(vatamount);
+            }
+            else
+            {
+                $('#VATAmount').val('');
+            }
+
+            var whtamount=0;
+            if(amount!=0 &&whtpercent!=0)
+            {
+                whtamount=(amount*whtpercent/100);
+                $('#WHTAmount').val(whtamount);
+            }
+            else{
+                $('#WHTAmount').val('');
+            }
+            var payment1=($('#Payment1').val()!="" && !isNaN($('#Payment1').val())?parseInt($('#Payment1').val()):0);
+            var payment2=($('#Payment2').val()!="" && !isNaN($('#Payment2').val())?parseInt($('#Payment2').val()):0);
+            var payment3=($('#Payment3').val()!="" && !isNaN($('#Payment3').val())?parseInt($('#Payment3').val()):0);
+            var totalamount=((amount+vatamount)-(whtamount));
+            $('#TotalAmount').val(totalamount);
+            var balanceamount=totalamount-(payment1+payment2+payment3);
+            $('#BalanceAmount').val(balanceamount);
         }
     </script>
 }
