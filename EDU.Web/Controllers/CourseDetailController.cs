@@ -66,6 +66,12 @@ namespace EDU.Web.Controllers
             var courseList = new CourseBO().GetCoursesByProduct(Id);
             return Json(courseList, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public JsonResult GetCoursesByProductCoutry(int Id, short country)
+        {
+            var courseList = new CourseBO().GetCoursesByProductCoutry(Id, country);
+            return Json(courseList, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public RedirectToRouteResult SaveCourseDetail(CourseDetail courseDetail)

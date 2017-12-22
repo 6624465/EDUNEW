@@ -142,7 +142,7 @@
                         &nbsp;&nbsp;<span id="lblmsg">(&nbsp;<label style="color:red;margin-top:14px"> Pending Registrations :@remainReg</label>&nbsp;)</span>
                     </div>
                     <div class="box-tools">
-                        
+
                     </div>
                 </div>
                 <div class="box-body">
@@ -236,10 +236,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row css25" id="webGridEdit">
-                        @using (Html.BeginForm("SaveRegistrationList", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration", autocomplete = "off" }))
-                        {
+                    </div>@using (Html.BeginForm("SaveRegistrationList", "Registration", FormMethod.Post, new { id = "frmRegistration", name = "frmRegistration", autocomplete = "off" }))
+                    {
+                        <div class="row css25" id="webGridPublicEdit">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -260,49 +259,49 @@
                                 </thead>
                                 <tbody>
                                     @for (int i = 0; i < Model.registration.Count(); i++)
-                                {
-                                    @Html.HiddenFor(x => x.registration[i].RegistrationId)
-                                    @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
-                                    <tr>
-                                        <td>@i.</td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm" })
-                                        </td>
-                                    </tr>
-                                }
+                                    {
+                                        @Html.HiddenFor(x => x.registration[i].RegistrationId)
+                                        @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
+                                        <tr>
+                                            <td>@i.</td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm" })
+                                            </td>
+                                        </tr>
+                                    }
                                     <tr>
                                         <td colspan="15">
                                             <div class="row css25">
@@ -317,25 +316,91 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-                        }
-                    </div>
+                        </div>
+                        <div class="row css25" id="webGridPrivateEdit">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>S No.</td>
+                                        <td>Student Name</td>
+                                        <td>Email Id</td>
+                                        <td>Contact</td>
+                                        <td>Company/Individual</td>
+                                        @*  <td>Amount</td>
+                                            <td>VAT/TAX</td>
+                                            <td>WHT</td>
+                                            <td>Payment #1</td>
+                                            <td>Payment #2</td>
+                                            <td>Payment #3</td>
+                                            <td>Total Amount</td>
+                                            <td>Balance Amount</td>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.registration.Count(); i++)
+                                    {
+                                        @Html.HiddenFor(x => x.registration[i].RegistrationId)
+                                        @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
+                                        <tr>
+                                            <td>@i.</td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
+                                            </td>
+                                            @*<td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm" })
+                                                </td>*@
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="15">
+                                            <div class="row css25">
+                                                <div class="col-md-12">
+                                                    <div class="text-center">
+                                                        <button id="btnSave" type="button" onclick="SaveRegistration()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                     <div class="row css25" id="webGridDisplay">
                         <div style="overflow-x: scroll; width: 100%" id="gridContent">
                             @grid.GetHtml(
                         columns: grid.Columns(
-
-                            @*grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                    {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteRegistration(@item.RegistrationId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </div>
-                                </text>),*@
                             grid.Column("", "S No.", canSort: false,
                                         format:
                                         @<text>
@@ -441,15 +506,6 @@
                                                     </span>
                                                 </div>
                                         </text>),
-                            @*grid.Column("OtherDeductionsAmount", "Other Deductions", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:100px;'>
-                                        <span class="center">
-                                            @ConvertToInt64dollar(item.OtherDeductionsAmount)
-                                        </span>
-                                    </div>
-                                </text>),*@
                                 grid.Column("BalanceAmount", "Balance", canSort: true,
                                         format:
                                         @<text>
@@ -487,7 +543,9 @@
     {
     <script type="text/javascript">
         $(function () {
-            $('#webGridEdit').hide();
+            $('#webGridPublicEdit').hide();
+            $('#webGridPrivateEdit').hide();
+
             $('#liRegistrationList').addClass('active');
 
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
@@ -500,7 +558,6 @@
 
             $('#lblmsg').hide();
             $('#TrainingDetails').hide();
-            //$('#addbtn').attr('disabled', 'disabled');
             var trid = $('#TrainingConfirmationID').val();
             debugger;
             if (trid != null && trid != '') {
@@ -519,8 +576,6 @@
 
         function SaveRegistration() {
             if ($('#frmRegistration').valid()) {
-                //$('#btnSave').attr('disabled', 'disabled');
-                //RemoveDisabledFields();
                 $('#frmRegistration').submit();
             }
         }
@@ -541,47 +596,32 @@
         function ChangeEventID(el) {
             $('#eventid').val(el.value);
             window.location = '@Url.Action("RegistrationList", "Registration", new { trainingConfirmationID = "", month = "", year = "" })' + '?trainingConfirmationID=' + el.value + '&month=' + $('#Month').val() + "&year=" + $('#Year').val();
+
+            $('#webGridDisplay').show();
+            $('#webGridPublicEdit').hide();
+            $('#webGridPrivateEdit').hide();
         };
 
         function navigatetoDetail() {
-            $('#webGridEdit').show();
+            @if (Model.trainingconfDetail.Private) {
+                <text>
+            $('#webGridPrivateEdit').show();
+            $('#webGridPublicEdit').hide();
+            </text>
+            }
+            else {
+                <text>
+            $('#webGridPublicEdit').show();
+            $('#webGridPrivateEdit').hide();
+            </text>
+            }
             $('#webGridDisplay').hide();
-            @*var trid = $('#TrainingConfirmationID').val();
-            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid+ '&month=' + $('#Month').val() + "&year=" + $('#Year').val();*@
         };
         function navigatetoList() {
-            $('#webGridEdit').hide();
+            $('#webGridPrivateEdit').hide();
+            $('#webGridPublicEdit').hide();
             $('#webGridDisplay').show();
-            @*var trid = $('#TrainingConfirmationID').val();
-            window.location = '@Url.Content("~/Registration/Registration")' + "?Id=-1&trainingConfirmationID=" + trid + '&month=' + $('#Month').val() + "&year=" + $('#Year').val();*@
-        };
+            };
 
-        @*function DeleteRegistration(id) {
-            swal({
-                title: "Are you sure?",
-                text: "Do you want delete?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            },
-    function () {
-        $.ajax({
-            url: '@Url.Content("~/Registration/DeleteRegistration?Id=")' + id,
-            type: 'POST',
-            contentType: 'application/json',
-            success: function (data) {
-                if (data) {
-                    swal("Deleted!", "Your Registration record has been deleted.", "success");
-                    location.reload();
-                }
-            },
-            error: function (e) {
-            }
-        });
-
-    });
-        }*@
     </script>
 }

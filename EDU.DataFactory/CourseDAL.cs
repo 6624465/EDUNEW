@@ -136,5 +136,12 @@ namespace EZY.EDU.DataFactory
                                                     Id).ToList();
             return courseItem;
         }
+        public List<Course> GetCoursesByProductCoutry(int Id, short country)
+        {
+            var courseItem = db.ExecuteSprocAccessor(DBRoutine.COURSESBYPRODUCTCOUNTRY,
+                                                    MapBuilder<Course>.BuildAllProperties(),
+                                                    Id, country).ToList();
+            return courseItem;
+        }
     }
 }

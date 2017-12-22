@@ -61,6 +61,7 @@ namespace EZY.EDU.DataFactory
         public const string SELECTEDUCOURSE = "[Edu].[usp_CourseSelect]";
         public const string SELECTEDUCOURSETABLEDATA = "[Edu].[CourseTableData]";
         public const string COURSESBYPRODUCT = "[Edu].[usp_CoursesByProduct]";
+        public const string COURSESBYPRODUCTCOUNTRY = "[Edu].[usp_CoursesByProductCountry]";
         public const string COURSECOUNT = "[Edu].[usp_CourseCount]";
 
         /// <summary>

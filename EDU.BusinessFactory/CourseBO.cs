@@ -32,6 +32,10 @@ namespace EZY.EDU.BusinessFactory
         {
             return courseDAL.GetCoursesByProduct(Id);
         }
+        public List<Course> GetCoursesByProductCoutry(int Id, short country)
+        {
+            return courseDAL.GetCoursesByProductCoutry(Id, country);
+        }
         
         public bool DeleteEduCourse(Course item)
         {
