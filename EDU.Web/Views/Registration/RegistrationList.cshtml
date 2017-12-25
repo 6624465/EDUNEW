@@ -12,7 +12,7 @@
 
     var Student = Model.trainingconfDetail.NoOfStudents;
     var reg = Model.registration.Count();
-    
+
     var remainReg = Student - reg;
 
     var myArray = (List<decimal?>)ViewData["Summary"];
@@ -86,21 +86,22 @@
     public string PaymentDetails(DateTime? date, short? type, string no)
     {
         string x = "";
-        if (type != null)
-        {
-            if (type == 1)
-                x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-                "Payment Type : Cash";
-            else if (type == 2)
-                x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-                    "Payment Type : Cheque" + "</Br>" +
-                    "Cheque No : " + (no == null ? "" : no);
-            else if (type == 3)
-                x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-                    "Payment Type : Bank Transfer" + "</Br>" +
-                    "Transaction ID : " + (no == null ? "" : no);
-        }
-        return x;
+        x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>";
+        //if (type != null)
+        //{
+        //    if (type == 1)
+        //        x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+        //        "Payment Type : Cash";
+        //    else if (type == 2)
+        //        x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+        //            "Payment Type : Cheque" + "</Br>" +
+        //            "Cheque No : " + (no == null ? "" : no);
+        //    else if (type == 3)
+        //        x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
+        //            "Payment Type : Bank Transfer" + "</Br>" +
+        //            "Transaction ID : " + (no == null ? "" : no);
+        //}
+            return x;
     }
 }
 @{
@@ -260,8 +261,11 @@
                                             <td>WHT</td>
                                             <td>WHT Amount</td>
                                             <td>Payment #1</td>
+                                            <td>Date</td>
                                             <td>Payment #2</td>
+                                            <td>Date</td>
                                             <td>Payment #3</td>
+                                            <td>Date</td>
                                             <td>Total Amount</td>
                                             <td>Balance Amount</td>
                                         </tr>
@@ -269,53 +273,77 @@
                                     <tbody>
                                         @for (int i = 0; i < Model.registration.Count(); i++)
                                         {
-                                        @Html.HiddenFor(x => x.registration[i].RegistrationId)
-                                        @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
-                                        <tr>
-                                            <td>@(i + 1).</td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
-                                            </td>
-                                        </tr>
+                                            @Html.HiddenFor(x => x.registration[i].RegistrationId)
+                                            @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
+                                            <tr>
+                                                <td>@(i + 1).</td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                </td>
+                                                <td>
+                                                    <div class="input-group date" id="Payment1Dt">
+                                                        @Html.TextBoxFor(x => x.registration[i].Payment1Date, new { @class = "form-control dtCss input-sm" })
+                                                        <span class="input-group-addon">
+                                                            <i class="ion ion-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                </td>
+                                                <td>
+                                                    <div class="input-group date" id="Payment2Dt">
+                                                        @Html.TextBoxFor(x => x.registration[i].Payment2Date, new { @class = "form-control dtCss input-sm" })
+                                                        <span class="input-group-addon">
+                                                            <i class="ion ion-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                </td>
+                                                <td>
+                                                    <div class="input-group date" id="Payment3Dt">
+                                                        @Html.TextBoxFor(x => x.registration[i].Payment3Date, new { @class = "form-control dtCss input-sm" })
+                                                        <span class="input-group-addon">
+                                                            <i class="ion ion-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                </td>
+                                            </tr>
                                         }
                                         <tr>
                                             <td colspan="15">
@@ -347,8 +375,11 @@
                                             <td>WHT</td>
                                             <td>WHT Amount</td>
                                             <td>Payment #1</td>
+                                            <td>Date</td>
                                             <td>Payment #2</td>
+                                            <td>Date</td>
                                             <td>Payment #3</td>
+                                            <td>Date</td>
                                             <td>Total Amount</td>
                                             <td>Balance Amount</td>
                                         </tr>
@@ -379,10 +410,34 @@
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
+                                                        <div class="input-group date" id="Payment1Dte">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1Date, new { @class = "form-control dtCss input-sm" })
+                                                            <span class="input-group-addon">
+                                                                <i class="ion ion-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
+                                                        <div class="input-group date" id="Payment2Dte">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2Date, new { @class = "form-control dtCss input-sm" })
+                                                            <span class="input-group-addon">
+                                                                <i class="ion ion-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group date" id="Payment3Dte">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3Date, new { @class = "form-control dtCss input-sm" })
+                                                            <span class="input-group-addon">
+                                                                <i class="ion ion-calendar"></i>
+                                                            </span>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
@@ -578,12 +633,11 @@
                                             tableStyle: "table")
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 css10">
                             <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -593,6 +647,18 @@
     {
     <script type="text/javascript">
         $(function () {
+            $('#Payment1Dt,#Payment2Dt,#Payment3Dt,#Payment1Dte,#Payment2Dte,#Payment3Dte').datetimepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down'
+                },
+                //minDate: new Date(),
+                //maxDate: new Date(),
+                format: 'DD/MM/YYYY'
+            });
+
             $('#webGridPublicEdit').hide();
             $('#webGridPrivateEdit').hide();
 
@@ -687,14 +753,14 @@
             var amount=($('#registration_'+rowvalue+'__Amount').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Amount').val())?parseInt($('#registration_'+rowvalue+'__Amount').val()):0);
             var vatpercent=($('#registration_'+rowvalue+'__VATPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__VATPercent').val())?parseInt($('#registration_'+rowvalue+'__VATPercent').val()):0)
             var whtpercent=($('#registration_'+rowvalue+'__WHTPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__WHTPercent').val())?parseInt($('#registration_'+rowvalue+'__WHTPercent').val()):0)
-           
+
             //if(vatpercent>100)
             //{
             //    var vatpercent=0;
             //    swal("Here's a message!", "It's pretty, isn't it?");
             //    $('#registration_'+rowvalue+'__VATPercent').val('')
             //    $('#registration_'+rowvalue+'__VATAmount').val('')
-                
+
             //}
             //if(whtpercent>100)
             //{
@@ -702,9 +768,9 @@
             //    swal("Here's a message!", "It's pretty, isn't it?");
             //    $('#registration_'+rowvalue+'__WHTPercent').val('')
             //    $('#registration_'+rowvalue+'__WHTAmount').val('')
-                
+
             //}
-           
+
 
             var vatamount=0;
             if(amount!=0 &&vatpercent!=0)
@@ -735,7 +801,7 @@
             $('#registration_'+rowvalue+'__TotalAmount').val(totalamount);
             var balanceamount=totalamount-(Payment1+Payment2+Payment3);
             balanceamount=$('#registration_'+rowvalue+'__BalanceAmount').val(balanceamount);
-           
+
         }
 
         function calculateTotalAmoutPrivate()
