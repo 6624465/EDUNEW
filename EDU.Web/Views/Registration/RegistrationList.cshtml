@@ -59,7 +59,7 @@
     .tablescroll {
         display: block;
         overflow-x: scroll;
-        width: 100%
+        width: 100%;
     }
 </style>
 @functions {
@@ -680,23 +680,23 @@
                 if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment1 != null)
                 {
                     <text>
-                    $('#registration_'+@i+'__Payment1').attr('disabled', 'disabled');
-                    $('#registration_' +@i+'__Payment1Date').attr('disabled', 'disabled');
-                    </text>
+            $('#registration_'+@i+'__Payment1').attr('disabled', 'disabled');
+            $('#registration_' +@i+'__Payment1Date').attr('disabled', 'disabled');
+            </text>
                 }
                 if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment2 != null)
                 {
                     <text>
-                    $('#registration_'+@i+'__Payment2').attr('disabled', 'disabled');
-                    $('#registration_' +@i+'__Payment2Date').attr('disabled', 'disabled');
-                    </text>
+            $('#registration_'+@i+'__Payment2').attr('disabled', 'disabled');
+            $('#registration_' +@i+'__Payment2Date').attr('disabled', 'disabled');
+            </text>
                 }
                 if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment3 != null)
                 {
                     <text>
-                    $('#registration_'+@i+'__Payment3').attr('disabled', 'disabled');
-                    $('#registration_' +@i+'__Payment3Date').attr('disabled', 'disabled');
-                    </text>
+            $('#registration_'+@i+'__Payment3').attr('disabled', 'disabled');
+            $('#registration_' +@i+'__Payment3Date').attr('disabled', 'disabled');
+            </text>
                 }
             }
 
@@ -708,23 +708,23 @@
                     if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment1 != null)
                     {
                     <text>
-                    $('#registrationPrivate_'+@i+'__Payment1').attr('disabled', 'disabled');
-                    $('#registrationPrivate_' +@i+'__Payment1Date').attr('disabled', 'disabled');
-                    </text>
+            $('#registrationPrivate_'+@i+'__Payment1').attr('disabled', 'disabled');
+            $('#registrationPrivate_' +@i+'__Payment1Date').attr('disabled', 'disabled');
+            </text>
                     }
                     if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment2 != null)
                     {
                     <text>
-                    $('#registrationPrivate_'+@i+'__Payment2').attr('disabled', 'disabled');
-                    $('#registrationPrivate_' +@i+'__Payment2Date').attr('disabled', 'disabled');
-                    </text>
+            $('#registrationPrivate_'+@i+'__Payment2').attr('disabled', 'disabled');
+            $('#registrationPrivate_' +@i+'__Payment2Date').attr('disabled', 'disabled');
+            </text>
                     }
                     if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment3 != null)
                     {
                     <text>
-                    $('#registrationPrivate_'+@i+'__Payment3').attr('disabled', 'disabled');
-                    $('#registrationPrivate_' +@i+'__Payment3Date').attr('disabled', 'disabled');
-                    </text>
+            $('#registrationPrivate_'+@i+'__Payment3').attr('disabled', 'disabled');
+            $('#registrationPrivate_' +@i+'__Payment3Date').attr('disabled', 'disabled');
+            </text>
                     }
                 }
             }
@@ -793,16 +793,16 @@
                 @if (Model.trainingconfDetail.Private) {
                 <text>
 
-            $('#webGridPrivateEdit').show();
-            $('#webGridPublicEdit').hide();
-            </text>
+                $('#webGridPrivateEdit').show();
+                $('#webGridPublicEdit').hide();
+                </text>
             }
             else {
                 <text>
-            $('#webGridPublicEdit').show();
-            $('#webGridPrivateEdit').hide();
+                $('#webGridPublicEdit').show();
+                $('#webGridPrivateEdit').hide();
 
-            </text>
+                </text>
             }
                 $('#webGridDisplay').hide();
             };
@@ -897,7 +897,7 @@
                 swal("whtpercent can not greater than 100!","")
                 $('#registrationPrivate_0__WHTPercent').val('') ;
                 $('#registrationPrivate_0__WHTAmount').val('');
-             }
+            }
 
             if(amount!=0 &&vatpercent!=0)
             {
@@ -925,7 +925,7 @@
             $('#registrationPrivate_0__TotalAmount').val(totalamount);
             var balanceamount=totalamount-(payment1+payment2+payment3);
             $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
-            }
+        }
 
 
         $('#frmregistration').validate({
@@ -978,5 +978,46 @@
             else return true;
 
         }, "");
+
+        $('#frmRegistrationPublic').validate({
+            rules:{
+                @for (int i = 0; i < Model.registration.Count(); i++)
+                  {
+                    <text>
+                'registration[@i].Payment1Date':{
+                    required: function(){
+                        var payment1 = $('#registration_'+'@i'+'__Payment1').val();
+                        if (payment1 != null && payment1 != "") {
+                            return true
+                        }
+                        else
+                            return false;
+                    }
+                },
+                'registration[@i].Payment2Date':{
+                    required: function(){
+                        var payment2 = $('#registration_'+'@i'+'__Payment2').val();
+                        if (payment2 != null && payment2 != "") {
+                            return true
+                        }
+                        else
+                            return false;
+                    }
+                },
+                'registration[@i].Payment3Date':{
+                    required: function(){
+                        var payment3 = $('#registration_'+'@i'+'__Payment3').val();
+                        if (payment3 != null && payment3 != "") {
+                            return true
+                        }
+                        else
+                            return false;
+                    }
+                },
+                </text>
+                  }
+            }
+        });
+
     </script>
 }
