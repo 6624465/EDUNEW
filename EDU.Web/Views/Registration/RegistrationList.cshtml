@@ -296,7 +296,7 @@
                                                     @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].Amount,"{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Amount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td style="min-width:50px;">
                                                     @Html.TextBoxFor(x => x.registration[i].VATPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
@@ -351,20 +351,17 @@
                                                 </td>
                                             </tr>
                                         }
-                                        <tr>
-                                            <td colspan="15">
-                                                <div class="row css25">
-                                                    <div class="col-md-12">
-                                                        <div class="text-center">
-                                                            <button id="btnSave" type="button" onclick="SaveRegistrationPublic()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                                            <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
+
+                            </div>
+                            <div class="row css25">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <button id="btnSave" type="button" onclick="SaveRegistrationPublic()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }
@@ -462,7 +459,7 @@
                                 </table>
                                 <hr />
                                 <div class="row css25 center">
-                                    <table class="table" >
+                                    <table class="table">
                                         <thead>
                                             <tr>
                                                 <td>S No.</td>
@@ -489,21 +486,18 @@
                                                     </td>
                                                 </tr>
                                             }
-                                            <tr>
-                                                <td colspan="15">
-                                                    <div class="row css25">
-                                                        <div class="col-md-12">
-                                                            <div class="text-center">
-                                                                <button id="btnSave" type="button" onclick="SaveRegistrationPrivate()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                                                <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="row css25">
+                                    <div class="col-md-12">
+                                        <div class="text-center">
+                                            <button id="btnSave" type="button" onclick="SaveRegistrationPrivate()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     }
@@ -558,7 +552,7 @@
                                 @<text>
                                     <div style='width:80px;'>
                                         <span class="center">
-                                            @ConvertToInt64dollar(item.VATPercent)
+                                            @ConvertToInt64percent(item.VATPercent)
                                         </span>
                                     </div>
                                 </text>
@@ -626,12 +620,28 @@
                                                 </span>
                                             </div>
                                         </text>),
-                                grid.Column("Email", "Email", canSort: true),
-                                grid.Column("Contact", "Contact", canSort: true),
-                                grid.Column("CompanyName", "Company Name", canSort: true,
+                                grid.Column("Email", "Email", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:150px;'>
+                                                <span class="center">
+                                                    @(item.Email)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                grid.Column("Contact", "Contact", canSort: true,
                                         format:
                                         @<text>
                                             <div style='width:100px;'>
+                                                <span class="center">
+                                                    @(item.Contact)
+                                                </span>
+                                            </div>
+                                        </text>),
+                                grid.Column("CompanyName", "Company Name", canSort: true,
+                                        format:
+                                        @<text>
+                                            <div style='width:200px;'>
                                                 <span class="center">
                                                     @(item.CompanyName)
                                                 </span>
@@ -872,7 +882,7 @@
             var amount = ($('#registrationPrivate_0__Amount').val() != "" && !isNaN($('#registrationPrivate_0__Amount').val()) ? parseInt($('#registrationPrivate_0__Amount').val()):0)
             var vatpercent = ($('#registrationPrivate_0__VATPercent').val() != "" && !isNaN($('#registrationPrivate_0__VATPercent').val()) ? parseInt($('#registrationPrivate_0__VATPercent').val()):0)
             var whtpercent = ($('#registrationPrivate_0__WHTPercent').val() != "" && !isNaN($('#registrationPrivate_0__WHTPercent').val()) ? parseInt($('#registrationPrivate_0__WHTPercent').val()):0)
-            
+
             var vatamount=0;
             if(vatpercent>100)
             {
@@ -889,7 +899,7 @@
                 $('#registrationPrivate_0__WHTPercent').val('') ;
                 $('#registrationPrivate_0__WHTAmount').val('');
              }
-        
+
             if(amount!=0 &&vatpercent!=0)
             {
                 vatamount=(amount*vatpercent/100);
@@ -917,7 +927,7 @@
             var balanceamount=totalamount-(payment1+payment2+payment3);
             $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
             }
-        
+
 
         $('#frmregistration').validate({
             rules:{
