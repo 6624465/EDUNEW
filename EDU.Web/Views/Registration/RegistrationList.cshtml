@@ -59,7 +59,6 @@
     table {
         display: block;
         overflow-x: scroll;
-        white-space: nowrap;
         width: 100%
     }
 </style>
@@ -256,24 +255,24 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <td>S No.</td>
-                                            <td>Student Name</td>
-                                            <td>Email Id</td>
-                                            <td>Contact</td>
-                                            <td>Company/Individual</td>
-                                            <td>Amount</td>
-                                            <td>VAT/TAX %</td>
-                                            <td>VAT/TAX Amount</td>
-                                            <td>WHT %</td>
-                                            <td>WHT Amount</td>
-                                            <td>Payment #1</td>
-                                            <td>Date</td>
-                                            <td>Payment #2</td>
-                                            <td>Date</td>
-                                            <td>Payment #3</td>
-                                            <td>Date</td>
-                                            <td>Total Amount</td>
-                                            <td>Balance Amount</td>
+                                            <td class="center"><b>S No.</b></td>
+                                            <td class="center"><b>Student Name</b></td>
+                                            <td class="center"><b>Email Id</b></td>
+                                            <td class="center"><b>Contact</b></td>
+                                            <td class="center"><b>Company/Individual</b></td>
+                                            <td class="center"><b>Amount</b></td>
+                                            <td class="center"><b>VAT/TAX %</b></td>
+                                            <td class="center"><b>VAT/TAX Amount</b></td>
+                                            <td class="center"><b>WHT %</b></td>
+                                            <td class="center"><b>WHT Amount</b></td>
+                                            <td class="center"><b>Payment #1</b></td>
+                                            <td class="center"><b>Date</b></td>
+                                            <td class="center"><b>Payment #2</b></td>
+                                            <td class="center"><b>Date</b></td>
+                                            <td class="center"><b>Payment #3</b></td>
+                                            <td class="center"><b>Date</b></td>
+                                            <td class="center"><b>Total Amount</b></td>
+                                            <td class="center"><b>Balance Amount</b></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -282,7 +281,7 @@
                                             @Html.HiddenFor(x => x.registration[i].RegistrationId)
                                             @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
                                             <tr>
-                                                <td>@(i + 1).</td>
+                                                <td style="min-width:35px;">@(i + 1).</td>
                                                 <td style="min-width:200px;">
                                                     @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
                                                 </td>
@@ -298,16 +297,16 @@
                                                 <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Amount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td style="min-width:50px;">
+                                                <td style="min-width:65px;">
                                                     @Html.TextBoxFor(x => x.registration[i].VATPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td style="min-width:50px;">
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].VATAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                                 <td style="min-width:50px;">
                                                     @Html.TextBoxFor(x => x.registration[i].WHTPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td style="min-width:50px;">
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].WHTAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                                 <td style="min-width:100px;">
@@ -372,20 +371,20 @@
                                 <table class="table">
                                     <thead>
                                         <tr class="center">
-                                            <td>Company/Individual</td>
-                                            <td>Amount</td>
-                                            <td>VAT/TAX %</td>
-                                            <td>VAT/TAX Amout</td>
-                                            <td>WHT %</td>
-                                            <td>WHT Amount</td>
-                                            <td>Payment #1</td>
-                                            <td>Date</td>
-                                            <td>Payment #2</td>
-                                            <td>Date</td>
-                                            <td>Payment #3</td>
-                                            <td>Date</td>
-                                            <td>Total Amount</td>
-                                            <td>Balance Amount</td>
+                                            <td class="center"><b>Company/Individual</b></td>
+                                            <td class="center"><b>Amount</b></td>
+                                            <td class="center"><b>VAT/TAX %</b></td>
+                                            <td class="center"><b>VAT/TAX Amout</b></td>
+                                            <td class="center"><b>WHT %</b></td>
+                                            <td class="center"><b>WHT Amount</b></td>
+                                            <td class="center"><b>Payment #1</b></td>
+                                            <td class="center"><b>Date<</b></td>
+                                            <td class="center"><b>Payment #2</b></td>
+                                            <td class="center"><b>Date</b></td>
+                                            <td class="center"><b>Payment #3</b></td>
+                                            <td class="center"><b>Date</b></td>
+                                            <td class="center"><b>Total Amount</b></td>
+                                            <td class="center"><b>Balance Amount</b></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -462,10 +461,10 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <td>S No.</td>
-                                                <td>Student Name</td>
-                                                <td>Email Id</td>
-                                                <td>Contact</td>
+                                                <td class="center"><b>S No.</b></td>
+                                                <td class="center"><b>Student Name</b></td>
+                                                <td class="center"><b>Email Id</b></td>
+                                                <td class="center"><b>Contact</b></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -623,7 +622,7 @@
                                 grid.Column("Email", "Email", canSort: true,
                                         format:
                                         @<text>
-                                            <div style='width:150px;'>
+                                            <div style='width:200px;'>
                                                 <span class="center">
                                                     @(item.Email)
                                                 </span>
