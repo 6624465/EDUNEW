@@ -148,7 +148,6 @@
                 <div class="box-header">
                     <div style="display:-webkit-inline-box">
                         <h4> Registrations List</h4>
-                        &nbsp;&nbsp;<span id="lblmsg">(&nbsp;<label style="color:red;margin-top:14px"> Pending Registrations :@remainReg</label>&nbsp;)</span>
                     </div>
                     <div class="box-tools">
 
@@ -291,7 +290,7 @@
                                                     @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm numCsspuls" })
                                                 </td>
                                                 <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
@@ -486,7 +485,7 @@
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Email, new { @class = "form-control input-sm" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Contact, new { @class = "form-control input-sm" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Contact, new { @class = "form-control input-sm numCsspuls" })
                                                     </td>
                                                 </tr>
                                             }
