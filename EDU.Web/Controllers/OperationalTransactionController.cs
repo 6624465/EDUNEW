@@ -114,7 +114,7 @@ namespace EDU.Web.Controllers
             }
             else
             {
-                ViewBag.Title = "Update Financial Transaction";
+                ViewBag.Title = "Update Operational Transaction";
                 //operationalTransactionvm.OperationalTransactionId = -1;
                 List<OperationalTransaction> otList = dbContext.OperationalTransactions.Where(x => x.OperationId == operationId && x.IsActive == true).ToList();
 
