@@ -262,9 +262,9 @@
                                             <td>Contact</td>
                                             <td>Company/Individual</td>
                                             <td>Amount</td>
-                                            <td>VAT/TAX%</td>
+                                            <td>VAT/TAX %</td>
                                             <td>VAT/TAX Amount</td>
-                                            <td>WHT%</td>
+                                            <td>WHT %</td>
                                             <td>WHT Amount</td>
                                             <td>Payment #1</td>
                                             <td>Date</td>
@@ -377,9 +377,9 @@
                                         <tr class="center">
                                             <td>Company/Individual</td>
                                             <td>Amount</td>
-                                            <td>VAT/TAX%</td>
+                                            <td>VAT/TAX %</td>
                                             <td>VAT/TAX Amout</td>
-                                            <td>WHT%</td>
+                                            <td>WHT %</td>
                                             <td>WHT Amount</td>
                                             <td>Payment #1</td>
                                             <td>Date</td>
@@ -928,46 +928,46 @@
         })
 
 
-        //$('#frmRegistrationPublic').validate({
-        //    rules: {
-        //        'Payment1Date': {
-        //            Payment1: true
-        //        },
-        //        'Payment2Date': {
-        //            Payment2: true
-        //        },
-        //        'Payment3Date': {
-        //            Payment3: true
-        //        }
-        //    }
-        //});
-        //$.validator.addMethod("Payment1", function (Value, element) {
-        //    debugger;
-        //    var payment1 = parseInt($('#registration_0__Payment1').val());
-        //    if (payment1 && !isNaN(payment1) && (Value == "" || Value == null)) {
-        //        return false
-        //    }
-        //    else
-        //        return true;
+        $('#frmRegistrationPrivate').validate({
+            rules: {
+                'registrationPrivate[0].Payment1Date': {
+                    Payment1: true
+                },
+                'registrationPrivate[0].Payment2Date': {
+                    Payment2: true
+                },
+                'registrationPrivate[0].Payment3Date': {
+                    Payment3: true
+                }
+            }
+        });
+        $.validator.addMethod("Payment1", function (Value, element) {
+            debugger;
+            var payment1 = parseInt($('#registrationPrivate_0__Payment1').val());
+            if (payment1 && !isNaN(payment1) && (Value == "" || Value == null)) {
+                return false
+            }
+            else
+                return true;
 
-        //}, "");
+        }, "");
 
-        //$.validator.addMethod("Payment2", function (Value, element) {
-        //    var payment2 = parseInt($('#Payment2').val());
-        //    if (payment2 && !isNaN(payment2) && (Value == "" || Value == null)) {
-        //        return false
-        //    }
-        //    else return true;
+        $.validator.addMethod("Payment2", function (Value, element) {
+            var payment2 = parseInt($('#registrationPrivate_0__Payment2').val());
+            if (payment2 && !isNaN(payment2) && (Value == "" || Value == null)) {
+                return false
+            }
+            else return true;
 
-        //}, "");
+        }, "");
 
-        //$.validator.addMethod("Payment3", function (Value, element) {
-        //    var payment3 = parseInt($('#Payment3').val());
-        //    if (payment3 && !isNaN(payment3) && (Value == "" || Value == null)) {
-        //        return false
-        //    }
-        //    else return true;
+        $.validator.addMethod("Payment3", function (Value, element) {
+            var payment3 = parseInt($('#registrationPrivate_0__Payment3').val());
+            if (payment3 && !isNaN(payment3) && (Value == "" || Value == null)) {
+                return false
+            }
+            else return true;
 
-        //}, "");
+        }, "");
     </script>
 }
