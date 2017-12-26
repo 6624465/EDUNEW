@@ -57,10 +57,17 @@
     }
 
     .tablescroll {
-        overflow-y: visible !important;
         display: block;
         overflow-x: scroll;
         width: 100%;
+        min-height: 200px;
+        position: relative;
+        z-index: 1;
+    }
+    .bootstrap-datetimepicker-widget {
+        bottom: auto !important;
+        position: absolute !important;
+        z-index: 5000 !important;
     }
 </style>
 @functions {
@@ -89,7 +96,6 @@
         else
             return null;
     }
-
     public string PaymentDetails(DateTime? date, short? type, string no)
     {
         string x = "";
@@ -248,7 +254,7 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    @*<hr />*@
                     @using (Html.BeginForm("SaveRegistrationPublicList", "Registration", FormMethod.Post, new { id = "frmRegistrationPublic", name = "frmRegistrationPublic", autocomplete = "off" }))
                     {
                         <div class="row css25" id="webGridPublicEdit" style="display:none">
@@ -372,7 +378,7 @@
                                 <div class="tablescroll">
                                     <table class="table">
                                         <thead>
-                                            <tr class="center">
+                                            <tr>
                                                 <td class="center"><b>Company/Individual</b></td>
                                                 <td class="center"><b>Amount</b></td>
                                                 <td class="center"><b>VAT/TAX %</b></td>
@@ -459,9 +465,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <hr />
-                                <div class="row css25 center">
-                                    <table class="table table-responsive">
+                                @*<hr />*@
+                                <div class="row css25">
+                                    <table class="table">
                                         <thead>
                                             <tr>
                                                 <td class="center"><b>S No.</b></td>
@@ -1029,6 +1035,7 @@
                   }
             }
         });
+        
 
     </script>
 }
