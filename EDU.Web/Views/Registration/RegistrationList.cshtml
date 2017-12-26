@@ -290,22 +290,22 @@
                                                     @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     @Html.TextBoxFor(x => x.registration[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     @Html.TextBoxFor(x => x.registration[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     <div class="input-group date" id="Payment1Dt">
@@ -316,7 +316,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     <div class="input-group date" id="Payment2Dt">
@@ -327,7 +327,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     <div class="input-group date" id="Payment3Dt">
@@ -754,22 +754,22 @@
             var vatpercent=($('#registration_'+rowvalue+'__VATPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__VATPercent').val())?parseInt($('#registration_'+rowvalue+'__VATPercent').val()):0)
             var whtpercent=($('#registration_'+rowvalue+'__WHTPercent').val()!="" &&!isNaN($('#registration_'+rowvalue+'__WHTPercent').val())?parseInt($('#registration_'+rowvalue+'__WHTPercent').val()):0)
 
-            //if(vatpercent>100)
-            //{
-            //    var vatpercent=0;
-            //    swal("Here's a message!", "It's pretty, isn't it?");
-            //    $('#registration_'+rowvalue+'__VATPercent').val('')
-            //    $('#registration_'+rowvalue+'__VATAmount').val('')
+            if(vatpercent>100)
+            {
+                var vatpercent=0;
+                swal("vatpercent can not greater than 100!", "");
+                $('#registration_'+rowvalue+'__VATPercent').val('')
+                $('#registration_'+rowvalue+'__VATAmount').val('')
 
-            //}
-            //if(whtpercent>100)
-            //{
-            //    var whtpercent=0;
-            //    swal("Here's a message!", "It's pretty, isn't it?");
-            //    $('#registration_'+rowvalue+'__WHTPercent').val('')
-            //    $('#registration_'+rowvalue+'__WHTAmount').val('')
+            }
+            if(whtpercent>100)
+            {
+                var whtpercent=0;
+                swal("whtpercent can not greater than 100!", "");
+                $('#registration_'+rowvalue+'__WHTPercent').val('')
+                $('#registration_'+rowvalue+'__WHTAmount').val('')
 
-            //}
+            }
 
 
             var vatamount=0;
