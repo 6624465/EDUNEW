@@ -403,22 +403,22 @@
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].CompanyName, new { @class = "form-control input-sm" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATAmount, new { @class = "form-control input-sm numCss", @readonly = true })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTPercent, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTAmount, new { @class = "form-control input-sm numCss", @readonly = true })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
                                                         <div class="input-group date" id="Payment1Dte">
@@ -429,7 +429,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
                                                         <div class="input-group date" id="Payment2Dte">
@@ -440,7 +440,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
                                                         <div class="input-group date" id="Payment3Dte">
@@ -872,7 +872,24 @@
             var amount = ($('#registrationPrivate_0__Amount').val() != "" && !isNaN($('#registrationPrivate_0__Amount').val()) ? parseInt($('#registrationPrivate_0__Amount').val()):0)
             var vatpercent = ($('#registrationPrivate_0__VATPercent').val() != "" && !isNaN($('#registrationPrivate_0__VATPercent').val()) ? parseInt($('#registrationPrivate_0__VATPercent').val()):0)
             var whtpercent = ($('#registrationPrivate_0__WHTPercent').val() != "" && !isNaN($('#registrationPrivate_0__WHTPercent').val()) ? parseInt($('#registrationPrivate_0__WHTPercent').val()):0)
+            
             var vatamount=0;
+            if(vatpercent>100)
+            {
+                debugger;
+                var vatpercent=0;
+                swal("vatpercent not greater than 100")
+                $('#registrationPrivate_0__VATPercent').val('');
+                $('#registrationPrivate_0__VATAmount').val('');
+            }
+            if(whtpercent>100)
+            {
+                var whtpercent=0;
+                swal("whtpercent not greater than 100")
+                $('#registrationPrivate_0__WHTPercent').val('') ;
+                $('#registrationPrivate_0__WHTAmount').val('');
+             }
+        
             if(amount!=0 &&vatpercent!=0)
             {
                 vatamount=(amount*vatpercent/100);
@@ -899,7 +916,8 @@
             $('#registrationPrivate_0__TotalAmount').val(totalamount);
             var balanceamount=totalamount-(payment1+payment2+payment3);
             $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
-        }
+            }
+        
 
         $('#frmregistration').validate({
             rules:{
