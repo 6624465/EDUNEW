@@ -56,7 +56,7 @@
         /*font-family: 'Bebas Neue'*/
     }
 
-    table {
+    .tablescroll {
         display: block;
         overflow-x: scroll;
         width: 100%
@@ -252,7 +252,7 @@
                     {
                         <div class="row css25" id="webGridPublicEdit">
                             <div class="col-sm-12">
-                                <table class="table">
+                                <table class="table tablescroll">
                                     <thead>
                                         <tr>
                                             <td class="center"><b>S No.</b></td>
@@ -312,7 +312,7 @@
                                                 <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Payment1, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:150px;">
                                                     <div class="input-group date" id="Payment1Dt">
                                                         @Html.TextBoxFor(x => x.registration[i].Payment1Date, new { @class = "form-control dtCss input-sm" })
                                                         <span class="input-group-addon">
@@ -323,7 +323,7 @@
                                                 <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Payment2, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:150px;">
                                                     <div class="input-group date" id="Payment2Dt">
                                                         @Html.TextBoxFor(x => x.registration[i].Payment2Date, new { @class = "form-control dtCss input-sm" })
                                                         <span class="input-group-addon">
@@ -334,7 +334,7 @@
                                                 <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Payment3, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:150px;">
                                                     <div class="input-group date" id="Payment3Dt">
                                                         @Html.TextBoxFor(x => x.registration[i].Payment3Date, new { @class = "form-control dtCss input-sm" })
                                                         <span class="input-group-addon">
@@ -368,7 +368,7 @@
                     {
                         <div class="row css25" id="webGridPrivateEdit">
                             <div class="col-sm-12">
-                                <table class="table">
+                                <table class="table tablescroll">
                                     <thead>
                                         <tr class="center">
                                             <td class="center"><b>Company/Individual</b></td>
@@ -378,7 +378,7 @@
                                             <td class="center"><b>WHT %</b></td>
                                             <td class="center"><b>WHT Amount</b></td>
                                             <td class="center"><b>Payment #1</b></td>
-                                            <td class="center"><b>Date<</b></td>
+                                            <td class="center"><b>Date</b></td>
                                             <td class="center"><b>Payment #2</b></td>
                                             <td class="center"><b>Date</b></td>
                                             <td class="center"><b>Payment #3</b></td>
@@ -400,7 +400,7 @@
                                                     <td style="min-width:100px;">
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
-                                                    <td style="min-width:50px;">
+                                                    <td style="min-width:65px;">
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td style="min-width:100px;">
@@ -415,7 +415,7 @@
                                                     <td style="min-width:100px;">
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:150px;">
                                                         <div class="input-group date" id="Payment1Dte">
                                                             @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1Date, new { @class = "form-control dtCss input-sm" })
                                                             <span class="input-group-addon">
@@ -426,7 +426,7 @@
                                                     <td style="min-width:100px;">
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:150px;">
                                                         <div class="input-group date" id="Payment2Dte">
                                                             @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2Date, new { @class = "form-control dtCss input-sm" })
                                                             <span class="input-group-addon">
@@ -437,7 +437,7 @@
                                                     <td style="min-width:100px;">
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:150px;">
                                                         <div class="input-group date" id="Payment3Dte">
                                                             @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3Date, new { @class = "form-control dtCss input-sm" })
                                                             <span class="input-group-addon">
@@ -458,7 +458,7 @@
                                 </table>
                                 <hr />
                                 <div class="row css25 center">
-                                    <table class="table">
+                                    <table class="table tablescroll">
                                         <thead>
                                             <tr>
                                                 <td class="center"><b>S No.</b></td>
@@ -502,7 +502,7 @@
                     }
                     <div class="row css25" id="webGridDisplay">
                         <div class="col-sm-12">
-                            <div id="gridContent">
+                            <div id="gridContent" style="overflow-x: scroll; width: 100%">
                                 @grid.GetHtml(
                         columns: grid.Columns(
                             grid.Column("", "S No.", canSort: false,
