@@ -55,11 +55,12 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+
     table {
         display: block;
         overflow-x: scroll;
         white-space: nowrap;
-        width:100%
+        width: 100%
     }
 </style>
 @functions {
@@ -107,7 +108,7 @@
         //            "Payment Type : Bank Transfer" + "</Br>" +
         //            "Transaction ID : " + (no == null ? "" : no);
         //}
-            return x;
+        return x;
     }
 }
 @{
@@ -375,6 +376,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr class="center">
+                                            <td>Company/Individual</td>
                                             <td>Amount</td>
                                             <td>VAT/TAX</td>
                                             <td>VAT/TAX Amout</td>
@@ -397,6 +399,9 @@
                                             if (Model.registrationPrivate.Count() > 0)
                                             {
                                                 <tr>
+                                                    <td>
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].CompanyName, new { @class = "form-control input-sm" })
+                                                    </td>
                                                     <td>
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, new { @class = "form-control input-sm", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
@@ -464,7 +469,6 @@
                                                 <td>Student Name</td>
                                                 <td>Email Id</td>
                                                 <td>Contact</td>
-                                                <td>Company/Individual</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -482,9 +486,6 @@
                                                     </td>
                                                     <td>
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Contact, new { @class = "form-control input-sm" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].CompanyName, new { @class = "form-control input-sm" })
                                                     </td>
                                                 </tr>
                                             }
@@ -664,6 +665,60 @@
                 //maxDate: new Date(),
                 format: 'DD/MM/YYYY'
             });
+
+            @for (int i = 0; i < Model.registration.Count(); i++)
+            {
+                if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment1 != null)
+                {
+                    <text>
+                    $('#registration_'+@i+'__Payment1').attr('disabled', 'disabled');
+                    $('#registration_' +@i+'__Payment1Date').attr('disabled', 'disabled');
+                    </text>
+                }
+                if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment2 != null)
+                {
+                    <text>
+                    $('#registration_'+@i+'__Payment2').attr('disabled', 'disabled');
+                    $('#registration_' +@i+'__Payment2Date').attr('disabled', 'disabled');
+                    </text>
+                }
+                if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment3 != null)
+                {
+                    <text>
+                    $('#registration_'+@i+'__Payment3').attr('disabled', 'disabled');
+                    $('#registration_' +@i+'__Payment3Date').attr('disabled', 'disabled');
+                    </text>
+                }
+            }
+
+
+            @for (int i = 0; i < 1; i++)
+            {
+                if (Model.registrationPrivate.Count() > 0)
+                {
+                    if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment1 != null)
+                    {
+                    <text>
+                    $('#registrationPrivate_'+@i+'__Payment1').attr('disabled', 'disabled');
+                    $('#registrationPrivate_' +@i+'__Payment1Date').attr('disabled', 'disabled');
+                    </text>
+                    }
+                    if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment2 != null)
+                    {
+                    <text>
+                    $('#registrationPrivate_'+@i+'__Payment2').attr('disabled', 'disabled');
+                    $('#registrationPrivate_' +@i+'__Payment2Date').attr('disabled', 'disabled');
+                    </text>
+                    }
+                    if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment3 != null)
+                    {
+                    <text>
+                    $('#registrationPrivate_'+@i+'__Payment3').attr('disabled', 'disabled');
+                    $('#registrationPrivate_' +@i+'__Payment3Date').attr('disabled', 'disabled');
+                    </text>
+                    }
+                }
+            }
 
             $('#webGridPublicEdit').hide();
             $('#webGridPrivateEdit').hide();
@@ -853,5 +908,48 @@
                 }
             }
         })
+
+
+        //$('#frmRegistrationPublic').validate({
+        //    rules: {
+        //        'Payment1Date': {
+        //            Payment1: true
+        //        },
+        //        'Payment2Date': {
+        //            Payment2: true
+        //        },
+        //        'Payment3Date': {
+        //            Payment3: true
+        //        }
+        //    }
+        //});
+        //$.validator.addMethod("Payment1", function (Value, element) {
+        //    debugger;
+        //    var payment1 = parseInt($('#Payment1').val());
+        //    if (payment1 && !isNaN(payment1) && (Value == "" || Value == null)) {
+        //        return false
+        //    }
+        //    else
+        //        return true;
+
+        //}, "");
+
+        //$.validator.addMethod("Payment2", function (Value, element) {
+        //    var payment2 = parseInt($('#Payment2').val());
+        //    if (payment2 && !isNaN(payment2) && (Value == "" || Value == null)) {
+        //        return false
+        //    }
+        //    else return true;
+
+        //}, "");
+
+        //$.validator.addMethod("Payment3", function (Value, element) {
+        //    var payment3 = parseInt($('#Payment3').val());
+        //    if (payment3 && !isNaN(payment3) && (Value == "" || Value == null)) {
+        //        return false
+        //    }
+        //    else return true;
+
+        //}, "");
     </script>
 }
