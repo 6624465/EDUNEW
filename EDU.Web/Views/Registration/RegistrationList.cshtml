@@ -57,6 +57,7 @@
     }
 
     .tablescroll {
+        overflow-y: visible !important;
         display: block;
         overflow-x: scroll;
         width: 100%;
@@ -180,7 +181,7 @@
                                 <div class="col-md-2">
                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                     {
-                                        <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-pencil"></i>Update Registration Info</button>
+                                    <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-pencil"></i>Update Registration Info</button>
                                     }
                                 </div>
                             </div>
@@ -250,7 +251,7 @@
                     <hr />
                     @using (Html.BeginForm("SaveRegistrationPublicList", "Registration", FormMethod.Post, new { id = "frmRegistrationPublic", name = "frmRegistrationPublic", autocomplete = "off" }))
                     {
-                        <div class="row css25" id="webGridPublicEdit">
+                        <div class="row css25" id="webGridPublicEdit" style="display:none">
                             <div class="col-sm-12">
                                 <table class="table tablescroll">
                                     <thead>
@@ -366,99 +367,101 @@
                     }
                     @using (Html.BeginForm("SaveRegistrationPrivateList", "Registration", FormMethod.Post, new { id = "frmRegistrationPrivate", name = "frmRegistrationPrivate", autocomplete = "off" }))
                     {
-                        <div class="row css25" id="webGridPrivateEdit">
+                        <div class="row css25" id="webGridPrivateEdit" style="display:none">
                             <div class="col-sm-12">
-                                <table class="table tablescroll">
-                                    <thead>
-                                        <tr class="center">
-                                            <td class="center"><b>Company/Individual</b></td>
-                                            <td class="center"><b>Amount</b></td>
-                                            <td class="center"><b>VAT/TAX %</b></td>
-                                            <td class="center"><b>VAT/TAX Amout</b></td>
-                                            <td class="center"><b>WHT %</b></td>
-                                            <td class="center"><b>WHT Amount</b></td>
-                                            <td class="center"><b>Payment #1</b></td>
-                                            <td class="center"><b>Date</b></td>
-                                            <td class="center"><b>Payment #2</b></td>
-                                            <td class="center"><b>Date</b></td>
-                                            <td class="center"><b>Payment #3</b></td>
-                                            <td class="center"><b>Date</b></td>
-                                            <td class="center"><b>Total Amount</b></td>
-                                            <td class="center"><b>Balance Amount</b></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <div class="tablescroll">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="center">
+                                                <td class="center"><b>Company/Individual</b></td>
+                                                <td class="center"><b>Amount</b></td>
+                                                <td class="center"><b>VAT/TAX %</b></td>
+                                                <td class="center"><b>VAT/TAX Amout</b></td>
+                                                <td class="center"><b>WHT %</b></td>
+                                                <td class="center"><b>WHT Amount</b></td>
+                                                <td class="center"><b>Payment #1</b></td>
+                                                <td class="center"><b>Date</b></td>
+                                                <td class="center"><b>Payment #2</b></td>
+                                                <td class="center"><b>Date</b></td>
+                                                <td class="center"><b>Payment #3</b></td>
+                                                <td class="center"><b>Date</b></td>
+                                                <td class="center"><b>Total Amount</b></td>
+                                                <td class="center"><b>Balance Amount</b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        @for (int i = 0; i < 1; i++)
-                                        {
-                                            if (Model.registrationPrivate.Count() > 0)
+                                            @for (int i = 0; i < 1; i++)
                                             {
-                                                <tr>
-                                                    <td style="min-width:200px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].CompanyName, new { @class = "form-control input-sm" })
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
-                                                    </td>
-                                                    <td style="min-width:65px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
-                                                    </td>
-                                                    <td style="min-width:50px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
-                                                    </td>
-                                                    <td style="min-width:150px;">
-                                                        <div class="input-group date" id="Payment1Dte">
-                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1Date, new { @class = "form-control dtCss input-sm" })
-                                                            <span class="input-group-addon">
-                                                                <i class="ion ion-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
-                                                    </td>
-                                                    <td style="min-width:150px;">
-                                                        <div class="input-group date" id="Payment2Dte">
-                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2Date, new { @class = "form-control dtCss input-sm" })
-                                                            <span class="input-group-addon">
-                                                                <i class="ion ion-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
-                                                    </td>
-                                                    <td style="min-width:150px;">
-                                                        <div class="input-group date" id="Payment3Dte">
-                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3Date, new { @class = "form-control dtCss input-sm" })
-                                                            <span class="input-group-addon">
-                                                                <i class="ion ion-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
-                                                    </td>
-                                                    <td style="min-width:100px;">
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].BalanceAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
-                                                    </td>
-                                                </tr>
+                                                if (Model.registrationPrivate.Count() > 0)
+                                                {
+                                                    <tr>
+                                                        <td style="min-width:200px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].CompanyName, new { @class = "form-control input-sm" })
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        </td>
+                                                        <td style="min-width:65px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].VATAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
+                                                        </td>
+                                                        <td style="min-width:50px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].WHTPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].WHTAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        </td>
+                                                        <td style="min-width:150px;">
+                                                            <div class="input-group date" id="Payment1Dte">
+                                                                @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1Date, new { @class = "form-control dtCss input-sm" })
+                                                                <span class="input-group-addon">
+                                                                    <i class="ion ion-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        </td>
+                                                        <td style="min-width:150px;">
+                                                            <div class="input-group date" id="Payment2Dte">
+                                                                @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2Date, new { @class = "form-control dtCss input-sm" })
+                                                                <span class="input-group-addon">
+                                                                    <i class="ion ion-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        </td>
+                                                        <td style="min-width:150px;">
+                                                            <div class="input-group date" id="Payment3Dte">
+                                                                @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3Date, new { @class = "form-control dtCss input-sm" })
+                                                                <span class="input-group-addon">
+                                                                    <i class="ion ion-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].BalanceAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
+                                                        </td>
+                                                    </tr>
+                                                }
                                             }
-                                        }
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <hr />
                                 <div class="row css25 center">
-                                    <table class="table tablescroll">
+                                    <table class="table table-responsive">
                                         <thead>
                                             <tr>
                                                 <td class="center"><b>S No.</b></td>
@@ -663,6 +666,14 @@
     {
     <script type="text/javascript">
         $(function () {
+            //$('input').datetimepicker({
+            //    beforeShow: function (input) {
+            //        $(input).css({
+            //            "position": "relative",
+            //            "z-index": 999999
+            //        });
+            //    }
+            //});
             $('#Payment1Dt,#Payment2Dt,#Payment3Dt,#Payment1Dte,#Payment2Dte,#Payment3Dte').datetimepicker({
                 icons: {
                     time: 'fa fa-clock-o',
@@ -680,22 +691,22 @@
                 if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment1 != null)
                 {
                     <text>
-            $('#registration_'+@i+'__Payment1').attr('disabled', 'disabled');
-            $('#registration_' +@i+'__Payment1Date').attr('disabled', 'disabled');
+            $('#registration_' +@i+'__Payment1').attr('readonly', 'readonly');
+            $('#registration_' +@i+'__Payment1Date').attr('readonly', 'readonly');
             </text>
                 }
                 if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment2 != null)
                 {
                     <text>
-            $('#registration_'+@i+'__Payment2').attr('disabled', 'disabled');
-            $('#registration_' +@i+'__Payment2Date').attr('disabled', 'disabled');
+            $('#registration_' +@i+'__Payment2').attr('readonly', 'readonly');
+            $('#registration_' +@i+'__Payment2Date').attr('readonly', 'readonly');
             </text>
                 }
                 if (Model.registration[i].RegistrationId != -1 && Model.registration[i].Payment3 != null)
                 {
                     <text>
-            $('#registration_'+@i+'__Payment3').attr('disabled', 'disabled');
-            $('#registration_' +@i+'__Payment3Date').attr('disabled', 'disabled');
+            $('#registration_' +@i+'__Payment3').attr('readonly', 'readonly');
+            $('#registration_' +@i+'__Payment3Date').attr('readonly', 'readonly');
             </text>
                 }
             }
@@ -708,22 +719,22 @@
                     if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment1 != null)
                     {
                     <text>
-            $('#registrationPrivate_'+@i+'__Payment1').attr('disabled', 'disabled');
-            $('#registrationPrivate_' +@i+'__Payment1Date').attr('disabled', 'disabled');
+            $('#registrationPrivate_' +@i+'__Payment1').attr('readonly', 'readonly');
+            $('#registrationPrivate_' +@i+'__Payment1Date').attr('readonly', 'readonly');
             </text>
                     }
                     if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment2 != null)
                     {
                     <text>
-            $('#registrationPrivate_'+@i+'__Payment2').attr('disabled', 'disabled');
-            $('#registrationPrivate_' +@i+'__Payment2Date').attr('disabled', 'disabled');
+            $('#registrationPrivate_' +@i+'__Payment2').attr('readonly', 'readonly');
+            $('#registrationPrivate_' +@i+'__Payment2Date').attr('readonly', 'readonly');
             </text>
                     }
                     if (Model.registrationPrivate[i].RegistrationId != -1 && Model.registrationPrivate[i].Payment3 != null)
                     {
                     <text>
-            $('#registrationPrivate_'+@i+'__Payment3').attr('disabled', 'disabled');
-            $('#registrationPrivate_' +@i+'__Payment3Date').attr('disabled', 'disabled');
+            $('#registrationPrivate_' +@i+'__Payment3').attr('readonly', 'readonly');
+            $('#registrationPrivate_' +@i+'__Payment3Date').attr('readonly', 'readonly');
             </text>
                     }
                 }
