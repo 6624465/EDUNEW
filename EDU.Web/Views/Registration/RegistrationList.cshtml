@@ -297,22 +297,22 @@
                                                     @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Amount,"{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td style="min-width:50px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].VATPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td style="min-width:50px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    @Html.TextBoxFor(x => x.registration[i].VATAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                                 <td style="min-width:50px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].WHTPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td style="min-width:50px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    @Html.TextBoxFor(x => x.registration[i].WHTAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment1, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     <div class="input-group date" id="Payment1Dt">
@@ -323,7 +323,7 @@
                                                     </div>
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment2, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     <div class="input-group date" id="Payment2Dt">
@@ -334,7 +334,7 @@
                                                     </div>
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Payment3, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
                                                     <div class="input-group date" id="Payment3Dt">
@@ -345,10 +345,10 @@
                                                     </div>
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    @Html.TextBoxFor(x => x.registration[i].TotalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                                 <td style="min-width:100px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                    @Html.TextBoxFor(x => x.registration[i].BalanceAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                             </tr>
                                         }
@@ -403,22 +403,22 @@
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].CompanyName, new { @class = "form-control input-sm" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Amount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATAmount, new { @class = "form-control input-sm numCss", @readonly = true })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].VATAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTPercent, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTAmount, new { @class = "form-control input-sm numCss", @readonly = true })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].WHTAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment1, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
                                                         <div class="input-group date" id="Payment1Dte">
@@ -429,7 +429,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment2, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
                                                         <div class="input-group date" id="Payment2Dte">
@@ -440,7 +440,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Payment3, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmoutPrivate()" })
                                                     </td>
                                                     <td>
                                                         <div class="input-group date" id="Payment3Dte">
@@ -451,10 +451,10 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].BalanceAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                                     </td>
                                                 </tr>
                                             }
@@ -943,7 +943,7 @@
         //});
         //$.validator.addMethod("Payment1", function (Value, element) {
         //    debugger;
-        //    var payment1 = parseInt($('#Payment1').val());
+        //    var payment1 = parseInt($('#registration_0__Payment1').val());
         //    if (payment1 && !isNaN(payment1) && (Value == "" || Value == null)) {
         //        return false
         //    }
