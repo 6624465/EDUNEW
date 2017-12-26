@@ -262,9 +262,9 @@
                                             <td>Contact</td>
                                             <td>Company/Individual</td>
                                             <td>Amount</td>
-                                            <td>VAT/TAX</td>
+                                            <td>VAT/TAX%</td>
                                             <td>VAT/TAX Amount</td>
-                                            <td>WHT</td>
+                                            <td>WHT%</td>
                                             <td>WHT Amount</td>
                                             <td>Payment #1</td>
                                             <td>Date</td>
@@ -377,9 +377,9 @@
                                         <tr class="center">
                                             <td>Company/Individual</td>
                                             <td>Amount</td>
-                                            <td>VAT/TAX</td>
+                                            <td>VAT/TAX%</td>
                                             <td>VAT/TAX Amout</td>
-                                            <td>WHT</td>
+                                            <td>WHT%</td>
                                             <td>WHT Amount</td>
                                             <td>Payment #1</td>
                                             <td>Date</td>
@@ -878,14 +878,14 @@
             {
                 debugger;
                 var vatpercent=0;
-                swal("vatpercent not greater than 100")
+                swal("vatpercent can not greater than 100!", "")
                 $('#registrationPrivate_0__VATPercent').val('');
                 $('#registrationPrivate_0__VATAmount').val('');
             }
             if(whtpercent>100)
             {
                 var whtpercent=0;
-                swal("whtpercent not greater than 100")
+                swal("whtpercent can not greater than 100!","")
                 $('#registrationPrivate_0__WHTPercent').val('') ;
                 $('#registrationPrivate_0__WHTAmount').val('');
              }
