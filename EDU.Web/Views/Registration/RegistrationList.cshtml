@@ -55,6 +55,12 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+    table {
+        display: block;
+        overflow-x: scroll;
+        white-space: nowrap;
+        width:100%
+    }
 </style>
 @functions {
     public string GetPaymentType(short id)
@@ -247,7 +253,7 @@
                     {
                         <div class="row css25" id="webGridPublicEdit">
                             <div class="col-sm-12">
-                                <table class="table" style="overflow-x: scroll; width: 100%">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <td>S No.</td>
@@ -277,34 +283,34 @@
                                             @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
                                             <tr>
                                                 <td>@(i + 1).</td>
-                                                <td>
+                                                <td style="min-width:200px;">
                                                     @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:150px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].CompanyName, new { @class = "form-control input-sm" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Amount, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:50px;">
                                                     @Html.TextBoxFor(x => x.registration[i].VATPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:50px;">
                                                     @Html.TextBoxFor(x => x.registration[i].VATAmount, new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:50px;">
                                                     @Html.TextBoxFor(x => x.registration[i].WHTPercent, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:50px;">
                                                     @Html.TextBoxFor(x => x.registration[i].WHTAmount, new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Payment1, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
@@ -315,7 +321,7 @@
                                                         </span>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Payment2, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
@@ -326,7 +332,7 @@
                                                         </span>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Payment3, new { @class = "form-control input-sm numCss", onkeyup = "calculateTotalAmount(this)" })
                                                 </td>
                                                 <td>
@@ -337,10 +343,10 @@
                                                         </span>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
-                                                <td>
+                                                <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true })
                                                 </td>
                                             </tr>
