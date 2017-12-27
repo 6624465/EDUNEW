@@ -34,8 +34,6 @@ namespace EDU.Web.ViewModels.CustomerPaymentStatusModel
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public string CustomerName { get; set; }
-        public int CourseId { get; set; }
-        public int ProductId { get; set; }
         public string CourseName { get; set; }
         public string ProductName { get; set; }
         public string TrianerName { get; set; }

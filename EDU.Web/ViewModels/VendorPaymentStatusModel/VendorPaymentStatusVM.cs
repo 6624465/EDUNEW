@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EDU.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,10 @@ namespace EDU.Web.ViewModels.VendorPaymentStatusModel
     public class VendorPaymentStatusVM
     {
         public List<VendorPaymentVM> VendorPayment { get; set; }
-        public List<Web.Models.TrainingConfirmation> trainingconf { get; set; }
-        public TrainingConfirmDtl trainingconfDetail { get; set; }
+        public List<TrainingConfirmation> trainingconfList { get; set; }
+        public List<EZY.EDU.Contract.CourseVm> courseList { get; set; }
+        public List<EZY.EDU.Contract.EduProduct> productList { get; set; }
+        public List<TrainerInformation> trainerInformationList { get; set; }
     }
 
     public class VendorPaymentVM
@@ -30,19 +33,23 @@ namespace EDU.Web.ViewModels.VendorPaymentStatusModel
         public System.DateTime CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public string CourseName { get; set; }
+        public string ProductName { get; set; }
         public string VendorName { get; set; }
         public HttpPostedFileBase FileName { get; set; }
+        public int? Year { get; set; }
+        public Nullable<short> Month { get; set; }
     }
-    public class TrainingConfirmDtl
-    {
-        public int Id { get; set; }
-        public string TrainingConfirmationID { get; set; }
-        public int Product { get; set; }
-        public int Course { get; set; }
-        public int TrianerId { get; set; }
+    //public class TrainingConfirmDtl
+    //{
+    //    public int Id { get; set; }
+    //    public string TrainingConfirmationID { get; set; }
+    //    public int Product { get; set; }
+    //    public int Course { get; set; }
+    //    public int TrianerId { get; set; }
 
-        public string ProductName { get; set; }
-        public string CourseName { get; set; }
-        public string TrianerName { get; set; }
-    }
+    //    public string ProductName { get; set; }
+    //    public string CourseName { get; set; }
+    //    public string TrianerName { get; set; }
+    //}
 }

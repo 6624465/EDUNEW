@@ -9,6 +9,25 @@
     WebGrid grid = new WebGrid(Model.VendorPayment, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
 }
+
+@{
+    var listMonths = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "Select Month",   Value = "0"},
+                                           new SelectListItem {Text = "Janaury",   Value = "1"},
+                                           new SelectListItem {Text = "February", Value = "2"},
+                                           new SelectListItem {Text = "March", Value = "3"},
+                                           new SelectListItem {Text = "April",   Value = "4"},
+                                           new SelectListItem {Text = "May", Value = "5"},
+                                           new SelectListItem {Text = "June", Value = "6"},
+                                           new SelectListItem {Text = "July",   Value = "7"},
+                                           new SelectListItem {Text = "August", Value = "8"},
+                                           new SelectListItem {Text = "September", Value = "9"},
+                                           new SelectListItem {Text = "October",   Value = "10"},
+                                           new SelectListItem {Text = "November", Value = "11"},
+                                           new SelectListItem {Text = "December", Value = "12"}
+                                       };
+}
 <style>
     .centerbox {
         margin: auto;
@@ -56,6 +75,41 @@
         else
             return null;
     }
+
+    public string GetCourseName(string data)
+    {
+        var tcd = Model.trainingconfList.Where(x => x.IsActive == true && x.TrainingConfirmationID == data).FirstOrDefault();
+        if (tcd != null)
+        {
+            var coursenamedtl = Model.courseList.Where(x => x.Id == tcd.Course && x.Product == tcd.Product && x.Country == tcd.Country).FirstOrDefault();
+            return coursenamedtl != null ? coursenamedtl.CourseName : "";
+        }
+        else
+            return "";
+    }
+
+    public string GetProductName(string data)
+    {
+        var tcd = Model.trainingconfList.Where(x => x.IsActive == true && x.TrainingConfirmationID == data).FirstOrDefault();
+        if (tcd != null)
+        {
+            var productnamedtl = Model.productList.Where(x => x.Id == tcd.Product).FirstOrDefault();
+            return productnamedtl != null ? productnamedtl.ProductName : "";
+        }
+        else
+            return "";
+    }
+
+    public string GetCustomerName(string data)
+    {
+        var tcdtl = Model.trainingconfList.Where(x => x.TrainingConfirmationID == data).FirstOrDefault();
+        if (tcdtl != null)
+        {
+            var tidtl = Model.trainerInformationList.Where(x => x.TrianerId == tcdtl.TrianerId).FirstOrDefault();
+            return tidtl != null ? tidtl.VendorName : "";
+        }
+        return "";
+    }
 }
 @using (Html.BeginForm("SaveVendorPaymentStatus", "VendorPaymentStatus", FormMethod.Post, new { id = "frmVendorPaymentStatus", name = "frmVendorPaymentStatus", enctype = "multipart/form-data" }))
 {
@@ -73,33 +127,17 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-md-1 control-label col-md-offset-2">
-                                    <span>Event No</span>
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Year</span>
+                                </label>
+                                <div class="col-md-1">
+                                    @Html.DropDownListFor(x => x.VendorPayment.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    <span class="pull-right">Month</span>
                                 </label>
                                 <div class="col-md-2">
-                                    <input type="hidden" id="eventid" name="eventid" />
-                                    @Html.DropDownListFor(x => x.VendorPayment.FirstOrDefault().TrainingConfirmationID,
-          new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
-          "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
-                                </div>
-                            </div>
-                        </div>
-                        <div id="TrainingDetails" class="css10">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label class="col-md-1 control-label col-md-offset-2">
-                                        <span>Product:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                    </label>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.ProductName : "")" />
-                                    </div>
-                                    <label class="col-md-1 control-label">
-                                        <span>Course:&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                                    </label>
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(x => x.trainingconfDetail.CourseName,
-                                                new { @class = "form-control", placeholder = "Course Name" , @readonly= "readonly"})
-                                    </div>
+                                    @Html.DropDownListFor(x => x.VendorPayment.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
                             </div>
                         </div>
@@ -116,6 +154,7 @@
                                             <div style='width:80px;'>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
+                                                    <input type="hidden" id="hdnvenderpaymentId" value="@item.VendorPaymentId" />
                                                     <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                     if (item.VendorPaymentId > 0)
                                                     {
@@ -124,12 +163,32 @@
                                                 }
                                             </div>
                                         </text>),
-
+                         grid.Column("TrainingConfirmationID", "Event ID", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:90px;'>
+                                            @(item.TrainingConfirmationID)
+                                        </div>
+                                    </text>),
                              grid.Column("VendorName", "Vendor Name", canSort: true,
                                      format:
                                     @<text>
                                         <div style='width:150px;'>
-                                            @(item.VendorName)
+                                            @GetCustomerName(item.TrainingConfirmationID)
+                                        </div>
+                                    </text>),
+                          grid.Column("ProductName", "Product Name", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:90px;'>
+                                            @GetProductName(item.TrainingConfirmationID)
+                                        </div>
+                                    </text>),
+                             grid.Column("CourseName", "Course Name", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:300px;'>
+                                            @GetCourseName(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
                              grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
@@ -140,7 +199,7 @@
                                                 @ConvertToInt64dollar(item.InvoiceAmount)
                                             </span>
                                         </div>
-                                    </text>,style:"center"),
+                                    </text>, style: "center"),
                              grid.Column("PaidAmount", "PaidAmount", canSort: true,
                                      format:
                                     @<text>
@@ -153,7 +212,7 @@
                              grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:90px;'>
+                                        <div style='width:100px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
@@ -162,7 +221,7 @@
                              grid.Column("OtherReceivablesAmount", "Other Receivables", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:150px;'>
+                                        <div style='width:120px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
@@ -177,12 +236,32 @@
                                             </span>
                                         </div>
                                     </text>, style: "center"),
-                         grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
-                         grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                              grid.Column("DueDate", "Due Date", canSort: true,
+                                     format: @<text>
+                                <div style='width:70px;'>
+                                    <span class="center">
+                                        @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy"))
+                                    </span>
+                                </div>
+                                    </text>
+                                     , style: "center"),
+                              grid.Column("ReceiptDate", "Receipt Datet", canSort: true,
+                                     format: @<text>
+                                <div style='width:90px;'>
+                                    <span class="center">
+                                        @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy"))
+                                    </span>
+                                </div>
+                                    </text>
+                                     , style: "center"),
                              grid.Column("ReferenceDoc", "Reference Doc",
                              format:
                             @<text>
-                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                <div style='width:100px;'>
+                                    <span class="center">
+                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                    </span>
+                                </div>
                             </text>, canSort: true)),
                                          tableStyle: "table")
                         </div>
@@ -210,6 +289,13 @@
     <script type="text/javascript">
         $(function () {
             $('#liVendorPaymentStatusList').addClass('active');
+            $("#gridContent tbody tr").each(function (i, row) {
+                debugger;
+                var $actualRow = $(row);
+                if ($actualRow.find('#hdnvenderpaymentId').val() != -1) {
+                    $actualRow.css('background-color', '#b3f7da');
+                }
+            });
         });
 
         function mouseleave(el) {
@@ -221,19 +307,8 @@
             $(el).popover("show");
         }
 
-        $(function () {
-            $('#TrainingDetails').hide();
-            $('#addbtn').attr('disabled', 'disabled');
-            var trid = $('#TrainingConfirmationID').val();
-
-            if (trid != null && trid != '') {
-                $('#TrainingDetails').show();
-            }
-        });
-
-        function ChangeEventID(el) {
-            $('#eventid').val(el.value);
-            window.location = '@Url.Action("VendorPaymentStatusList", "VendorPaymentStatus", new { trainingConfirmationID = ""})' + '?trainingConfirmationID=' + el.value;
+        function ChangeMonth() {
+            window.location = '@Url.Action("VendorPaymentStatusList", "VendorPaymentStatus", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
         function EditVendorPaymentStatusDetail(el) {
@@ -257,21 +332,6 @@
         }
 
         function DeleteVendorPaymentStatus(id) {
-            @*if (confirm("Are you sure, You want to delete")) {
-                $.ajax({
-                    url: '@Url.Content("~/VendorPaymentStatus/DeleteVendorPaymentStatus?VendorPaymentId=")' + id,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data) {
-                            alert("Deleted Successfully");
-                            location.reload();
-                        }
-                    },
-                    error: function (e) {
-                    }
-                });
-            }*@
             swal({
                 title: "Are you sure?",
                 text: "Do you want delete?",

@@ -15,46 +15,20 @@ namespace EDU.Web.Controllers
     {
         // GET: VendorPaymentStatus
         EducationEntities dbContext = new EducationEntities();
-        public ActionResult VendorPaymentStatusList(string trainingConfirmationID)
+        public ActionResult VendorPaymentStatusList(short? month, int year)
         {
-            VendorPaymentStatusVM result = new VendorPaymentStatusVM();
-            result = getListData(trainingConfirmationID);
-
-            return View(result);
-
-        }
-        private VendorPaymentStatusVM getListData(string trainingConfirmationID)
-        {
-            VendorPaymentStatusVM result = new VendorPaymentStatusVM();
             try
             {
-                List<TrainingConfirmation> tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
-                List<Registration> regList = GetList(trainingConfirmationID);
-                TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
+                VendorPaymentStatusVM result = new VendorPaymentStatusVM();
+                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+                List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 
-
-                TrainingConfirmDtl tcd = new TrainingConfirmDtl();
-                string VendorName = "";
-                if (tcdtl != null)
-                {
-                    string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
-                    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault().CourseName : "";
-                    VendorName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().VendorName;
-
-                    tcd = new TrainingConfirmDtl()
-                    {
-                        Id = tcdtl.Id,
-                        TrainingConfirmationID = tcdtl.TrainingConfirmationID,
-                        Product = tcdtl.Product,
-                        Course = tcdtl.Course,
-                        ProductName = productName,
-                        CourseName = courseName,
-                        TrianerId = tcdtl.TrianerId
-                    };
-                }
+                List<Registration> registrations = dbContext.Registrations.Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount > 0).ToList();
+                var courseList = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
+                var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
 
                 List<VendorPaymentVM> VendorPaymentVM = dbContext.VendorPayments
-                    .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID)
+                     .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount > 0)
                     .Select(x => new VendorPaymentVM
                     {
                         VendorPaymentId = x.VendorPaymentId,
@@ -73,80 +47,203 @@ namespace EDU.Web.Controllers
                         CreatedOn = x.CreatedOn,
                         ModifiedBy = x.ModifiedBy,
                         ModifiedOn = x.ModifiedOn,
-                        VendorName = VendorName
+                        Year = year,
+                        Month = month
                     })
                     .ToList();
 
-                decimal? invoiceAmount = 0;
-                decimal? paidAmount = 0;
-                decimal? balanceAmount = 0;
 
-                foreach (var item in regList)
+                foreach (var item in registrations)
                 {
-                    invoiceAmount += item.TotalAmount;
-                    paidAmount += (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
-                    balanceAmount += item.BalanceAmount;
-                }
-
-
-                if (VendorPaymentVM.Count() == 0 && trainingConfirmationID !="")
-                {
-                    VendorPaymentVM.Add(new VendorPaymentVM()
+                    if (VendorPaymentVM.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).Count() == 0)
                     {
-                        VendorPaymentId = -1,
-                        VendorId = tcd.TrianerId,
-                        TrainingConfirmationID = tcd.TrainingConfirmationID,
-                        InvoiceAmount = invoiceAmount,
-                        PaidAmount = paidAmount,
-                        BalanceAmount = balanceAmount,
-                        OtherReceivablesAmount = 0,
-                        TotalAmount = 0,
-                        DueDate = null,
-                        ReceiptDate = null,
-                        ReferenceDoc = null,
-                        IsActive = true,
-                        CreatedBy = null,
-                        CreatedOn = DateTime.Now,
-                        ModifiedBy = null,
-                        ModifiedOn = null,
-                        VendorName = VendorName
-                    });
+                        decimal? invoiceAmount = 0;
+                        decimal? paidAmount = 0;
+                        decimal? balanceAmount = 0;
+
+                        foreach (var ritem in registrations.Where(t => t.TrainingConfirmationID == item.TrainingConfirmationID))
+                        {
+                            invoiceAmount += ritem.TotalAmount;
+                            paidAmount += (ritem.Payment1 == null ? 0 : ritem.Payment1) + (ritem.Payment2 == null ? 0 : ritem.Payment2) + (ritem.Payment3 == null ? 0 : ritem.Payment3);
+                            balanceAmount += ritem.BalanceAmount;
+                        }
+
+                        VendorPaymentVM.Add(new VendorPaymentVM()
+                        {
+                            VendorPaymentId = -1,
+                            VendorId = item.RegistrationId,
+                            TrainingConfirmationID = item.TrainingConfirmationID,
+                            InvoiceAmount = invoiceAmount,
+                            PaidAmount = paidAmount,
+                            BalanceAmount = balanceAmount,
+                            OtherReceivablesAmount = 0,
+                            TotalAmount = 0,
+                            DueDate = null,
+                            ReceiptDate = null,
+                            ReferenceDoc = null,
+                            IsActive = true,
+                            CreatedBy = null,
+                            CreatedOn = DateTime.Now,
+                            ModifiedBy = null,
+                            ModifiedOn = null,
+                            Year = year,
+                            Month = month
+                        });
+                    }
                 }
 
                 result.VendorPayment = VendorPaymentVM;
+                result.trainingconfList = trainingConfirmationList;
+                result.productList = new EduProductBO().GetList();
+                result.courseList = new CourseBO().GetList();
+                result.trainerInformationList = dbContext.TrainerInformations.Where(x => x.IsActive == true).ToList();
 
-                result.trainingconf = tc;
-                result.trainingconfDetail = tcd;
 
+
+                return View(result);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return result;
         }
+
+        //private VendorPaymentStatusVM getListData(string trainingConfirmationID)
+        //{
+        //    VendorPaymentStatusVM result = new VendorPaymentStatusVM();
+        //    try
+        //    {
+        //        //List<TrainingConfirmation> tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+        //        //List<Registration> regList = GetList(trainingConfirmationID);
+        //        //TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
+
+
+        //        //TrainingConfirmDtl tcd = new TrainingConfirmDtl();
+        //        //string VendorName = "";
+        //        //if (tcdtl != null)
+        //        //{
+        //        //    string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
+        //        //    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault().CourseName : "";
+        //        //    VendorName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().VendorName;
+
+        //        //    tcd = new TrainingConfirmDtl()
+        //        //    {
+        //        //        Id = tcdtl.Id,
+        //        //        TrainingConfirmationID = tcdtl.TrainingConfirmationID,
+        //        //        Product = tcdtl.Product,
+        //        //        Course = tcdtl.Course,
+        //        //        ProductName = productName,
+        //        //        CourseName = courseName,
+        //        //        TrianerId = tcdtl.TrianerId
+        //        //    };
+        //        //}
+
+        //        List<VendorPaymentVM> VendorPaymentVM = dbContext.VendorPayments
+        //            .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID)
+        //            .Select(x => new VendorPaymentVM
+        //            {
+        //                VendorPaymentId = x.VendorPaymentId,
+        //                VendorId = x.VendorId,
+        //                TrainingConfirmationID = x.TrainingConfirmationID,
+        //                InvoiceAmount = x.InvoiceAmount,
+        //                PaidAmount = x.PaidAmount,
+        //                BalanceAmount = x.BalanceAmount,
+        //                OtherReceivablesAmount = x.OtherReceivablesAmount,
+        //                TotalAmount = x.TotalAmount,
+        //                DueDate = x.DueDate,
+        //                ReceiptDate = x.ReceiptDate,
+        //                ReferenceDoc = x.ReferenceDoc,
+        //                IsActive = true,
+        //                CreatedBy = x.CreatedBy,
+        //                CreatedOn = x.CreatedOn,
+        //                ModifiedBy = x.ModifiedBy,
+        //                ModifiedOn = x.ModifiedOn,
+        //                //VendorName = VendorName
+        //            })
+        //            .ToList();
+
+        //        decimal? invoiceAmount = 0;
+        //        decimal? paidAmount = 0;
+        //        decimal? balanceAmount = 0;
+
+        //        //foreach (var item in regList)
+        //        //{
+        //        //    invoiceAmount += item.TotalAmount;
+        //        //    paidAmount += (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
+        //        //    balanceAmount += item.BalanceAmount;
+        //        //}
+
+
+        //        if (VendorPaymentVM.Count() == 0 && trainingConfirmationID != "")
+        //        {
+        //            VendorPaymentVM.Add(new VendorPaymentVM()
+        //            {
+        //                VendorPaymentId = -1,
+        //                //VendorId = tcd.TrianerId,
+        //                //TrainingConfirmationID = tcd.TrainingConfirmationID,
+        //                InvoiceAmount = invoiceAmount,
+        //                PaidAmount = paidAmount,
+        //                BalanceAmount = balanceAmount,
+        //                OtherReceivablesAmount = 0,
+        //                TotalAmount = 0,
+        //                DueDate = null,
+        //                ReceiptDate = null,
+        //                ReferenceDoc = null,
+        //                IsActive = true,
+        //                CreatedBy = null,
+        //                CreatedOn = DateTime.Now,
+        //                ModifiedBy = null,
+        //                ModifiedOn = null,
+        //                //VendorName = VendorName
+        //            });
+        //        }
+
+        //        //result.VendorPayment = VendorPaymentVM;
+
+        //        //result.trainingconf = tc;
+        //        //result.trainingconfDetail = tcd;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return result;
+        //}
+
         [HttpPost]
         public PartialViewResult VendorPaymentStatusDetail(VendorPaymentVM VendorPayment)
         {
+            ViewData["year"] = VendorPayment.Year;
+            ViewData["month"] = VendorPayment.Month;
+
+            var tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == VendorPayment.TrainingConfirmationID).FirstOrDefault();
+            if (tcdtl != null)
+            {
+                var tidtl = dbContext.TrainerInformations.Where(x => x.TrianerId == tcdtl.TrianerId && x.IsActive == true).FirstOrDefault();
+                VendorPayment.VendorName = tidtl != null ? tidtl.VendorName : "";
+            }
+
             if (VendorPayment.VendorPaymentId == -1)
             {
                 ViewBag.Title = "New Vendor Payment Status";
-                return PartialView(new VendorPaymentVM { VendorPaymentId = -1, IsActive = true });
+                VendorPayment.IsActive = true;
             }
             else
             {
                 ViewBag.Title = "Update Vendor Payment Status";
-                return PartialView(VendorPayment);
-
             }
+            return PartialView(VendorPayment);
         }
-        private List<Registration> GetList(string trainingConfirmationID)
-        {
-            List<Registration> List = dbContext.Registrations
-                .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID)
-                .ToList();
-            return List;
-        }
+
+        //private List<Registration> GetList(string trainingConfirmationID)
+        //{
+        //    List<Registration> List = dbContext.Registrations
+        //        .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID)
+        //        .ToList();
+        //    return List;
+        //}
+
         [HttpPost]
         public ActionResult SaveVendorPaymentStatus(VendorPaymentVM Vendorpaymentvm)
         {
@@ -221,13 +318,12 @@ namespace EDU.Web.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
-            return RedirectToAction("VendorPaymentStatusList", new { trainingConfirmationID = Vendorpaymentvm.TrainingConfirmationID });
+            return RedirectToAction("VendorPaymentStatusList", new { month = Vendorpaymentvm.Month, year = Vendorpaymentvm.Year });
         }
 
         [HttpPost]

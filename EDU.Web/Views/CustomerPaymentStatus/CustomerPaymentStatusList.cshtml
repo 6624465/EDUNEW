@@ -14,11 +14,6 @@
 
     var cPayment = Model.customerPayment.Count();
     var myArray = (List<decimal?>)ViewData["Summary"];
-
-
-    var courseList = Model.courseList;
-    var productList = Model.productList;
-    var trainingconfList = Model.trainingconfList;
 }
 @functions{
     public string ConvertToInt64dollar(decimal? data)
@@ -108,6 +103,7 @@
         else
             return "";
     }
+
     public string GetProductName(string data)
     {
         var tcd = Model.trainingconfList.Where(x => x.IsActive == true && x.TrainingConfirmationID == data).FirstOrDefault();
@@ -128,18 +124,11 @@
             var tcdtl = Model.trainingconfList.Where(x => x.TrainingConfirmationID == registrationdtl.TrainingConfirmationID).FirstOrDefault();
             if (tcdtl != null)
             {
-                if (tcdtl.Private)
-                {
-                    return registrationdtl.CompanyName;
-                }
-                else
-                    return registrationdtl.StudentName;
+                return tcdtl.Private ? registrationdtl.CompanyName : registrationdtl.StudentName;
             }
-            else
-                return "";
-        }
-        else
             return "";
+        }
+        return "";
     }
 }
 @using (Html.BeginForm("SaveCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmCustomerPaymentStatus", name = "frmCustomerPaymentStatus", enctype = "multipart/form-data" }))
@@ -167,7 +156,7 @@
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Month</span>
                                 </label>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     @Html.DropDownListFor(x => x.customerPayment.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
                             </div>
@@ -205,7 +194,7 @@
                              grid.Column("CustomerName", "Customer", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:90px;'>
+                                        <div style='width:150px;'>
                                             @GetCustomerName(item.RegistrationId)
                                         </div>
                                     </text>),
@@ -219,7 +208,7 @@
                              grid.Column("CourseName", "Course Name", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:90px;'>
+                                        <div style='width:300px;'>
                                             @GetCourseName(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
@@ -244,7 +233,7 @@
                              grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:80px;'>
+                                        <div style='width:100px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
@@ -253,7 +242,7 @@
                              grid.Column("OtherReceivablesAmount", "Other Receivables", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:90px;'>
+                                        <div style='width:120px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
@@ -268,12 +257,32 @@
                                             </span>
                                         </div>
                                     </text>, style: "center"),
-                         grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
-                         grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
+                              grid.Column("DueDate", "Due Date", canSort: true,
+                                     format: @<text>
+                                <div style='width:70px;'>
+                                    <span class="center">
+                                        @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy"))
+                                    </span>
+                                </div>
+                                    </text>
+                                     , style: "center"),
+                              grid.Column("ReceiptDate", "Receipt Datet", canSort: true,
+                                     format: @<text>
+                                <div style='width:90px;'>
+                                    <span class="center">
+                                        @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy"))
+                                    </span>
+                                </div>
+                                    </text>
+                                     , style: "center"),
                              grid.Column("ReferenceDoc", "Reference Doc",
                              format:
                             @<text>
-                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/CPS_@item.CustomerPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                <div style='width:100px;'>
+                                    <span class="center">
+                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/CPS_@item.CustomerPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                    </span>
+                                </div>
                             </text>, canSort: true)),
                                          tableStyle: "table")
                         </div>
@@ -308,8 +317,7 @@
                 if ($actualRow.find('#hdncustomerpaymentId').val() != -1) {
                     $actualRow.css('background-color', '#b3f7da');
                 }
-
-            });  
+            });
 
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (cPayment > 0)
@@ -370,21 +378,6 @@
         }
 
         function DeleteCustomerPaymentStatus(id) {
-            @*if (confirm("Are you sure, You want to delete")) {
-                $.ajax({
-                    url: '@Url.Content("~/CustomerPaymentStatus/DeleteCustomerPaymentStatus?CustomerPaymentId=")' + id,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data) {
-                            alert("Deleted Successfully");
-                            location.reload();
-                        }
-                    },
-                    error: function (e) {
-                    }
-                });
-            }*@
         debugger;
             swal({
                 title: "Are you sure?",
