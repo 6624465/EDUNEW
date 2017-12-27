@@ -14,6 +14,11 @@
 
     var cPayment = Model.customerPayment.Count();
     var myArray = (List<decimal?>)ViewData["Summary"];
+
+
+    var courseList = Model.courseList;
+    var productList = Model.productList;
+    var trainingconfList = Model.trainingconfList;
 }
 @functions{
     public string ConvertToInt64dollar(decimal? data)
@@ -92,7 +97,50 @@
             return null;
     }
 
+    public string GetCourseName(string data)
+    {
+        var tcd = Model.trainingconfList.Where(x => x.IsActive == true && x.TrainingConfirmationID == data).FirstOrDefault();
+        if (tcd != null)
+        {
+            var coursenamedtl = Model.courseList.Where(x => x.Id == tcd.Course && x.Product == tcd.Product && x.Country == tcd.Country).FirstOrDefault();
+            return coursenamedtl != null ? coursenamedtl.CourseName : "";
+        }
+        else
+            return "";
+    }
+    public string GetProductName(string data)
+    {
+        var tcd = Model.trainingconfList.Where(x => x.IsActive == true && x.TrainingConfirmationID == data).FirstOrDefault();
+        if (tcd != null)
+        {
+            var productnamedtl = Model.productList.Where(x => x.Id == tcd.Product).FirstOrDefault();
+            return productnamedtl != null ? productnamedtl.ProductName : "";
+        }
+        else
+            return "";
+    }
 
+    public string GetCustomerName(int data)
+    {
+        var registrationdtl = Model.registrationList.Where(x => x.IsActive == true && x.RegistrationId == data).FirstOrDefault();
+        if (registrationdtl != null)
+        {
+            var tcdtl = Model.trainingconfList.Where(x => x.TrainingConfirmationID == registrationdtl.TrainingConfirmationID).FirstOrDefault();
+            if (tcdtl != null)
+            {
+                if (tcdtl.Private)
+                {
+                    return registrationdtl.CompanyName;
+                }
+                else
+                    return registrationdtl.StudentName;
+            }
+            else
+                return "";
+        }
+        else
+            return "";
+    }
 }
 @using (Html.BeginForm("SaveCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmCustomerPaymentStatus", name = "frmCustomerPaymentStatus", enctype = "multipart/form-data" }))
 {
@@ -153,11 +201,25 @@
                                             @(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
+                             grid.Column("CourseName", "Course Name", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:90px;'>
+                                            @GetCourseName(item.TrainingConfirmationID)
+                                        </div>
+                                    </text>),
+                             grid.Column("ProductName", "Product Name", canSort: true,
+                                     format:
+                                    @<text>
+                                        <div style='width:90px;'>
+                                            @GetProductName(item.TrainingConfirmationID)
+                                        </div>
+                                    </text>),
                              grid.Column("CustomerName", "Customer", canSort: true,
                                      format:
                                     @<text>
                                         <div style='width:90px;'>
-                                            @(item.CustomerName)
+                                            @GetCustomerName(item.RegistrationId)
                                         </div>
                                     </text>),
                              grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,

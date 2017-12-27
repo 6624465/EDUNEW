@@ -12,7 +12,7 @@ namespace EDU.Web.ViewModels.CustomerPaymentStatusModel
         public List<TrainingConfirmation> trainingconfList { get; set; }
         public List<EZY.EDU.Contract.CourseVm> courseList { get; set; }
         public List<EZY.EDU.Contract.EduProduct> productList { get; set; }
-        //public TrainingConfirmDtl trainingconfDetail { get; set; }
+        public List<EDU.Web.Models.Registration> registrationList { get; set; }
     }
 
     public class CustomerPaymentVM

@@ -136,6 +136,7 @@ namespace EDU.Web.Controllers
             result.trainingconfList = trainingConfirmationList;
             result.productList = new EduProductBO().GetList();
             result.courseList = new CourseBO().GetList();
+            result.registrationList = registrations;
 
 
             long invoiceAmount = 0;
