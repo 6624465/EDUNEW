@@ -206,6 +206,43 @@ namespace EDU.Web.Controllers
 
                         dbContext.Entry(regObj).State = EntityState.Modified;
                         dbContext.SaveChanges();
+
+                        //customer payment status update
+
+                        CustomerPayment customerpayment = dbContext.CustomerPayments.Where(x => x.RegistrationId == regObj.RegistrationId && x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                        if (customerpayment != null)
+                        {
+                            customerpayment.PaidAmount = (regObj.Payment1 == null ? 0 : regObj.Payment1) + (regObj.Payment2 == null ? 0 : regObj.Payment2) + (regObj.Payment3 == null ? 0 : regObj.Payment3);
+                            customerpayment.BalanceAmount = regObj.BalanceAmount;
+
+                            customerpayment.IsActive = true;
+                            customerpayment.ModifiedBy = USER_ID;
+                            customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                            dbContext.SaveChanges();
+                        }
+
+
+                        //vendor payment status update
+                        List<Registration> regList = dbContext.Registrations.Where(x => x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).ToList();
+                        decimal? PaidAmount = 0;
+                        decimal? BalanceAmount = 0;
+                        foreach (var regitem in regList)
+                        {
+                            PaidAmount += (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3);
+                            BalanceAmount += regitem.BalanceAmount;
+                        }
+
+                        VendorPayment vendorpayment = dbContext.VendorPayments.Where(x => x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                        if (vendorpayment != null)
+                        {
+                            vendorpayment.PaidAmount = PaidAmount;
+                            vendorpayment.BalanceAmount = BalanceAmount;
+
+                            vendorpayment.IsActive = true;
+                            vendorpayment.ModifiedBy = USER_ID;
+                            vendorpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                            dbContext.SaveChanges();
+                        }
                     }
                 }
             }
@@ -281,6 +318,43 @@ namespace EDU.Web.Controllers
 
                             dbContext.Entry(regObj).State = EntityState.Modified;
                             dbContext.SaveChanges();
+
+                            //customer payment status update
+
+                            CustomerPayment customerpayment = dbContext.CustomerPayments.Where(x => x.RegistrationId == regObj.RegistrationId && x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                            if (customerpayment != null)
+                            {
+                                customerpayment.PaidAmount = (regObj.Payment1 == null ? 0 : regObj.Payment1) + (regObj.Payment2 == null ? 0 : regObj.Payment2) + (regObj.Payment3 == null ? 0 : regObj.Payment3);
+                                customerpayment.BalanceAmount = regObj.BalanceAmount;
+
+                                customerpayment.IsActive = true;
+                                customerpayment.ModifiedBy = USER_ID;
+                                customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                                dbContext.SaveChanges();
+                            }
+
+
+                            //vendor payment status update
+                            List<Registration> regList = dbContext.Registrations.Where(x => x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).ToList();
+                            decimal? PaidAmount = 0;
+                            decimal? BalanceAmount = 0;
+                            foreach (var regitem in regList)
+                            {
+                                PaidAmount += (regitem.Payment1 == null ? 0 : regitem.Payment1) + (regitem.Payment2 == null ? 0 : regitem.Payment2) + (regitem.Payment3 == null ? 0 : regitem.Payment3);
+                                BalanceAmount += regitem.BalanceAmount;
+                            }
+
+                            VendorPayment vendorpayment = dbContext.VendorPayments.Where(x => x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                            if (vendorpayment != null)
+                            {
+                                vendorpayment.PaidAmount = PaidAmount;
+                                vendorpayment.BalanceAmount = BalanceAmount;
+
+                                vendorpayment.IsActive = true;
+                                vendorpayment.ModifiedBy = USER_ID;
+                                vendorpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                                dbContext.SaveChanges();
+                            }
                         }
                     }
                 }
