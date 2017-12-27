@@ -39,5 +39,6 @@ namespace EDU.Web.ViewModels.Registration
         public string CourseName { get; set; }
         public string TrianerName { get; set; }
         public bool LVC { get; set; }
+        public string CountryName { get; set; }
     }
 }

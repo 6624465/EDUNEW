@@ -41,6 +41,7 @@ namespace EDU.Web.Controllers
                 TrainingConfirmDtl tcd = new TrainingConfirmDtl();
                 if (tcdtl != null)
                 {
+                    string countryName = new BranchBO().GetList().Where(x => x.BranchID == tcdtl.Country).FirstOrDefault() != null ? new BranchBO().GetList().Where(x => x.BranchID == tcdtl.Country).FirstOrDefault().BranchName : "";
                     string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
                     string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault().CourseName : "";
                     tcd = new TrainingConfirmDtl()
@@ -57,6 +58,7 @@ namespace EDU.Web.Controllers
                         TrianerId = tcdtl.TrianerId,
                         ProductName = productName,
                         CourseName = courseName,
+                        CountryName = countryName,
                         TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
                     };
 

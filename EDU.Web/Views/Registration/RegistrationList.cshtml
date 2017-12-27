@@ -207,7 +207,7 @@
                                     <div class="col-md-1">
                                         <label class="control-label">Course:&nbsp;&nbsp;  </label>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null ? Model.trainingconfDetail.CourseName : "")" />
                                     </div>
                                     <div class="col-md-1" style="width:110px">
@@ -215,6 +215,12 @@
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.TrianerName != null ? Model.trainingconfDetail.TrianerName : "")" />
+                                    </div>
+                                    <div class="col-md-1" style="width:110px">
+                                        <label class="control-label">Country:</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control input-sm" readonly value="@(Model.trainingconfDetail != null && Model.trainingconfDetail.CountryName != null ? Model.trainingconfDetail.CountryName : "")" />
                                     </div>
                                 </div>
                             </div>
