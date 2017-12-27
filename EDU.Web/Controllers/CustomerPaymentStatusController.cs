@@ -15,129 +15,195 @@ namespace EDU.Web.Controllers
     {
         // GET: CustomerPaymentStatus
         EducationEntities dbContext = new EducationEntities();
-        public ActionResult CustomerPaymentStatusList(string trainingConfirmationID)
+        public ActionResult CustomerPaymentStatusList(short? month, int year)
         {
             CustomerPaymentStatusVM result = new CustomerPaymentStatusVM();
-            result = getListData(trainingConfirmationID);
+            List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
+            List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
+
+            List<Registration> registrations = dbContext.Registrations.Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount > 0).ToList();
+
+
+            List<CustomerPaymentVM> customerPaymentVM = dbContext.CustomerPayments
+                .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID))
+                .Select(x => new CustomerPaymentVM
+                {
+                    CustomerPaymentId = x.CustomerPaymentId,
+                    RegistrationId = x.RegistrationId,
+                    TrainingConfirmationID = x.TrainingConfirmationID,
+                    InvoiceAmount = x.InvoiceAmount,
+                    PaidAmount = x.PaidAmount,
+                    BalanceAmount = x.BalanceAmount,
+                    OtherReceivablesAmount = x.OtherReceivablesAmount,
+                    TotalAmount = x.TotalAmount,
+                    DueDate = x.DueDate,
+                    ReceiptDate = x.ReceiptDate,
+                    ReferenceDoc = x.ReferenceDoc,
+                    IsActive = true,
+                    CreatedBy = x.CreatedBy,
+                    CreatedOn = x.CreatedOn,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedOn = x.ModifiedOn,
+                    CustomerName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName,
+                    //CourseName = 
+                    //ProductName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
+                    //CustomerName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
+                    Year = year,
+                    Month = month
+                })
+                .ToList();
+
+
+            foreach (var item in registrations)
+            {
+                if (customerPaymentVM.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).Count() == 0)
+                {
+                    customerPaymentVM.Add(new CustomerPaymentVM()
+                    {
+                        CustomerPaymentId = -1,
+                        RegistrationId = item.RegistrationId,
+                        TrainingConfirmationID = item.TrainingConfirmationID,
+                        InvoiceAmount = item.TotalAmount,
+                        PaidAmount = (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3),
+                        BalanceAmount = item.BalanceAmount,
+                        OtherReceivablesAmount = 0,
+                        TotalAmount = 0,
+                        DueDate = null,
+                        ReceiptDate = null,
+                        ReferenceDoc = null,
+                        IsActive = true,
+                        CreatedBy = null,
+                        CreatedOn = DateTime.Now,
+                        ModifiedBy = null,
+                        ModifiedOn = null,
+                        CustomerName = item.StudentName,
+                        Year = year,
+                        Month = month
+                    });
+                }
+            }
+
+            result.customerPayment = customerPaymentVM;
+            
             return View(result);
 
         }
-        private CustomerPaymentStatusVM getListData(string trainingConfirmationID)
-        {
-            CustomerPaymentStatusVM result = new CustomerPaymentStatusVM();
-            try
-            {
-                List<TrainingConfirmation> tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
-                List<Registration> regList = GetList(trainingConfirmationID);
-                TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
+        //private CustomerPaymentStatusVM getListData(string trainingConfirmationID)
+        //{
+        //    CustomerPaymentStatusVM result = new CustomerPaymentStatusVM();
+        //    try
+        //    {
+        //        List<TrainingConfirmation> tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true).ToList();
+        //        List<Registration> regList = GetList(trainingConfirmationID);
+        //        TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
 
 
-                TrainingConfirmDtl tcd = new TrainingConfirmDtl();
+        //        //TrainingConfirmDtl tcd = new TrainingConfirmDtl();
 
-                if (tcdtl != null)
-                {
-                    string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
-                    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product== tcdtl.Product && x.Country== tcdtl.Country).FirstOrDefault().CourseName : "";
-                    tcd = new TrainingConfirmDtl()
-                    {
-                        Id = tcdtl.Id,
-                        TrainingConfirmationID = tcdtl.TrainingConfirmationID,
-                        Product = tcdtl.Product,
-                        Course = tcdtl.Course,
-                        ProductName = productName,
-                        CourseName = courseName,
-                        TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
-                    };
-                }
+        //        //if (tcdtl != null)
+        //        //{
+        //        //    string productName = new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault() != null ? new EduProductBO().GetList().Where(x => x.Id == tcdtl.Product).FirstOrDefault().ProductName : "";
+        //        //    string courseName = new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product == tcdtl.Product && x.Country == tcdtl.Country).FirstOrDefault() != null ? new CourseBO().GetList().Where(x => x.Id == tcdtl.Course && x.Product== tcdtl.Product && x.Country== tcdtl.Country).FirstOrDefault().CourseName : "";
+        //        //    tcd = new TrainingConfirmDtl()
+        //        //    {
+        //        //        Id = tcdtl.Id,
+        //        //        TrainingConfirmationID = tcdtl.TrainingConfirmationID,
+        //        //        Product = tcdtl.Product,
+        //        //        Course = tcdtl.Course,
+        //        //        ProductName = productName,
+        //        //        CourseName = courseName,
+        //        //        TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
+        //        //    };
+        //        //}
 
-                List<CustomerPaymentVM> customerPaymentVM = dbContext.CustomerPayments
-                    .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID)
-                    .Select(x => new CustomerPaymentVM
-                    {
-                        CustomerPaymentId = x.CustomerPaymentId,
-                        RegistrationId = x.RegistrationId,
-                        TrainingConfirmationID = x.TrainingConfirmationID,
-                        InvoiceAmount = x.InvoiceAmount,
-                        PaidAmount = x.PaidAmount,
-                        BalanceAmount = x.BalanceAmount,
-                        OtherReceivablesAmount = x.OtherReceivablesAmount,
-                        TotalAmount = x.TotalAmount,
-                        DueDate = x.DueDate,
-                        ReceiptDate = x.ReceiptDate,
-                        ReferenceDoc = x.ReferenceDoc,
-                        IsActive = true,
-                        CreatedBy = x.CreatedBy,
-                        CreatedOn = x.CreatedOn,
-                        ModifiedBy = x.ModifiedBy,
-                        ModifiedOn = x.ModifiedOn,
-                        CustomerName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
-                    })
-                    .ToList();
+        //        //List<CustomerPaymentVM> customerPaymentVM = dbContext.CustomerPayments
+        //        //    .Where(x => x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID)
+        //        //    .Select(x => new CustomerPaymentVM
+        //        //    {
+        //        //        CustomerPaymentId = x.CustomerPaymentId,
+        //        //        RegistrationId = x.RegistrationId,
+        //        //        TrainingConfirmationID = x.TrainingConfirmationID,
+        //        //        InvoiceAmount = x.InvoiceAmount,
+        //        //        PaidAmount = x.PaidAmount,
+        //        //        BalanceAmount = x.BalanceAmount,
+        //        //        OtherReceivablesAmount = x.OtherReceivablesAmount,
+        //        //        TotalAmount = x.TotalAmount,
+        //        //        DueDate = x.DueDate,
+        //        //        ReceiptDate = x.ReceiptDate,
+        //        //        ReferenceDoc = x.ReferenceDoc,
+        //        //        IsActive = true,
+        //        //        CreatedBy = x.CreatedBy,
+        //        //        CreatedOn = x.CreatedOn,
+        //        //        ModifiedBy = x.ModifiedBy,
+        //        //        ModifiedOn = x.ModifiedOn,
+        //        //        CustomerName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
+        //        //    })
+        //        //    .ToList();
 
 
-                foreach (var item in regList)
-                {
-                    if (dbContext.CustomerPayments.Where(x => x.IsActive == true && x.RegistrationId == item.RegistrationId).Count() == 0)
-                    {
-                        customerPaymentVM.Add(new CustomerPaymentVM()
-                        {
-                            CustomerPaymentId = -1,
-                            RegistrationId = item.RegistrationId,
-                            TrainingConfirmationID = item.TrainingConfirmationID,
-                            InvoiceAmount = item.TotalAmount,
-                            PaidAmount = (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3),
-                            BalanceAmount = item.BalanceAmount,
-                            OtherReceivablesAmount = 0,
-                            TotalAmount = 0,
-                            DueDate = null,
-                            ReceiptDate = null,
-                            ReferenceDoc = null,
-                            IsActive = true,
-                            CreatedBy = null,
-                            CreatedOn = DateTime.Now,
-                            ModifiedBy = null,
-                            ModifiedOn = null,
-                            CustomerName = item.StudentName
-                        });
-                    }
-                }
+        //        //foreach (var item in regList)
+        //        //{
+        //        //    if (dbContext.CustomerPayments.Where(x => x.IsActive == true && x.RegistrationId == item.RegistrationId).Count() == 0)
+        //        //    {
+        //        //        customerPaymentVM.Add(new CustomerPaymentVM()
+        //        //        {
+        //        //            CustomerPaymentId = -1,
+        //        //            RegistrationId = item.RegistrationId,
+        //        //            TrainingConfirmationID = item.TrainingConfirmationID,
+        //        //            InvoiceAmount = item.TotalAmount,
+        //        //            PaidAmount = (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3),
+        //        //            BalanceAmount = item.BalanceAmount,
+        //        //            OtherReceivablesAmount = 0,
+        //        //            TotalAmount = 0,
+        //        //            DueDate = null,
+        //        //            ReceiptDate = null,
+        //        //            ReferenceDoc = null,
+        //        //            IsActive = true,
+        //        //            CreatedBy = null,
+        //        //            CreatedOn = DateTime.Now,
+        //        //            ModifiedBy = null,
+        //        //            ModifiedOn = null,
+        //        //            CustomerName = item.StudentName
+        //        //        });
+        //        //    }
+        //        //}
 
-                result.customerPayment = customerPaymentVM;
+        //        //result.customerPayment = customerPaymentVM;
 
-                result.trainingconf = tc;
-                result.trainingconfDetail = tcd;
+        //        //result.trainingconf = tc;
+        //        //result.trainingconfDetail = tcd;
 
-                long invoiceAmount = 0;
-                long paidAmount = 0;
-                long balanceAmount = 0;
-                long otherreceivablesAmount = 0;
-                long totalAmount = 0;
+        //        //long invoiceAmount = 0;
+        //        //long paidAmount = 0;
+        //        //long balanceAmount = 0;
+        //        //long otherreceivablesAmount = 0;
+        //        //long totalAmount = 0;
 
-                foreach (var item in customerPaymentVM)
-                {
-                    invoiceAmount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
-                    paidAmount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
-                    balanceAmount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
-                    otherreceivablesAmount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
-                    totalAmount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
-                }
+        //        //foreach (var item in customerPaymentVM)
+        //        //{
+        //        //    invoiceAmount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
+        //        //    paidAmount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
+        //        //    balanceAmount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+        //        //    otherreceivablesAmount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
+        //        //    totalAmount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+        //        //}
 
-                List<decimal?> summary = new List<decimal?>();
-                summary.Add(invoiceAmount);
-                summary.Add(paidAmount);
-                summary.Add(balanceAmount);
-                summary.Add(otherreceivablesAmount);
-                summary.Add(totalAmount);
-                ViewData["Summary"] = summary;
+        //        //List<decimal?> summary = new List<decimal?>();
+        //        //summary.Add(invoiceAmount);
+        //        //summary.Add(paidAmount);
+        //        //summary.Add(balanceAmount);
+        //        //summary.Add(otherreceivablesAmount);
+        //        //summary.Add(totalAmount);
+        //        //ViewData["Summary"] = summary;
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return result;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return result;
+        //}
 
         [HttpPost]
         public PartialViewResult CustomerPaymentStatusDetail(CustomerPaymentVM customerPayment)
