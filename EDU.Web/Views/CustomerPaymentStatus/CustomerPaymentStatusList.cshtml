@@ -185,6 +185,7 @@
                                             <div style='width:60px;'>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
+                                                    <input type="hidden" id="hdncustomerpaymentId" value="@item.CustomerPaymentId" />
                                                     <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                     @*<button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Registration/Registration?Id=" + item.RegistrationId + "&trainingConfirmationID=" + item.TrainingConfirmationID)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>*@
                                                 if (item.CustomerPaymentId > 0)
@@ -201,25 +202,25 @@
                                             @(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
-                             grid.Column("CourseName", "Course Name", canSort: true,
+                             grid.Column("CustomerName", "Customer", canSort: true,
                                      format:
                                     @<text>
                                         <div style='width:90px;'>
-                                            @GetCourseName(item.TrainingConfirmationID)
+                                            @GetCustomerName(item.RegistrationId)
                                         </div>
                                     </text>),
-                             grid.Column("ProductName", "Product Name", canSort: true,
+                          grid.Column("ProductName", "Product Name", canSort: true,
                                      format:
                                     @<text>
                                         <div style='width:90px;'>
                                             @GetProductName(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
-                             grid.Column("CustomerName", "Customer", canSort: true,
+                             grid.Column("CourseName", "Course Name", canSort: true,
                                      format:
                                     @<text>
                                         <div style='width:90px;'>
-                                            @GetCustomerName(item.RegistrationId)
+                                            @GetCourseName(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
                              grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
@@ -301,12 +302,20 @@
         $(function () {
 
             $('#liCustomerPaymentStatusList').addClass('active');
+            $("#gridContent tbody tr").each(function (i, row) {
+                debugger;
+                var $actualRow = $(row);
+                if ($actualRow.find('#hdncustomerpaymentId').val() != -1) {
+                    $actualRow.css('background-color', '#b3f7da');
+                }
+
+            });  
 
             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (cPayment > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><td></td><td></td></td><td><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });
