@@ -1,6 +1,9 @@
 ﻿
 @model EDU.Web.ViewModels.CustomerPaymentStatusModel.CustomerPaymentVM
-
+@{ 
+    var year = (int)ViewData["year"];
+    var month = (short?)ViewData["month"];
+}
 <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -12,6 +15,8 @@
             @Html.HiddenFor(x => x.CustomerPaymentId)
             @Html.HiddenFor(x => x.RegistrationId)
             @Html.HiddenFor(x => x.TrainingConfirmationID)
+            @Html.HiddenFor(x=>x.Year)
+            @Html.HiddenFor(x => x.Month)
             <div class="row">
                 <div class="form-group">
                     <label class="col-md-3 control-label">

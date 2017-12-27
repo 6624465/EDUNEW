@@ -206,16 +206,20 @@ namespace EDU.Web.Controllers
         //}
 
         [HttpPost]
-        public PartialViewResult CustomerPaymentStatusDetail(CustomerPaymentVM customerPayment)
+        public PartialViewResult CustomerPaymentStatusDetail(CustomerPaymentVM customerPayment, short? month, int year)
         {
             if (customerPayment.CustomerPaymentId == -1)
             {
                 ViewBag.Title = "New Customer Payment Status";
+                ViewData["year"] = year;
+                ViewData["month"] = month;
                 return PartialView(new CustomerPaymentVM { CustomerPaymentId = -1, IsActive = true });
             }
             else
             {
                 ViewBag.Title = "Update Customer Payment Status";
+                ViewData["year"] = year;
+                ViewData["month"] = month;
                 return PartialView(customerPayment);
 
             }
@@ -230,7 +234,7 @@ namespace EDU.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveCustomerPaymentStatus(CustomerPaymentVM customerpaymentvm)
+        public ActionResult SaveCustomerPaymentStatus(CustomerPaymentVM customerpaymentvm, short? month, int year)
         {
             try
             {
@@ -309,7 +313,7 @@ namespace EDU.Web.Controllers
                 throw;
             }
 
-            return RedirectToAction("CustomerPaymentStatusList", new { trainingConfirmationID = customerpaymentvm.TrainingConfirmationID });
+            return RedirectToAction("CustomerPaymentStatusList", new CustomerPaymentVM{Month= month,Year = year } );
         }
 
         [HttpPost]
