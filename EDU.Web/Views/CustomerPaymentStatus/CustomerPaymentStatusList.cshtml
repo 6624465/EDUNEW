@@ -12,8 +12,8 @@
     WebGrid grid = new WebGrid(Model.customerPayment, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
 
-    //var cPayment = Model.customerPayment.Count();
-    //var myArray = (List<decimal?>)ViewData["Summary"];
+    var cPayment = Model.customerPayment.Count();
+    var myArray = (List<decimal?>)ViewData["Summary"];
 }
 @functions{
     public string ConvertToInt64dollar(decimal? data)
@@ -134,7 +134,7 @@
                           grid.Column("", "#Action", canSort: false,
                                          format:
                                         @<text>
-                                            <div style='width:80px;'>
+                                            <div style='width:60px;'>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
@@ -149,14 +149,14 @@
                              grid.Column("TrainingConfirmationID", "Event ID", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:100px;'>
+                                        <div style='width:90px;'>
                                             @(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
                              grid.Column("CustomerName", "Customer", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:150px;'>
+                                        <div style='width:90px;'>
                                             @(item.CustomerName)
                                         </div>
                                     </text>),
@@ -168,7 +168,7 @@
                                                 @ConvertToInt64dollar(item.InvoiceAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>, style: "center"),
                              grid.Column("PaidAmount", "PaidAmount", canSort: true,
                                      format:
                                     @<text>
@@ -177,25 +177,25 @@
                                                 @ConvertToInt64dollar(item.PaidAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>, style: "center"),
                              grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:90px;'>
+                                        <div style='width:80px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>, style: "center"),
                              grid.Column("OtherReceivablesAmount", "Other Receivables", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:150px;'>
+                                        <div style='width:90px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>, style: "center"),
                               grid.Column("TotalAmount", "Total Amount", canSort: true,
                                      format:
                                     @<text>
@@ -204,7 +204,7 @@
                                                 @ConvertToInt64dollar(item.TotalAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>, style: "center"),
                          grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                          grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                              grid.Column("ReferenceDoc", "Reference Doc",
@@ -224,9 +224,9 @@
             </div>
         </div>
     </div>
- 
+
     <div id="myModal" class="modal fade" role="dialog">
-      
+
     </div>
 }
 @using (Html.BeginForm("DeleteCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmDeleteCustomerPaymentStatus", name = "frmDeleteCustomerPaymentStatus", enctype = "multipart/form-data" }))
@@ -240,13 +240,13 @@
 
             $('#liCustomerPaymentStatusList').addClass('active');
 
-            @*var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (cPayment > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
             </text>
-            }*@
+            }
         });
 
         function mouseleave(el) {
@@ -299,7 +299,7 @@
         }
 
         function DeleteCustomerPaymentStatus(id) {
-            if (confirm("Are you sure, You want to delete")) {
+            @*if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
                     url: '@Url.Content("~/CustomerPaymentStatus/DeleteCustomerPaymentStatus?CustomerPaymentId=")' + id,
                     type: 'POST',
@@ -313,7 +313,34 @@
                     error: function (e) {
                     }
                 });
-            }
+            }*@
+        debugger;
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+      function () {
+          debugger;
+          $.ajax({
+              url: '@Url.Content("~/CustomerPaymentStatus/DeleteCustomerPaymentStatus?CustomerPaymentId=")' + id,
+              type: 'POST',
+              contentType: 'application/json',
+              success: function (data) {
+                  debugger;
+                  if (data) {
+                      swal("Deleted!", "Your Customer Payment record has been deleted.", "success");
+                      location.reload();
+                  }
+              },
+              error: function (e) {
+              }
+          });
+      });
         }
         function CalculateTotalAmount() {
             var invoiceamt = parseInt($('#InvoiceAmount').val());

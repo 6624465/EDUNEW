@@ -137,6 +137,28 @@ namespace EDU.Web.Controllers
             result.productList = new EduProductBO().GetList();
             result.courseList = new CourseBO().GetList();
 
+
+            long invoiceAmount = 0;
+            long paidAmount = 0;
+            long balanceAmount = 0;
+            long otherreceivablesAmount = 0;
+            long totalAmount = 0;
+            foreach (var item in customerPaymentVM)
+            {
+                invoiceAmount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
+                paidAmount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
+                balanceAmount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+                otherreceivablesAmount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
+                totalAmount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+            }
+
+            List<decimal?> summary = new List<decimal?>();
+            summary.Add(invoiceAmount);
+            summary.Add(paidAmount);
+            summary.Add(balanceAmount);
+            summary.Add(otherreceivablesAmount);
+            summary.Add(totalAmount);
+            ViewData["Summary"] = summary;
             return View(result);
 
         }
@@ -257,16 +279,20 @@ namespace EDU.Web.Controllers
         //}
 
         [HttpPost]
-        public PartialViewResult CustomerPaymentStatusDetail(CustomerPaymentVM customerPayment)
+        public PartialViewResult CustomerPaymentStatusDetail(CustomerPaymentVM customerPayment, short? month, int year)
         {
             if (customerPayment.CustomerPaymentId == -1)
             {
                 ViewBag.Title = "New Customer Payment Status";
+                ViewData["year"] = year;
+                ViewData["month"] = month;
                 return PartialView(new CustomerPaymentVM { CustomerPaymentId = -1, IsActive = true });
             }
             else
             {
                 ViewBag.Title = "Update Customer Payment Status";
+                ViewData["year"] = year;
+                ViewData["month"] = month;
                 return PartialView(customerPayment);
 
             }
@@ -281,7 +307,7 @@ namespace EDU.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveCustomerPaymentStatus(CustomerPaymentVM customerpaymentvm)
+        public ActionResult SaveCustomerPaymentStatus(CustomerPaymentVM customerpaymentvm, short? month, int year)
         {
             try
             {
@@ -360,7 +386,7 @@ namespace EDU.Web.Controllers
                 throw;
             }
 
-            return RedirectToAction("CustomerPaymentStatusList", new { trainingConfirmationID = customerpaymentvm.TrainingConfirmationID });
+            return RedirectToAction("CustomerPaymentStatusList", new CustomerPaymentVM{Month= month,Year = year } );
         }
 
         [HttpPost]
