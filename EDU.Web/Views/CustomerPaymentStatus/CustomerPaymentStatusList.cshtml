@@ -134,7 +134,7 @@
                           grid.Column("", "#Action", canSort: false,
                                          format:
                                         @<text>
-                                            <div style='width:80px;'>
+                                            <div style='width:60px;'>
                                                 @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
@@ -149,14 +149,14 @@
                              grid.Column("TrainingConfirmationID", "Event ID", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:100px;'>
+                                        <div style='width:90px;'>
                                             @(item.TrainingConfirmationID)
                                         </div>
                                     </text>),
                              grid.Column("CustomerName", "Customer", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:150px;'>
+                                        <div style='width:90px;'>
                                             @(item.CustomerName)
                                         </div>
                                     </text>),
@@ -168,7 +168,7 @@
                                                 @ConvertToInt64dollar(item.InvoiceAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>,style:"center"),
                              grid.Column("PaidAmount", "PaidAmount", canSort: true,
                                      format:
                                     @<text>
@@ -177,25 +177,25 @@
                                                 @ConvertToInt64dollar(item.PaidAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>, style:"center"),
                              grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:90px;'>
+                                        <div style='width:80px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>,style:"center"),
                              grid.Column("OtherReceivablesAmount", "Other Receivables", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:150px;'>
+                                        <div style='width:90px;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>,style:"center"),
                               grid.Column("TotalAmount", "Total Amount", canSort: true,
                                      format:
                                     @<text>
@@ -204,7 +204,7 @@
                                                 @ConvertToInt64dollar(item.TotalAmount)
                                             </span>
                                         </div>
-                                    </text>),
+                                    </text>,style:"center"),
                          grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                          grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                              grid.Column("ReferenceDoc", "Reference Doc",
