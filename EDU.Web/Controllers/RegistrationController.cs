@@ -214,61 +214,139 @@ namespace EDU.Web.Controllers
         [HttpPost]
         public ActionResult SaveRegistrationPrivateList(RegistrationVM registrationvm)
         {
-            List<Registration> registration = registrationvm.registrationPrivate;
-            string trainingConfirmationId = registration.FirstOrDefault().TrainingConfirmationID;
-            foreach (var item in registration)
+            try
             {
-                if (item.RegistrationId == -1)
+                List<Registration> registration = registrationvm.registrationPrivate;
+                string trainingConfirmationId = registration.FirstOrDefault().TrainingConfirmationID;
+                foreach (var item in registration)
                 {
-                    item.IsActive = true;
-                    item.CreatedBy = USER_ID;
-                    item.CreatedOn = UTILITY.SINGAPORETIME;
+                    if (item.RegistrationId == -1)
+                    {
+                        item.IsActive = true;
+                        item.CreatedBy = USER_ID;
+                        item.CreatedOn = UTILITY.SINGAPORETIME;
 
-                    dbContext.Registrations.Add(item);
+                        dbContext.Registrations.Add(item);
+                        dbContext.SaveChanges();
+                    }
+                    else
+                    {
+                        Registration regObj = dbContext.Registrations.Where(x => x.RegistrationId == item.RegistrationId && x.TrainingConfirmationID == item.TrainingConfirmationID).FirstOrDefault();
+                        if (regObj != null)
+                        {
+                            regObj.StudentName = item.StudentName;
+                            regObj.Email = item.Email;
+                            regObj.Contact = item.Contact;
+                            regObj.CompanyName = item.CompanyName;
+                            regObj.Amount = item.Amount;
+                            regObj.WHTPercent = item.WHTPercent;
+                            regObj.VATPercent = item.VATPercent;
+                            regObj.WHTAmount = item.WHTAmount;
+                            regObj.VATAmount = item.VATAmount;
+                            regObj.OtherDeductionsAmount = item.OtherDeductionsAmount;
+                            regObj.TotalAmount = item.TotalAmount;
+                            regObj.Payment1 = item.Payment1;
+                            regObj.Payment2 = item.Payment2;
+                            regObj.Payment3 = item.Payment3;
+                            regObj.Payment1Date = item.Payment1Date;
+                            regObj.Payment2Date = item.Payment2Date;
+                            regObj.Payment3Date = item.Payment3Date;
+                            regObj.Payment1Type = item.Payment1Type;
+                            regObj.Payment2Type = item.Payment2Type;
+                            regObj.Payment3Type = item.Payment3Type;
+
+                            if (item.Payment1Type == 2 || item.Payment1Type == 3)
+                                regObj.ChequeNo1 = item.ChequeNo1;
+                            else
+                                regObj.ChequeNo1 = "";
+                            if (item.Payment2Type == 2 || item.Payment2Type == 3)
+                                regObj.ChequeNo2 = item.ChequeNo2;
+                            else
+                                regObj.ChequeNo2 = "";
+
+                            if (item.Payment3Type == 2 || item.Payment3Type == 3)
+                                regObj.ChequeNo3 = item.ChequeNo3;
+                            else
+                                regObj.ChequeNo3 = "";
+
+                            regObj.BalanceAmount = item.BalanceAmount;
+                            regObj.TrainingConfirmationID = item.TrainingConfirmationID;
+
+                            regObj.IsActive = true;
+
+                            regObj.ModifiedBy = USER_ID;
+                            regObj.ModifiedOn = UTILITY.SINGAPORETIME;
+
+                            dbContext.Entry(regObj).State = EntityState.Modified;
+                            dbContext.SaveChanges();
+                        }
+                    }
+                }
+                TrainingConfirmation tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == trainingConfirmationId).FirstOrDefault();
+                return RedirectToAction("RegistrationList", new { trainingConfirmationID = trainingConfirmationId, year = tcdtl.Year, month = tcdtl.Month });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Registration(Registration registration)
+        {
+            try
+            {
+                if (registration.RegistrationId == -1)
+                {
+                    registration.IsActive = true;
+                    registration.CreatedBy = USER_ID;
+                    registration.CreatedOn = UTILITY.SINGAPORETIME;
+
+                    dbContext.Registrations.Add(registration);
                     dbContext.SaveChanges();
                 }
                 else
                 {
-                    Registration regObj = dbContext.Registrations.Where(x => x.RegistrationId == item.RegistrationId && x.TrainingConfirmationID == item.TrainingConfirmationID).FirstOrDefault();
+                    Registration regObj = dbContext.Registrations.Where(x => x.RegistrationId == registration.RegistrationId && x.TrainingConfirmationID == registration.TrainingConfirmationID).FirstOrDefault();
                     if (regObj != null)
                     {
-                        regObj.StudentName = item.StudentName;
-                        regObj.Email = item.Email;
-                        regObj.Contact = item.Contact;
-                        regObj.CompanyName = item.CompanyName;
-                        regObj.Amount = item.Amount;
-                        regObj.WHTPercent = item.WHTPercent;
-                        regObj.VATPercent = item.VATPercent;
-                        regObj.WHTAmount = item.WHTAmount;
-                        regObj.VATAmount = item.VATAmount;
-                        regObj.OtherDeductionsAmount = item.OtherDeductionsAmount;
-                        regObj.TotalAmount = item.TotalAmount;
-                        regObj.Payment1 = item.Payment1;
-                        regObj.Payment2 = item.Payment2;
-                        regObj.Payment3 = item.Payment3;
-                        regObj.Payment1Date = item.Payment1Date;
-                        regObj.Payment2Date = item.Payment2Date;
-                        regObj.Payment3Date = item.Payment3Date;
-                        regObj.Payment1Type = item.Payment1Type;
-                        regObj.Payment2Type = item.Payment2Type;
-                        regObj.Payment3Type = item.Payment3Type;
+                        regObj.StudentName = registration.StudentName;
+                        regObj.Email = registration.Email;
+                        regObj.Contact = registration.Contact;
+                        regObj.CompanyName = registration.CompanyName;
+                        regObj.Amount = registration.Amount;
+                        regObj.WHTPercent = registration.WHTPercent;
+                        regObj.VATPercent = registration.VATPercent;
+                        regObj.WHTAmount = registration.WHTAmount;
+                        regObj.VATAmount = registration.VATAmount;
+                        regObj.OtherDeductionsAmount = registration.OtherDeductionsAmount;
+                        regObj.TotalAmount = registration.TotalAmount;
+                        regObj.Payment1 = registration.Payment1;
+                        regObj.Payment2 = registration.Payment2;
+                        regObj.Payment3 = registration.Payment3;
+                        regObj.Payment1Date = registration.Payment1Date;
+                        regObj.Payment2Date = registration.Payment2Date;
+                        regObj.Payment3Date = registration.Payment3Date;
+                        regObj.Payment1Type = registration.Payment1Type;
+                        regObj.Payment2Type = registration.Payment2Type;
+                        regObj.Payment3Type = registration.Payment3Type;
 
-                        if (item.Payment1Type == 2 || item.Payment1Type == 3)
-                            regObj.ChequeNo1 = item.ChequeNo1;
+                        if (registration.Payment1Type == 2 || registration.Payment1Type == 3)
+                            regObj.ChequeNo1 = registration.ChequeNo1;
                         else
                             regObj.ChequeNo1 = "";
-                        if (item.Payment2Type == 2 || item.Payment2Type == 3)
-                            regObj.ChequeNo2 = item.ChequeNo2;
+                        if (registration.Payment2Type == 2 || registration.Payment2Type == 3)
+                            regObj.ChequeNo2 = registration.ChequeNo2;
                         else
                             regObj.ChequeNo2 = "";
 
-                        if (item.Payment3Type == 2 || item.Payment3Type == 3)
-                            regObj.ChequeNo3 = item.ChequeNo3;
+                        if (registration.Payment3Type == 2 || registration.Payment3Type == 3)
+                            regObj.ChequeNo3 = registration.ChequeNo3;
                         else
                             regObj.ChequeNo3 = "";
 
-                        regObj.BalanceAmount = item.BalanceAmount;
-                        regObj.TrainingConfirmationID = item.TrainingConfirmationID;
+                        regObj.BalanceAmount = registration.BalanceAmount;
+                        regObj.TrainingConfirmationID = registration.TrainingConfirmationID;
 
                         regObj.IsActive = true;
 
@@ -276,117 +354,53 @@ namespace EDU.Web.Controllers
                         regObj.ModifiedOn = UTILITY.SINGAPORETIME;
 
                         dbContext.Entry(regObj).State = EntityState.Modified;
+                    }
+                    dbContext.SaveChanges();
+
+                    //customer payment status update
+
+                    CustomerPayment customerpayment = dbContext.CustomerPayments.Where(x => x.RegistrationId == regObj.RegistrationId && x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                    if (customerpayment != null)
+                    {
+                        customerpayment.PaidAmount = (regObj.Payment1 == null ? 0 : regObj.Payment1) + (regObj.Payment2 == null ? 0 : regObj.Payment2) + (regObj.Payment3 == null ? 0 : regObj.Payment3);
+                        customerpayment.BalanceAmount = regObj.BalanceAmount;
+
+                        customerpayment.IsActive = true;
+                        customerpayment.ModifiedBy = USER_ID;
+                        customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
+                        dbContext.SaveChanges();
+                    }
+
+
+                    //vendor payment status update
+                    List<Registration> regList = dbContext.Registrations.Where(x => x.TrainingConfirmationID == registration.TrainingConfirmationID && x.IsActive == true).ToList();
+                    decimal? PaidAmount = 0;
+                    decimal? BalanceAmount = 0;
+                    foreach (var item in regList)
+                    {
+                        PaidAmount += (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
+                        BalanceAmount += item.BalanceAmount;
+                    }
+
+                    VendorPayment vendorpayment = dbContext.VendorPayments.Where(x => x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
+                    if (vendorpayment != null)
+                    {
+                        vendorpayment.PaidAmount = PaidAmount;
+                        vendorpayment.BalanceAmount = BalanceAmount;
+
+                        vendorpayment.IsActive = true;
+                        vendorpayment.ModifiedBy = USER_ID;
+                        vendorpayment.ModifiedOn = UTILITY.SINGAPORETIME;
                         dbContext.SaveChanges();
                     }
                 }
+                TrainingConfirmation tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == registration.TrainingConfirmationID).FirstOrDefault();
+                return RedirectToAction("RegistrationList", new { trainingConfirmationID = registration.TrainingConfirmationID, year = tcdtl.Year, month = tcdtl.Month });
             }
-            TrainingConfirmation tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == trainingConfirmationId).FirstOrDefault();
-            return RedirectToAction("RegistrationList", new { trainingConfirmationID = trainingConfirmationId, year = tcdtl.Year, month = tcdtl.Month });
-        }
-
-        [HttpPost]
-        public ActionResult Registration(Registration registration)
-        {
-            if (registration.RegistrationId == -1)
+            catch (Exception ex)
             {
-                registration.IsActive = true;
-                registration.CreatedBy = USER_ID;
-                registration.CreatedOn = UTILITY.SINGAPORETIME;
-
-                dbContext.Registrations.Add(registration);
-                dbContext.SaveChanges();
+                throw ex;
             }
-            else
-            {
-                Registration regObj = dbContext.Registrations.Where(x => x.RegistrationId == registration.RegistrationId && x.TrainingConfirmationID == registration.TrainingConfirmationID).FirstOrDefault();
-                if (regObj != null)
-                {
-                    regObj.StudentName = registration.StudentName;
-                    regObj.Email = registration.Email;
-                    regObj.Contact = registration.Contact;
-                    regObj.CompanyName = registration.CompanyName;
-                    regObj.Amount = registration.Amount;
-                    regObj.WHTPercent = registration.WHTPercent;
-                    regObj.VATPercent = registration.VATPercent;
-                    regObj.WHTAmount = registration.WHTAmount;
-                    regObj.VATAmount = registration.VATAmount;
-                    regObj.OtherDeductionsAmount = registration.OtherDeductionsAmount;
-                    regObj.TotalAmount = registration.TotalAmount;
-                    regObj.Payment1 = registration.Payment1;
-                    regObj.Payment2 = registration.Payment2;
-                    regObj.Payment3 = registration.Payment3;
-                    regObj.Payment1Date = registration.Payment1Date;
-                    regObj.Payment2Date = registration.Payment2Date;
-                    regObj.Payment3Date = registration.Payment3Date;
-                    regObj.Payment1Type = registration.Payment1Type;
-                    regObj.Payment2Type = registration.Payment2Type;
-                    regObj.Payment3Type = registration.Payment3Type;
-
-                    if (registration.Payment1Type == 2 || registration.Payment1Type == 3)
-                        regObj.ChequeNo1 = registration.ChequeNo1;
-                    else
-                        regObj.ChequeNo1 = "";
-                    if (registration.Payment2Type == 2 || registration.Payment2Type == 3)
-                        regObj.ChequeNo2 = registration.ChequeNo2;
-                    else
-                        regObj.ChequeNo2 = "";
-
-                    if (registration.Payment3Type == 2 || registration.Payment3Type == 3)
-                        regObj.ChequeNo3 = registration.ChequeNo3;
-                    else
-                        regObj.ChequeNo3 = "";
-
-                    regObj.BalanceAmount = registration.BalanceAmount;
-                    regObj.TrainingConfirmationID = registration.TrainingConfirmationID;
-
-                    regObj.IsActive = true;
-
-                    regObj.ModifiedBy = USER_ID;
-                    regObj.ModifiedOn = UTILITY.SINGAPORETIME;
-
-                    dbContext.Entry(regObj).State = EntityState.Modified;
-                }
-                dbContext.SaveChanges();
-
-                //customer payment status update
-
-                CustomerPayment customerpayment = dbContext.CustomerPayments.Where(x => x.RegistrationId == regObj.RegistrationId && x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
-                if (customerpayment != null)
-                {
-                    customerpayment.PaidAmount = (regObj.Payment1 == null ? 0 : regObj.Payment1) + (regObj.Payment2 == null ? 0 : regObj.Payment2) + (regObj.Payment3 == null ? 0 : regObj.Payment3);
-                    customerpayment.BalanceAmount = regObj.BalanceAmount;
-
-                    customerpayment.IsActive = true;
-                    customerpayment.ModifiedBy = USER_ID;
-                    customerpayment.ModifiedOn = UTILITY.SINGAPORETIME;
-                    dbContext.SaveChanges();
-                }
-
-
-                //vendor payment status update
-                List<Registration> regList = dbContext.Registrations.Where(x => x.TrainingConfirmationID == registration.TrainingConfirmationID && x.IsActive == true).ToList();
-                decimal? PaidAmount = 0;
-                decimal? BalanceAmount = 0;
-                foreach (var item in regList)
-                {
-                    PaidAmount += (item.Payment1 == null ? 0 : item.Payment1) + (item.Payment2 == null ? 0 : item.Payment2) + (item.Payment3 == null ? 0 : item.Payment3);
-                    BalanceAmount += item.BalanceAmount;
-                }
-
-                VendorPayment vendorpayment = dbContext.VendorPayments.Where(x => x.TrainingConfirmationID == regObj.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
-                if (vendorpayment != null)
-                {
-                    vendorpayment.PaidAmount = PaidAmount;
-                    vendorpayment.BalanceAmount = BalanceAmount;
-
-                    vendorpayment.IsActive = true;
-                    vendorpayment.ModifiedBy = USER_ID;
-                    vendorpayment.ModifiedOn = UTILITY.SINGAPORETIME;
-                    dbContext.SaveChanges();
-                }
-            }
-            TrainingConfirmation tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == registration.TrainingConfirmationID).FirstOrDefault();
-            return RedirectToAction("RegistrationList", new { trainingConfirmationID = registration.TrainingConfirmationID, year = tcdtl.Year, month = tcdtl.Month });
         }
 
         [HttpPost]

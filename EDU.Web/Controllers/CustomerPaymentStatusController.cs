@@ -1,6 +1,7 @@
 ﻿using EDU.Web.Models;
 using EDU.Web.ViewModels.CustomerPaymentStatusModel;
 using EZY.EDU.BusinessFactory;
+using EZY.EDU.Contract;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,52 @@ namespace EDU.Web.Controllers
     [SessionFilter]
     public class CustomerPaymentStatusController : BaseController
     {
+        //public Func<IQueryable<CourseVm>, IQueryable<TrainingConfirmation>, string, string> CourseName = delegate (IQueryable<CourseVm> course, IQueryable<TrainingConfirmation> tc, string code)
+        // {
+        //     var tcd = tc.Where(x => x.IsActive == true && x.TrainingConfirmationID == code).FirstOrDefault();
+        //     if (tcd != null)
+        //     {
+        //         var coursenamedtl = course.Where(x => x.Id == tcd.Course && x.Product == tcd.Product && x.Country == tcd.Country).FirstOrDefault();
+        //         return coursenamedtl != null ? coursenamedtl.CourseName : "";
+        //     }
+        //     else
+        //         return "";
+        // };
+
+        //public Func<IQueryable<EduProduct>, IQueryable<TrainingConfirmation>, string, string> ProductName = delegate (IQueryable<EduProduct> product, IQueryable<TrainingConfirmation> tc, string code)
+        //{
+        //    var tcd = tc.Where(x => x.IsActive == true && x.TrainingConfirmationID == code).FirstOrDefault();
+        //    if (tcd != null)
+        //    {
+        //        var productnamedtl = product.Where(x => x.Id == tcd.Product).FirstOrDefault();
+        //        return productnamedtl != null ? productnamedtl.ProductName : "";
+        //    }
+        //    else
+        //        return "";
+        //};
+
+        //public Func<IQueryable<Registration>, IQueryable<TrainingConfirmation>, int, string> CustomerName = delegate (IQueryable<Registration> registration, IQueryable<TrainingConfirmation> tc, int code)
+        //{
+        //    var registrationdtl = registration.Where(x => x.IsActive == true && x.RegistrationId == code).FirstOrDefault();
+        //    if (registrationdtl != null)
+        //    {
+        //        var tcdtl = tc.Where(x => x.TrainingConfirmationID == registrationdtl.TrainingConfirmationID).FirstOrDefault();
+        //        if (tcdtl != null)
+        //        {
+        //            if (tcdtl.Private)
+        //            {
+        //                return registrationdtl.CompanyName;
+        //            }
+        //            else
+        //                return registrationdtl.StudentName;
+        //        }
+        //        else
+        //            return "";
+        //    }
+        //    else
+        //        return "";
+        //};
+
         // GET: CustomerPaymentStatus
         EducationEntities dbContext = new EducationEntities();
         public ActionResult CustomerPaymentStatusList(short? month, int year)
@@ -23,7 +70,8 @@ namespace EDU.Web.Controllers
             List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 
             List<Registration> registrations = dbContext.Registrations.Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount > 0).ToList();
-
+            var courseList = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
+            var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
 
             List<CustomerPaymentVM> customerPaymentVM = dbContext.CustomerPayments
                 .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID))
@@ -45,9 +93,9 @@ namespace EDU.Web.Controllers
                     CreatedOn = x.CreatedOn,
                     ModifiedBy = x.ModifiedBy,
                     ModifiedOn = x.ModifiedOn,
-                    CustomerName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName,
-                    //CourseName = 
-                    //ProductName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
+                    //CustomerName = CustomerName(registrations.AsQueryable(), trainingConfirmationList.AsQueryable(), x.RegistrationId),// dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName,
+                    //CourseName = CourseName(courseList.AsQueryable(), trainingConfirmationList.AsQueryable(), x.TrainingConfirmationID),
+                    //ProductName = ProductName(productList.AsQueryable(), trainingConfirmationList.AsQueryable(), x.TrainingConfirmationID),
                     //CustomerName = dbContext.Registrations.Where(r => r.RegistrationId == x.RegistrationId).FirstOrDefault().StudentName
                     Year = year,
                     Month = month
@@ -77,7 +125,7 @@ namespace EDU.Web.Controllers
                         CreatedOn = DateTime.Now,
                         ModifiedBy = null,
                         ModifiedOn = null,
-                        CustomerName = item.StudentName,
+                        //CustomerName = item.StudentName,
                         Year = year,
                         Month = month
                     });
@@ -85,7 +133,10 @@ namespace EDU.Web.Controllers
             }
 
             result.customerPayment = customerPaymentVM;
-            
+            result.trainingconfList = trainingConfirmationList;
+            result.productList = new EduProductBO().GetList();
+            result.courseList = new CourseBO().GetList();
+
             return View(result);
 
         }

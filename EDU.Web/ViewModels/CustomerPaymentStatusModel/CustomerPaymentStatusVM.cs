@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EDU.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +9,9 @@ namespace EDU.Web.ViewModels.CustomerPaymentStatusModel
     public class CustomerPaymentStatusVM
     {
         public List<CustomerPaymentVM> customerPayment { get; set; }
-        //public List<Web.Models.TrainingConfirmation> trainingconf { get; set; }
+        public List<TrainingConfirmation> trainingconfList { get; set; }
+        public List<EZY.EDU.Contract.CourseVm> courseList { get; set; }
+        public List<EZY.EDU.Contract.EduProduct> productList { get; set; }
         //public TrainingConfirmDtl trainingconfDetail { get; set; }
     }
 
@@ -31,6 +34,8 @@ namespace EDU.Web.ViewModels.CustomerPaymentStatusModel
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public string CustomerName { get; set; }
+        public int CourseId { get; set; }
+        public int ProductId { get; set; }
         public string CourseName { get; set; }
         public string ProductName { get; set; }
         public string TrianerName { get; set; }
