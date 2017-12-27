@@ -168,7 +168,7 @@
                                                 @ConvertToInt64dollar(item.InvoiceAmount)
                                             </span>
                                         </div>
-                                    </text>,style:"center"),
+                                    </text>, style: "center"),
                              grid.Column("PaidAmount", "PaidAmount", canSort: true,
                                      format:
                                     @<text>
@@ -177,7 +177,7 @@
                                                 @ConvertToInt64dollar(item.PaidAmount)
                                             </span>
                                         </div>
-                                    </text>, style:"center"),
+                                    </text>, style: "center"),
                              grid.Column("BalanceAmount", "Balance Amount", canSort: true,
                                      format:
                                     @<text>
@@ -186,7 +186,7 @@
                                                 @ConvertToInt64dollar(item.BalanceAmount)
                                             </span>
                                         </div>
-                                    </text>,style:"center"),
+                                    </text>, style: "center"),
                              grid.Column("OtherReceivablesAmount", "Other Receivables", canSort: true,
                                      format:
                                     @<text>
@@ -195,7 +195,7 @@
                                                 @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                             </span>
                                         </div>
-                                    </text>,style:"center"),
+                                    </text>, style: "center"),
                               grid.Column("TotalAmount", "Total Amount", canSort: true,
                                      format:
                                     @<text>
@@ -204,7 +204,7 @@
                                                 @ConvertToInt64dollar(item.TotalAmount)
                                             </span>
                                         </div>
-                                    </text>,style:"center"),
+                                    </text>, style: "center"),
                          grid.Column("DueDate", "Due Date", format: @<text> @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                          grid.Column("ReceiptDate", "Receipt Date", format: @<text> @(item.ReceiptDate == null ? null : item.ReceiptDate.ToString("dd/MM/yyyy")) </text>, canSort: true, style: "center"),
                              grid.Column("ReferenceDoc", "Reference Doc",
@@ -224,9 +224,9 @@
             </div>
         </div>
     </div>
- 
+
     <div id="myModal" class="modal fade" role="dialog">
-      
+
     </div>
 }
 @using (Html.BeginForm("DeleteCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmDeleteCustomerPaymentStatus", name = "frmDeleteCustomerPaymentStatus", enctype = "multipart/form-data" }))
@@ -299,7 +299,7 @@
         }
 
         function DeleteCustomerPaymentStatus(id) {
-            if (confirm("Are you sure, You want to delete")) {
+            @*if (confirm("Are you sure, You want to delete")) {
                 $.ajax({
                     url: '@Url.Content("~/CustomerPaymentStatus/DeleteCustomerPaymentStatus?CustomerPaymentId=")' + id,
                     type: 'POST',
@@ -313,7 +313,34 @@
                     error: function (e) {
                     }
                 });
-            }
+            }*@
+        debugger;
+            swal({
+                title: "Are you sure?",
+                text: "Do you want delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+      function () {
+          debugger;
+          $.ajax({
+              url: '@Url.Content("~/CustomerPaymentStatus/DeleteCustomerPaymentStatus?CustomerPaymentId=")' + id,
+              type: 'POST',
+              contentType: 'application/json',
+              success: function (data) {
+                  debugger;
+                  if (data) {
+                      swal("Deleted!", "Your Customer Payment record has been deleted.", "success");
+                      location.reload();
+                  }
+              },
+              error: function (e) {
+              }
+          });
+      });
         }
         function CalculateTotalAmount() {
             var invoiceamt = parseInt($('#InvoiceAmount').val());
