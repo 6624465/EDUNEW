@@ -85,7 +85,28 @@ namespace EDU.Web.Controllers
             }
 
             result.customerPayment = customerPaymentVM;
-            
+
+            long invoiceAmount = 0;
+            long paidAmount = 0;
+            long balanceAmount = 0;
+            long otherreceivablesAmount = 0;
+            long totalAmount = 0;
+            foreach (var item in customerPaymentVM)
+            {
+                invoiceAmount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
+                paidAmount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
+                balanceAmount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+                otherreceivablesAmount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
+                totalAmount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+            }
+
+            List<decimal?> summary = new List<decimal?>();
+            summary.Add(invoiceAmount);
+            summary.Add(paidAmount);
+            summary.Add(balanceAmount);
+            summary.Add(otherreceivablesAmount);
+            summary.Add(totalAmount);
+            ViewData["Summary"] = summary;
             return View(result);
 
         }

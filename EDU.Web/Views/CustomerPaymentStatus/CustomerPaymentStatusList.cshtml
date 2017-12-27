@@ -12,8 +12,8 @@
     WebGrid grid = new WebGrid(Model.customerPayment, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
 
-    //var cPayment = Model.customerPayment.Count();
-    //var myArray = (List<decimal?>)ViewData["Summary"];
+    var cPayment = Model.customerPayment.Count();
+    var myArray = (List<decimal?>)ViewData["Summary"];
 }
 @functions{
     public string ConvertToInt64dollar(decimal? data)
@@ -240,13 +240,13 @@
 
             $('#liCustomerPaymentStatusList').addClass('active');
 
-            @*var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (cPayment > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td></td><td><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
             </text>
-            }*@
+            }
         });
 
         function mouseleave(el) {
