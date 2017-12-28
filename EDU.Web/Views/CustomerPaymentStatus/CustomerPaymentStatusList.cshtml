@@ -131,7 +131,7 @@
         return "";
     }
 }
-@using (Html.BeginForm("SaveCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmCustomerPaymentStatus", name = "frmCustomerPaymentStatus", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SaveCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmCustomerPaymentStatus", name = "frmCustomerPaymentStatus", enctype = "multipart/form-data",autocomplete="off" }))
 {
     <div class="page page-forms-elements">
         <div class="page-wrap">
