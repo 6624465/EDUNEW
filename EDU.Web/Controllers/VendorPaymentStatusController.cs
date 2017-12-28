@@ -67,11 +67,11 @@ namespace EDU.Web.Controllers
                             paidAmount += (ritem.Payment1 == null ? 0 : ritem.Payment1) + (ritem.Payment2 == null ? 0 : ritem.Payment2) + (ritem.Payment3 == null ? 0 : ritem.Payment3);
                             balanceAmount += ritem.BalanceAmount;
                         }
-
+                        var vendorId = trainingConfirmationList.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).FirstOrDefault().TrianerId;
                         VendorPaymentVM.Add(new VendorPaymentVM()
                         {
                             VendorPaymentId = -1,
-                            VendorId = item.RegistrationId,
+                            VendorId = vendorId,
                             TrainingConfirmationID = item.TrainingConfirmationID,
                             InvoiceAmount = invoiceAmount,
                             PaidAmount = paidAmount,
@@ -237,12 +237,23 @@ namespace EDU.Web.Controllers
             ViewData["year"] = VendorPayment.Year;
             ViewData["month"] = VendorPayment.Month;
 
-            var tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == VendorPayment.TrainingConfirmationID).FirstOrDefault();
-            if (tcdtl != null)
+            List<string> list = dbContext.TrainerInformations.Where(x => x.IsActive == true).Select(x => x.VendorName).Distinct().ToList();
+
+            List<TrainerInformation> vendorsList = new List<TrainerInformation>();
+
+            foreach (var item in list)
             {
-                var tidtl = dbContext.TrainerInformations.Where(x => x.TrianerId == tcdtl.TrianerId && x.IsActive == true).FirstOrDefault();
-                VendorPayment.VendorName = tidtl != null ? tidtl.VendorName : "";
+                var trainerid = dbContext.TrainerInformations.Where(x => x.VendorName == item).FirstOrDefault().TrianerId;
+                vendorsList.Add(new TrainerInformation()
+                {
+                    TrianerId = trainerid,
+                    VendorName = item
+                });
             }
+            ViewData["VendorsList"] = vendorsList;
+
+            VendorPayment.VendorName = VendorPayment.VendorId == 0 ? "" : dbContext.TrainerInformations.Where(x => x.TrianerId == VendorPayment.VendorId).FirstOrDefault().VendorName;
+            VendorPayment.VendorId = VendorPayment.VendorId == 0 ? 0 : dbContext.TrainerInformations.Where(x => x.VendorName == VendorPayment.VendorName).FirstOrDefault().TrianerId;
 
             if (VendorPayment.VendorPaymentId == -1)
             {
