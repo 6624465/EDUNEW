@@ -115,18 +115,7 @@
                 ]
             },
 
-         @foreach (var item in Model)
-            {
-                        <text>
-                                 {
-                                     name:@item.GrossProfit>0?'profit':'loss',
-                                     color:@item.GrossProfit>0?'green':'red',
-                                     data:[0,@item.GrossProfit]
-
-                                 },
-                        </text>
-          }
-         @*{
+         {
                 name: 'profit',
                 color: "green",
                 data: [
@@ -147,7 +136,7 @@
                         </text>
                     }
                 ]
-            }*@
+            }
             ]
         });
     </script>
