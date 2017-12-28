@@ -1,5 +1,6 @@
 ﻿using EDU.Web;
 using EDU.Web.Models;
+using EDU.Web.ViewModels.FinancialTransactionModel;
 using EDU.Web.ViewModels.OperationalTransaction;
 using EDU.Web.ViewModels.ReportsModel;
 using EZY.EDU.BusinessFactory;
@@ -471,9 +472,69 @@ namespace EDU.Web.Reports.Controllers
             return View(list.OrderBy(x => x.ProductId));
         }
 
-        public ActionResult ProfitAndLoss()
+        public ActionResult ProfitAndLoss(Int16 month, int year)
         {
-            return View();
+            try
+            {
+                List<FinancialTransactionsVM> financialTransactionReport = new List<FinancialTransactionsVM>();
+                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+
+                List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
+                List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
+                                                                         .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID)).ToList();
+                var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+
+                financialTransactionReport = financialTransaction1List
+                    .Select(x => new FinancialTransactionsVM
+                    {
+                        TrainingConfirmationID = x.TrainingConfirmationID,
+                        Country = x.Country,
+                        CountryName = countryList.Where(y => y.BranchID == x.Country).FirstOrDefault().BranchName,
+                        TotalRevenueAmount = x.TotalRevenueAmount,
+                        TrainerExpensesAmount = x.TrainerExpensesAmount,
+                        TrainerTravelExpensesAmount = x.TrainerTravelExpensesAmount,
+                        LocalExpensesAmount = x.LocalExpensesAmount,
+                        CoursewareMaterialAmount = x.CoursewareMaterialAmount,
+                        MiscExpensesAmount = x.MiscExpensesAmount,
+                        GrossProfit = x.GrossProfit,
+                        ProfitAndLossPercent = x.ProfitAndLossPercent,
+                        Year = year,
+                        Month = month
+                    })
+                    .ToList();
+
+
+                foreach (var item in trainingConfirmationList)
+                {
+                    if (financialTransaction1List.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).Count() == 0)
+                    {
+                        decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
+
+                        financialTransactionReport.Add(new FinancialTransactionsVM()
+                        {
+                            TrainingConfirmationID = item.TrainingConfirmationID,
+                            Country = item.Country,
+                            CountryName = countryList.Where(y => y.BranchID == item.Country).FirstOrDefault().BranchName,
+                            TotalRevenueAmount = TotalAmount,
+                            TrainerExpensesAmount = null,
+                            TrainerTravelExpensesAmount = null,
+                            LocalExpensesAmount = null,
+                            CoursewareMaterialAmount = null,
+                            MiscExpensesAmount = null,
+                            GrossProfit = 0,
+                            ProfitAndLossPercent = 0,
+                            Year = year,
+                            Month = month
+                        });
+                    }
+                }
+
+                return View(financialTransactionReport.OrderBy(x => x.TrainingConfirmationID));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 
