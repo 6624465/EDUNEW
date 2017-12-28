@@ -9,7 +9,7 @@
     WebGrid grid = new WebGrid(Model.VendorPayment, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
     var vPayment = Model.VendorPayment.Count();
-    var myArray =(List<decimal>) ViewData["Summary"];
+    var myArray =(List<decimal?>) ViewData["Summary"];
 }
 
 @{
