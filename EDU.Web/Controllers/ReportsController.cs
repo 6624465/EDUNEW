@@ -162,7 +162,7 @@ namespace EDU.Web.Reports.Controllers
                         {
                             reportListbyMonth.Add(new OperationalTransactionReportByMonth()
                             {
-                                ParticularId =it.ParticularsId,
+                                ParticularId = it.ParticularsId,
                                 ParticularName = it.ParticularName,
                                 Amount = it.Amount,
                                 Month = month,
@@ -200,7 +200,7 @@ namespace EDU.Web.Reports.Controllers
 
                 ViewData["CountryData"] = countrylist;
                 ViewData["ParticularsData"] = ParticularsList;
-                return View(reportListbyMonth.OrderBy(x=>x.ParticularId));
+                return View(reportListbyMonth.OrderBy(x => x.ParticularId));
             }
             catch (Exception ex)
             {
@@ -496,8 +496,8 @@ namespace EDU.Web.Reports.Controllers
                         LocalExpensesAmount = x.LocalExpensesAmount,
                         CoursewareMaterialAmount = x.CoursewareMaterialAmount,
                         MiscExpensesAmount = x.MiscExpensesAmount,
-                        GrossProfit = x.GrossProfit,
-                        ProfitAndLossPercent = x.ProfitAndLossPercent,
+                        GrossProfit = x.GrossProfit==null?0: x.GrossProfit,
+                        ProfitAndLossPercent = x.ProfitAndLossPercent == null ? 0 : x.ProfitAndLossPercent,
                         Year = year,
                         Month = month
                     })
@@ -515,7 +515,7 @@ namespace EDU.Web.Reports.Controllers
                             TrainingConfirmationID = item.TrainingConfirmationID,
                             Country = item.Country,
                             CountryName = countryList.Where(y => y.BranchID == item.Country).FirstOrDefault().BranchName,
-                            TotalRevenueAmount = TotalAmount,
+                            TotalRevenueAmount = TotalAmount == null ? 0 : TotalAmount,
                             TrainerExpensesAmount = null,
                             TrainerTravelExpensesAmount = null,
                             LocalExpensesAmount = null,

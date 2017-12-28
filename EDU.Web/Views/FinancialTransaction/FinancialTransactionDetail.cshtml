@@ -20,20 +20,20 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-2 col-md-offset-1">
-                                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", @readonly = true })
+                                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control input-sm", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.Country,
                         new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                        "Select Country", new { @class = "form-control", @disabled = "disabled" })
+                        "Select Country", new { @class = "form-control input-sm", @disabled = "disabled" })
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.CurrencyCode,
                                         new SelectList((List<EDU.Web.Models.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
-                                              "Select Currency", new { @class = "form-control " })
+                                              "Select Currency", new { @class = "form-control  input-sm" })
                                     </div>
                                     <div class="col-md-1">
-                                        @Html.TextBoxFor(x => x.CurrencyExRate, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Currency Ex Rate", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.CurrencyExRate, "{0:#.#}", new { @class = "form-control numCss input-sm", @placeholder = "Currency Ex Rate", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                 </div>
                             </div>
