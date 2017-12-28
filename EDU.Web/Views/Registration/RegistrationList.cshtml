@@ -882,7 +882,7 @@
             var Payment2=($('#registration_'+rowvalue+'__Payment2').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment2').val())?parseInt($('#registration_'+rowvalue+'__Payment2').val()):0);
             var Payment3=($('#registration_'+rowvalue+'__Payment3').val()!="" &&!isNaN($('#registration_'+rowvalue+'__Payment3').val())?parseInt($('#registration_'+rowvalue+'__Payment3').val()):0);
 
-            var totalamount=((amount+vatamount)-(whtamount));
+            var totalamount=((amount+vatamount+whtamount));
             $('#registration_'+rowvalue+'__TotalAmount').val(totalamount);
             var balanceamount=totalamount-(Payment1+Payment2+Payment3);
             balanceamount=$('#registration_'+rowvalue+'__BalanceAmount').val(balanceamount);
@@ -936,7 +936,7 @@
             var payment1 = ($('#registrationPrivate_0__Payment1').val() != "" && !isNaN($('#registrationPrivate_0__Payment1').val()) ? parseInt($('#registrationPrivate_0__Payment1').val()):0);
             var payment2 = ($('#registrationPrivate_0__Payment2').val() != "" && !isNaN($('#registrationPrivate_0__Payment2').val()) ? parseInt($('#registrationPrivate_0__Payment2').val()):0);
             var payment3 = ($('#registrationPrivate_0__Payment3').val() != "" && !isNaN($('#registrationPrivate_0__Payment3').val()) ? parseInt($('#registrationPrivate_0__Payment3').val()):0);
-            var totalamount=((amount+vatamount)-(whtamount));
+            var totalamount=((amount+vatamount+whtamount));
             $('#registrationPrivate_0__TotalAmount').val(totalamount);
             var balanceamount=totalamount-(payment1+payment2+payment3);
             $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
