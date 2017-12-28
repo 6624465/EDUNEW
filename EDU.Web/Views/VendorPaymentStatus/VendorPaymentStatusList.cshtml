@@ -290,14 +290,7 @@
     {
     <script type="text/javascript">
         $(function () {
-            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
-            @if (vPayment > 0)
-            {
-                <text>
-                $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><td></td><td></td></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
-                </text>
-            }
-
+           
             $('#liVendorPaymentStatusList').addClass('active');
             $("#gridContent tbody tr").each(function (i, row) {
                 debugger;
@@ -306,6 +299,14 @@
                     $actualRow.css('background-color', '#b3f7da');
                 }
             });
+             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            @if (vPayment > 0)
+            {
+                <text>
+                $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><td></td><td></td></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
+                </text>
+            }
+
         });
 
         function mouseleave(el) {

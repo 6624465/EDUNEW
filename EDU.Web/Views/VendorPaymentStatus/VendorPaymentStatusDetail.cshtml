@@ -2,6 +2,7 @@
 @{
     var year = (int)ViewData["year"];
     var month = (short?)ViewData["month"];
+   
 }
 <div class="modal-dialog">
     <!-- Modal content-->
@@ -12,7 +13,6 @@
         </div>
         <div class="modal-body" id="FinancialTransactionModalBody">
             @Html.HiddenFor(x => x.VendorPaymentId)
-            @Html.HiddenFor(x => x.VendorId)
             @Html.HiddenFor(x => x.TrainingConfirmationID)
             @Html.HiddenFor(x => x.Year)
             @Html.HiddenFor(x => x.Month)
@@ -22,7 +22,9 @@
                         <span class="pull-right">Vendor Name</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control", @disabled = "disabled" })
+                        @Html.DropDownListFor(x => x.VendorId,
+                    new SelectList((List<EDU.Web.Models.TrainerInformation>)ViewData["VendorsList"], "TrianerId", "VendorName"),
+                    "Select Vendor Name", new { @class = "form-control"})
                     </div>
                 </div>
             </div>
