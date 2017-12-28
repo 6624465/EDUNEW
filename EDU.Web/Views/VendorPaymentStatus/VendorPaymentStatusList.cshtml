@@ -8,6 +8,8 @@
 @{
     WebGrid grid = new WebGrid(Model.VendorPayment, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
+    var vPayment = Model.VendorPayment.Count();
+    var myArray =(List<decimal?>) ViewData["Summary"];
 }
 
 @{
@@ -111,7 +113,7 @@
         return "";
     }
 }
-@using (Html.BeginForm("SaveVendorPaymentStatus", "VendorPaymentStatus", FormMethod.Post, new { id = "frmVendorPaymentStatus", name = "frmVendorPaymentStatus", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SaveVendorPaymentStatus", "VendorPaymentStatus", FormMethod.Post, new { id = "frmVendorPaymentStatus", name = "frmVendorPaymentStatus", enctype = "multipart/form-data", autocomplete = "off" }))
 {
     <div class="page page-forms-elements">
         <div class="page-wrap">
@@ -288,6 +290,14 @@
     {
     <script type="text/javascript">
         $(function () {
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            @if (vPayment > 0)
+            {
+                <text>
+                $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><td></td><td></td></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
+                </text>
+            }
+
             $('#liVendorPaymentStatusList').addClass('active');
             $("#gridContent tbody tr").each(function (i, row) {
                 debugger;

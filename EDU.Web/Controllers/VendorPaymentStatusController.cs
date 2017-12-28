@@ -98,8 +98,28 @@ namespace EDU.Web.Controllers
                 result.courseList = new CourseBO().GetList();
                 result.trainerInformationList = dbContext.TrainerInformations.Where(x => x.IsActive == true).ToList();
 
+                long Invoiceamount = 0;
+                long Paidamount = 0;
+                long Balanceamount = 0;
+                long otherreceivablesamount = 0;
+                long totalamount = 0;
+                foreach (var item in VendorPaymentVM)
+                {
+                    Invoiceamount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
+                    Paidamount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
+                    Balanceamount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+                    otherreceivablesamount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
+                    totalamount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+                }
 
+                List<decimal?> summary = new List<decimal?>();
+                summary.Add(Invoiceamount);
+                summary.Add(Paidamount);
+                summary.Add(Balanceamount);
+                summary.Add(otherreceivablesamount);
+                summary.Add(totalamount);
 
+                ViewData["Summary"] = summary;
                 return View(result);
             }
             catch (Exception ex)
