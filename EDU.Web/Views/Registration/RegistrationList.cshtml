@@ -299,7 +299,7 @@
                                                     @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
                                                 </td>
                                                 <td style="min-width:150px;">
-                                                    @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm" })
+                                                    @Html.TextBoxFor(x => x.registration[i].Email, new { @class = "form-control input-sm",@type="email" })
                                                 </td>
                                                 <td style="min-width:100px;">
                                                     @Html.TextBoxFor(x => x.registration[i].Contact, new { @class = "form-control input-sm numCsspuls" })
@@ -493,7 +493,7 @@
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].StudentName, new { @class = "form-control input-sm" })
                                                     </td>
                                                     <td>
-                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Email, new { @class = "form-control input-sm" })
+                                                        @Html.TextBoxFor(x => x.registrationPrivate[i].Email, new { @class = "form-control input-sm", @type = "email" })
                                                     </td>
                                                     <td>
                                                         @Html.TextBoxFor(x => x.registrationPrivate[i].Contact, new { @class = "form-control input-sm numCsspuls" })
@@ -962,7 +962,8 @@
                 },
                 'registrationPrivate[0].Payment3Date': {
                     Payment3: true
-                }
+                },
+
             }
         });
         $.validator.addMethod("Payment1", function (Value, element) {
