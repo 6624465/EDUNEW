@@ -142,9 +142,6 @@ namespace EDU.Web.Controllers
 
         [HttpGet]
         public ActionResult FinancialTransactionDetail(int Id, string trainingConfirmationID, Int16? country, decimal? totalRevenueAmount, short? month, int? year)
-
-
-
         {
             var currencyList = dbContext.Lookups.Where(x => x.LookupCategory == "Currency").ToList();
             var countryList = new BranchBO().GetList();
