@@ -96,6 +96,13 @@
         else
             return null;
     }
+    public string ConvertToInt64dollarBalance(decimal? data)
+    {
+        if (data != null && data != 0)
+            return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
+        else
+            return "$ 0";
+    }
     public string PaymentDetails(DateTime? date, short? type, string no)
     {
         string x = "";
@@ -630,7 +637,7 @@
                                         @<text>
                                             <div style='width:70px;'>
                                                 <span class="center">
-                                                    @ConvertToInt64dollar(item.BalanceAmount)
+                                                    @ConvertToInt64dollarBalance(item.BalanceAmount)
                                                 </span>
                                             </div>
                                         </text>),
