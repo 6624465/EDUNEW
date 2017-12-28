@@ -74,7 +74,6 @@
         $(function () {
             $('#liProfitandlossReport').addClass('active');
         });
-
         function ChangeMonth() {
             window.location = '@Url.Action("ProfitAndLoss", "Reports", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
@@ -102,7 +101,7 @@
                             rotation: -90
                         }
                     }
-                ],
+            ],
             series: [{
                 name: 'revenue',
                 color: "blue",
@@ -114,7 +113,20 @@
                         </text>
                     }
                 ]
-            }, {
+            },
+
+         @foreach (var item in Model)
+            {
+                        <text>
+                                 {
+                                     name:@item.GrossProfit>0?'profit':'loss',
+                                     color:@item.GrossProfit>0?'green':'red',
+                                     data:[0,@item.GrossProfit]
+
+                                 },
+                        </text>
+          }
+         @*{
                 name: 'profit',
                 color: "green",
                 data: [
@@ -135,7 +147,8 @@
                         </text>
                     }
                 ]
-            }]
+            }*@
+            ]
         });
     </script>
 }
