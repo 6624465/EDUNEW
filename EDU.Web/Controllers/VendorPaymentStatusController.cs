@@ -112,7 +112,7 @@ namespace EDU.Web.Controllers
                     totalamount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
                 }
 
-                List<decimal> summary = new List<decimal>();
+                List<decimal?> summary = new List<decimal?>();
                 summary.Add(Invoiceamount);
                 summary.Add(Paidamount);
                 summary.Add(Balanceamount);
