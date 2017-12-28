@@ -413,8 +413,6 @@ namespace EDU.Web.Reports.Controllers
             ViewData["CountryData"] = countrylist;
             return View(report);
         }
-
-
         public ActionResult Achievement(int year)
         {
             List<Revenue> RevenueList = dbContext.Revenues.Where(x => x.IsActive == true && x.Year == year).ToList();
@@ -473,6 +471,10 @@ namespace EDU.Web.Reports.Controllers
             return View(list.OrderBy(x => x.ProductId));
         }
 
+        public ActionResult ProfitAndLoss()
+        {
+            return View();
+        }
     }
 
 }
