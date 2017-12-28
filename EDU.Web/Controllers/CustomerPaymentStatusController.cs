@@ -86,7 +86,7 @@ namespace EDU.Web.Controllers
                     }
                 }
 
-                result.customerPayment = customerPaymentVM.OrderByDescending(x=>x.TrainingConfirmationID).ToList();
+                result.customerPayment = customerPaymentVM.OrderBy(x => x.TrainingConfirmationID).ToList();
                 result.trainingconfList = trainingConfirmationList;
                 result.productList = new EduProductBO().GetList();
                 result.courseList = new CourseBO().GetList();
@@ -134,7 +134,7 @@ namespace EDU.Web.Controllers
                 var tcdtl = dbContext.TrainingConfirmations.Where(x => x.TrainingConfirmationID == registrationdtl.TrainingConfirmationID && x.IsActive == true).FirstOrDefault();
                 if (tcdtl != null)
                 {
-                    customerPayment.CustomerName= tcdtl.Private ? registrationdtl.CompanyName : registrationdtl.StudentName;
+                    customerPayment.CustomerName = tcdtl.Private ? registrationdtl.CompanyName : registrationdtl.StudentName;
                 }
             }
 

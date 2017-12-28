@@ -92,7 +92,7 @@ namespace EDU.Web.Controllers
                     }
                 }
 
-                result.VendorPayment = VendorPaymentVM;
+                result.VendorPayment = VendorPaymentVM.OrderBy(x => x.TrainingConfirmationID).ToList();
                 result.trainingconfList = trainingConfirmationList;
                 result.productList = new EduProductBO().GetList();
                 result.courseList = new CourseBO().GetList();
