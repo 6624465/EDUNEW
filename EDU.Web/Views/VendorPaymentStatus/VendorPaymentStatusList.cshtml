@@ -104,10 +104,10 @@
 
     public string GetCustomerName(string data)
     {
-        var tcdtl = Model.trainingconfList.Where(x => x.TrainingConfirmationID == data).FirstOrDefault();
+        var tcdtl = Model.VendorPayment.Where(x => x.TrainingConfirmationID == data).FirstOrDefault();
         if (tcdtl != null)
         {
-            var tidtl = Model.trainerInformationList.Where(x => x.TrianerId == tcdtl.TrianerId).FirstOrDefault();
+            var tidtl = Model.trainerInformationList.Where(x => x.TrianerId == tcdtl.VendorId).FirstOrDefault();
             return tidtl != null ? tidtl.VendorName : "";
         }
         return "";
