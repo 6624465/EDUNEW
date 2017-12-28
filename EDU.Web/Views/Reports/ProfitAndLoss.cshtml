@@ -4,6 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .highcharts-button-symbol {
+        display: none !important;
+    }
+
+    .highcharts-legend {
+        display: none !important;
+    }
+</style>
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -11,41 +20,53 @@
                 <div class="box-header">
                     <h4>Profit And Loss</h4>
                     <div class="box-tools">
+
                     </div>
                 </div>
                 <div class="box-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div id="container">
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @section SectionScripts {
-<script type="text/javascript">
-    Highcharts.chart('container', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Column chart with negative values'
-        },
-        xAxis: {
-            categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-        },
-        credits: {
-            enabled: false
-        },
-        series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2]
-        }, {
-            name: 'Jane',
-            data: [2, -2, -3, 2, 1]
-        }, {
-            name: 'Joe',
-            data: [3, 4, 4, -2, 5]
-        }]
-    });
-</script>
-    }
+    <script type="text/javascript">
+
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column',
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                categories: ['Apples', 'jok', 'Apples', 'jok', 'Apples', 'jok', 'Apples', 'jok', , 'Apples', 'jok', 'Apples', 'jok']
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'revenue',
+                color: "blue",
+                data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+            }, {
+                name: 'profit',
+                color: "green",
+                data: [5, 0, 3, 0, 4, 0, 2, 6, 4, 0, 2, 6]
+            },
+            {
+                name: 'loss',
+                color: "red",
+                data: [0, -1, 0, -6, 0, -1, 0, 0, 0, -1, 0,0]
+            }]
+        });
+    </script>
+}
 
