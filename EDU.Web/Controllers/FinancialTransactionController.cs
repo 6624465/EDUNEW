@@ -28,8 +28,13 @@ namespace EDU.Web.Controllers
                 List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
+
+                List<string> reglist =dbContext.Registrations
+                                        .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID))
+                                        .Select(x => x.TrainingConfirmationID).Distinct().ToList();
+
                 List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
-                                                                         .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID)).ToList();
+                                                                         .Where(x => x.IsActive == true && reglist.Contains(x.TrainingConfirmationID)).ToList();
                 var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 
                 financialTransactionList = financialTransaction1List
@@ -79,19 +84,20 @@ namespace EDU.Web.Controllers
                     .ToList();
 
 
-                foreach (var item in trainingConfirmationList)
+                foreach (var item in reglist)
                 {
-                    if (financialTransaction1List.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).Count() == 0)
+                    if (financialTransaction1List.Where(x => x.TrainingConfirmationID == item).Count() == 0)
                     {
-                        decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
+                        decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == item && x.IsActive == true).Sum(y => y.TotalAmount);
+                        TrainingConfirmation trainingConfirmation = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.TrainingConfirmationID==item).FirstOrDefault();
 
 
                         financialTransactionList.Add(new FinancialTransactionsVM()
                         {
                             FinancialTransactionId = -1,
-                            TrainingConfirmationID = item.TrainingConfirmationID,
-                            Country = item.Country,
-                            CountryName = countryList.Where(y => y.BranchID == item.Country).FirstOrDefault().BranchName,
+                            TrainingConfirmationID = item,
+                            Country = trainingConfirmation.Country,
+                            CountryName = countryList.Where(y => y.BranchID == trainingConfirmation.Country).FirstOrDefault().BranchName,
                             CurrencyCode = null,
                             CurrencyExRate = null,
                             TotalRevenueAmount = TotalAmount,
