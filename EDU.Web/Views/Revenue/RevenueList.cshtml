@@ -242,7 +242,7 @@
             }
         });
 
-        function updateRevenueInfoByExRate() {
+        @*function updateRevenueInfoByExRate() {
             if ($('#frmRevenue').valid()) {
                 var Revenue =
                     {
@@ -262,7 +262,46 @@
                     }
                 });
             }
+        }*@
+
+        function updateRevenueInfoByExRate() {
+            debugger;
+            if ($('#frmRevenue').valid())
+                debugger;
+                swal({
+                    title: "Are you sure?",
+                    text: "Do you want update?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, update it!",
+                    closeOnConfirm: false
+                },
+            function () {
+                var Revenue =
+                    {
+                        "CurrencyExRate": $('#CurrencyExRate').val(),
+                        "Country": $('#Country').val(),
+                        "CurrencyCode": $('#CurrencyCode').val(),
+                        "Year": $('#Year').val()
+                    };
+                $.ajax({
+                    url: '@Url.Content("~/Revenue/updateRevenueInfoByExRate/")',
+                    data: JSON.stringify(Revenue),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        // alert(data);
+                        swal(data+"updated succesfully")
+                        location.reload(true);
+                    }
+                });
+            });
         }
+                
+
+
+
 
         var Product = null;
         var ProductName = null;
