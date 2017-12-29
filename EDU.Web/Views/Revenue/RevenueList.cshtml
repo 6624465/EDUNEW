@@ -48,7 +48,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-1 col-md-offset-3">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
                             </div>
                             <div class="col-md-2">
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Country,
