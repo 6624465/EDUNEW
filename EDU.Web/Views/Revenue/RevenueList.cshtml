@@ -92,14 +92,14 @@
                                         grid.Column("QuarterlyTargetAmt", header: "", format: @<input type="hidden" name="QuarterlyTargetAmt" value="@item.QuarterlyTargetAmt" />, style: "width0"),
                                         grid.Column("MonthlyTargetAmt", header: "", format: @<input type="hidden" name="MonthlyTargetAmt" value="@item.MonthlyTargetAmt" />, style: "width0"),
 
-                                          @*grid.Column("Action", format: @<text>
-                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                                {
-                                                    <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                }
-                                                <button type="button" class="save-user edit-mode btn btn-success btn-xs waves-effect" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o" style="padding-left: 5px;"></i></button>
-                                                <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
-                                        </text>, style: "col3Width", canSort: false),*@
+                                            @*grid.Column("Action", format: @<text>
+                                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                        {
+                                                            <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        }
+                                                        <button type="button" class="save-user edit-mode btn btn-success btn-xs waves-effect" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o" style="padding-left: 5px;"></i></button>
+                                                        <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
+                                                </text>, style: "col3Width", canSort: false),*@
 
                                         grid.Column("ProductName", "Product Name", format: @<text>  @item.ProductName  </text>, style: ""),
                                         grid.Column("YearlyTarget", "YearlyTarget", format:
@@ -123,11 +123,11 @@
                             </div>
 
                             @*<div class="col-md-6 col-md-offset-3 css10">
-                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
-                                {
-                                    <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
-                                }
-                            </div>*@
+                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    {
+                                        <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
+                                    }
+                                </div>*@
                             <div class="col-md-6 col-md-offset-3 css10">
                                 @{
                                     var grid1 = new WebGrid(Model);
@@ -185,7 +185,7 @@
             var totalhyt = 0;
             var totalqyt = 0;
             var totalmt = 0;
-            debugger;
+
             $('#gridContent .YearlyTarget').each(function () {
                 totalyt = totalyt + parseInt($(this)[0].innerText.replace('$', '').trim() == "" ? 0 : $(this)[0].innerText.replace('$', '').toLocaleString());
             });
@@ -242,32 +242,10 @@
             }
         });
 
-        @*function updateRevenueInfoByExRate() {
-            if ($('#frmRevenue').valid()) {
-                var Revenue =
-                    {
-                        "CurrencyExRate": $('#CurrencyExRate').val(),
-                        "Country": $('#Country').val(),
-                        "CurrencyCode": $('#CurrencyCode').val(),
-                        "Year": $('#Year').val()
-                    };
-                $.ajax({
-                    url: '@Url.Content("~/Revenue/updateRevenueInfoByExRate/")',
-                    data: JSON.stringify(Revenue),
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        alert(data);
-                        location.reload(true);
-                    }
-                });
-            }
-        }*@
+       
 
         function updateRevenueInfoByExRate() {
-            debugger;
-            if ($('#frmRevenue').valid())
-                debugger;
+            if ($('#frmRevenue').valid()) {
                 swal({
                     title: "Are you sure?",
                     text: "Do you want update?",
@@ -291,16 +269,13 @@
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                        // alert(data);
-                        swal(data+"updated succesfully")
+                        swal(data)
                         location.reload(true);
                     }
                 });
             });
+            }
         }
-                
-
-
 
 
         var Product = null;
@@ -315,7 +290,7 @@
             Year = year;
         }
         function CountryChange(el) {
-            if ($('#Country').val() != '' && $('#Year').val()!='') {
+            if ($('#Country').val() != '' && $('#Year').val() != '') {
                 window.location = '@Url.Action("RevenueList", "Revenue", new { country = "", year="" })' + '?country=' + $('#Country').val() + '&year=' + $('#Year').val();
             }
             else {
@@ -327,8 +302,8 @@
             @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
-            $('#Country').attr('disabled','disabled');
-             </text>
+            $('#Country').attr('disabled', 'disabled');
+            </text>
             }
 
             $("#CurrencyCode").val('@Model.FirstOrDefault().CurrencyCode');
