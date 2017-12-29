@@ -1483,6 +1483,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\admin.jpg" />
+    <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ban.png" />
     <Content Include="Images\bg.png" />
     <Content Include="Images\boxed-bg.jpg" />

@@ -44,6 +44,16 @@
         .font20 {
             font-size: 20px !important;
         }
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('@Url.Content("~/Images/ajax-loader.gif")') 50% 50% no-repeat #DCD6D6;
+            opacity: .8;
+        }
     </style>
     @RenderSection("Styles", false)
     @{
@@ -52,6 +62,7 @@
     }
 </head>
 <body id="app" class="app off-canvas nav-expand">
+   
     <!-- header -->
     <header class="site-head" id="site-head">
         <ul class="list-unstyled left-elems">
@@ -267,6 +278,7 @@
         <!-- #end main-navigation -->
         <!-- content-here -->
         <div class="content-container" id="content">
+            <div class="loader"></div>
             <!-- dashboard page -->
             @RenderBody()
             <!-- #end dashboard page -->
@@ -346,6 +358,17 @@
     <script src="@Url.Content("~/Scripts/layout.js")"></script>
     @RenderSection("SectionScripts", false)
     <script type="text/javascript">
+
+        $(window).load(function () {
+            $(".loader").fadeOut("slow");
+        });
+
+        $(function () {
+            $('.waves-effect li a').on('click', function () {
+                $(".loader").fadeIn();
+            });
+        });
+
         $(document).on('keypress', '.numCss', function (evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;
             if ((charCode >= 48 && charCode <= 57) || charCode == 8)
