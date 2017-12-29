@@ -8,7 +8,6 @@
 @{
     var listMonths = new List<SelectListItem> ()
     {
-    new SelectListItem {Text = "Select Month",   Value = "0"},
     new SelectListItem {Text = "Janaury",   Value = "1"},
     new SelectListItem {Text = "February", Value = "2"},
     new SelectListItem {Text = "March", Value = "3"},
@@ -43,7 +42,7 @@
                                 <div class="col-md-2">
                                     @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Country,
                                      new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                                     "Select Country", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                     new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Month</span>
@@ -55,7 +54,7 @@
                                     <span class="pull-right">Year</span>
                                 </label>
                                 <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
                               
                             </div>

@@ -42,27 +42,6 @@
             return null;
     }
 }
-@{
-
-    var listMonths = new List<SelectListItem>()
-                                          {
-                                           new SelectListItem {Text = "Select Month",   Value = "0"},
-                                           new SelectListItem {Text = "Janaury",   Value = "1"},
-                                           new SelectListItem {Text = "February", Value = "2"},
-                                           new SelectListItem {Text = "March", Value = "3"},
-                                           new SelectListItem {Text = "April",   Value = "4"},
-                                           new SelectListItem {Text = "May", Value = "5"},
-                                           new SelectListItem {Text = "June", Value = "6"},
-                                           new SelectListItem {Text = "July",   Value = "7"},
-                                           new SelectListItem {Text = "August", Value = "8"},
-                                           new SelectListItem {Text = "September", Value = "9"},
-                                           new SelectListItem {Text = "October",   Value = "10"},
-                                           new SelectListItem {Text = "November", Value = "11"},
-                                           new SelectListItem {Text = "December", Value = "12"}
-                                       };
-
-
-}
 <div class="page page-forms-elements">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -80,13 +59,13 @@
                                 @Html.HiddenFor(x => x.FirstOrDefault().CountryName)
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Country,
                                      new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                                 "Select Country", new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
+                                 new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
                             </div>
                             <label class="col-md-2 control-label">
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = (i + " - " + (i + 1)).ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = (i + " - " + (i + 1)).ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
                             </div>
                         </div>
                     </div>
