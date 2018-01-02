@@ -64,6 +64,9 @@
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\MicrosoftReportViewerWebForms.11.0.0.0\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
     </Reference>
+    <Reference Include="MvcReportViewer, Version=0.8.5816.27247, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcReportViewer.0.8.3\lib\net45\MvcReportViewer.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -1527,6 +1530,7 @@
       <DependentUpon>EduEntity.edmx</DependentUpon>
       <LastGenOutput>EduEntity.cs</LastGenOutput>
     </Content>
+    <Content Include="MvcReportViewer.aspx" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1574,10 +1578,13 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.js" />
+    <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\MvcReportViewer.js" />
     <Content Include="Scripts\sweetalert.css" />
     <Content Include="Scripts\sweetalert.js" />
     <Content Include="Scripts\webGrid.js" />
@@ -1603,6 +1610,7 @@
     <Compile Include="Controllers\OperationalTransactionController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RevenueController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
@@ -1658,6 +1666,13 @@
     </Compile>
     <Compile Include="Models\VendorPayment.cs">
       <DependentUpon>EduEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MvcReportViewer.aspx.cs">
+      <DependentUpon>MvcReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MvcReportViewer.aspx.designer.cs">
+      <DependentUpon>MvcReportViewer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility.cs" />
@@ -1781,6 +1796,7 @@
     <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusList.cshtml" />
     <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusDetail.cshtml" />
     <Content Include="Views\Dashboard\ProfitAndLoss.cshtml" />
+    <Content Include="Views\Report\ViewReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
