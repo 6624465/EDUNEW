@@ -1777,18 +1777,18 @@
     <Content Include="Views\FinancialTransaction\FinancialTransactionDetail.cshtml" />
     <Content Include="Views\OperationalTransaction\OperationalTransactionList.cshtml" />
     <Content Include="Views\OperationalTransaction\OperationalTransaction.cshtml" />
-    <Content Include="Views\Reports\Achievement.cshtml" />
-    <Content Include="Views\Reports\Operationaltransaction.cshtml" />
-    <Content Include="Views\Reports\OperationalExpenses.cshtml" />
-    <Content Include="Views\Reports\DashboardOperationaltransaction.cshtml" />
+    <Content Include="Views\Dashboard\Achievement.cshtml" />
+    <Content Include="Views\Dashboard\Operationaltransaction.cshtml" />
+    <Content Include="Views\Dashboard\OperationalExpenses.cshtml" />
+    <Content Include="Views\Dashboard\DashboardOperationaltransaction.cshtml" />
     <Content Include="Views\OperationalTransaction\OperationalTransactionReport.cshtml" />
-    <Content Include="Views\Reports\TotalRevenue.cshtml" />
-    <Content Include="Views\Reports\DashBoard.cshtml" />
+    <Content Include="Views\Dashboard\TotalRevenue.cshtml" />
+    <Content Include="Views\Dashboard\DashBoard.cshtml" />
     <Content Include="Views\CustomerPaymentStatus\CustomerPaymentStatusList.cshtml" />
     <Content Include="Views\CustomerPaymentStatus\CustomerPaymentStatusDetail.cshtml" />
     <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusList.cshtml" />
     <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusDetail.cshtml" />
-    <Content Include="Views\Reports\ProfitAndLoss.cshtml" />
+    <Content Include="Views\Dashboard\ProfitAndLoss.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
