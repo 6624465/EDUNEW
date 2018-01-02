@@ -6,9 +6,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    var grid = new WebGrid(Model, rowsPerPage: 10);
+    var grid = new WebGrid(Model, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
 
+    int month = Convert.ToInt16(DateTime.Now.Month.ToString());
     var count = Model.Count();
     var myArray = (List<decimal?>)ViewData["Summary"];
 }
@@ -65,7 +66,13 @@
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = (i + " - " + (i + 1)).ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
+                                @if (month < 4)
+                                {
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = ((i - 1) + " - " + i).ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
+                                }
+                                else
+                                {
+                                }
                             </div>
                         </div>
                     </div>
