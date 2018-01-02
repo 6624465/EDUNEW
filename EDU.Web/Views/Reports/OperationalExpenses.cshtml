@@ -70,10 +70,10 @@
 @section SectionScripts{
     <script type="text/javascript">
         function ChangeYear() {
-            window.location = '@Url.Action("OperationalExpenses", "Reports", new { year = ""})' + '?year=' + $('#Year').val();
+            window.location = '@Url.Action("OperationalExpenses", "Dashboard", new { year = ""})' + '?year=' + $('#Year').val();
         };
         $(function () {
-            $('#liReportsOperationalExpenses').addClass('active');
+            $('#liDashboardOperationalExpenses').addClass('active');
 
             var count = 0;
             @foreach (var item in Model)

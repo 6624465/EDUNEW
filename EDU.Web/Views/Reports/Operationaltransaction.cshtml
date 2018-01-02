@@ -104,11 +104,11 @@
                      </text>
                  }
 
-                $('#liReportsOperationaltransaction').addClass('active');
+                 $('#liDashboardOperationaltransaction').addClass('active');
             });
 
             function ChangeMonth() {
-                window.location = '@Url.Action("Operationaltransaction", "Reports", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
+                window.location = '@Url.Action("Operationaltransaction", "Dashboard", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
             };
            
             Highcharts.chart('container', {

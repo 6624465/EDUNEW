@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EDU.Web.ViewModels.ReportsModel.TotalRevenueVM>
+﻿@model IEnumerable<EDU.Web.ViewModels.DashboardModel.TotalRevenueVM>
 @{
     ViewBag.Title = "TotalRevenue";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -233,7 +233,7 @@
 @section SectionScripts {
     <script lang="javascript" type="text/javascript">
         function ChangeYear() {
-            window.location = '@Url.Action("TotalRevenue", "Reports", new { year = ""})' + '?year=' + $('#Year').val();
+            window.location = '@Url.Action("TotalRevenue", "Dashboard", new { year = ""})' + '?year=' + $('#Year').val();
         };
         $(document).ready(function () {
             var count = 0;
@@ -255,7 +255,7 @@
 
             }
 
-            $('#liReportsTotalRevenue').addClass('active');
+                     $('#liDashboardTotalRevenue').addClass('active');
 
             $('#jqChart1').jqChart({
                 title: { text: '' },

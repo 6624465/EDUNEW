@@ -2,7 +2,7 @@
 using EDU.Web.Models;
 using EDU.Web.ViewModels.FinancialTransactionModel;
 using EDU.Web.ViewModels.OperationalTransaction;
-using EDU.Web.ViewModels.ReportsModel;
+using EDU.Web.ViewModels.DashboardModel;
 using EZY.EDU.BusinessFactory;
 using System;
 using System.Collections.Generic;
@@ -12,10 +12,10 @@ using System.Web;
 using System.Web.Mvc;
 
 
-namespace EDU.Web.Reports.Controllers
+namespace EDU.Web.Dashboard.Controllers
 {
     [SessionFilter]
-    public class ReportsController : BaseController
+    public class DashboardController : BaseController
     {
         EducationEntities dbContext = new EducationEntities();
 

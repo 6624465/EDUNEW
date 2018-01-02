@@ -87,7 +87,7 @@
 @section SectionScripts {
     <script type="text/javascript">
         $(function () {
-            $('#liProfitandlossReport').addClass('active');
+            $('#liDashboardProfitandloss').addClass('active');
             @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
@@ -96,7 +96,7 @@
             }
         });
         function ChangeMonth() {
-            window.location = '@Url.Action("ProfitAndLoss", "Reports", new { month = "", year = "", country = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() +"&country=" + $('#Country').val();
+            window.location = '@Url.Action("ProfitAndLoss", "Dashboard", new { month = "", year = "", country = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() +"&country=" + $('#Country').val();
         };
         Highcharts.chart('container', {
             chart: {

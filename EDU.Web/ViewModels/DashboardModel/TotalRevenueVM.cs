@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace EDU.Web.ViewModels.ReportsModel
+namespace EDU.Web.ViewModels.DashboardModel
 {
     public class ProductRevenueReportVM
     {

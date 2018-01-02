@@ -210,8 +210,8 @@
                             <i class="arrow ion-chevron-left"></i>
                         </a>
                         <ul class="inner-drop list-unstyled">
-                            <li id="liReportsAchievement" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/Achievement?year=" + year)">
+                            <li id="liDashboardAchievement" class="waves-effect">
+                                <a href="@Url.Content("~/Dashboard/Achievement?year=" + year)">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop7">&nbsp;Performance Report</span>
                                 </a>
@@ -223,38 +223,38 @@
                                     <span class="text ptop0">&nbsp;Operational Transactions Report</span>
                                 </a>
                             </li>
-                            <li id="liReportsOperationaltransaction" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/Operationaltransaction?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
+                            <li id="liDashboardOperationaltransaction" class="waves-effect">
+                                <a href="@Url.Content("~/Dashboard/Operationaltransaction?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop7"> &nbsp;Operational Transaction</span>
                                 </a>
                             </li>
-                            <li id="liReportsOperationalExpenses" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/OperationalExpenses?year=" + year)">
+                            <li id="liDashboardOperationalExpenses" class="waves-effect">
+                                <a href="@Url.Content("~/Dashboard/OperationalExpenses?year=" + year)">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop7"> &nbsp;Operational Expenses</span>
                                 </a>
                             </li>
                             <li id="liDashboardOperationaltransaction" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/DashboardOperationaltransaction?month=" + month + "&year=" + year)">
+                                <a href="@Url.Content("~/Dashboard/DashboardOperationaltransaction?month=" + month + "&year=" + year)">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop0">&nbsp;Dashboard Operational Transaction</span>
                                 </a>
                             </li>
-                            <li id="liReportsTotalRevenue" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/TotalRevenue?year=" + year)">
+                            <li id="liDashboardTotalRevenue" class="waves-effect">
+                                <a href="@Url.Content("~/Dashboard/TotalRevenue?year=" + year)">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop7">&nbsp;Total Revenue</span>
                                 </a>
                             </li>
-                            <li id="liReportsDashboard" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/Dashboard?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
+                            <li id="liDashboardDashboard" class="waves-effect">
+                                <a href="@Url.Content("~/Dashboard/Dashboard?country=" + Convert.ToInt16(Session["BranchId"])+ "&month=" + month + "&year=" + year)">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop0">&nbsp;DashBoard - Achievement YTD</span>
                                 </a>
                             </li>
-                            <li id="liProfitandlossReport" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/ProfitAndLoss?month=" + month + "&year=" + year+"&country=" + Convert.ToInt16(Session["BranchId"]))">
+                            <li id="liDashboardProfitandloss" class="waves-effect">
+                                <a href="@Url.Content("~/Dashboard/ProfitAndLoss?month=" + month + "&year=" + year+"&country=" + Convert.ToInt16(Session["BranchId"]))">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop7">&nbsp;DashBoard - Profit And Loss</span>
                                 </a>

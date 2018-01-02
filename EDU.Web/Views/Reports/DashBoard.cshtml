@@ -1,4 +1,4 @@
-﻿@model EDU.Web.ViewModels.ReportsModel.ProductRevenueReportVM
+﻿@model EDU.Web.ViewModels.DashboardModel.ProductRevenueReportVM
 
 @{
     ViewBag.Title = "DashBoard";
@@ -264,7 +264,7 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
         function ChangeMonth() {
-            window.location = '@Url.Action("Dashboard", "Reports", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
+            window.location = '@Url.Action("Dashboard", "Dashboard", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
         $(document).ready(function () {
@@ -289,7 +289,7 @@
              </text>
             }
 
-            $('#liReportsDashboard').addClass('active');
+            $('#liDashboardDashboard').addClass('active');
             $('.canvasjs-chart-credit').hide();
 
             var monthsArray = [1,2,3,4,5,6,7,8,9,10,11,12];
