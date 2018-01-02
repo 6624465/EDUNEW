@@ -472,12 +472,12 @@ namespace EDU.Web.Reports.Controllers
             return View(list.OrderBy(x => x.ProductId));
         }
 
-        public ActionResult ProfitAndLoss(Int16 month, int year)
+        public ActionResult ProfitAndLoss(Int16 month, int year, Int16 country)
         {
             try
             {
                 List<FinancialTransactionsVM> financialTransactionReport = new List<FinancialTransactionsVM>();
-                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month && x.Country == country).ToList();
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
                 List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
@@ -490,13 +490,13 @@ namespace EDU.Web.Reports.Controllers
                         TrainingConfirmationID = x.TrainingConfirmationID,
                         Country = x.Country,
                         CountryName = countryList.Where(y => y.BranchID == x.Country).FirstOrDefault().BranchName,
-                        TotalRevenueAmount = x.TotalRevenueAmount,
-                        TrainerExpensesAmount = x.TrainerExpensesAmount,
-                        TrainerTravelExpensesAmount = x.TrainerTravelExpensesAmount,
-                        LocalExpensesAmount = x.LocalExpensesAmount,
-                        CoursewareMaterialAmount = x.CoursewareMaterialAmount,
-                        MiscExpensesAmount = x.MiscExpensesAmount,
-                        GrossProfit = x.GrossProfit==null?0: x.GrossProfit,
+                        TotalRevenueAmount = x.TotalRevenueAmount == null ? 0 : x.TotalRevenueAmount,
+                        TrainerExpensesAmount = x.TrainerExpensesAmount == null ? 0 : x.TrainerExpensesAmount,
+                        TrainerTravelExpensesAmount = x.TrainerTravelExpensesAmount == null ? 0 : x.TrainerTravelExpensesAmount,
+                        LocalExpensesAmount = x.LocalExpensesAmount == null ? 0 : x.LocalExpensesAmount,
+                        CoursewareMaterialAmount = x.CoursewareMaterialAmount == null ? 0 : x.CoursewareMaterialAmount,
+                        MiscExpensesAmount = x.MiscExpensesAmount == null ? 0 : x.MiscExpensesAmount,
+                        GrossProfit = x.GrossProfit == null ? 0 : x.GrossProfit,
                         ProfitAndLossPercent = x.ProfitAndLossPercent == null ? 0 : x.ProfitAndLossPercent,
                         Year = year,
                         Month = month
@@ -516,11 +516,11 @@ namespace EDU.Web.Reports.Controllers
                             Country = item.Country,
                             CountryName = countryList.Where(y => y.BranchID == item.Country).FirstOrDefault().BranchName,
                             TotalRevenueAmount = TotalAmount == null ? 0 : TotalAmount,
-                            TrainerExpensesAmount = null,
-                            TrainerTravelExpensesAmount = null,
-                            LocalExpensesAmount = null,
-                            CoursewareMaterialAmount = null,
-                            MiscExpensesAmount = null,
+                            TrainerExpensesAmount = 0,
+                            TrainerTravelExpensesAmount = 0,
+                            LocalExpensesAmount = 0,
+                            CoursewareMaterialAmount = 0,
+                            MiscExpensesAmount = 0,
                             GrossProfit = 0,
                             ProfitAndLossPercent = 0,
                             Year = year,
@@ -529,6 +529,7 @@ namespace EDU.Web.Reports.Controllers
                     }
                 }
 
+                ViewData["CountryData"] = countryList;
                 return View(financialTransactionReport.OrderBy(x => x.TrainingConfirmationID));
             }
             catch (Exception ex)

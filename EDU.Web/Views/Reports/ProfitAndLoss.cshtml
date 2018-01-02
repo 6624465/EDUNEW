@@ -28,13 +28,13 @@
     .highcharts-legend {
         display: none !important;
     }
-    .highcharts-credits
-    {
-        display:none !important
-    } 
-    .highcharts-axis-title 
-    {
-        display:none !important
+
+    .highcharts-credits {
+        display: none !important
+    }
+
+    .highcharts-axis-title {
+        display: none !important
     }
 </style>
 <div class="page page-forms-elements">
@@ -50,6 +50,14 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Country</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Country,
+                                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
+                                     new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                            </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Year</span>
                             </label>
@@ -80,9 +88,15 @@
     <script type="text/javascript">
         $(function () {
             $('#liProfitandlossReport').addClass('active');
+            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            {
+                <text>
+            $('#Country').attr('disabled','disabled');
+             </text>
+            }
         });
         function ChangeMonth() {
-            window.location = '@Url.Action("ProfitAndLoss", "Reports", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
+            window.location = '@Url.Action("ProfitAndLoss", "Reports", new { month = "", year = "", country = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() +"&country=" + $('#Country').val();
         };
         Highcharts.chart('container', {
             chart: {
@@ -120,6 +134,17 @@
                         </text>
                     }
                 ]
+            },
+         {
+                name: 'Expenses',
+                color: "orange",
+                data: [
+                @foreach (var item in Model)
+                    {
+                        <text>
+                            @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount),
+                        </text>
+                }]
             },
 
          {

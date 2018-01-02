@@ -62,7 +62,7 @@
     }
 </head>
 <body id="app" class="app off-canvas nav-expand">
-   
+
     <!-- header -->
     <header class="site-head" id="site-head">
         <ul class="list-unstyled left-elems">
@@ -254,7 +254,7 @@
                                 </a>
                             </li>
                             <li id="liProfitandlossReport" class="waves-effect">
-                                <a href="@Url.Content("~/Reports/ProfitAndLoss?month=" + month + "&year=" + year)">
+                                <a href="@Url.Content("~/Reports/ProfitAndLoss?month=" + month + "&year=" + year+"&country=" + Convert.ToInt16(Session["BranchId"]))">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop7">&nbsp;DashBoard - Profit And Loss</span>
                                 </a>
