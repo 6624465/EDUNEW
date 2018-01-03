@@ -74,7 +74,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span> Trainer Expenses</span>
+                                        <span> Trainer Fee</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -93,7 +93,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span style="white-space:nowrap"> Trainer Travel Expenses</span>
+                                        <span style="white-space:nowrap"> Trainer Airfare</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerTravelExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -112,7 +112,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span> Local Expenses</span>
+                                        <span> Hotel Bookings</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.LocalExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -125,6 +125,44 @@
                                     </div>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.LocalExpensesRemarks, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span>Trainer Claims</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span>Regional expneses</span>
+                                    </label>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -144,25 +182,6 @@
                                     </div>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.CoursewareMaterialRemarks, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span>Misc Expenses</span>
-                                    </label>
-                                    <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
-                                    </div>
-                                    <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
-                                    </div>
-                                    <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
