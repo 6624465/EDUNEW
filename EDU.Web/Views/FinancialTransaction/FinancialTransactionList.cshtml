@@ -28,7 +28,7 @@
     var listMonths = new List<SelectListItem>()
                                           {
                                           // new SelectListItem {Text = "Select Month",   Value = "0"},
-                                           new SelectListItem {Text = "Janaury",   Value = "1"},
+                                           new SelectListItem {Text = "January",   Value = "1"},
                                            new SelectListItem {Text = "February", Value = "2"},
                                            new SelectListItem {Text = "March", Value = "3"},
                                            new SelectListItem {Text = "April",   Value = "4"},
@@ -451,30 +451,7 @@
         function ChangeMonth() {
             window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
-
-        @*function UpdateFinancialTransactionLocalAmount() {
-            debugger;
-            if ($('#frmFinancial').valid()) {
-                var FinancialTransaction =
-                    {
-                        "CurrencyExRate": $('#financialTransaction_CurrencyExRate').val(),
-                        "Country": $('#financialTransaction_Country').val(),
-                        "CurrencyCode": $('#financialTransaction_CurrencyCode').val(),
-                        "FinancialTransactionId": $('#financialTransaction_FinancialTransactionId').val(),
-                        "TrainingConfirmationID": $('#financialTransaction_TrainingConfirmationID').val()
-                    };
-                $.ajax({
-                    url: '@Url.Content("~/FinancialTransaction/UpdateFinancialTransactionLocalAmount/")',
-                    data: JSON.stringify(FinancialTransaction),
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        alert(data);
-                        location.reload(true);
-                    }
-                });
-            }
-        }*@
+        
 
         function SaveFinancialTransaction() {
             if ($('#frmFinancial').valid()) {
@@ -486,74 +463,6 @@
             }
         };
 
-
-        @*function SubmitFinancialTransaction() {
-            if ($('#frmFinancial').valid()) {
-                var FinancialTransaction =
-                    {
-                        "FinancialTransactionId": $('#financialTransaction_FinancialTransactionId').val(),
-                        "TrainingConfirmationID": $('#financialTransaction_TrainingConfirmationID').val()
-                    };
-                $.ajax({
-                    url: '@Url.Content("~/FinancialTransaction/SubmitFinancialTransaction/")',
-                    data: JSON.stringify(FinancialTransaction),
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        alert(data);
-                        location.reload(true);
-                    }
-                });
-            }
-        }*@
-
-        @*function EditFinancialTransactionDetail(Id) {
-            debugger;
-            if($('#frmFinancial').valid())
-            {
-                //var currencyExRate = $('#financialTransaction_CurrencyExRate').val();
-                $.ajax({
-                    url: '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=")' + Id ,
-                    method: 'get',
-                    contentType: 'text/html',
-                    success: function (html) {
-                    },
-                    error: function (err) {
-
-                    }
-                });
-            }
-
-        }*@
-
-        @*function CountryChange(el) {
-            if (el.value) {
-                $.ajax({
-                    url: '@Url.Content("~/FinancialTransaction/GetCurrency?Id=")' + el.value,
-                    method: 'GET',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        debugger;
-                        $("#financialTransaction_CurrencyCode").val(data);
-                    },
-                    error: function (err) {
-                    }
-                });
-            }
-            else {
-                $("#financialTransaction_CurrencyCode").val('');
-            }
-        };*@
-        //function CalculateLocalAmount() {
-        //    debugger;
-        //    var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
-        //    var Amount = parseInt($('#Amount').val());
-        //    var result = currencyrate * Amount;
-        //    $('#LocalAmount').val(result);
-        //    if (isNaN(Amount)) {
-        //        $('#LocalAmount').val('');
-        //    }
-        //}
         $('#frmFinancial').validate({
             rules: {
                 'financialTransaction.Country': {
@@ -581,13 +490,5 @@
         function mouseover(el) {
             $(el).popover("show");
         }
-        //function ValidateTheExValue()
-        //{
-        //    var currencyrate = parseInt($('#financialTransaction_CurrencyExRate').val());
-        //    if(currencyrate==0)
-        //    {
-        //        parseInt($('#financialTransaction_CurrencyExRate').val(''));
-        //    }
-        //}
     </script>
 }

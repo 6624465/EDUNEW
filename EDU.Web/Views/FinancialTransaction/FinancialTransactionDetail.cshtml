@@ -33,7 +33,7 @@
                                               "Select Currency", new { @class = "form-control  input-sm" })
                                     </div>
                                     <div class="col-md-1">
-                                        @Html.TextBoxFor(x => x.CurrencyExRate, "{0:#.#}", new { @class = "form-control numCss input-sm", @placeholder = "Currency Ex Rate", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.CurrencyExRate, "{0:#.#}", new { @class = "form-control numCss input-sm", @placeholder = "Ex Rate", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Total Revenue</span>
+                                        <span>Total Revenue</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TotalRevenueAmount, "{0:#.#}", new { @class = "form-control numCss",  @readonly = true })
@@ -74,7 +74,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right"> Trainer Expenses</span>
+                                        <span> Trainer Expenses</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -93,7 +93,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span style="width:135px" class="pull-right"> Trainer Travel Expenses</span>
+                                        <span style="white-space:nowrap"> Trainer Travel Expenses</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.TrainerTravelExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -112,7 +112,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right"> Local Expenses</span>
+                                        <span> Local Expenses</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.LocalExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -131,7 +131,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Courseware Material</span>
+                                        <span>Courseware Material</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.CoursewareMaterialAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -150,7 +150,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        <span class="pull-right">Misc Expenses</span>
+                                        <span>Misc Expenses</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
@@ -169,13 +169,13 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-1 control-label col-md-offset-1">
-                                        <span class="pull-right">Gross Profit</span>
+                                        <span>Gross Profit</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.TextBoxFor(x => x.GrossProfit, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Gross Profit", @readonly = true })
                                     </div>
                                     <label class="col-md-1 control-label">
-                                        <span class="pull-right">Profit & Loss</span>
+                                        <span style="white-space:nowrap">Profit & Loss</span>
                                     </label>
                                     <div class="col-md-1">
                                         @Html.TextBoxFor(x => x.ProfitAndLossPercent, "{0:#.#}", new { @class = "form-control", @placeholder = "Profit&Loss", @readonly = true })
@@ -185,7 +185,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button> &nbsp;&nbsp;&nbsp;
+                                        @*<button type="button" onclick="SubmitFinancialTransaction()" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button> &nbsp;&nbsp;&nbsp;*@
                                         <button type="button" onclick="SaveFinancialTransactionDetail()" class="btn btn-success btn-frmt green btn-sm editdisable"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                         <button class="btn btn-default btn-sm" type="button" onclick="navigateToList();"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                     </div>

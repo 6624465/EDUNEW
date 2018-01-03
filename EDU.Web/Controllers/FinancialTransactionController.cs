@@ -29,7 +29,7 @@ namespace EDU.Web.Controllers
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 
-                List<string> reglist =dbContext.Registrations
+                List<string> reglist = dbContext.Registrations
                                         .Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID))
                                         .Select(x => x.TrainingConfirmationID).Distinct().ToList();
 
@@ -89,7 +89,7 @@ namespace EDU.Web.Controllers
                     if (financialTransaction1List.Where(x => x.TrainingConfirmationID == item).Count() == 0)
                     {
                         decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == item && x.IsActive == true).Sum(y => y.TotalAmount);
-                        TrainingConfirmation trainingConfirmation = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.TrainingConfirmationID==item).FirstOrDefault();
+                        TrainingConfirmation trainingConfirmation = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.TrainingConfirmationID == item).FirstOrDefault();
 
 
                         financialTransactionList.Add(new FinancialTransactionsVM()
@@ -154,7 +154,7 @@ namespace EDU.Web.Controllers
             FinancialTransactionsVM financialtransaction = new FinancialTransactionsVM();
             if (Id == -1)
             {
-                financialtransaction = new FinancialTransactionsVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount, Month = month, Year = year };
+                financialtransaction = new FinancialTransactionsVM { FinancialTransactionId = -1, TrainingConfirmationID = trainingConfirmationID, Country = country, TotalRevenueAmount = totalRevenueAmount, TotalRevenueLocalAmount = totalRevenueAmount, Month = month, Year = year, CurrencyCode = "USD", CurrencyExRate = 1 };
                 ViewBag.Title = "New Financial Transaction";
 
             }
@@ -195,8 +195,8 @@ namespace EDU.Web.Controllers
                                            MiscExpensesRemarks = x.MiscExpensesRemarks,
                                            GrossProfit = x.GrossProfit,
                                            ProfitAndLossPercent = x.ProfitAndLossPercent,
-                                           Year=x.Year,
-                                           Month=x.Month,
+                                           Year = x.Year,
+                                           Month = x.Month,
                                            IsActive = true,
                                            IsSubmit = x.IsSubmit,
 
