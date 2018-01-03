@@ -496,6 +496,7 @@ namespace EDU.Web.Dashboard.Controllers
                         LocalExpensesAmount = x.LocalExpensesAmount == null ? 0 : x.LocalExpensesAmount,
                         CoursewareMaterialAmount = x.CoursewareMaterialAmount == null ? 0 : x.CoursewareMaterialAmount,
                         MiscExpensesAmount = x.MiscExpensesAmount == null ? 0 : x.MiscExpensesAmount,
+                        TrainerClaimsAmount = x.TrainerClaimsAmount == null ? 0 : x.TrainerClaimsAmount,
                         GrossProfit = x.GrossProfit == null ? 0 : x.GrossProfit,
                         ProfitAndLossPercent = x.ProfitAndLossPercent == null ? 0 : x.ProfitAndLossPercent,
                         Year = year,
