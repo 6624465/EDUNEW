@@ -45,6 +45,11 @@ namespace EDU.Web.ViewModels.FinancialTransactionModel
         public Nullable<decimal> MiscExpensesLocalAmount { get; set; }
         public string MiscExpensesReferenceDoc { get; set; }
         public string MiscExpensesRemarks { get; set; }
+
+        public Nullable<decimal> TrainerClaimsAmount { get; set; }
+        public Nullable<decimal> TrainerClaimsLocalAmount { get; set; }
+        public string TrainerClaimsReferenceDoc { get; set; }
+        public string TrainerClaimsRemarks { get; set; }
         public Nullable<decimal> GrossProfit { get; set; }
         public Nullable<decimal> ProfitAndLossPercent { get; set; }
         public Nullable<bool> IsActive { get; set; }
@@ -59,6 +64,7 @@ namespace EDU.Web.ViewModels.FinancialTransactionModel
         public System.Web.HttpPostedFileBase LocalExpensesFileName { get; set; }
         public System.Web.HttpPostedFileBase CoursewareMaterialFileName { get; set; }
         public System.Web.HttpPostedFileBase MiscExpensesFileName { get; set; }
+        public System.Web.HttpPostedFileBase TrainerClaimsFileName { get; set; }
         public int? Year { get; set; }
         public Nullable<short> Month { get; set; }
     }

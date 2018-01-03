@@ -53,5 +53,9 @@ namespace EDU.Web.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public Nullable<int> Year { get; set; }
         public Nullable<short> Month { get; set; }
+        public Nullable<decimal> TrainerClaimsAmount { get; set; }
+        public Nullable<decimal> TrainerClaimsLocalAmount { get; set; }
+        public string TrainerClaimsReferenceDoc { get; set; }
+        public string TrainerClaimsRemarks { get; set; }
     }
 }

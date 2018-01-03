@@ -70,6 +70,10 @@ namespace EDU.Web.Controllers
                         MiscExpensesLocalAmount = x.MiscExpensesLocalAmount,
                         MiscExpensesReferenceDoc = x.MiscExpensesReferenceDoc,
                         MiscExpensesRemarks = x.MiscExpensesRemarks,
+                        TrainerClaimsAmount = x.TrainerClaimsAmount,
+                        TrainerClaimsLocalAmount = x.TrainerClaimsLocalAmount,
+                        TrainerClaimsReferenceDoc = x.TrainerClaimsReferenceDoc,
+                        TrainerClaimsRemarks = x.TrainerClaimsRemarks,
                         GrossProfit = x.GrossProfit,
                         ProfitAndLossPercent = x.ProfitAndLossPercent,
                         IsActive = x.IsActive,
@@ -124,6 +128,10 @@ namespace EDU.Web.Controllers
                             MiscExpensesLocalAmount = null,
                             MiscExpensesReferenceDoc = null,
                             MiscExpensesRemarks = null,
+                            TrainerClaimsAmount = null,
+                            TrainerClaimsLocalAmount = null,
+                            TrainerClaimsReferenceDoc = null,
+                            TrainerClaimsRemarks = null,
                             GrossProfit = null,
                             ProfitAndLossPercent = null,
                             IsActive = true,
@@ -137,6 +145,38 @@ namespace EDU.Web.Controllers
                         });
                     }
                 }
+
+                long revenue = 0;
+                long trainerFee = 0;
+                long trainerAirfare = 0;
+                long hotelBookings = 0;
+                long trainerClaims = 0;
+                long RegionalExp = 0;
+                long coursewareMaterial = 0;
+                long grossProfit = 0;
+
+                foreach (var item in financialTransactionList)
+                {
+                    revenue += Convert.ToInt64(item.TotalRevenueAmount == null ? 0 : item.TotalRevenueAmount.Value);
+                    trainerFee += Convert.ToInt64(item.TrainerExpensesAmount == null ? 0 : item.TrainerExpensesAmount.Value);
+                    trainerAirfare += Convert.ToInt64(item.TrainerTravelExpensesAmount == null ? 0 : item.TrainerTravelExpensesAmount.Value);
+                    hotelBookings += Convert.ToInt64(item.LocalExpensesAmount == null ? 0 : item.LocalExpensesAmount.Value);
+                    trainerClaims += Convert.ToInt64(item.TrainerClaimsAmount == null ? 0 : item.TrainerClaimsAmount.Value);
+                    RegionalExp += Convert.ToInt64(item.MiscExpensesAmount == null ? 0 : item.MiscExpensesAmount.Value);
+                    coursewareMaterial += Convert.ToInt64(item.CoursewareMaterialAmount == null ? 0 : item.CoursewareMaterialAmount.Value);
+                    grossProfit += Convert.ToInt64(item.GrossProfit == null ? 0 : item.GrossProfit.Value);                   
+                }
+
+                List<decimal?> summary = new List<decimal?>();
+                summary.Add(revenue);
+                summary.Add(trainerFee);
+                summary.Add(trainerAirfare);
+                summary.Add(hotelBookings);
+                summary.Add(trainerClaims);
+                summary.Add(RegionalExp);
+                summary.Add(coursewareMaterial);
+                summary.Add(grossProfit);
+                ViewData["Summary"] = summary;
 
                 return View(financialTransactionList.OrderBy(x => x.TrainingConfirmationID));
             }
@@ -193,6 +233,10 @@ namespace EDU.Web.Controllers
                                            MiscExpensesLocalAmount = x.MiscExpensesLocalAmount,
                                            MiscExpensesReferenceDoc = x.MiscExpensesReferenceDoc,
                                            MiscExpensesRemarks = x.MiscExpensesRemarks,
+                                           TrainerClaimsAmount = x.TrainerClaimsAmount,
+                                           TrainerClaimsLocalAmount = x.TrainerClaimsLocalAmount,
+                                           TrainerClaimsReferenceDoc = x.TrainerClaimsReferenceDoc,
+                                           TrainerClaimsRemarks = x.TrainerClaimsRemarks,
                                            GrossProfit = x.GrossProfit,
                                            ProfitAndLossPercent = x.ProfitAndLossPercent,
                                            Year = x.Year,
@@ -222,16 +266,18 @@ namespace EDU.Web.Controllers
                     financialtransactions.Country = ftInfo.Country;
                     financialtransactions.CurrencyCode = ftInfo.CurrencyCode;
                     financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
+
                     financialtransactions.TotalRevenueAmount = ftInfo.TotalRevenueAmount;
                     financialtransactions.TotalRevenueLocalAmount = ftInfo.TotalRevenueLocalAmount;
+
                     if (ftInfo.TotalRevenueFileName != null && ftInfo.TotalRevenueFileName.ContentLength > 0)
                     {
                         financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueFileName.FileName;
                     }
                     else
                         financialtransactions.TotalRevenueReferenceDoc = null;
-                    //financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
                     financialtransactions.TotalRevenueRemarks = ftInfo.TotalRevenueRemarks;
+
                     financialtransactions.TrainerExpensesAmount = ftInfo.TrainerExpensesAmount;
                     financialtransactions.TrainerExpensesLocalAmount = ftInfo.TrainerExpensesLocalAmount;
                     if (ftInfo.TrainerExpensesFileName != null && ftInfo.TrainerExpensesFileName.ContentLength > 0)
@@ -240,8 +286,8 @@ namespace EDU.Web.Controllers
                     }
                     else
                         financialtransactions.TrainerExpensesReferenceDoc = null;
-                    //financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
                     financialtransactions.TrainerExpensesRemarks = ftInfo.TrainerExpensesRemarks;
+
                     financialtransactions.TrainerTravelExpensesAmount = ftInfo.TrainerTravelExpensesAmount;
                     financialtransactions.TrainerTravelExpensesLocalAmount = ftInfo.TrainerTravelExpensesLocalAmount;
                     if (ftInfo.TrainerTravelExpensesFileName != null && ftInfo.TrainerTravelExpensesFileName.ContentLength > 0)
@@ -250,8 +296,8 @@ namespace EDU.Web.Controllers
                     }
                     else
                         financialtransactions.TrainerTravelExpensesReferenceDoc = null;
-                    //financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
                     financialtransactions.TrainerTravelExpensesRemarks = ftInfo.TrainerTravelExpensesRemarks;
+
                     financialtransactions.LocalExpensesAmount = ftInfo.LocalExpensesAmount;
                     financialtransactions.LocalExpensesLocalAmount = ftInfo.LocalExpensesLocalAmount;
                     if (ftInfo.LocalExpensesFileName != null && ftInfo.LocalExpensesFileName.ContentLength > 0)
@@ -260,8 +306,8 @@ namespace EDU.Web.Controllers
                     }
                     else
                         financialtransactions.LocalExpensesReferenceDoc = null;
-                    //financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
                     financialtransactions.LocalExpensesRemarks = ftInfo.LocalExpensesRemarks;
+
                     financialtransactions.CoursewareMaterialAmount = ftInfo.CoursewareMaterialAmount;
                     financialtransactions.CoursewareMaterialLocalAmount = ftInfo.CoursewareMaterialLocalAmount;
                     if (ftInfo.CoursewareMaterialFileName != null && ftInfo.CoursewareMaterialFileName.ContentLength > 0)
@@ -270,8 +316,8 @@ namespace EDU.Web.Controllers
                     }
                     else
                         financialtransactions.CoursewareMaterialReferenceDoc = null;
-                    // financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
                     financialtransactions.CoursewareMaterialRemarks = ftInfo.CoursewareMaterialRemarks;
+
                     financialtransactions.MiscExpensesAmount = ftInfo.MiscExpensesAmount;
                     financialtransactions.MiscExpensesLocalAmount = ftInfo.MiscExpensesLocalAmount;
                     if (ftInfo.MiscExpensesFileName != null && ftInfo.MiscExpensesFileName.ContentLength > 0)
@@ -280,8 +326,19 @@ namespace EDU.Web.Controllers
                     }
                     else
                         financialtransactions.MiscExpensesReferenceDoc = null;
-                    //financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
                     financialtransactions.MiscExpensesRemarks = ftInfo.MiscExpensesRemarks;
+
+                    financialtransactions.TrainerClaimsAmount = ftInfo.TrainerClaimsAmount;
+                    financialtransactions.TrainerClaimsLocalAmount = ftInfo.TrainerClaimsLocalAmount;
+                    if (ftInfo.TrainerClaimsFileName != null && ftInfo.TrainerClaimsFileName.ContentLength > 0)
+                    {
+                        financialtransactions.TrainerClaimsReferenceDoc = ftInfo.TrainerClaimsFileName.FileName;
+                    }
+                    else
+                        financialtransactions.TrainerClaimsReferenceDoc = null;
+                    financialtransactions.TrainerClaimsRemarks = ftInfo.TrainerClaimsRemarks;
+
+
                     financialtransactions.GrossProfit = ftInfo.GrossProfit;
                     financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
                     financialtransactions.Year = ftInfo.Year;
@@ -354,6 +411,17 @@ namespace EDU.Web.Controllers
 
                         ftInfo.MiscExpensesFileName.SaveAs(path + ftInfo.MiscExpensesFileName.FileName);
                     }
+
+                    if (ftInfo.TrainerClaimsFileName != null && ftInfo.TrainerClaimsFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + financialtransactions.FinancialTransactionId + "/TrainerClaims/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TrainerClaimsFileName.SaveAs(path + ftInfo.TrainerClaimsFileName.FileName);
+                    }
                 }
                 else
                 {
@@ -367,6 +435,7 @@ namespace EDU.Web.Controllers
                     financialtransactions.Month = ftInfo.Month;
                     financialtransactions.CurrencyCode = ftInfo.CurrencyCode;
                     financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
+
                     financialtransactions.TotalRevenueAmount = ftInfo.TotalRevenueAmount;
                     financialtransactions.TotalRevenueLocalAmount = ftInfo.TotalRevenueLocalAmount;
                     if (ftInfo.TotalRevenueFileName != null && ftInfo.TotalRevenueFileName.ContentLength > 0)
@@ -380,8 +449,8 @@ namespace EDU.Web.Controllers
                         ftInfo.TotalRevenueFileName.SaveAs(path + ftInfo.TotalRevenueFileName.FileName);
                         financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueFileName.FileName;
                     }
-                    // financialtransactions.TotalRevenueReferenceDoc = ftInfo.TotalRevenueReferenceDoc;
                     financialtransactions.TotalRevenueRemarks = ftInfo.TotalRevenueRemarks;
+
                     financialtransactions.TrainerExpensesAmount = ftInfo.TrainerExpensesAmount;
                     financialtransactions.TrainerExpensesLocalAmount = ftInfo.TrainerExpensesLocalAmount;
                     if (ftInfo.TrainerExpensesFileName != null && ftInfo.TrainerExpensesFileName.ContentLength > 0)
@@ -395,8 +464,8 @@ namespace EDU.Web.Controllers
                         ftInfo.TrainerExpensesFileName.SaveAs(path + ftInfo.TrainerExpensesFileName.FileName);
                         financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesFileName.FileName;
                     }
-                    //financialtransactions.TrainerExpensesReferenceDoc = ftInfo.TrainerExpensesReferenceDoc;
                     financialtransactions.TrainerExpensesRemarks = ftInfo.TrainerExpensesRemarks;
+
                     financialtransactions.TrainerTravelExpensesAmount = ftInfo.TrainerTravelExpensesAmount;
                     financialtransactions.TrainerTravelExpensesLocalAmount = ftInfo.TrainerTravelExpensesLocalAmount;
                     if (ftInfo.TrainerTravelExpensesFileName != null && ftInfo.TrainerTravelExpensesFileName.ContentLength > 0)
@@ -410,8 +479,8 @@ namespace EDU.Web.Controllers
                         ftInfo.TrainerTravelExpensesFileName.SaveAs(path + ftInfo.TrainerTravelExpensesFileName.FileName);
                         financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesFileName.FileName;
                     }
-                    //financialtransactions.TrainerTravelExpensesReferenceDoc = ftInfo.TrainerTravelExpensesReferenceDoc;
                     financialtransactions.TrainerTravelExpensesRemarks = ftInfo.TrainerTravelExpensesRemarks;
+
                     financialtransactions.LocalExpensesAmount = ftInfo.LocalExpensesAmount;
                     financialtransactions.LocalExpensesLocalAmount = ftInfo.LocalExpensesLocalAmount;
                     if (ftInfo.LocalExpensesFileName != null && ftInfo.LocalExpensesFileName.ContentLength > 0)
@@ -425,8 +494,8 @@ namespace EDU.Web.Controllers
                         ftInfo.LocalExpensesFileName.SaveAs(path + ftInfo.LocalExpensesFileName.FileName);
                         financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesFileName.FileName;
                     }
-                    //financialtransactions.LocalExpensesReferenceDoc = ftInfo.LocalExpensesReferenceDoc;
                     financialtransactions.LocalExpensesRemarks = ftInfo.LocalExpensesRemarks;
+
                     financialtransactions.CoursewareMaterialAmount = ftInfo.CoursewareMaterialAmount;
                     financialtransactions.CoursewareMaterialLocalAmount = ftInfo.CoursewareMaterialLocalAmount;
                     if (ftInfo.CoursewareMaterialFileName != null && ftInfo.CoursewareMaterialFileName.ContentLength > 0)
@@ -440,8 +509,8 @@ namespace EDU.Web.Controllers
                         ftInfo.CoursewareMaterialFileName.SaveAs(path + ftInfo.CoursewareMaterialFileName.FileName);
                         financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialFileName.FileName;
                     }
-                    // financialtransactions.CoursewareMaterialReferenceDoc = ftInfo.CoursewareMaterialReferenceDoc;
                     financialtransactions.CoursewareMaterialRemarks = ftInfo.CoursewareMaterialRemarks;
+
                     financialtransactions.MiscExpensesAmount = ftInfo.MiscExpensesAmount;
                     financialtransactions.MiscExpensesLocalAmount = ftInfo.MiscExpensesLocalAmount;
                     if (ftInfo.MiscExpensesFileName != null && ftInfo.MiscExpensesFileName.ContentLength > 0)
@@ -455,8 +524,23 @@ namespace EDU.Web.Controllers
                         ftInfo.MiscExpensesFileName.SaveAs(path + ftInfo.MiscExpensesFileName.FileName);
                         financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesFileName.FileName;
                     }
-                    //financialtransactions.MiscExpensesReferenceDoc = ftInfo.MiscExpensesReferenceDoc;
                     financialtransactions.MiscExpensesRemarks = ftInfo.MiscExpensesRemarks;
+
+                    financialtransactions.TrainerClaimsAmount = ftInfo.TrainerClaimsAmount;
+                    financialtransactions.TrainerClaimsLocalAmount = ftInfo.TrainerClaimsLocalAmount;
+                    if (ftInfo.TrainerClaimsFileName != null && ftInfo.TrainerClaimsFileName.ContentLength > 0)
+                    {
+                        string path = Server.MapPath("~/Uploads/ft_" + ftInfo.FinancialTransactionId + "/TrainerClaims/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        ftInfo.TrainerClaimsFileName.SaveAs(path + ftInfo.TrainerClaimsFileName.FileName);
+                        financialtransactions.TrainerClaimsReferenceDoc = ftInfo.TrainerClaimsFileName.FileName;
+                    }
+                    financialtransactions.TrainerClaimsRemarks = ftInfo.TrainerClaimsRemarks;
+
                     financialtransactions.GrossProfit = ftInfo.GrossProfit;
                     financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
                     financialtransactions.IsActive = true;

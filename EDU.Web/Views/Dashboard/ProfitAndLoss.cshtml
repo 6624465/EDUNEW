@@ -142,11 +142,10 @@
                 @foreach (var item in Model)
                     {
                         <text>
-                            @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount),
+                            @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
                         </text>
                 }]
             },
-
          {
                 name: 'profit',
                 color: "green",

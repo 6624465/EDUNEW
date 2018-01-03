@@ -134,16 +134,16 @@
                                         <span>Trainer Claims</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.TrainerClaimsAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                        @Html.TextBoxFor(x => x.TrainerClaimsLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
+                                        @Html.TextBoxFor(x => x.TrainerClaimsFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerClaimsReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.TrainerClaimsRemarks, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -252,6 +252,7 @@
             var localExpensesAmount = ($('#LocalExpensesAmount').val() != null && !isNaN($('#LocalExpensesAmount').val()) ? parseInt($('#LocalExpensesAmount').val()) : 0);
             var coursewareMaterialAmount = ($('#CoursewareMaterialAmount').val() != null && !isNaN($('#CoursewareMaterialAmount').val()) ? parseInt($('#CoursewareMaterialAmount').val()) : 0);
             var miscExpensesAmount = ($('#MiscExpensesAmount').val() != null && !isNaN($('#MiscExpensesAmount').val()) ? parseInt($('#MiscExpensesAmount').val()) : 0);
+            var trainerClaimsAmount = ($('#TrainerClaimsAmount').val() != null && !isNaN($('#TrainerClaimsAmount').val()) ? parseInt($('#TrainerClaimsAmount').val()) : 0);
 
             $('#TotalRevenueLocalAmount').val('');
             $('#TrainerExpensesLocalAmount').val('');
@@ -259,6 +260,7 @@
             $('#LocalExpensesLocalAmount').val('');
             $('#CoursewareMaterialLocalAmount').val('');
             $('#MiscExpensesLocalAmount').val('');
+            $('#TrainerClaimsLocalAmount').val('');
 
             if (currencyrt > 0) {
                 $('#TotalRevenueLocalAmount').val(currencyrt * totalRevenueAmount);
@@ -283,6 +285,10 @@
                     $('#MiscExpensesLocalAmount').val(currencyrt * miscExpensesAmount);
                 else
                     $('#MiscExpensesLocalAmount').val('');
+                if (trainerClaimsAmount > 0)
+                    $('#TrainerClaimsLocalAmount').val(currencyrt * trainerClaimsAmount);
+                else
+                    $('#TrainerClaimsLocalAmount').val('');
             }
         }
         function calculateGrossProfitandLoss() {
@@ -293,8 +299,9 @@
             var localExpensesAmount = ($('#LocalExpensesAmount').val() != '' && $('#LocalExpensesAmount').val() != null && !isNaN($('#LocalExpensesAmount').val()) ? parseInt($('#LocalExpensesAmount').val()) : 0);
             var coursewareMaterialAmount = ($('#CoursewareMaterialAmount').val() != '' && $('#CoursewareMaterialAmount').val() != null && !isNaN($('#CoursewareMaterialAmount').val()) ? parseInt($('#CoursewareMaterialAmount').val()) : 0);
             var miscExpensesAmount = ($('#MiscExpensesAmount').val() != '' && $('#MiscExpensesAmount').val() != null && !isNaN($('#MiscExpensesAmount').val()) ? parseInt($('#MiscExpensesAmount').val()) : 0);
+            var trainerClaimsAmount = ($('#TrainerClaimsAmount').val() != '' && $('#TrainerClaimsAmount').val() != null && !isNaN($('#TrainerClaimsAmount').val()) ? parseInt($('#TrainerClaimsAmount').val()) : 0);
 
-            var expenses = trainerExpensesAmount + trainerTravelExpensesAmount + localExpensesAmount + coursewareMaterialAmount + miscExpensesAmount;
+            var expenses = trainerExpensesAmount + trainerTravelExpensesAmount + localExpensesAmount + coursewareMaterialAmount + miscExpensesAmount + trainerClaimsAmount;
             var result = totalRevenueAmount - expenses;
             var pro = ((result * 100) / totalRevenueAmount).toFixed();
             $('#GrossProfit').val(result);

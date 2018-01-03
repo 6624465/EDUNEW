@@ -521,6 +521,7 @@ namespace EDU.Web.Dashboard.Controllers
                             LocalExpensesAmount = 0,
                             CoursewareMaterialAmount = 0,
                             MiscExpensesAmount = 0,
+                            TrainerClaimsAmount = 0,
                             GrossProfit = 0,
                             ProfitAndLossPercent = 0,
                             Year = year,

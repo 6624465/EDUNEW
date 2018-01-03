@@ -1,13 +1,11 @@
 ﻿@model EDU.Web.ViewModels.OperationalTransactionModel.OTVM
 @{
-    // ViewBag.Title = "FinancialTransactionDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
 
     var listMonths = new List<SelectListItem>()
                                           {
-                                           //new SelectListItem {Text = "Select Month",   Value = "0"},
                                            new SelectListItem {Text = "January",   Value = "1"},
                                            new SelectListItem {Text = "February", Value = "2"},
                                            new SelectListItem {Text = "March", Value = "3"},
@@ -56,21 +54,16 @@
                                         <span class="pull-right">Country</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @*@Html.DropDownListFor(x => x.CountryName, new { @class = "form-control" })*@
                                         @Html.DropDownListFor(x => x.Country,
                              new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
                              "Select Country", new { @class = "form-control", onchange = "CountryChange(this);",@disabled=true })
                                     </div>
-
-
                                     <label class="col-md-1 control-label">
                                         <span class="pull-right">Year</span>
                                     </label>
                                     <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Year ", new { @class = "form-control", @disabled = true })
-                                        @*@Html.DropDownListFor(x => x.Year,)*@
                                     </div>
-
                                     <label class="col-md-1 control-label">
                                         <span class="pull-right">Month</span>
                                     </label>
@@ -103,34 +96,27 @@
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.RentalAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                             </div>
-
                             <div class="row">
-
                                 <label class="col-md-2 control-label">
                                     <span class="pull-right">Telephone Expenses</span>
                                 </label>
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.TelephoneexpAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                                 <label class="col-md-2 control-label">
                                     <span class="pull-right">Courier Charges</span>
                                 </label>
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.CourierchargesAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Insurance</span>
                                 </label>
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.InsuranceAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                             </div>
-
                             <div class="row">
                                 <label class="col-md-2 control-label">
                                     <span class="pull-right">Utility</span>
@@ -138,23 +124,19 @@
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.UtilityAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                                 <label class="col-md-2 control-label">
                                     <span class="pull-right">Marketingexp</span>
                                 </label>
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.MarketingexpAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Depreciation</span>
                                 </label>
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.DepreciationAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                             </div>
-
                             <hr />
                             <div class="row col-md-offset-1">
                                 <h4>Other Expenses</h4>
@@ -172,9 +154,7 @@
                                 <div class="col-md-2">
                                     @Html.TextBoxFor(x => x.RepairmaintenanceAmount, "{0:#.#}", new { @class = "form-control numCss" })
                                 </div>
-
                             </div>
-
                             <div class="row">
                                 <label class="col-md-2 control-label">
                                     <span class="pull-right">Bankcharges </span>
@@ -214,12 +194,10 @@
                             </div>
                         </div>
                         <hr />
-
                     </div>
                 </div>
             </div>
         </div>
-
     }
 </div>
 @section SectionScripts{

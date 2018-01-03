@@ -85,6 +85,10 @@
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="Year" Type="int" />
           <Property Name="Month" Type="smallint" />
+          <Property Name="TrainerClaimsAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerClaimsLocalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerClaimsReferenceDoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="TrainerClaimsRemarks" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="OperationalTransaction">
           <Key>
@@ -502,6 +506,10 @@
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="Year" Type="Int32" />
           <Property Name="Month" Type="Int16" />
+          <Property Name="TrainerClaimsAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerClaimsLocalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TrainerClaimsReferenceDoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerClaimsRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -717,6 +725,10 @@
           <EntitySetMapping Name="FinancialTransactions">
             <EntityTypeMapping TypeName="DB_9F30C5_edudevModel.FinancialTransaction">
               <MappingFragment StoreEntitySet="FinancialTransaction">
+                <ScalarProperty Name="TrainerClaimsRemarks" ColumnName="TrainerClaimsRemarks" />
+                <ScalarProperty Name="TrainerClaimsReferenceDoc" ColumnName="TrainerClaimsReferenceDoc" />
+                <ScalarProperty Name="TrainerClaimsLocalAmount" ColumnName="TrainerClaimsLocalAmount" />
+                <ScalarProperty Name="TrainerClaimsAmount" ColumnName="TrainerClaimsAmount" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />

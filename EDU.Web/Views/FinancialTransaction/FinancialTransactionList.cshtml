@@ -9,16 +9,29 @@
 @{
     var grid = new WebGrid(Model, rowsPerPage: 15);
     grid.Pager(WebGridPagerModes.All);
+
+
+    var ftCount = Model.Count();
+    var myArray = (List<decimal?>)ViewData["Summary"];
 }
 @functions {
     public string CheckString(string remarks)
     {
         return remarks.Replace(System.Environment.NewLine, "<br/>");
     }
+
     public string ConvertToInt64(decimal? data)
     {
         if (data != null)
             return Convert.ToInt64(data.Value).ToString();
+        else
+            return null;
+    }
+
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data != 0)
+            return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
         else
             return null;
     }
@@ -114,335 +127,88 @@
                                         grid.Column("TrainingConfirmationID", "Event ID",
                                         format:
                                         @<text>
-                                            <div style='width:140px;'>
+                                            <div style='width:100px;'>
                                                 <span>@item.TrainingConfirmationID</span>
                                             </div>
-                                        </text>, canSort: false),
+                                        </text>, canSort: true),
                                             grid.Column("CountryName", "Country Name",
                                         format:
                                         @<text>
                                             <div style='width:85px;'>
                                                 <span>@item.CountryName</span>
                                             </div>
-                                        </text>, canSort: false),
-                                                grid.Column("TotalRevenueAmount", "Revenue Amount", format:
+                                        </text>, canSort: true),
+                                                grid.Column("TotalRevenueAmount", "Rev Amount", format:
                                                 @<text>
                                                     <div style='width:100px;'>
-                                                        @if (item.TotalRevenueAmount != null)
-                                                        {
-                                                            <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.TotalRevenueAmount)
-                                                            </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.TotalRevenueAmount)
-                                                            </span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false, style: "center"),
-                                                grid.Column("TotalRevenueReferenceDoc", "Revenue Reference Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:170px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
+                                                            @ConvertToInt64dollar(item.TotalRevenueAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
-                                                grid.Column("TotalRevenueRemarks", "Revenue Remarks",
-                                                format:
+                                                </text>, canSort: true, style: "center"),
+
+                                                grid.Column("TrainerExpensesAmount", " Trainer Fee Amt.", format:
+                                                @<text>
+                                                    <div style='width:100px;'>
+                                                        <span class="center">
+                                                            @ConvertToInt64dollar(item.TrainerExpensesAmount)
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true, style: "center"),
+                                                   grid.Column("TrainerTravelExpensesAmount", "Trainer Airfare Amt.", format:
                                                 @<text>
                                                     <div style='width:110px;'>
-                                                        @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TotalRevenueRemarks)" data-original-title="" title="">@item.TotalRevenueRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.TotalRevenueRemarks</span>
-                                                        }
+                                                        <span class="center">
+                                                            @ConvertToInt64dollar(item.TrainerTravelExpensesAmount)
+                                                        </span>
                                                     </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: true, style: "center"),
 
-                                                grid.Column("TrainerExpensesAmount", " Trainer Fee Amount", format:
+                                                grid.Column("LocalExpensesAmount", "Hotel Bookings Amt.", format:
                                                 @<text>
-                                                    <div style='width:150px;'>
-                                                        @if (item.TrainerExpensesAmount != null)
-                                                        {
-                                                            <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.TrainerExpensesAmount)
-                                                            </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.TrainerExpensesAmount)
-                                                            </span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false, style: "center"),
-                                                grid.Column("TrainerExpensesReferenceDoc", "Trainer Expenses Reference Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:190px;'>
+                                                    <div style='width:120px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
+                                                            @ConvertToInt64dollar(item.LocalExpensesAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
-                                                grid.Column("TrainerExpensesRemarks", "Trainer Expenses Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:155px;'>
-                                                        @if (item.TrainerExpensesRemarks != null && item.TrainerExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerExpensesRemarks)" data-original-title="" title="">@item.TrainerExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.TrainerExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false),
-                                                   grid.Column("TrainerTravelExpensesAmount", "Trainer Airfare Amount", format:
-                                                @<text>
-                                                    <div style='width:190px;'>
-                                                        @if (item.TrainerTravelExpensesAmount != null)
-                                                        {
-                                                            <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.TrainerTravelExpensesAmount)
-                                                            </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.TrainerTravelExpensesAmount)
-                                                            </span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false, style: "center"),
-                                                grid.Column("TrainerTravelExpensesReferenceDoc", "Trainer TravelExpenses ReferenceDoc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:220px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),
-                                                grid.Column("TrainerTravelExpensesRemarks", "Trainer TravelExpenses Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:195px;'>
-                                                        @if (item.TrainerTravelExpensesRemarks != null && item.TrainerTravelExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerTravelExpensesRemarks)" data-original-title="" title="">@item.TrainerTravelExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.TrainerTravelExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: true, style: "center"),
 
-                                                grid.Column("LocalExpensesAmount", "Hotel Bookings Amount", format:
+                                                 grid.Column("MiscExpensesAmount", "Trainer Claims Amt.", format:
                                                 @<text>
-                                                    <div style='width:150px;'>
-                                                        @if (item.LocalExpensesAmount != null)
-                                                        {
-                                                            <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.LocalExpensesAmount)
-                                                            </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.LocalExpensesAmount)
-                                                            </span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false, style: "center"),
-                                                grid.Column("LocalExpensesReferenceDoc", "LocalExpenses ReferenceDoc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:170px;'>
+                                                    <div style='width:110px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
+                                                            @ConvertToInt64dollar(item.TrainerClaimsAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
-                                                grid.Column("LocalExpensesRemarks", "LocalExpenses Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:140px;'>
-                                                        @if (item.LocalExpensesRemarks != null && item.LocalExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.LocalExpensesRemarks)" data-original-title="" title="">@item.LocalExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.LocalExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false),
+                                                </text>, canSort: true, style: "center"),
 
-                                                 grid.Column("MiscExpensesAmount", "Trainer Claims Amount", format:
+                                                 grid.Column("MiscExpensesAmount", "Regional exp Amt.", format:
                                                 @<text>
-                                                    <div style='width:140px;'>
-                                                        @if (item.MiscExpensesAmount != null)
-                                                        {
-                                                            <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.MiscExpensesAmount)
-                                                            </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.MiscExpensesAmount)
-                                                            </span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false, style: "center"),
-                                                grid.Column("MiscExpensesReferenceDoc", "Trainer Claims ReferenceDoc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:170px;'>
+                                                    <div style='width:110px;'>
                                                         <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                                            @ConvertToInt64dollar(item.MiscExpensesAmount)
                                                         </span>
                                                     </div>
-                                                </text>, canSort: false),
-                                                grid.Column("MiscExpensesRemarks", "Trainer Claims Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:140px;'>
-                                                        @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.MiscExpensesRemarks)" data-original-title="" title="">@item.MiscExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.MiscExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false),
-
-                                                 grid.Column("MiscExpensesAmount", "Regional expneses Amount", format:
-                                                @<text>
-                                                    <div style='width:140px;'>
-                                                        @if (item.MiscExpensesAmount != null)
-                                                        {
-                                                            <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.MiscExpensesAmount)
-                                                            </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.MiscExpensesAmount)
-                                                            </span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false, style: "center"),
-                                                grid.Column("MiscExpensesReferenceDoc", "Regional expneses ReferenceDoc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:170px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),
-                                                grid.Column("MiscExpensesRemarks", "Regional expneses Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:140px;'>
-                                                        @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.MiscExpensesRemarks)" data-original-title="" title="">@item.MiscExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.MiscExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false),
-                                             grid.Column("CoursewareMaterialAmount", " Courseware Material Amount", format:
+                                                </text>, canSort: true, style: "center"),
+                                             grid.Column("CoursewareMaterialAmount", " Courseware Material Amt.", format:
                                             @<text>
-                                                <div style='width:170px;'>
-                                                    @if (item.CoursewareMaterialAmount != null)
-                                                    {
-                                                        <span class="center">
-                                                            $&nbsp;@ConvertToInt64(item.CoursewareMaterialAmount)
-                                                        </span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="center">
-                                                            @ConvertToInt64(item.CoursewareMaterialAmount)
-                                                        </span>
-                                                    }
+                                                <div style='width:150px;'>
+                                                    <span class="center">
+                                                        @ConvertToInt64dollar(item.CoursewareMaterialAmount)
+                                                    </span>
                                                 </div>
-                                            </text>, canSort: false, style: "center"),
-                                                grid.Column("CoursewareMaterialReferenceDoc", "Courseware Material ReferenceDoc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:210px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: false),
-                                                grid.Column("CoursewareMaterialRemarks", "Courseware Material Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:175px;'>
-                                                        @if (item.CoursewareMaterialRemarks != null && item.CoursewareMaterialRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.CoursewareMaterialRemarks)" data-original-title="" title="">@item.CoursewareMaterialRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.CoursewareMaterialRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: false),
+                                            </text>, canSort: true, style: "center"),
 
                                             grid.Column("GrossProfit", "Gross Profit",
                                                 format:
                                                 @<text>
-                                                    <div style='width:140px;'>
-                                                        @if (item.GrossProfit != null)
-                                                        {
-                                                            <span class="center">
-                                                                $&nbsp;@ConvertToInt64(item.GrossProfit)
-                                                            </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.GrossProfit)
-                                                            </span>
-                                                        }
+                                                    <div style='width:100px;'>
+                                                        <span class="center">
+                                                            @ConvertToInt64dollar(item.GrossProfit)
+                                                        </span>
                                                     </div>
 
-                                                </text>, canSort: false),
+                                                </text>, canSort: true, style: "center"),
                                             grid.Column("ProfitAndLossPercent", "Profit And Loss Percent",
                                                 format:
                                                 @<text>
@@ -460,10 +226,184 @@
                                                             </span>
                                                         }
                                                     </div>
+                                                </text>, canSort: true, style: "center"),
 
-                                                </text>, canSort: false)
+                                                grid.Column("TotalRevenueReferenceDoc", "Rev Ref Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:170px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("TotalRevenueRemarks", "Rev Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:110px;'>
+                                                        @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TotalRevenueRemarks)" data-original-title="" title="">@item.TotalRevenueRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TotalRevenueRemarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("TrainerExpensesReferenceDoc", "Trainer Exp Ref Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:190px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("TrainerExpensesRemarks", "Trainer Exp Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:155px;'>
+                                                        @if (item.TrainerExpensesRemarks != null && item.TrainerExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerExpensesRemarks)" data-original-title="" title="">@item.TrainerExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TrainerExpensesRemarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("TrainerTravelExpensesReferenceDoc", "Trainer Airfare Ref Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:220px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("TrainerTravelExpensesRemarks", "Trainer Airfare Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:195px;'>
+                                                        @if (item.TrainerTravelExpensesRemarks != null && item.TrainerTravelExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerTravelExpensesRemarks)" data-original-title="" title="">@item.TrainerTravelExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TrainerTravelExpensesRemarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("LocalExpensesReferenceDoc", "Hotel Bookings Ref Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:170px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("LocalExpensesRemarks", "Hotel Bookings Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:140px;'>
+                                                        @if (item.LocalExpensesRemarks != null && item.LocalExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.LocalExpensesRemarks)" data-original-title="" title="">@item.LocalExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.LocalExpensesRemarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("TrainerClaimsReferenceDoc", "Trainer Claims Ref Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:170px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerClaims/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("MiscExpensesRemarks", "Trainer Claims Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:140px;'>
+                                                        @if (item.TrainerClaimsRemarks != null && item.TrainerClaimsRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerClaimsRemarks)" data-original-title="" title="">@item.TrainerClaimsRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TrainerClaimsRemarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("MiscExpensesReferenceDoc", "Regional exp Ref Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:170px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("MiscExpensesRemarks", "Regional exp Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:140px;'>
+                                                        @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.MiscExpensesRemarks)" data-original-title="" title="">@item.MiscExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.MiscExpensesRemarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("CoursewareMaterialReferenceDoc", "Courseware Material Ref Doc",
+                                                format:
+                                                @<text>
+                                                    <div style='width:210px;'>
+                                                        <span class="center">
+                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
+                                                        </span>
+                                                    </div>
+                                                </text>, canSort: true),
+                                                grid.Column("CoursewareMaterialRemarks", "Courseware Material Remarks",
+                                                format:
+                                                @<text>
+                                                    <div style='width:175px;'>
+                                                        @if (item.CoursewareMaterialRemarks != null && item.CoursewareMaterialRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.CoursewareMaterialRemarks)" data-original-title="" title="">@item.CoursewareMaterialRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.CoursewareMaterialRemarks</span>
+                                                        }
+                                                    </div>
+                                                </text>, canSort: true)
                                                      ))
-
                                 </div>
                             </div>
                             <div class="col-sm-12 css10">
@@ -488,13 +428,21 @@
                     $actualRow.css('background-color', '#b3f7da');
                 }
 
-            });  
+            });
+
+            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            @if (ftCount > 0)
+        {
+            <text>
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td></td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[7])</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+            </text>
+            }
         });
 
         function ChangeMonth() {
             window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
-        
+
 
         function SaveFinancialTransaction() {
             if ($('#frmFinancial').valid()) {
@@ -521,8 +469,8 @@
                 'Amount': {
                     required: true,
                 },
-                'financialTransaction.TrainingConfirmationID':{
-                    required:true
+                'financialTransaction.TrainingConfirmationID': {
+                    required: true
                 }
             }
         });
