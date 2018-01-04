@@ -352,6 +352,20 @@
             $('#TotalNoOfDays').removeAttr('disabled');
             $('#TrianerId').removeAttr('disabled');
         }
+
+        function CourseNameIsLabRental() {
+            var coursetext = $("#Course").find("option:selected").text();
+            if (coursetext.toLowerCase().indexOf("rental") != -1) {
+                $('#rdoPrivate').prop('checked', true)
+                $('#rdoPublic').prop('checked', false);
+                $('#rdoLvc').prop('checked', false)
+            }
+            else
+            {
+                $('#rdoPublic').prop('checked', true);
+            }
+
+        }
     </script>
 
 }
