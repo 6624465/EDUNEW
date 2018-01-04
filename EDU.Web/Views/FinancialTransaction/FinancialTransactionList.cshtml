@@ -40,7 +40,7 @@
 @{
     var listMonths = new List<SelectListItem>()
                                           {
-                                          // new SelectListItem {Text = "Select Month",   Value = "0"},
+                                           new SelectListItem {Text = "All",   Value = "0"},
                                            new SelectListItem {Text = "January",   Value = "1"},
                                            new SelectListItem {Text = "February", Value = "2"},
                                            new SelectListItem {Text = "March", Value = "3"},
@@ -209,7 +209,7 @@
                                                     </div>
 
                                                 </text>, canSort: true, style: "center"),
-                                            grid.Column("ProfitAndLossPercent", "Profit And Loss Percent",
+                                            grid.Column("ProfitAndLossPercent", "P&L Percent",
                                                 format:
                                                 @<text>
                                                     <div style='width:140px;'>

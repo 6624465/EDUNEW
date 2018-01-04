@@ -23,9 +23,12 @@ namespace EDU.Web.Controllers
         {
             try
             {
-
                 List<FinancialTransactionsVM> financialTransactionList = new List<FinancialTransactionsVM>();
-                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+                List<TrainingConfirmation> trainingConfirmationList = new List<TrainingConfirmation>();
+                if (month == 0)
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year).ToList();
+                else
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 

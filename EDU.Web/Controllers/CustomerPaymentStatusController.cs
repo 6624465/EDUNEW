@@ -21,11 +21,16 @@ namespace EDU.Web.Controllers
             try
             {
                 CustomerPaymentStatusVM result = new CustomerPaymentStatusVM();
-                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+                List<TrainingConfirmation> trainingConfirmationList = new List<TrainingConfirmation>();
+
+                if (month == 0)
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year).ToList();
+                else
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 
-                List<Registration> registrations = dbContext.Registrations.Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount > 0).ToList();
+                List<Registration> registrations = dbContext.Registrations.Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount >= 1).ToList();
 
 
                 List<int> reglist = registrations.Select(x => x.RegistrationId).ToList();
@@ -33,7 +38,7 @@ namespace EDU.Web.Controllers
                 var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
 
                 List<CustomerPaymentVM> customerPaymentVM = dbContext.CustomerPayments
-                    .Where(x => x.IsActive == true && reglist.Contains(x.RegistrationId) && x.BalanceAmount > 0)
+                    .Where(x => x.IsActive == true && reglist.Contains(x.RegistrationId) && x.BalanceAmount >= 1)
                     .Select(x => new CustomerPaymentVM
                     {
                         CustomerPaymentId = x.CustomerPaymentId,

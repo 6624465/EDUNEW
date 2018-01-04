@@ -20,7 +20,14 @@ namespace EDU.Web.Controllers
             try
             {
                 VendorPaymentStatusVM result = new VendorPaymentStatusVM();
-                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+
+                List<TrainingConfirmation> trainingConfirmationList = new List<TrainingConfirmation>();
+
+                if (month == 0)
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year).ToList();
+                else
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+                
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 
                 List<Registration> registrations = dbContext.Registrations.Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount > 0).ToList();
