@@ -62,10 +62,19 @@ namespace EDU.Web.Controllers
                         TrianerName = dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault() == null ? "" : dbContext.TrainerInformations.Where(t => t.TrianerId == tcdtl.TrianerId).FirstOrDefault().TrainerName
                     };
 
-                    for (int i = 0; i < tcdtl.NoOfStudents; i++)
+                    var rowsLength = tcdtl.NoOfStudents;
+                    if (!string.IsNullOrWhiteSpace(tcd.CourseName) && tcd.CourseName.ToUpper().Contains("RENTAL"))
                     {
-                        if (List.Count() != tcdtl.NoOfStudents)
+                        rowsLength = 1;
+                        if (List.Count() == 0)
                             List.Add(new Registration { RegistrationId = -1, TrainingConfirmationID = tcdtl.TrainingConfirmationID });
+                    }
+                    else {
+                        for (int i = 0; i < rowsLength; i++)
+                        {
+                            if (List.Count() != tcdtl.NoOfStudents)
+                                List.Add(new Registration { RegistrationId = -1, TrainingConfirmationID = tcdtl.TrainingConfirmationID });
+                        }
                     }
                 }
 
