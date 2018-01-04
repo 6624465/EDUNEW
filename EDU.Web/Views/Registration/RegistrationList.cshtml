@@ -470,10 +470,10 @@
                                                             </div>
                                                         </td>
                                                         <td style="min-width:100px;">
-                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].TotalAmount, new { @class = "form-control input-sm", @readonly = true, @Value = Convert.ToInt64(Model.registrationPrivate[i].TotalAmount) })
                                                         </td>
                                                         <td style="min-width:100px;">
-                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].BalanceAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
+                                                            @Html.TextBoxFor(x => x.registrationPrivate[i].BalanceAmount, new { @class = "form-control input-sm", @readonly = true, @Value = Convert.ToInt64(Model.registrationPrivate[i].BalanceAmount) })
                                                         </td>
                                                     </tr>
                                                 }
