@@ -11,11 +11,11 @@
     public string ConvertToInt64dollar(decimal? data)
     {
         if (data != null && data > 0)
-            return new HtmlString("$ "+Convert.ToInt64(data.Value)).ToString();
+            return new HtmlString("$ " + Convert.ToInt64(data.Value)).ToString();
         else
             return "N/A";
     }
-        }
+}
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -23,11 +23,10 @@
                 <div class="box-header">
                     <h4>Course List</h4>
                     <div class="box-tools">
-                        @if(Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                         {
-                            <button type = "button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddCourse()"><i class="fa fa-plus"></i>Add New Course</button>
-        // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
-    }
+                            <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddCourse()"><i class="fa fa-plus"></i>Add New Course</button>
+                        }
                     </div>
                 </div>
                 <div class="box-body">
@@ -57,12 +56,12 @@
                         </div>
                     </text>
                     , canSort: true, style: "center"),
-                    grid.Column("PublicPrice", "Public Price", format: @<text> 
-                         <span class="display-mode">@ConvertToInt64dollar(item.PublicPrice) </span> 
-                        </text>, style: "", canSort: true),
-                    grid.Column("PrivatePrice", "Private Price", format: @<text> 
-                         <span class="display-mode">@ConvertToInt64dollar(item.PrivatePrice) </span>
-                         </text>, style: "", canSort: true)),
+                    grid.Column("PublicPrice", "Public Price", format: @<text>
+                                        <span class="display-mode">@ConvertToInt64dollar(item.PublicPrice) </span>
+                    </text>, style: "", canSort: true),
+                    grid.Column("PrivatePrice", "Private Price", format: @<text>
+                                        <span class="display-mode">@ConvertToInt64dollar(item.PrivatePrice) </span>
+                    </text>, style: "", canSort: true)),
                                 tableStyle: "table")
                     </div>
                     <div class="row">
@@ -76,17 +75,17 @@
     </div>
 </div>
 <style>
-    .center{
-            text-align:center!important
+    .center {
+        text-align: center !important
     }
 </style>
-@using(Html.BeginForm("DeleteEduCourse", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
+@using (Html.BeginForm("DeleteEduCourse", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
 {
-    <input type = "hidden" id="id" name="id" />
+    <input type="hidden" id="id" name="id" />
 }
-@using(Html.BeginForm("SaveCourse", "Master", FormMethod.Post, new { id = "frmCourse", name = "frmCourse", autocomplete = "off" }))
+@using (Html.BeginForm("SaveCourse", "Master", FormMethod.Post, new { id = "frmCourse", name = "frmCourse", autocomplete = "off" }))
 {
-    <div id = "myModal" class="modal fade" role="dialog">
+    <div id="myModal" class="modal fade" role="dialog">
 
     </div>
 }
@@ -155,53 +154,65 @@
 
         function SaveCourse() {
             debugger;
-            var cName = $('#CourseName').val() == null ? '' : $('#CourseName').val();
-            var country = $('#Country').val() == null ? '' : $('#Country').val();
-            var product = $('#Product').val() == null ? '' : $('#Product').val();
+            if ($('#frmCourse').valid()) {
+                $('#CourseName').removeAttr('disabled');
+                $('#Country').removeAttr('disabled');
+                $('#Product').removeAttr('disabled');
+                $('#frmCourse').submit();
+            }
+            //var cName = '';
+            //if ($('#CourseDescription').val() != null && $('#CourseDescription').val() != '') {
+            //    cName = $('#CourseDescription').val();
+            //}
+            //else {
+            //    cName = $('#CourseName').val() == null ? '' : $('#CourseName').val();
+            //}
+            //var country = $('#Country').val() == null ? '' : $('#Country').val();
+            //var product = $('#Product').val() == null ? '' : $('#Product').val();
 
-            if (cName != '' && country != '' && product != '')
-            {
-                if ($('#Id').val() == '-1') {
-                    var promise = ValidateByCourseName();
-                    $.when(promise).done(function(result) {
-                        if (result == "False")
-                        {
-                            if ($('#frmCourse').valid()) {
-                                $('#CourseName').removeAttr('disabled');
-                                $('#Country').removeAttr('disabled');
-                                $('#Product').removeAttr('disabled');
-                                $('#frmCourse').submit();
-                            }
-                        }
-                        else
-                        {
-                            if (result == "True")
-                            {
-                                alert("Course already exists with the combination of country and Product. Please re-enter new course.");
-                                $('#CourseName').val('');
-                                if ($('#frmCourse').valid()) {
-                                    //$('#frmCourse').submit();
-                                }
-                            }
-                        }
-                    });
-                }
-                else {
-                    if ($('#frmCourse').valid()) {
-                        $('#CourseName').removeAttr('disabled');
-                        $('#Country').removeAttr('disabled');
-                        $('#Product').removeAttr('disabled');
-                        $('#frmCourse').submit();
-                    }
-                }
-            }
-            else
-            {
-                if ($('#frmCourse').valid()) {
-                    debugger;
-                    //$('#frmCourse').submit();
-                }
-            }
+            //if (cName != '' && country != '' && product != '')
+            //{
+            //    if ($('#Id').val() == '-1') {
+            //        var promise = ValidateByCourseName();
+            //        $.when(promise).done(function(result) {
+            //            if (result == "False")
+            //            {
+            //                if ($('#frmCourse').valid()) {
+            //                    $('#CourseName').removeAttr('disabled');
+            //                    $('#Country').removeAttr('disabled');
+            //                    $('#Product').removeAttr('disabled');
+            //                    $('#frmCourse').submit();
+            //                }
+            //            }
+            //            else
+            //            {
+            //                if (result == "True")
+            //                {
+            //                    alert("Course already exists with the combination of country and Product. Please re-enter new course.");
+            //                    $('#CourseName').val('');
+            //                    if ($('#frmCourse').valid()) {
+            //                        //$('#frmCourse').submit();
+            //                    }
+            //                }
+            //            }
+            //        });
+            //    }
+            //    else {
+            //        if ($('#frmCourse').valid()) {
+            //            $('#CourseName').removeAttr('disabled');
+            //            $('#Country').removeAttr('disabled');
+            //            $('#Product').removeAttr('disabled');
+            //            $('#frmCourse').submit();
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if ($('#frmCourse').valid()) {
+            //        debugger;
+            //        //$('#frmCourse').submit();
+            //    }
+            //}
         };
         $('#frmCourse').validate({
             rules:
@@ -273,10 +284,64 @@
             }
         };
 
+        function CountryChange(el) {
+            $('#Product').val('');
+            $('#CourseName').empty();
+            $('#CourseName').append($('<option></option>').val('').html(''));
+        }
+
+        function ProductChange(el) {
+            if (el.value) {
+                $.ajax({
+                    url: '@Url.Content("~/Master/GetCoursesByProductCoutry?Id=")' + el.value + '&country=' + $('#Country').val(),
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        debugger;
+                        $('#CourseName').empty();
+                        $('#CourseName').append($('<option></option>').val('').html(''));
+                        $('#NoOfDays').val('');
+                        $.each(data, function (key, value) {
+                            $('#CourseName').append($('<option></option>').val(value.Id).html(value.CourseName));
+                        });
+                        $('#CourseName').removeAttr('disabled');
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            }
+            else {
+                $('#CourseName').empty();
+                $('#CourseName').attr('disabled', 'disabled');
+                $('#CourseName').append($('<option></option>').val('').html(''));
+                $('#NoOfDays').val('');
+            }
+        }
+
+        function CourseChangeWrapper(val) {
+            if (val) {
+                $.ajax({
+                    url: '@Url.Content("~/Master/GetCourse?Id=")' + val,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        $('#NoOfDays').val(data.NoOfDays);
+                    },
+                    error: function (err) {
+                    }
+                });
+            }
+            else
+                $('#NoOfDays').val('');
+        }
+
+        function CourseChange(el) {
+            debugger;
+            CourseChangeWrapper(el.value);
+        }
 
         function ValidateCourseName(isBlur) {
-
-
             var promise = ValidateByCourseName();
             $.when(promise).done(function(result) {
                 if (isBlur)

@@ -96,16 +96,20 @@ namespace EDU.Web.Controllers
         {
             ViewData["ProductData"] = new EduProductBO().GetList();
             ViewData["CountryData"] = new BranchBO().GetList();
+
+            Course course = new Course();
             if (!Id.HasValue)
             {
                 ViewBag.Title = "New Course";
-                return PartialView(new Course { Id = -1, IsActive = true });
+                course = new Course { Id = -1, IsActive = true };
             }
             else
             {
                 ViewBag.Title = "Update Course";
-                return PartialView(new CourseBO().GetCourse(new Course { Id = Id.Value }));
+                course = new CourseBO().GetCourse(new Course { Id = Id.Value });
+                ViewData["CourseData"] = new CourseBO().GetCoursesByProductCoutry(course.Product, course.Country).AsEnumerable();
             }
+            return PartialView(course);
         }
 
         [HttpGet]
@@ -117,7 +121,18 @@ namespace EDU.Web.Controllers
         [HttpPost]
         public RedirectToRouteResult SaveCourse(Course course)
         {
-            course.CourseDescription = course.CourseName;
+            if (course.CourseDescription != null && course.CourseDescription != "")
+            {
+                course.CourseName = course.CourseDescription;
+            }
+            else
+            {
+                Course courseDtl = new CourseBO().GetCourse(new Course { Id = Convert.ToInt32(course.CourseName) });
+                course.CourseName = courseDtl.CourseName;
+                course.CourseDescription = course.CourseName;
+            }
+
+
             course.CreatedBy = USER_ID;
             course.CreatedOn = UTILITY.SINGAPORETIME;
             course.ModifiedBy = USER_ID;
@@ -150,7 +165,7 @@ namespace EDU.Web.Controllers
         public ViewResult CourseSalesMasterList(short month, int year)
         {
             var list = new CourseSalesMasterBO().GetList();
-            if (month==0)
+            if (month == 0)
                 list = list.Where(x => x.Year == year).ToList();
             else
                 list = list.Where(x => x.Year == year && x.Month == month).ToList();
@@ -166,7 +181,7 @@ namespace EDU.Web.Controllers
 
             ViewData["totalleadsonhand"] = totalleadsonhand;
             ViewData["totalrevenue"] = totalrevenue;
-            
+
             ViewData["ProductList"] = new EduProductBO().GetList().OrderBy(x => x.Id).ToList();
             return View("CourseSalesMasterList", list.AsEnumerable());
         }
@@ -188,7 +203,7 @@ namespace EDU.Web.Controllers
                 courseSalesMaster = new CourseSalesMaster
                 {
                     Id = Id,
-                    Year=year                    
+                    Year = year
                     //StartDate = UTILITY.SINGAPORETIME,
                     //EndDate = UTILITY.SINGAPORETIME,
                     //RegClosingDate = UTILITY.SINGAPORETIME.AddDays(-14)
