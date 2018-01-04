@@ -47,13 +47,13 @@
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Month</span>
                                 </label>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Year</span>
                                 </label>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                                 </div>
                               
