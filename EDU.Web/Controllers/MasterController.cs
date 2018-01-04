@@ -147,9 +147,14 @@ namespace EDU.Web.Controllers
 
         #region Course Sales Master
         [HttpGet]
-        public ViewResult CourseSalesMasterList()
+        public ViewResult CourseSalesMasterList(short month, int year)
         {
             var list = new CourseSalesMasterBO().GetList();
+            if (month==0)
+                list = list.Where(x => x.Year == year).ToList();
+            else
+                list = list.Where(x => x.Year == year && x.Month == month).ToList();
+
             var totalleadsonhand = 0;
             long totalrevenue = 0;
 
@@ -161,14 +166,13 @@ namespace EDU.Web.Controllers
 
             ViewData["totalleadsonhand"] = totalleadsonhand;
             ViewData["totalrevenue"] = totalrevenue;
-
-            var prodList = new EduProductBO().GetList().OrderBy(x => x.Id).ToList();
-            ViewData["ProductList"] = prodList;
+            
+            ViewData["ProductList"] = new EduProductBO().GetList().OrderBy(x => x.Id).ToList();
             return View("CourseSalesMasterList", list.AsEnumerable());
         }
 
         [HttpGet]
-        public ViewResult CourseSalesMaster(int Id)
+        public ViewResult CourseSalesMaster(int Id, short month, int year)
         {
             CourseSalesMaster courseSalesMaster = null;
             var courseSalesMasterVm = new CourseSalesMasterVm
@@ -183,7 +187,8 @@ namespace EDU.Web.Controllers
             {
                 courseSalesMaster = new CourseSalesMaster
                 {
-                    Id = Id
+                    Id = Id,
+                    Year=year                    
                     //StartDate = UTILITY.SINGAPORETIME,
                     //EndDate = UTILITY.SINGAPORETIME,
                     //RegClosingDate = UTILITY.SINGAPORETIME.AddDays(-14)
@@ -193,6 +198,7 @@ namespace EDU.Web.Controllers
             {
                 courseSalesMaster = new CourseSalesMasterBO()
                                             .GetCourseSalesMaster(new CourseSalesMaster { Id = Id });
+                courseSalesMaster.Year = year;
 
                 courseSalesMasterVm.courseList = new CourseBO()
                                                     .GetCoursesByProductCoutry(courseSalesMaster.Product, courseSalesMaster.Country)
@@ -200,11 +206,12 @@ namespace EDU.Web.Controllers
             }
 
             courseSalesMasterVm.courseSalesMaster = courseSalesMaster;
+            ViewData["month"] = month;
             return View("CourseSalesMaster", courseSalesMasterVm);
         }
 
         [HttpPost]
-        public RedirectToRouteResult CoureSalesMaster(CourseSalesMaster courseSalesMaster)
+        public RedirectToRouteResult CoureSalesMaster(CourseSalesMaster courseSalesMaster, int mnth)
         {
             courseSalesMaster.IsActive = true;
             courseSalesMaster.CreatedBy = USER_ID;
@@ -214,16 +221,16 @@ namespace EDU.Web.Controllers
             courseSalesMaster.ConfirmOrDropDate = UTILITY.SINGAPORETIME;
 
             courseSalesMaster.Id = new CourseSalesMasterBO().SaveCourseSalesMaster(courseSalesMaster);
-            return RedirectToAction("CourseSalesMasterList");
+            return RedirectToAction("CourseSalesMasterList", new { month = mnth, year = courseSalesMaster.Year });
         }
 
 
         [HttpPost]
-        public ActionResult DeleteCourseSalesMaster(int? Id)
+        public ActionResult DeleteCourseSalesMaster(int? Id, short month, int year)
         {
             var result = new CourseSalesMasterBO().DeleteCourseSalesMaster(new CourseSalesMaster { Id = Id.Value });
 
-            var list = new CourseSalesMasterBO().GetList();
+            var list = new CourseSalesMasterBO().GetList().Where(x => x.Year == year && x.Month == month);
             var totalleadsonhand = 0;
             long totalrevenue = 0;
 
@@ -236,6 +243,7 @@ namespace EDU.Web.Controllers
             ViewData["totalleadsonhand"] = totalleadsonhand;
             ViewData["totalrevenue"] = totalrevenue;
 
+            ViewData["ProductList"] = new EduProductBO().GetList().OrderBy(x => x.Id).ToList(); ;
             return View("CourseSalesMasterList", list.AsEnumerable());
         }
         #endregion

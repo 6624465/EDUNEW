@@ -2,12 +2,12 @@
 @{
     ViewBag.Title = "CourseSalesMaster";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var mnth = Convert.ToInt16(ViewData["month"]);
 }
 @{
 
     var listMonths = new List<SelectListItem>()
                                           {
-                                           //new SelectListItem {Text = "Select Month",   Value = "0"},
                                            new SelectListItem {Text = "January",   Value = "1"},
                                            new SelectListItem {Text = "February", Value = "2"},
                                            new SelectListItem {Text = "March", Value = "3"},
@@ -28,6 +28,8 @@
     @using (Html.BeginForm("CoureSalesMaster", "Master", FormMethod.Post, new { id = "frmCourseDetail", name = "frmCourseDetail", autocomplete = "off" }))
     {
         @Html.HiddenFor(x => x.courseSalesMaster.Id)
+        @Html.HiddenFor(x => x.courseSalesMaster.Year)
+        <input type="hidden" id="mnth" name="mnth" />
         <div class="page-wrap">
             <div class="row">
                 <div class="col-md-12">
@@ -284,7 +286,7 @@
                                 <div class="col-md-12">
                                     <div class="text-center">
                                         <button type="button" onclick="SaveCourseSalesMaster()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Master/CourseSalesMasterList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-default btn-sm" type="button" onclick="navigateToList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -301,6 +303,7 @@
     <script type="text/javascript">
         $(function () {
             $('#liRegionalLeads').addClass('active');
+            $('#mnth').val(@mnth);
         });
         $(function () {
             $('#StartDt, #RegClosingDt').datetimepicker({
@@ -372,6 +375,12 @@
                 //$('#EndDt').data("DateTimePicker").minDate(e.date);
             });
         });
+
+        function navigateToList() {
+            var month = $('#Month').val();
+            var year = $('#Year').val();
+            location.href = '@Url.Content("~/Master/CourseSalesMasterList?month=")' + month + '&year=' + year;
+        }
 
     function ConfirmAttrCoursesalesmaster() {
             $('#courseSalesMaster_Country').attr('disabled', 'disabled');
@@ -455,6 +464,7 @@
                 $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
                 $('#courseSalesMaster_Month').removeAttr('disabled');
                 SaveRemoveatrr();
+                
                 $('#frmCourseDetail').submit();
             }
         }

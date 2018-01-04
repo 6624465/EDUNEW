@@ -10,7 +10,7 @@
     var totalrevenue = 0;
 
     var totalRevenueArray = new List<Decimal>();
-        
+
 }
 @functions {
     public string GetMonthById(int id)
@@ -34,6 +34,24 @@
             return null;
     }
 
+}
+@{
+    var listMonths = new List<SelectListItem>()
+                                          {
+                                           new SelectListItem {Text = "All",   Value = "0"},
+                                           new SelectListItem {Text = "January",   Value = "1"},
+                                           new SelectListItem {Text = "February", Value = "2"},
+                                           new SelectListItem {Text = "March", Value = "3"},
+                                           new SelectListItem {Text = "April",   Value = "4"},
+                                           new SelectListItem {Text = "May", Value = "5"},
+                                           new SelectListItem {Text = "June", Value = "6"},
+                                           new SelectListItem {Text = "July",   Value = "7"},
+                                           new SelectListItem {Text = "August", Value = "8"},
+                                           new SelectListItem {Text = "September", Value = "9"},
+                                           new SelectListItem {Text = "October",   Value = "10"},
+                                           new SelectListItem {Text = "November", Value = "11"},
+                                           new SelectListItem {Text = "December", Value = "12"}
+                                       };
 }
 <style>
     .bordertop {
@@ -81,17 +99,33 @@
                         }
                     </div>
                 </div>
-
                 <div class="box-body">
                     <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-1">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                            </div>
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Month</span>
+                            </label>
+                            <div class="col-md-1">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row css25">
                         <div class="col-md-12">
                             <div class="clearfix tabs-linearrow">
                                 <ul class="nav nav-tabs">
                                     @for (int i = 0; i < ProductData.Count(); i++)
                                     {
-                                        <li id="li_@i"><a href="#div_@i" data-toggle="tab">@ProductData[i].ProductName</a></li>
+                                        <li id="li_@i"><a href="#div_@i" data-toggle="tab" style="color:orangered">@ProductData[i].ProductName</a></li>
                                     }
                                 </ul>
+                                <hr />
                                 <div class="tab-content">
                                     @for (int j = 0; j < ProductData.Count(); j++)
                                     {
@@ -124,7 +158,7 @@
                                                                                 <div style='width:80px;'>
                                                                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
                                                                                     {
-                                                                                        <button class="btn btn-xs btn-success waves-effect" onclick="location.href = '@Url.Content("~/Master/CourseSalesMaster?Id=" + item.Id)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                                        <button class="btn btn-xs btn-success waves-effect" onclick="navigateToDetail(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                                                         <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                                                     }
                                                                                     @if (item.IsConfirm == true)
@@ -206,7 +240,7 @@
                                                                                      format:
                                                                                     @<text>
                                                                                         @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
-                                                                            {
+                                                                                        {
                                                                                             <span>@item.Registered</span>
                                                                                         }
                                                                                         else
@@ -241,7 +275,7 @@
                                                                                             @ConvertToInt64dollar(item.Revenue)
                                                                                         </span>
                                                                                     </div>
-                                                                                </text>)),
+                                                                                </text>,style: "center")),
                                                                          tableStyle: "table tblCss", htmlAttributes: new { id = tblId })
                                                         </div>
                                                     </div>
@@ -271,6 +305,8 @@
 @using (Html.BeginForm("DeleteCourseSalesMaster", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
 {
     <input type="hidden" id="id" name="id" />
+    <input type="hidden" id="month" name="month" />
+    <input type="hidden" id="year" name="year" />
 }
 @section SectionScripts{
     <script type="text/javascript">
@@ -283,10 +319,20 @@
         $(document).ready(function () {
             var tbls = $('.tblCss');
             $.each(tbls, function (index, item) {
-                var totalRevenue = '$ '+$('#hdn_' + index).val();
+                var totalRevenue = '$ ' + $('#hdn_' + index).val();
                 $('#table_' + index + ' tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalRevenue + '</td><td>');
             });
         });
+
+        function navigateToDetail(id) {
+            var month = $('#Month').val();
+            var year = $('#Year').val();
+            location.href = '@Url.Content("~/Master/CourseSalesMaster?id=")'+id+'&month=' + month + '&year=' + year;
+        }
+
+         function ChangeMonth() {
+            window.location = '@Url.Action("CourseSalesMasterList", "Master", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
+        };
 
         function DeleteCourseSalesMaster(Id) {
             swal({
@@ -298,12 +344,14 @@
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
             },
-        function () {
-            $('#id').val(Id);
-            $('#frmDelete').submit();
-            swal("Deleted!", "Your Regional Leads record has been deleted.", "success");
+                function () {
+                    $('#id').val(Id);
+                    $('#month').val($('#Month').val());
+                    $('#year').val($('#Year').val());
+                    $('#frmDelete').submit();
+                    swal("Deleted!", "Your Regional Leads record has been deleted.", "success");
 
-        });
+                });
         }
 
         function mouseleave(el) {
