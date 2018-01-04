@@ -35,6 +35,13 @@
         else
             return null;
     }
+    public string ConvertToInt64Percent(decimal? data)
+    {
+        if (data != null && data != 0)
+            return new HtmlString(Convert.ToInt64(data) + " %" ).ToString();
+        else
+            return null;
+    }
 }
 
 @{
@@ -134,7 +141,7 @@
                                             grid.Column("CountryName", "Country Name",
                                         format:
                                         @<text>
-                                            <div style='width:85px;'>
+                                            <div style='width:100px;'>
                                                 <span>@item.CountryName</span>
                                             </div>
                                         </text>, canSort: true),
@@ -157,7 +164,7 @@
                                                 </text>, canSort: true, style: "center"),
                                                    grid.Column("TrainerTravelExpensesAmount", "Trainer Airfare Amt.", format:
                                                 @<text>
-                                                    <div style='width:110px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             @ConvertToInt64dollar(item.TrainerTravelExpensesAmount)
                                                         </span>
@@ -166,7 +173,7 @@
 
                                                 grid.Column("LocalExpensesAmount", "Hotel Bookings Amt.", format:
                                                 @<text>
-                                                    <div style='width:120px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             @ConvertToInt64dollar(item.LocalExpensesAmount)
                                                         </span>
@@ -175,7 +182,7 @@
 
                                                  grid.Column("TrainerClaimsAmount", "Trainer Claims Amt.", format:
                                                 @<text>
-                                                    <div style='width:110px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             @ConvertToInt64dollar(item.TrainerClaimsAmount)
                                                         </span>
@@ -184,7 +191,7 @@
 
                                                  grid.Column("MiscExpensesAmount", "Regional exp Amt.", format:
                                                 @<text>
-                                                    <div style='width:110px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             @ConvertToInt64dollar(item.MiscExpensesAmount)
                                                         </span>
@@ -192,7 +199,7 @@
                                                 </text>, canSort: true, style: "center"),
                                              grid.Column("CoursewareMaterialAmount", " Courseware Material Amt.", format:
                                             @<text>
-                                                <div style='width:150px;'>
+                                                <div style='width:100px;'>
                                                     <span class="center">
                                                         @ConvertToInt64dollar(item.CoursewareMaterialAmount)
                                                     </span>
@@ -212,26 +219,17 @@
                                             grid.Column("ProfitAndLossPercent", "P&L Percent",
                                                 format:
                                                 @<text>
-                                                    <div style='width:140px;'>
-                                                        @if (item.ProfitAndLossPercent != null)
-                                                        {
+                                                    <div style='width:100px;'>
                                                             <span class="center">
-                                                                @ConvertToInt64(item.ProfitAndLossPercent)&nbsp;%
+                                                                @ConvertToInt64Percent(item.ProfitAndLossPercent)
                                                             </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="center">
-                                                                @ConvertToInt64(item.ProfitAndLossPercent)
-                                                            </span>
-                                                        }
                                                     </div>
                                                 </text>, canSort: true, style: "center"),
 
                                                 grid.Column("TotalRevenueReferenceDoc", "Rev Ref Doc",
                                                 format:
                                                 @<text>
-                                                    <div style='width:170px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
                                                         </span>
@@ -240,7 +238,7 @@
                                                 grid.Column("TotalRevenueRemarks", "Rev Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:110px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -256,7 +254,7 @@
                                                 grid.Column("TrainerExpensesReferenceDoc", "Trainer Exp Ref Doc",
                                                 format:
                                                 @<text>
-                                                    <div style='width:190px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
                                                         </span>
@@ -265,7 +263,7 @@
                                                 grid.Column("TrainerExpensesRemarks", "Trainer Exp Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:155px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.TrainerExpensesRemarks != null && item.TrainerExpensesRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -281,7 +279,7 @@
                                                 grid.Column("TrainerTravelExpensesReferenceDoc", "Trainer Airfare Ref Doc",
                                                 format:
                                                 @<text>
-                                                    <div style='width:220px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
                                                         </span>
@@ -290,7 +288,7 @@
                                                 grid.Column("TrainerTravelExpensesRemarks", "Trainer Airfare Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:195px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.TrainerTravelExpensesRemarks != null && item.TrainerTravelExpensesRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -306,7 +304,7 @@
                                                 grid.Column("LocalExpensesReferenceDoc", "Hotel Bookings Ref Doc",
                                                 format:
                                                 @<text>
-                                                    <div style='width:170px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
                                                         </span>
@@ -315,7 +313,7 @@
                                                 grid.Column("LocalExpensesRemarks", "Hotel Bookings Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:140px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.LocalExpensesRemarks != null && item.LocalExpensesRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -331,7 +329,7 @@
                                                 grid.Column("TrainerClaimsReferenceDoc", "Trainer Claims Ref Doc",
                                                 format:
                                                 @<text>
-                                                    <div style='width:170px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerClaims/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
                                                         </span>
@@ -340,7 +338,7 @@
                                                 grid.Column("MiscExpensesRemarks", "Trainer Claims Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:140px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.TrainerClaimsRemarks != null && item.TrainerClaimsRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -356,7 +354,7 @@
                                                 grid.Column("MiscExpensesReferenceDoc", "Regional exp Ref Doc",
                                                 format:
                                                 @<text>
-                                                    <div style='width:170px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
                                                         </span>
@@ -365,7 +363,7 @@
                                                 grid.Column("MiscExpensesRemarks", "Regional exp Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:140px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -381,7 +379,7 @@
                                                 grid.Column("CoursewareMaterialReferenceDoc", "Courseware Material Ref Doc",
                                                 format:
                                                 @<text>
-                                                    <div style='width:210px;'>
+                                                    <div style='width:100px;'>
                                                         <span class="center">
                                                             <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
                                                         </span>
@@ -390,7 +388,7 @@
                                                 grid.Column("CoursewareMaterialRemarks", "Courseware Material Remarks",
                                                 format:
                                                 @<text>
-                                                    <div style='width:175px;'>
+                                                    <div style='width:100px;'>
                                                         @if (item.CoursewareMaterialRemarks != null && item.CoursewareMaterialRemarks.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -434,7 +432,7 @@
             @if (ftCount > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td></td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[7])</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td></td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[7])</td><td class="center">@ConvertToInt64Percent(myArray[8])</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
             </text>
             }
         });

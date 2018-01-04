@@ -157,6 +157,7 @@ namespace EDU.Web.Controllers
                 long RegionalExp = 0;
                 long coursewareMaterial = 0;
                 long grossProfit = 0;
+                decimal? profitPercent = 0;
 
                 foreach (var item in financialTransactionList)
                 {
@@ -167,8 +168,11 @@ namespace EDU.Web.Controllers
                     trainerClaims += Convert.ToInt64(item.TrainerClaimsAmount == null ? 0 : item.TrainerClaimsAmount.Value);
                     RegionalExp += Convert.ToInt64(item.MiscExpensesAmount == null ? 0 : item.MiscExpensesAmount.Value);
                     coursewareMaterial += Convert.ToInt64(item.CoursewareMaterialAmount == null ? 0 : item.CoursewareMaterialAmount.Value);
-                    grossProfit += Convert.ToInt64(item.GrossProfit == null ? 0 : item.GrossProfit.Value);                   
+                    grossProfit += Convert.ToInt64(item.GrossProfit == null ? 0 : item.GrossProfit.Value);
                 }
+
+                profitPercent = financialTransactionList.Where(x => x.FinancialTransactionId != -1).Average(y => y.ProfitAndLossPercent);
+
 
                 List<decimal?> summary = new List<decimal?>();
                 summary.Add(revenue);
@@ -179,6 +183,7 @@ namespace EDU.Web.Controllers
                 summary.Add(RegionalExp);
                 summary.Add(coursewareMaterial);
                 summary.Add(grossProfit);
+                summary.Add(profitPercent);
                 ViewData["Summary"] = summary;
 
                 return View(financialTransactionList.OrderBy(x => x.TrainingConfirmationID));

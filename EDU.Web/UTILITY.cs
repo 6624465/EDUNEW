@@ -9,7 +9,7 @@ namespace EDU.Web
 {
     public static class UTILITY
     {
-        public static string REPORTSUBFOLDER = WebConfigurationManager.AppSettings["ReportSubFolder"].ToString();
+        //public static string REPORTSUBFOLDER = WebConfigurationManager.AppSettings["ReportPath"].ToString();
         public static string SSN_USER_OBJECT = "SSN_USER";
         public static string SSN_USER_SECURABLES = "SSN_SECURABLES";
 
