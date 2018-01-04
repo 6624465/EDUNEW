@@ -17,7 +17,7 @@
 
     var myArray = (List<decimal?>)ViewData["Summary"];
 
-    var coursename = Model.trainingconfDetail.CourseName;
+    var coursename = Model.trainingconfDetail.CourseName.TrimEnd().ToString();
 }
 <style>
     .centerbox {
@@ -74,6 +74,11 @@
     }
 </style>
 @functions {
+    public string CheckString(string remarks)
+    {
+        return remarks.Replace(System.Environment.NewLine, "<br/>");
+    }
+
     public string GetPaymentType(short id)
     {
         if (id == 1)
@@ -650,7 +655,16 @@
                                         @<text>
                                             <div style='width:200px;'>
                                                 <span class="center">
-                                                    @(item.Email)
+                                                    @if (item.Email != null && item.Email.ToString().Length > 20)
+                                                    {
+                                                        <a style="cursor:pointer;text-decoration:underline;">
+                                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Email)" data-original-title="" title="">@item.Email.ToString().Substring(0, 20)...</span>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@item.Email</span>
+                                                    }
                                                 </span>
                                             </div>
                                         </text>),
