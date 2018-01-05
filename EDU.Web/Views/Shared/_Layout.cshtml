@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="@Url.Content("~/Css/main.min.css")">
     <link href="@Url.Content("~/Css/style.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Css/sitecss.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Scripts/select2.css")" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/jquery-2.2.3.min.js")"></script>
     <style type="text/css">
         .icheckbox_flat {
@@ -356,9 +357,10 @@
     <script src="@Url.Content("~/Scripts/Core/app.js")"></script>
     <script src="@Url.Content("~/Scripts/Core/index.init.js")"></script>
     <script src="@Url.Content("~/Scripts/layout.js")"></script>
+    <script src="@Url.Content("~/Scripts/select2.full.min.js")"></script>
     @RenderSection("SectionScripts", false)
     <script type="text/javascript">
-
+        $("select").select2();
         $(window).load(function () {
             $(".loader").fadeOut("slow");
         });
