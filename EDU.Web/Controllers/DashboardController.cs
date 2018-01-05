@@ -125,7 +125,7 @@ namespace EDU.Web.Dashboard.Controllers
                     }
                 }
 
-                return View(reportListbyYear);
+                return View(reportListbyYear.OrderBy(x=>x.CountryName));
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace EDU.Web.Dashboard.Controllers
 
                 List<OperationalTransactionReportByMonth> reportListbyMonth = new List<OperationalTransactionReportByMonth>();
 
-                var countrylist = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+                var countrylist = new BranchBO().GetList().Where(x => x.IsActive == true).OrderBy(x => x.BranchName).ToList();
 
                 foreach (var item in countrylist)
                 {
@@ -215,6 +215,42 @@ namespace EDU.Web.Dashboard.Controllers
 
             foreach (var item in countrylist)
             {
+                switch (item.BranchName.ToUpper())
+                {
+                    case "BANGLADESH":
+                        item.BranchCode = "BD";
+                        break;
+                    case "CAMBODIA":
+                        item.BranchCode = "KH";
+                        break;
+                    case "INDIA":
+                        item.BranchCode = "IN";
+                        break;
+                    case "LAOS":
+                        item.BranchCode = "LA";
+                        break;
+                    case "MYANMAR":
+                        item.BranchCode = "MM";
+                        break;
+                    case "PAKISTAN":
+                        item.BranchCode = "PK";
+                        break;
+                    case "PHILLIPINES":
+                        item.BranchCode = "PH";
+                        break;
+                    case "SINGAPORE":
+                        item.BranchCode = "SG";
+                        break;
+                    case "SRILANKA":
+                        item.BranchCode = "SL";
+                        break;
+                    case "VIETNAM":
+                        item.BranchCode = "VN";
+                        break;
+                    default:
+                        break;
+                }
+
                 if (RevenueList.Where(x => x.Country == item.BranchID).Count() == 0)
                 {
                     list.Add(new TotalRevenueVM()

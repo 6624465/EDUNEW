@@ -71,6 +71,10 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+    .bordertopnocolor {
+        border-top: 2px solid gray !important;
+        border-bottom: 2px solid gray !important;
+    }
 
     .tablescroll {
         display: block;
@@ -779,7 +783,7 @@
             <text>
             if ('@Model.trainingconfDetail.Private'=='True')
             {
-                $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Payment Details</td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[8])</td><td></td><td></td><td></td></tr>');
+                $('#gridContent tbody').append('<tr class="bordertopnocolor"><td></td><td>Payment Details</td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[8])</td><td></td><td></td><td></td></tr>');
            }
             $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[8])</td><td></td><td></td><td></td></tr>');
             </text>

@@ -14,7 +14,7 @@
         achievedRevenue += item.AchievedRevenue;
         yettoAchieveRevenue += item.YetToAchieveRevenue;
     }
-    if(totalRevenue>0)
+    if (totalRevenue > 0)
     {
         achievedPercent = ((achievedRevenue * 100) / totalRevenue).Value.ToString("#0.00");
         yettoAchievePercent = ((yettoAchieveRevenue * 100) / totalRevenue).Value.ToString("#0.00");
@@ -76,7 +76,7 @@
                                     <div class="col-md-12">
                                         <div class="col-md-2">
                                             <div class="sml">
-                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div4" ></span></h6>
+                                                <h6 style="color:white;padding-top:30%; text-align:center"><span class="div4"></span></h6>
                                                 <h5 style="color:white; text-align:center"><span id="achieved4"></span></h5>
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@
 
             }
 
-                     $('#liDashboardTotalRevenue').addClass('active');
+            $('#liDashboardTotalRevenue').addClass('active');
 
             $('#jqChart1').jqChart({
                 title: { text: '' },
