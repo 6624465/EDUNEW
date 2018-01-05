@@ -100,14 +100,14 @@ namespace EDU.Web.Controllers
             Course course = new Course();
             if (!Id.HasValue)
             {
-                ViewBag.Title = "New Course";
+                ViewBag.Title = "New Regional Costing";
                 course = new Course { Id = -1, IsActive = true };
             }
             else
             {
-                ViewBag.Title = "Update Course";
+                ViewBag.Title = "Update Regional Costing";
                 course = new CourseBO().GetCourse(new Course { Id = Id.Value });
-                ViewData["CourseData"] = new CourseBO().GetCoursesByProductCoutry(course.Product, course.Country).AsEnumerable();
+                ViewData["CourseData"] = new CourseBO().GetCoursesByProduct(course.Product).AsEnumerable();
             }
             return PartialView(course);
         }

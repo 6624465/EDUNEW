@@ -17,7 +17,21 @@
 
     var myArray = (List<decimal?>)ViewData["Summary"];
 
-    var coursename = Model.trainingconfDetail.CourseName==null?null:Model.trainingconfDetail.CourseName.TrimEnd().ToString();
+    var coursename = Model.trainingconfDetail.CourseName == null ? null : Model.trainingconfDetail.CourseName.TrimEnd().ToString();
+    
+    if (Model.trainingconfDetail.Private)
+    {
+        Model.registration[0].Amount = null;
+        Model.registration[0].WHTAmount = null;
+        Model.registration[0].WHTPercent = null;
+        Model.registration[0].VATAmount = null;
+        Model.registration[0].VATPercent = null;
+        Model.registration[0].Payment1 = null;
+        Model.registration[0].Payment2 = null;
+        Model.registration[0].Payment3 = null;
+        Model.registration[0].TotalAmount = null;
+        Model.registration[0].BalanceAmount = null;
+    }
 }
 <style>
     .centerbox {
@@ -106,29 +120,15 @@
     }
     public string ConvertToInt64dollarBalance(decimal? data)
     {
-        if (data != null && data != 0)
+        if (data != null)
             return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
         else
-            return "$ 0";
+            return null;
     }
     public string PaymentDetails(DateTime? date, short? type, string no)
     {
         string x = "";
         x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>";
-        //if (type != null)
-        //{
-        //    if (type == 1)
-        //        x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-        //        "Payment Type : Cash";
-        //    else if (type == 2)
-        //        x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-        //            "Payment Type : Cheque" + "</Br>" +
-        //            "Cheque No : " + (no == null ? "" : no);
-        //    else if (type == 3)
-        //        x = "Payment Date : " + (date == null ? "" : date.Value.ToString("dd/MM/yyyy")) + "</Br>" +
-        //            "Payment Type : Bank Transfer" + "</Br>" +
-        //            "Transaction ID : " + (no == null ? "" : no);
-        //}
         return x;
     }
 }
@@ -699,8 +699,7 @@
         </div>
     </div>
 </div>
-@section SectionScripts
-    {
+@section SectionScripts {
     <script type="text/javascript">
         $(function () {
             $('#Payment1Dt,#Payment2Dt,#Payment3Dt,#Payment1Dte,#Payment2Dte,#Payment3Dte').datetimepicker({
@@ -778,6 +777,10 @@
             @if (reg > 0)
         {
             <text>
+            if ('@Model.trainingconfDetail.Private'=='True')
+            {
+                $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Payment Details</td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[8])</td><td></td><td></td><td></td></tr>');
+           }
             $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[8])</td><td></td><td></td><td></td></tr>');
             </text>
             }

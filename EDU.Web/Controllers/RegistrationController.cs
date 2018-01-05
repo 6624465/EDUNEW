@@ -65,11 +65,11 @@ namespace EDU.Web.Controllers
                     var rowsLength = tcdtl.NoOfStudents;
                     if (!string.IsNullOrWhiteSpace(tcd.CourseName) && tcd.CourseName.ToUpper().Contains("RENTAL"))
                     {
-                        rowsLength = 1;
                         if (List.Count() == 0)
                             List.Add(new Registration { RegistrationId = -1, TrainingConfirmationID = tcdtl.TrainingConfirmationID });
                     }
-                    else {
+                    else
+                    {
                         for (int i = 0; i < rowsLength; i++)
                         {
                             if (List.Count() != tcdtl.NoOfStudents)
@@ -120,6 +120,11 @@ namespace EDU.Web.Controllers
                 summary.Add(othertotal);
                 summary.Add(baltotal);
                 ViewData["Summary"] = summary;
+
+                //if (tcd.Private==true && !string.IsNullOrWhiteSpace(tcd.CourseName) && !tcd.CourseName.ToUpper().Contains("RENTAL"))
+                //{
+                //    result.registration.FirstOrDefault();
+                //}
             }
             catch (Exception ex)
             {
@@ -136,19 +141,19 @@ namespace EDU.Web.Controllers
 
 
 
-        public ActionResult Registration(int Id, string trainingConfirmationID, short? month, int year)
-        {
-            Registration registration = dbContext.Registrations.Where(x => x.RegistrationId == Id && x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
-            if (registration == null)
-            {
-                registration = new Registration();
-                registration.RegistrationId = Id;
-                registration.TrainingConfirmationID = trainingConfirmationID;
-            }
-            ViewData["year"] = year;
-            ViewData["month"] = month;
-            return View(registration);
-        }
+        //public ActionResult Registration(int Id, string trainingConfirmationID, short? month, int year)
+        //{
+        //    Registration registration = dbContext.Registrations.Where(x => x.RegistrationId == Id && x.IsActive == true && x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
+        //    if (registration == null)
+        //    {
+        //        registration = new Registration();
+        //        registration.RegistrationId = Id;
+        //        registration.TrainingConfirmationID = trainingConfirmationID;
+        //    }
+        //    ViewData["year"] = year;
+        //    ViewData["month"] = month;
+        //    return View(registration);
+        //}
 
         [HttpPost]
         public ActionResult SaveRegistrationPublicList(List<Registration> registration)

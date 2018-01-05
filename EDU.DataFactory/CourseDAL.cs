@@ -129,13 +129,13 @@ namespace EZY.EDU.DataFactory
             return courseItem;
         }
 
-        //public List<Course> GetCoursesByProduct(int Id)
-        //{
-        //    var courseItem = db.ExecuteSprocAccessor(DBRoutine.COURSESBYPRODUCT,
-        //                                            MapBuilder<Course>.BuildAllProperties(),
-        //                                            Id).ToList();
-        //    return courseItem;
-        //}
+        public List<Course> GetCoursesByProduct(int Id)
+        {
+            var courseItem = db.ExecuteSprocAccessor(DBRoutine.COURSESBYPRODUCT,
+                                                    MapBuilder<Course>.BuildAllProperties(),
+                                                    Id).ToList();
+            return courseItem;
+        }
         public List<Course> GetCoursesByProductCoutry(int Id, short country)
         {
             var courseItem = db.ExecuteSprocAccessor(DBRoutine.COURSESBYPRODUCTCOUNTRY,
