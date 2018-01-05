@@ -17,7 +17,7 @@
 
     var myArray = (List<decimal?>)ViewData["Summary"];
 
-    var coursename = Model.trainingconfDetail.CourseName.TrimEnd().ToString();
+    var coursename = Model.trainingconfDetail.CourseName==null?null:Model.trainingconfDetail.CourseName.TrimEnd().ToString();
 }
 <style>
     .centerbox {
