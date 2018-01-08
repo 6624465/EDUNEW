@@ -48,7 +48,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Country,
                                           new SelectList(Model.branchList, "BranchID", "BranchName"),
                                        "Select Country",
-                                      new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                                      new { @class = "form-control input-sm", onchange = "CountryChange(this);", @style="width:100%" })
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Product,
                                        new SelectList(Model.eduProductList, "Id", "ProductName"),
                                           "Select Product",
-                                        new { @class = "form-control input-sm", onchange = "ProductChange(this);" })
+                                        new { @class = "form-control input-sm", onchange = "ProductChange(this);", @style = "width:100%" })
                                     </div>
                                 </div>
                             </div>
@@ -76,14 +76,14 @@
                                             @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)" })
+                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)", @style = "width:100%" })
                                         }
                                         else
                                         {
                                             @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                                  new SelectList(Model.courseList, "Id", "CourseName"),
                                              "Select Course",
-                                        new { @class = "form-control input-sm", onchange = "CourseChange(this)" })
+                                        new { @class = "form-control input-sm", onchange = "CourseChange(this)", @style = "width:100%" })
                                         }
                                     </div>
                                 </div>
@@ -540,9 +540,9 @@
 
 
         function CountryChange(el) {
-            $('#courseSalesMaster_Product').val('');
-            $('#courseSalesMaster_Course').empty();
-            //$('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+            $('#courseSalesMaster_Product').select2().select2("val", ''); 
+            $('#courseSalesMaster_Course').select2().empty();
+            $('#courseSalesMaster_Course').select2().append($('<option></option>').val('').html(''));
         }
 
         function ProductChange(el) {
@@ -552,11 +552,11 @@
                     method: 'GET',
                     contentType: 'application/json',
                     success: function (data) {
-                        $('#courseSalesMaster_Course').empty();
-                        //$('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+                        $('#courseSalesMaster_Course').select2().empty();
+                        $('#courseSalesMaster_Course').select2().append($('<option></option>').val('').html(''));
                         $('#courseSalesMaster_NoOfDays').val('');
                         $.each(data, function (key, value) {
-                            $('#courseSalesMaster_Course').append($('<option></option>').val(value.Id).html(value.CourseName));
+                            $('#courseSalesMaster_Course').select2().append($('<option></option>').val(value.Id).html(value.CourseName));
                         });
                         $('#courseSalesMaster_Course').removeAttr('disabled');
                     },
@@ -568,7 +568,7 @@
             else {
                 $('#courseSalesMaster_Course').empty();
                 $('#courseSalesMaster_Course').attr('disabled', 'disabled');
-                //$('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+                $('#courseSalesMaster_Course').select2().append($('<option></option>').val('').html(''));
                 $('#courseSalesMaster_NoOfDays').val('');
             }
         }

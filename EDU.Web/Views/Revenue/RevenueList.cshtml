@@ -47,7 +47,7 @@
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-1 col-md-offset-3">
+                            <div class="col-md-1 col-md-offset-2">
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
                             </div>
                             <div class="col-md-2">
@@ -76,7 +76,7 @@
                             <div class="col-md-2"></div>
                         </div>
                         <div class="row css10">
-                            <div class="col-md-6 col-md-offset-3 ">
+                            <div class="col-md-8 col-md-offset-2 ">
                                 @{
                                     var grid = new WebGrid(Model);
                                 }
@@ -128,7 +128,7 @@
             <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
         }
     </div>*@
-                            <div class="col-md-6 col-md-offset-3 css10">
+                            <div class="col-md-8 col-md-offset-2 css10">
                                 @{
                                     var grid1 = new WebGrid(Model);
                                 }

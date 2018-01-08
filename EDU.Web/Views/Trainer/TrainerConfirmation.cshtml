@@ -218,26 +218,11 @@
     $('select').select2({}).on("change", function (e) {
         $(this).valid()
     });
-    //function DisbledExamOrVocherFields() {
-    //    $('#rdoPrivate').prop('checked', false);
-    //    $('#rdoPublic').prop('checked', false);
-    //    $('#rdoPublic').prop('checked', false);
-    //    $('#StartDate').val('');
-    //    $('#EndDate').val('');
-    //    $('#TotalNoOfDays').val('');
-    //    $('#TrianerId').val('');
-    //    $('#rdoPrivate').attr('disabled', 'disabled');
-    //    $('#rdoPublic').attr('disabled', 'disabled');
-    //    $('#rdoLvc').attr('disabled', 'disabled');
-    //    $('#StartDate').attr('disabled', 'disabled');
-    //    $('#EndDate').attr('disabled', 'disabled');
-    //    $('#TotalNoOfDays').attr('disabled', 'disabled');
-    //    $('#TrianerId').attr('disabled', 'disabled');
-    //}
+
     function CountryChange(el) {
-        $('#Product').val('');
-        $('#Course').empty();
-        $('#Course').append($('<option></option>').val('').html(''));
+        $('#Product').select2().select2("val", ''); 
+        $('#Course').select2().empty();
+        $('#Course').select2().append($('<option></option>').val('').html(''));
     }
 
     function ProductChange(el) {
@@ -247,10 +232,10 @@
                 method: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
-                    $('#Course').empty();
-                    $('#Course').append($('<option></option>').val('').html(''));
+                    $('#Course').select2().empty();
+                    $('#Course').select2().append($('<option></option>').val('').html(''));
                     $.each(data, function (key, value) {
-                        $('#Course').append($('<option></option>').val(value.Id).html(value.CourseName));
+                        $('#Course').select2().append($('<option></option>').val(value.Id).html(value.CourseName));
                     });
                     $('#Course').removeAttr('disabled');
                 },
@@ -260,9 +245,9 @@
             });
         }
         else {
-            $('#Course').empty();
+            $('#Course').select2().empty();
             $('#Course').attr('disabled', 'disabled');
-            $('#Course').append($('<option></option>').val('').html(''));
+            $('#Course').select2().append($('<option></option>').val('').html(''));
         }
     }
 
@@ -274,12 +259,12 @@
                 contentType: 'application/json',
                 success: function (data) {
                     var courseid = $('#Course').val();
-                    $('#Course').empty();
-                    $('#Course').append($('<option></option>').val('').html(''));
+                    $('#Course').select2().empty();
+                    $('#Course').select2().append($('<option></option>').val('').html(''));
                     $.each(data, function (key, value) {
-                        $('#Course').append($('<option></option>').val(value.Id).html(value.CourseName));
+                        $('#Course').select2().append($('<option></option>').val(value.Id).html(value.CourseName));
                     });
-                    $('#Course').val(courseid);
+                    $('#Course').select2().select2("val", courseid);
                 },
                 error: function (err) {
 

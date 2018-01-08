@@ -270,7 +270,7 @@
             }
 
         });
-      
+
 
         $.validator.addMethod('validatePrices', function (value, element, param) {
             var PublicPrice = parseFloat($('#PublicPrice').val());
@@ -306,9 +306,9 @@
         };
 
         function CountryChange(el) {
-            $('#Product').val('');
-            $('#CourseName').empty();
-            $('#CourseName').append($('<option></option>').val('').html(''));
+            $("#Product").select2().select2("val", '');           
+            $('#CourseName').select2().empty();
+            //$('#CourseName').append($('<option></option>').val('').html(''));
         }
 
         function ProductChange(el) {
@@ -319,11 +319,12 @@
                     contentType: 'application/json',
                     success: function (data) {
                         debugger;
-                        $('#CourseName').empty();
-                        //$('#CourseName').append($('<option></option>').val('').html(''));
+                        $('#CourseName').select2().empty();
+                        $('#CourseName').select2().append($('<option></option>').val('').html(''));
                         $('#NoOfDays').val('');
                         $.each(data, function (key, value) {
-                            $('#CourseName').append($('<option></option>').val(value.Id).html(value.CourseName));
+                            debugger;
+                            $('#CourseName').select2().append($('<option></option>').val(value.Id).html(value.CourseName));
                         });
                         $('#CourseName').removeAttr('disabled');
                     },
@@ -333,9 +334,9 @@
                 });
             }
             else {
-                $('#CourseName').empty();
+                $('#CourseName').select2().empty();
                 $('#CourseName').attr('disabled', 'disabled');
-                //$('#CourseName').append($('<option></option>').val('').html(''));
+                $('#CourseName').append($('<option></option>').val('').html(''));
                 $('#NoOfDays').val('');
             }
         }
