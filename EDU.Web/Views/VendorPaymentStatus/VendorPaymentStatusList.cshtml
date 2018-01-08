@@ -154,7 +154,7 @@
                                          format:
                                         @<text>
                                             <div style='width:80px;'>
-                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <input type="hidden" id="hdnvenderpaymentId" value="@item.VendorPaymentId" />
                                                     <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>

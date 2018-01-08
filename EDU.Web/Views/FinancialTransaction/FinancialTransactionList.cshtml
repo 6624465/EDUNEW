@@ -124,7 +124,7 @@
                                         grid.Columns(
 
                                               grid.Column("", "Action", format: @<text>
-                                                @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <input type="hidden" id="hdnFinancialTransactionId" value="@item.FinancialTransactionId" />
                                                     <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.trainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>

@@ -282,7 +282,7 @@
             $("tbody tr:even").css("background-color", "#eeeeee");
             $("tbody tr:odd").css("background-color", "#ffffff");
 
-            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
             $('#Country').attr('disabled','disabled');

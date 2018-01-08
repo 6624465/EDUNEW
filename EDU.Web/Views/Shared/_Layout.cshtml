@@ -117,14 +117,6 @@
             </div>
 
             <nav class="site-nav clearfix" role="navigation">
-                @*<div class="profile clearfix mb15">
-                        <img src="@Url.Content("~/images/admin.jpg")" alt="admin">
-                        <div class="group">
-                            <h5 class="name">Robert Smith</h5>
-                            <small class="desig text-uppercase">UX Designer</small>
-                        </div>
-                    </div>*@
-
                 <!-- navigation -->
                 <ul class="list-unstyled clearfix nav-list mb15">
                     <li class="waves-effect open">
@@ -139,9 +131,9 @@
                                     <i class="fa fa-bars font20"></i>
                                     <span class="text ptop7">&nbsp;Courses</span>
                                 </a>
-                            </li>
+                            </li>                            
                             <li id="liRegionalLeads">
-                                <a href="@Url.Content("~/Master/CourseSalesMasterList?month=0&year="+year)">
+                                <a href="@Url.Content("~/Master/CourseSalesMasterList?month=0&year=" + year)">
                                     <i class="fa fa-chain font20"></i>
                                     <span class="text ptop7">&nbsp;Regional Leads</span>
                                 </a>
@@ -234,7 +226,7 @@
                                     <span class="text ptop7"> &nbsp;Operational Expenses</span>
                                 </a>
                             </li>
-                            <li id="liDashboardOperationaltransaction" class="waves-effect">
+                            <li id="liDashboardDashboardOperationaltransaction" class="waves-effect">
                                 <a href="@Url.Content("~/Dashboard/DashboardOperationaltransaction?month=" + month + "&year=" + year)">
                                     <i class="fa fa-table font20"></i>
                                     <span class="text ptop0">&nbsp;Dashboard Operational Transaction</span>
@@ -367,7 +359,125 @@
             $('.waves-effect li a').on('click', function () {
                 $(".loader").fadeIn();
             });
+
+            displayLinks();
+            hideLinksByRole();
         });
+
+        function displayLinks()
+        {
+            $("#liCourse").show()
+            $("#liRegionalLeads").show();
+            $("#liTrainingConfirmationList").show();
+            $("#liRegistrationList").show();
+            $("#liCustomerPaymentStatusList").show();
+            $("#liVendorPaymentStatusList").show();
+            $("#liFinancialTransactionList").show();
+            $("#liOperationalTransactionList").show();
+            $("#liTrainersList").show();
+            $("#liEduProductList").show();
+            $("#liRevenueList").show();
+
+            $("#liDashboardAchievement").show();
+            $("#liOperationalTransactionReportList").show();
+            $("#liDashboardOperationaltransaction").show();
+            $("#liDashboardOperationalExpenses").show();
+            $("#liDashboardDashboardOperationaltransaction").show();
+            $("#liDashboardTotalRevenue").show();
+            $("#liDashboardDashboard").show();
+            $("#liDashboardProfitandloss").show();
+        }
+
+        function hideLinksByRole() {
+            if ('@Session["RoleCode"]' == 'SALES') {
+                $("#liCourse").hide()
+                //$("#liRegionalLeads").hide();
+                $("#liTrainingConfirmationList").hide();
+                $("#liRegistrationList").hide();
+                $("#liCustomerPaymentStatusList").hide();
+                $("#liVendorPaymentStatusList").hide();
+                $("#liFinancialTransactionList").hide();
+                $("#liOperationalTransactionList").hide();
+                $("#liTrainersList").hide();
+                $("#liEduProductList").hide();
+                $("#liRevenueList").hide();
+
+                //$("#liDashboardAchievement").hide();
+                $("#liOperationalTransactionReportList").hide();
+                $("#liDashboardOperationaltransaction").hide();
+                $("#liDashboardOperationalExpenses").hide();
+                $("#liDashboardDashboardOperationaltransaction").hide();
+                //$("#liDashboardTotalRevenue").hide();
+                //$("#liDashboardDashboard").hide();
+                $("#liDashboardProfitandloss").hide();
+            }
+            else if ('@Session["RoleCode"]' == 'FINANCE'){
+                $("#liCourse").hide()
+                $("#liRegionalLeads").hide();
+                $("#liTrainingConfirmationList").hide();
+                $("#liRegistrationList").hide();
+                //$("#liCustomerPaymentStatusList").hide();
+                $("#liVendorPaymentStatusList").hide();
+                $("#liFinancialTransactionList").hide();
+                //$("#liOperationalTransactionList").hide();
+                $("#liTrainersList").hide();
+                $("#liEduProductList").hide();
+                $("#liRevenueList").hide();
+
+                //$("#liDashboardAchievement").hide();
+                //$("#liOperationalTransactionReportList").hide();
+                //$("#liDashboardOperationaltransaction").hide();
+                //$("#liDashboardOperationalExpenses").hide();
+                //$("#liDashboardDashboardOperationaltransaction").hide();
+                //$("#liDashboardTotalRevenue").hide();
+                //$("#liDashboardDashboard").hide();
+                //$("#liDashboardProfitandloss").hide();
+            }
+            else if ('@Session["RoleCode"]' == 'MANAGEMENT') {
+                $("#liCourse").hide()
+                //$("#liRegionalLeads").hide();
+                //$("#liTrainingConfirmationList").hide();
+                $("#liRegistrationList").hide();
+                //$("#liCustomerPaymentStatusList").hide();
+                $("#liVendorPaymentStatusList").hide();
+                $("#liFinancialTransactionList").hide();
+                //$("#liOperationalTransactionList").hide();
+                $("#liTrainersList").hide();
+                $("#liEduProductList").hide();
+                $("#liRevenueList").hide();
+
+                //$("#liDashboardAchievement").hide();
+                //$("#liOperationalTransactionReportList").hide();
+                //$("#liDashboardOperationaltransaction").hide();
+                //$("#liDashboardOperationalExpenses").hide();
+                //$("#liDashboardDashboardOperationaltransaction").hide();
+                //$("#liDashboardTotalRevenue").hide();
+                //$("#liDashboardDashboard").hide();
+                //$("#liDashboardProfitandloss").hide();
+            }
+            else if ('@Session["RoleCode"]' == 'REGIONAL') {
+                //$("#liCourse").hide()
+                //$("#liRegionalLeads").hide();
+                //$("#liTrainingConfirmationList").hide();
+                //$("#liRegistrationList").hide();
+                $("#liCustomerPaymentStatusList").hide();
+                $("#liVendorPaymentStatusList").hide();
+                $("#liFinancialTransactionList").hide();
+                $("#liOperationalTransactionList").hide();
+                //$("#liTrainersList").hide();
+                //$("#liEduProductList").hide();
+                $("#liRevenueList").hide();
+
+                //$("#liDashboardAchievement").hide();
+                $("#liOperationalTransactionReportList").hide();
+                $("#liDashboardOperationaltransaction").hide();
+                $("#liDashboardOperationalExpenses").hide();
+                $("#liDashboardDashboardOperationaltransaction").hide();
+                $("#liDashboardTotalRevenue").hide();
+                //$("#liDashboardDashboard").hide();
+                $("#liDashboardProfitandloss").hide();
+            }
+        }
 
         $(document).on('keypress', '.numCss', function (evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;

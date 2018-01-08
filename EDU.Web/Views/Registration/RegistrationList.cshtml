@@ -204,7 +204,7 @@
                                  "Select Event No.", new { @class = "form-control input-sm chosen-select", onchange = "ChangeEventID(this);" })
                                 </div>
                                 <div class="col-md-2">
-                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                                     {
                                         <button type="button" id="addbtn" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigatetoDetail()"><i class="fa fa-pencil"></i>Update Registration Info</button>
                                     }

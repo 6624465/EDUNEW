@@ -81,11 +81,11 @@ namespace EDU.Web.Controllers
                 USER_OBJECT = SsnObj;
                 USER_SECURABLES = new RoleRightsBO().GetSecurableItemsListByRoleCode(SsnObj.RoleCode);
 
-                if (currentUser.UserID.ToLower().Contains("cxo@ezy") || currentUser.UserID.ToLower() == "rgldata")
-                    Session["UserID"] = "ADMIN";
-                else
-                    Session["UserID"] = currentUser.UserID;
+                //if (currentUser.UserID.ToLower().Contains("cxo@ezy") || currentUser.UserID.ToLower() == "rgldata")
+                //    Session["UserID"] = "ADMIN";
+                //else
 
+                Session["UserID"] = currentUser.UserID;
                 Session["UserName"] = currentUser.UserName;
                 Session["BranchId"] = model.BranchID;
                 Session["RoleCode"] = currentUser.RoleCode.ToUpper();

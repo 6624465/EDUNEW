@@ -59,7 +59,7 @@
                 <div class="box-header">
                     <h4>Operational Transaction List</h4>
                     <div class="box-tools">
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
                         {
                             if (Model.FirstOrDefault() == null)
                             {
@@ -132,7 +132,7 @@
             @*@Model.FirstOrDefault().OperationId==''? Add Operational Transactions:Add Operational Transactions
             btnAdd*@
 
-            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
                     $('#Country').attr('disabled','disabled');
@@ -148,6 +148,7 @@
              }
         });
         function ChangeMonth() {
+            debugger;
             window.location = '@Url.Action("OperationalTransactionList", "OperationalTransaction", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
         };
 

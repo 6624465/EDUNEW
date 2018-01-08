@@ -378,8 +378,8 @@
 
         function navigateToList() {
             var month = $('#Month').val();
-            var year = $('#Year').val();
-            location.href = '@Url.Content("~/Master/CourseSalesMasterList?month=")' + month + '&year=' + year;
+            var year = $('#courseSalesMaster_Year').val();
+            location.href = '@Url.Content("~/Master/CourseSalesMasterList?month=")' + $('#mnth').val() + '&year=' + year;
         }
 
     function ConfirmAttrCoursesalesmaster() {
@@ -543,7 +543,7 @@
         function CountryChange(el) {
             $('#courseSalesMaster_Product').val('');
             $('#courseSalesMaster_Course').empty();
-            $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+            //$('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
         }
 
         function ProductChange(el) {
@@ -554,7 +554,7 @@
                     contentType: 'application/json',
                     success: function (data) {
                         $('#courseSalesMaster_Course').empty();
-                        $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+                        //$('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
                         $('#courseSalesMaster_NoOfDays').val('');
                         $.each(data, function (key, value) {
                             $('#courseSalesMaster_Course').append($('<option></option>').val(value.Id).html(value.CourseName));
@@ -569,7 +569,7 @@
             else {
                 $('#courseSalesMaster_Course').empty();
                 $('#courseSalesMaster_Course').attr('disabled', 'disabled');
-                $('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
+                //$('#courseSalesMaster_Course').append($('<option></option>').val('').html(''));
                 $('#courseSalesMaster_NoOfDays').val('');
             }
         }

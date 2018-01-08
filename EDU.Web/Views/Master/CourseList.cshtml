@@ -23,7 +23,7 @@
                 <div class="box-header">
                     <h4>Course List</h4>
                     <div class="box-tools">
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                         {
                             <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="AddCourse()"><i class="fa fa-plus"></i>Add Regional Costing</button>
                         }
@@ -38,7 +38,7 @@
                                       grid.Column("", "#Action", canSort: false,
                                 format:
                                 @<text>
-                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                                     {
                                         <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                         <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>

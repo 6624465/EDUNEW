@@ -88,7 +88,7 @@
     <script type="text/javascript">
         $(function () {
             $('#liDashboardProfitandloss').addClass('active');
-            @if (Session["UserID"].ToString().ToUpper() != "ADMIN")
+            @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
             $('#Country').attr('disabled','disabled');

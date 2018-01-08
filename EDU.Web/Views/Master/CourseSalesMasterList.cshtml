@@ -93,7 +93,7 @@
                 <div class="box-header">
                     <h4>Regional Leads List</h4>
                     <div class="box-tools">
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "SALES" || Session["RoleCode"].ToString() == "REGIONAL")
                         {
                             <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigateToDetail(-1)"><i class="fa fa-plus"></i>Add New Regional Lead</button>
                         }
@@ -156,7 +156,7 @@
                                                                              format:
                                                                             @<text>
                                                                                 <div style='width:80px;'>
-                                                                                    @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                                                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "SALES" || Session["RoleCode"].ToString() == "REGIONAL")
                                                                                     {
                                                                                         <button class="btn btn-xs btn-success waves-effect" onclick="navigateToDetail(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                                                         <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
@@ -275,7 +275,7 @@
                                                                                             @ConvertToInt64dollar(item.Revenue)
                                                                                         </span>
                                                                                     </div>
-                                                                                </text>,style: "center")),
+                                                                                </text>, style: "center")),
                                                                          tableStyle: "table tblCss", htmlAttributes: new { id = tblId })
                                                         </div>
                                                     </div>

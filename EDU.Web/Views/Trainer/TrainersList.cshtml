@@ -20,7 +20,7 @@
                 <div class="box-header">
                     <h4>Vendors & Trainers List</h4>
                     <div class="box-tools">
-                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                         {
                             <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="location.href = '@Url.Content("~/Trainer/Trainer?Id=-1")'"><i class="fa fa-plus"></i>Add New Trainer</button>
                             // <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
@@ -36,7 +36,7 @@
                                 format:
                                 @<text>
                                     <div style='width:80px;'>
-                                        @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
+                                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                                         {
                                             <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Trainer?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                             <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
