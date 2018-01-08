@@ -58,16 +58,16 @@
                                         <span>Total Revenue</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TotalRevenueAmount, "{0:#.#}", new { @class = "form-control numCss",  @readonly = true })
+                                        @Html.TextBoxFor(x => x.TotalRevenueAmount, "{0:#.#}", new { @class = "form-control input-sm numCss",  @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TotalRevenueLocalAmount, "{0:#.#}", new { @class = "form-control numCss", @readonly = true })
+                                        @Html.TextBoxFor(x => x.TotalRevenueLocalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TotalRevenueFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TotalRevenueReferenceDoc
+                                        @Html.TextBoxFor(x => x.TotalRevenueFileName, new { @class = "form-control input-sm input-sm", type = "file" })&nbsp;@Model.TotalRevenueReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.TotalRevenueRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.TotalRevenueRemarks, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -77,16 +77,16 @@
                                         <span> Trainer Fee</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.TrainerExpensesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerExpensesLocalAmount, "{0:#.#}", new { @class = "form-control numCss", @readonly = true })
+                                        @Html.TextBoxFor(x => x.TrainerExpensesLocalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerExpensesReferenceDoc
+                                        @Html.TextBoxFor(x => x.TrainerExpensesFileName, new { @class = "form-control input-sm", type = "file" })&nbsp;@Model.TrainerExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.TrainerExpensesRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.TrainerExpensesRemarks, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -96,16 +96,16 @@
                                         <span style="white-space:nowrap"> Trainer Airfare</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesLocalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerTravelExpensesReferenceDoc
+                                        @Html.TextBoxFor(x => x.TrainerTravelExpensesFileName, new { @class = "form-control input-sm", type = "file" })&nbsp;@Model.TrainerTravelExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.TrainerTravelExpensesRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.TrainerTravelExpensesRemarks, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -115,16 +115,16 @@
                                         <span> Hotel Bookings</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.LocalExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.LocalExpensesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.LocalExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                        @Html.TextBoxFor(x => x.LocalExpensesLocalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.LocalExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.LocalExpensesReferenceDoc
+                                        @Html.TextBoxFor(x => x.LocalExpensesFileName, new { @class = "form-control input-sm", type = "file" })&nbsp;@Model.LocalExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.LocalExpensesRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.LocalExpensesRemarks, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -134,16 +134,16 @@
                                         <span>Trainer Claims</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerClaimsAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.TrainerClaimsAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerClaimsLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                        @Html.TextBoxFor(x => x.TrainerClaimsLocalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.TrainerClaimsFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.TrainerClaimsReferenceDoc
+                                        @Html.TextBoxFor(x => x.TrainerClaimsFileName, new { @class = "form-control input-sm", type = "file" })&nbsp;@Model.TrainerClaimsReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.TrainerClaimsRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.TrainerClaimsRemarks, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -153,16 +153,16 @@
                                         <span>Regional expneses</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.MiscExpensesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                        @Html.TextBoxFor(x => x.MiscExpensesLocalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
+                                        @Html.TextBoxFor(x => x.MiscExpensesFileName, new { @class = "form-control input-sm", type = "file" })&nbsp;@Model.MiscExpensesReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.MiscExpensesRemarks, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -172,16 +172,16 @@
                                         <span>Courseware Material</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.CoursewareMaterialAmount, "{0:#.#}", new { @class = "form-control numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
+                                        @Html.TextBoxFor(x => x.CoursewareMaterialAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "calculateLocalAmount();calculateGrossProfitandLoss()" })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.CoursewareMaterialLocalAmount, "{0:#.#}", new { @class = "form-control", @readonly = true })
+                                        @Html.TextBoxFor(x => x.CoursewareMaterialLocalAmount, "{0:#.#}", new { @class = "form-control input-sm", @readonly = true })
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.CoursewareMaterialFileName, new { @class = "form-control", type = "file" })&nbsp;@Model.CoursewareMaterialReferenceDoc
+                                        @Html.TextBoxFor(x => x.CoursewareMaterialFileName, new { @class = "form-control input-sm", type = "file" })&nbsp;@Model.CoursewareMaterialReferenceDoc
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.CoursewareMaterialRemarks, new { @class = "form-control" })
+                                        @Html.TextAreaFor(x => x.CoursewareMaterialRemarks, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -191,13 +191,13 @@
                                         <span>Gross Profit</span>
                                     </label>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(x => x.GrossProfit, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Gross Profit", @readonly = true })
+                                        @Html.TextBoxFor(x => x.GrossProfit, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "Gross Profit", @readonly = true })
                                     </div>
                                     <label class="col-md-1 control-label">
                                         <span style="white-space:nowrap">Profit & Loss</span>
                                     </label>
                                     <div class="col-md-1">
-                                        @Html.TextBoxFor(x => x.ProfitAndLossPercent, "{0:#.#}", new { @class = "form-control", @placeholder = "Profit&Loss", @readonly = true })
+                                        @Html.TextBoxFor(x => x.ProfitAndLossPercent, "{0:#.#}", new { @class = "form-control input-sm", @placeholder = "Profit&Loss", @readonly = true })
                                     </div>
                                 </div>
                             </div>
