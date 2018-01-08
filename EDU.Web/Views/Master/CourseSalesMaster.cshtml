@@ -297,7 +297,11 @@
         </div>
     }
 </div>
-
+<style type="text/css">
+    .select2 {
+        width: 522px !important;
+    }
+</style>
 
 @section SectionScripts{
     <script type="text/javascript">
@@ -367,10 +371,12 @@
             }
 
             $("#StartDt").on("dp.change", function (e) {
+                debugger;
                 var d = $('#courseSalesMaster_StartDate').val();
                 var m = d.toString().split("/")[1];
                 var dmonth = parseInt(m);
-                $('#courseSalesMaster_Month').val(dmonth);
+               // $('#courseSalesMaster_Month').val(dmonth);
+                $("#courseSalesMaster_Month").select2().select2("val", dmonth);
                 $('#courseSalesMaster_EndDate').val('');
                 //$('#EndDt').data("DateTimePicker").minDate(e.date);
             });
@@ -493,52 +499,62 @@
             $('#rdoConfirm').removeAttr('disabled');
         }
 
-        $('#frmCourseDetail').validate({
+        // new validation
+        $("#frmCourseDetail").validate({
             rules: {
-                'courseSalesMaster.Country': {
-                    required: true
-                },
-                'courseSalesMaster.Product': {
-                    required: true
-                },
-                'courseSalesMaster.Course': {
-                    required: true
-                },
-                'courseSalesMaster.NoOfDays': {
-                    required: true
-                },
+                'courseSalesMaster.Country': "required",
+                'courseSalesMaster.Product': "required",
+                'courseSalesMaster.Course': "required",
+                'courseSalesMaster.NoOfDays': "required",
                 'courseSalesMaster.StartDate': {
                     validatelvctodsd: true
                 },
                 'courseSalesMaster.EndDate': {
                     validatelvctoded: true
                 },
-                'courseSalesMaster.RegClosingDate': {
-                    required: true
-                },
-                'courseSalesMaster.MinimumReg': {
-                    required: true
-                },
-                'courseSalesMaster.LeadsOnHead': {
-                    required: true
-                },
-                'courseSalesMaster.Registered': {
-                    required: true
-                },
-                'courseSalesMaster.AvailableSeats': {
-                    required: true
-                },
-                'courseSalesMaster.LeadsOnHeadRemarks': {
-                    required: true
-                },
-                'courseSalesMaster.RegisteredRemarks': {
-                    required: true
-                },
-                'courseSalesMaster.Revenue': {
-                    required: true
+                'courseSalesMaster.RegClosingDate': "required",
+                'courseSalesMaster.MinimumReg': "required",
+                'courseSalesMaster.LeadsOnHead': "required",
+                'courseSalesMaster.Registered': "required",
+                'courseSalesMaster.AvailableSeats': "required",
+                'courseSalesMaster.LeadsOnHeadRemarks': "required",
+                'courseSalesMaster.RegisteredRemarks': "required",
+                'courseSalesMaster.Revenue': "required"
+
+
+            },
+            highlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            },
+            errorPlacement: function (error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent();
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
                 }
             }
         });
+
+        $('select').select2({}).on("change", function (e) {
+            $(this).valid()
+        });
+        //
+
 
         function CountryChange(el) {
             $('#courseSalesMaster_Product').val('');

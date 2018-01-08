@@ -84,6 +84,7 @@
     .action {
         width: 50px;
     }
+
 </style>
 
 <div class="page">
@@ -300,7 +301,11 @@
         </div>
     </div>
 </div>
-
+<style type="text/css">
+    .select2 {
+        width: 121px !important;
+    }
+</style>
 
 @using (Html.BeginForm("DeleteCourseSalesMaster", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
 {

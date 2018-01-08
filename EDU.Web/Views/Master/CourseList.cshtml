@@ -76,7 +76,7 @@
 </div>
 <style>
     .center {
-        text-align: center !important
+        text-align: center !important;
     }
 </style>
 @using (Html.BeginForm("DeleteEduCourse", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
@@ -102,11 +102,11 @@
                 url: '@Url.Content("~/Master/Course")',
                 method: 'get',
                 contentType: 'text/html',
-                success: function(html) {
+                success: function (html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                 },
-                error: function(err) {
+                error: function (err) {
 
                 }
             });
@@ -118,13 +118,13 @@
                 url: '@Url.Content("~/Master/Course?Id=")' + Id,
                 method: 'get',
                 contentType: 'text/html',
-                success: function(html) {
+                success: function (html) {
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                     $('#Country, #Product').attr('disabled', 'disabled');
                     $('#cname').val(cname);
                 },
-                error: function(err) {
+                error: function (err) {
 
                 }
             });
@@ -143,13 +143,13 @@
                 confirmButtonClass: "btn-danger",
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
-                },
-        function() {
+            },
+        function () {
             $('#id').val(Id);
             $('#frmDelete').submit();
-                swal("Deleted!", "Your Course has been deleted.", "success");
+            swal("Deleted!", "Your Course has been deleted.", "success");
 
-            });
+        });
         }
 
         function SaveCourse() {
@@ -217,14 +217,8 @@
         $('#frmCourse').validate({
             rules:
             {
-                Country:
-                {
-                    required: true
-                    },
-                Product:
-                {
-                    required: true
-                },
+                Country: "required",
+                Product: "required",
                 CourseName:
                 {
                     required: true,
@@ -248,13 +242,40 @@
                 {
                     validatePrices: true
                 }
+            },
+            highlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            },
+            errorPlacement: function (error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent();
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
             }
+
         });
+      
+
         $.validator.addMethod('validatePrices', function (value, element, param) {
             var PublicPrice = parseFloat($('#PublicPrice').val());
             var PrivatePrice = parseFloat($('#PrivatePrice').val());
-            if ((isNaN(PublicPrice) || PublicPrice == 0) && (isNaN(PrivatePrice) || PrivatePrice == 0))
-            {
+            if ((isNaN(PublicPrice) || PublicPrice == 0) && (isNaN(PrivatePrice) || PrivatePrice == 0)) {
                 return false;
             }
             else
@@ -276,7 +297,7 @@
                     url: '@Url.Content("~/Master/IsEduCourseExists?courseName=")' + $('#CourseName').val() + '&country=' + $('#Country').val() + '&product=' + $('#Product').val(),
                     method: 'get',
                     contentType: 'text/html',
-                    success: function(result) {
+                    success: function (result) {
                         def.resolve(result);
                     }
                 });
@@ -343,19 +364,16 @@
 
         function ValidateCourseName(isBlur) {
             var promise = ValidateByCourseName();
-            $.when(promise).done(function(result) {
-                if (isBlur)
-                {
-                    if (result == "True")
-                    {
+            $.when(promise).done(function (result) {
+                if (isBlur) {
+                    if (result == "True") {
                         alert("Course already exists with the combination of country and Product. Please re-enter new course.");
                         $('#CourseName').val('');
                     }
                 }
-                else
-                {
+                else {
                     return result
-                    }
+                }
             });
         };
     </script>

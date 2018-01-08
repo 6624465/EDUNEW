@@ -18,7 +18,7 @@
                     <div class="col-md-4">
                         @Html.DropDownListFor(x => x.Country,
                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-                    "Select Country", new { @class = "form-control", onchange = "CountryChange(this);" })
+                    "Select Country", new { @class = "form-control ", onchange = "CountryChange(this);" })
                     </div>
                 </div>
             </div>
@@ -116,11 +116,20 @@
 </div>
 
 </div>
+<style type="text/css">
+    .select2 {
+     width: 172px !important; 
+}
+</style>
 <script type="text/javascript">
     $(function () {
         $('#newCourse').hide();
+        $("select").select2();
     });
-
+   
+    $('select').select2({}).on("change", function (e) {
+        $(this).valid()
+    });
     function disableCourseText() {
         $('#CourseDescription').val('');
         $('#newCourse').hide();
