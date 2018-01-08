@@ -17,7 +17,7 @@
                         <span class="pull-right">Event ID</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control", placeholder = "Event ID", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control input-sm", placeholder = "Event ID", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Country,
                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                    "Select Country", new { @class = "form-control", onchange = "CountryChange(this);" })
+                    "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Product,
                     new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
-                    "Select Product", new { @class = "form-control", onchange = "ProductChange(this);" })
+                    "Select Product", new { @class = "form-control input-sm", onchange = "ProductChange(this);" })
                     </div>
                 </div>
             </div>
@@ -56,13 +56,13 @@
                             @Html.DropDownListFor(x => x.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control", disabled = "disabled", onchange = "ExamOrVocherDisbledFileds();CourseNameIsLabRental()" })
+                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "ExamOrVocherDisbledFileds();CourseNameIsLabRental()" })
                         }
                         else
                         {
                             @Html.DropDownListFor(x => x.Course,
                     new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
-                    "Select Course", new { @class = "form-control", onchange = "ExamOrVocherDisbledFileds()" })
+                    "Select Course", new { @class = "form-control input-sm", onchange = "ExamOrVocherDisbledFileds()" })
                         }
 
 
@@ -75,7 +75,7 @@
                         <span class="pull-right">Number of Students</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.NoOfStudents, "{0:#.#}", new { @class = "form-control numCss", placeholder = "Number of Students" })
+                        @Html.TextBoxFor(x => x.NoOfStudents, "{0:#.#}", new { @class = "form-control input-sm numCss", placeholder = "Number of Students" })
                     </div>
                 </div>
             </div>
@@ -108,8 +108,8 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="StartDt">
-                            @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control dtCss" })
-                            <span class="input-group-addon">
+                            @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control input-sm dtCss" })
+                            <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
                         </div>
@@ -123,8 +123,8 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="EndDt">
-                            @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control dtCss" })
-                            <span class="input-group-addon">
+                            @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control input-sm dtCss" })
+                            <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
                         </div>
@@ -137,7 +137,7 @@
                         <span class="pull-right">Total # of days</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.TotalNoOfDays, "{0:#.#}", new { @class = "form-control numCss", placeholder = "Total # of days" })
+                        @Html.TextBoxFor(x => x.TotalNoOfDays, "{0:#.#}", new { @class = "form-control input-sm numCss", placeholder = "Total # of days" })
                     </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.TrianerId,
                     new SelectList((List<EDU.Web.Models.TrainerInformation>)ViewData["TrainerData"], "TrianerId", "TrainerName"),
-                    "Select Trainer", new { @class = "form-control" })
+                    "Select Trainer", new { @class = "form-control input-sm" })
                     </div>
                 </div>
             </div>
