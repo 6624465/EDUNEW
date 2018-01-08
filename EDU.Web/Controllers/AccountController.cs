@@ -44,7 +44,7 @@ namespace EDU.Web.Controllers
             model.CompanyCode = "EZY";
             var BranchDetails = new BranchBO().GetList().Where(x => x.BranchID == model.BranchID).ToList();
             string BranchName = BranchDetails.Select(x => x.BranchName).FirstOrDefault();
-            
+
 
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,11 @@ namespace EDU.Web.Controllers
                 USER_OBJECT = SsnObj;
                 USER_SECURABLES = new RoleRightsBO().GetSecurableItemsListByRoleCode(SsnObj.RoleCode);
 
-                Session["UserID"] = currentUser.UserID;
+                if (currentUser.UserID.ToLower() == "cxo@ezy-corp.com")
+                    Session["UserID"] = "ADMIN";
+                else
+                    Session["UserID"] = currentUser.UserID;
+
                 Session["UserName"] = currentUser.UserName;
                 Session["BranchId"] = model.BranchID;
                 if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
