@@ -104,13 +104,13 @@
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-1">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:100%" })
                             </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Month</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:60%" })
                             </div>
                         </div>
                     </div>
@@ -273,35 +273,44 @@
                 $('#frmTrainerConfirmation').submit();
             }
         }
-        $('#frmTrainerConfirmation').validate({
-            rules: {
-                Product: {
-                    required: true
-                },
-                Country: {
-                    required: true
-                },
-                Course: {
-                    required: true
-                },
-                TotalNoOfDays: {
-                    required: true
-                },
-                StartDate: {
-                    required: true
-                },
-                EndDate: {
-                    required: true
-                },
-                NoOfStudents: {
-                    required: true
-                },
-                TrianerId: {
-                    required: true
-                }
 
+        $("#frmTrainerConfirmation").validate({
+            rules: {
+                Product: "required",
+                Country: "required",
+                Course: "required",
+                TotalNoOfDays: "required",
+                StartDate: "required",
+                EndDate: "required",
+                NoOfStudents: "required",
+                TrianerId: "required"
+            },
+            highlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            },
+            errorPlacement: function (error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent();
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
             }
-        })
+        });
 
         function mouseleave(el) {
             $(el).popover("hide");
@@ -362,8 +371,7 @@
                 $('#rdoPublic').prop('checked', false);
                 $('#rdoLvc').prop('checked', false)
             }
-            else
-            {
+            else {
                 $('#rdoPublic').prop('checked', true);
             }
 
