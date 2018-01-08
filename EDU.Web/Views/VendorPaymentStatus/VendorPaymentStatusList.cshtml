@@ -376,24 +376,40 @@
             $('#TotalAmount').val(result);
         }
 
-        $('#frmVendorPaymentStatus').validate({
+      
+        $("#frmVendorPaymentStatus").validate({
             rules: {
-                InvoiceAmount: {
-                    required: true
-                },
-                TotalAmount: {
-                    required: true
-                },
-                DueDate: {
-                    required: true
-                },
-                ReceiptDate: {
-                    required: true
-                },
-                VendorId:{
-                    required:true
-                }
+                InvoiceAmount: "required",
+                TotalAmount: "required",
+                DueDate: "required",
+                ReceiptDate: "required",
+                VendorId: "required"
+            },
 
+            highlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass); 
+                } else {
+                    elem.addClass(errorClass);
+                }
+            },    
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            },
+            errorPlacement: function(error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
             }
         });
         function SaveVendorPaymentStatus(id) {
