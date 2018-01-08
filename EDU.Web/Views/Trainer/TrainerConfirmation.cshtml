@@ -29,7 +29,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Country,
                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                    "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                    "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);", @style="width:100%" })
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Product,
                     new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
-                    "Select Product", new { @class = "form-control input-sm", onchange = "ProductChange(this);" })
+                    "Select Product", new { @class = "form-control input-sm", onchange = "ProductChange(this);", @style = "width:100%" })
                     </div>
                 </div>
             </div>
@@ -56,13 +56,13 @@
                             @Html.DropDownListFor(x => x.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "ExamOrVocherDisbledFileds();CourseNameIsLabRental()" })
+                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "ExamOrVocherDisbledFileds();CourseNameIsLabRental()", @style = "width:100%" })
                         }
                         else
                         {
                             @Html.DropDownListFor(x => x.Course,
                     new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
-                    "Select Course", new { @class = "form-control input-sm", onchange = "ExamOrVocherDisbledFileds()" })
+                    "Select Course", new { @class = "form-control input-sm", onchange = "ExamOrVocherDisbledFileds()", @style = "width:100%" })
                         }
 
 
@@ -149,7 +149,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.TrianerId,
                     new SelectList((List<EDU.Web.Models.TrainerInformation>)ViewData["TrainerData"], "TrianerId", "TrainerName"),
-                    "Select Trainer", new { @class = "form-control input-sm" })
+                    "Select Trainer", new { @class = "form-control input-sm", @style = "width:100%" })
                     </div>
                 </div>
             </div>
