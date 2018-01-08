@@ -61,7 +61,7 @@ namespace EDU.Web.Controllers
                                     .Where(x => x.BranchID == model.BranchID)
                                     .FirstOrDefault();
 
-            if (currentUser != null && userBranch != null)
+            if (currentUser != null && userBranch != null)// 
             {
                 FormsAuthentication.SetAuthCookie(currentUser.UserID, false);
 
@@ -81,13 +81,15 @@ namespace EDU.Web.Controllers
                 USER_OBJECT = SsnObj;
                 USER_SECURABLES = new RoleRightsBO().GetSecurableItemsListByRoleCode(SsnObj.RoleCode);
 
-                if (currentUser.UserID.ToLower() == "cxo@ezy-corp.com")
+                if (currentUser.UserID.ToLower().Contains("cxo@ezy") || currentUser.UserID.ToLower() == "rgldata")
                     Session["UserID"] = "ADMIN";
                 else
                     Session["UserID"] = currentUser.UserID;
 
                 Session["UserName"] = currentUser.UserName;
                 Session["BranchId"] = model.BranchID;
+                Session["RoleCode"] = currentUser.RoleCode.ToUpper();
+
                 if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                     && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                 {
