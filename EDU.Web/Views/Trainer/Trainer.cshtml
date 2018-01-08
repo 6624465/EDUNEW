@@ -22,13 +22,13 @@
                                         <span class="pull-right">Trainer Name</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.TrainerName, new { @class = "form-control input-sm" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Technology</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Technology, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.Technology, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -40,13 +40,13 @@
                                     <div class="col-md-4">
                                         @Html.DropDownListFor(x => x.Country,
                                         new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-                                        "Select Country", new { @class = "form-control", onchange = "CountryChange();" })
+                                        "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange();",@style="width:100%" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Profile</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })&nbsp;@Model.Profile
+                                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control input-sm", id = Profile })&nbsp;@Model.Profile
                                     </div>
                                 </div>
                             </div>
@@ -56,13 +56,13 @@
                                         <span class="pull-right">Trainer Rate</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerRate, new { @class = "form-control numCss" })
+                                        @Html.TextBoxFor(x => x.TrainerRate, new { @class = "form-control input-sm numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Vendor Name</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                         <span class="pull-right">Contact</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control numCsspuls" })
+                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control input-sm numCsspuls" })
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                         <span class="pull-right">Remarks</span>
                                     </label>
                                     <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @style = "overflow-y: scroll" })
+                                        @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
                                     </div>
                                 </div>
                             </div>
