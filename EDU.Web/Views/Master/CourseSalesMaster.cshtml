@@ -297,7 +297,11 @@
         </div>
     }
 </div>
-
+<style type="text/css">
+    .select2 {
+        width: 522px !important;
+    }
+</style>
 
 @section SectionScripts{
     <script type="text/javascript">
@@ -371,7 +375,8 @@
                 var d = $('#courseSalesMaster_StartDate').val();
                 var m = d.toString().split("/")[1];
                 var dmonth = parseInt(m);
-                $('#courseSalesMaster_Month').val(dmonth);
+               // $('#courseSalesMaster_Month').val(dmonth);
+                $("#courseSalesMaster_Month").select2().select2("val", dmonth);
                 $('#courseSalesMaster_EndDate').val('');
                 //$('#EndDt').data("DateTimePicker").minDate(e.date);
             });
