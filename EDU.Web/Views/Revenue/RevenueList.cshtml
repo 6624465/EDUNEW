@@ -222,7 +222,7 @@
 
     <script type="text/javascript">
 
-      
+
 
         $("#frmRevenue").validate({
             rules: {
@@ -324,9 +324,9 @@
             $('#Country').attr('disabled', 'disabled');
             </text>
             }
-
-            $("#CurrencyCode").val('@Model.FirstOrDefault().CurrencyCode');
-
+            debugger;
+            //var currency = $("#CurrencyCode").val('@Model.FirstOrDefault().CurrencyCode');
+            $("#CurrencyCode").select2().select2("val", '@Model.FirstOrDefault().CurrencyCode');
             $('.edit-mode').hide();
             $('.edit-user, .cancel-user').on('click', function () {
                 var tr = $(this).parents('tr:first');
