@@ -131,34 +131,53 @@
             }
         }
 
-        $('#frmTrainer').validate({
+      
+        $("#frmTrainer").validate({
             rules: {
-                TrainerName: {
-                    required: true
-                },
-                Technology: {
-                    required: true
-                },
-                Country: {
-                    required: true
-                },
-                TrainerRate: {
-                    required: true
-                },
-                VendorName: {
-                    required: true
-                },
-                Address: {
-                    required: true
-                },
+                TrainerName: "required",
+                Technology: "required",
+                Country: "required",
+                TrainerRate: "required",
+                VendorName: "required",
+                Address: "required",
                 Contact: {
                     required: true,
-                    maxlength: 12
+                    maxlength: 15
                 },
                 FileName: {
                     validateFile: true
                 }
+            },
+
+            highlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    $("#select2-" + elem.attr("id") + "-container").parent().removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            },
+            errorPlacement: function (error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent();
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
             }
+        });
+
+        $('select').select2({}).on("change", function (e) {
+            $(this).valid()
         });
 
         $.validator.addMethod('validateFile', function (value, element, param) {
