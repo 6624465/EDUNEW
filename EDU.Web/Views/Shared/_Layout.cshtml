@@ -55,6 +55,10 @@
             background: url('@Url.Content("~/Images/ajax-loader.gif")') 50% 50% no-repeat #DCD6D6;
             opacity: .8;
         }
+        span.error {
+            outline: none;
+            border-bottom-color: #F44336 !important;
+        }
     </style>
     @RenderSection("Styles", false)
     @{
@@ -360,7 +364,7 @@
     <script src="@Url.Content("~/Scripts/select2.full.min.js")"></script>
     @RenderSection("SectionScripts", false)
     <script type="text/javascript">
-        //$("select").select2();
+        $("select").select2();
         $(window).load(function () {
             $(".loader").fadeOut("slow");
         });
