@@ -162,7 +162,7 @@
 </div>
 <script type="text/javascript">
     $(function () {
-
+        $("select").select2();
 
         $('#StartDt').datetimepicker({
             icons: {
@@ -215,7 +215,9 @@
             </text>
         }
     });
-
+    $('select').select2({}).on("change", function (e) {
+        $(this).valid()
+    });
     //function DisbledExamOrVocherFields() {
     //    $('#rdoPrivate').prop('checked', false);
     //    $('#rdoPublic').prop('checked', false);
