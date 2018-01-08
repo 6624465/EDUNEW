@@ -20,6 +20,7 @@ namespace EDU.Web.ViewModels.DashboardModel
         public decimal? TotalRevenue { get; set; }
         public decimal? AchievedRevenue { get; set; }
         public decimal? YetToAchieveRevenue { get; set; }
+        public int id { get; set; }
     }
 
 

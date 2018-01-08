@@ -201,7 +201,7 @@
                                     <input type="hidden" id="eventid" name="eventid" />
                                     @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
                                  new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
-                                 "Select Event No.", new { @class = "form-control input-sm", onchange = "ChangeEventID(this);" })
+                                 "Select Event No.", new { @class = "form-control input-sm chosen-select", onchange = "ChangeEventID(this);" })
                                 </div>
                                 <div class="col-md-2">
                                     @if (Session["UserID"].ToString().ToUpper() == "ADMIN")
@@ -706,6 +706,8 @@
 @section SectionScripts {
     <script type="text/javascript">
         $(function () {
+            $("#TrainingConfirmationID").chosen();
+            $.validator.setDefaults({ ignore: ":hidden:not(select)" })
             $('#Payment1Dt,#Payment2Dt,#Payment3Dt,#Payment1Dte,#Payment2Dte,#Payment3Dte').datetimepicker({
                 icons: {
                     time: 'fa fa-clock-o',
@@ -792,14 +794,10 @@
             $('#lblmsg').hide();
             $('#TrainingDetails').hide();
             var trid = $('#TrainingConfirmationID').val();
-            debugger;
             if (trid != null && trid != '') {
                 $('#TrainingDetails').show();
                 $('#lblmsg').show();
             }
-
-            debugger;
-
         });
 
         function SaveRegistrationPublic() {
@@ -808,7 +806,6 @@
             }
         }
         function SaveRegistrationPrivate() {
-            debugger;
             if ($('#frmRegistrationPrivate').valid()) {
                 $('#frmRegistrationPrivate').submit();
             }
@@ -823,7 +820,6 @@
         }
 
         function mouseover(el) {
-            debugger;
             $(el).popover("show");
         }
 
@@ -856,7 +852,6 @@
             }
                 $('#webGridDisplay').hide();
             };
-            debugger;
             var cname = '@coursename';
             if (cname != null && cname.toLowerCase().indexOf("rental") != -1)
             {
@@ -874,7 +869,6 @@
 
         function calculateTotalAmount(el)
         {
-            debugger;
             var id=el.id;
             var row=id.split("_")
             var rowvalue=row[1];
@@ -935,7 +929,6 @@
         function calculateTotalAmoutPrivate()
         {
             var p = $('#registrationPrivate_0__Amount').val();
-            debugger;
             var amount = ($('#registrationPrivate_0__Amount').val() != "" && !isNaN($('#registrationPrivate_0__Amount').val()) ? parseInt($('#registrationPrivate_0__Amount').val()):0)
             var vatpercent = ($('#registrationPrivate_0__VATPercent').val() != "" && !isNaN($('#registrationPrivate_0__VATPercent').val()) ? parseInt($('#registrationPrivate_0__VATPercent').val()):0)
             var whtpercent = ($('#registrationPrivate_0__WHTPercent').val() != "" && !isNaN($('#registrationPrivate_0__WHTPercent').val()) ? parseInt($('#registrationPrivate_0__WHTPercent').val()):0)
@@ -943,7 +936,6 @@
             var vatamount=0;
             if(vatpercent>100)
             {
-                debugger;
                 var vatpercent=0;
                 swal("vatpercent can not greater than 100!", "")
                 $('#registrationPrivate_0__VATPercent').val('');
@@ -985,9 +977,9 @@
             $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
         }
 
-
+        debugger;
         $('#frmregistration').validate({
-            rules:{
+            rules: {                
                 TrainingConfirmationID:{
                     required:true
                 }
@@ -1010,7 +1002,6 @@
             }
         });
         $.validator.addMethod("Payment1", function (Value, element) {
-            debugger;
             var payment1 = parseInt($('#registrationPrivate_0__Payment1').val());
             if (payment1 && !isNaN(payment1) && (Value == "" || Value == null)) {
                 return false

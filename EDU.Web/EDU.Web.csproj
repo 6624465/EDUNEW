@@ -1546,6 +1546,8 @@
     <Content Include="Scripts\Charts\jquery.jqRangeSlider.min.js" />
     <Content Include="Scripts\Charts\jquery.mousewheel.js" />
     <Content Include="Scripts\Charts\prettify.js" />
+    <Content Include="Scripts\chosen.css" />
+    <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\Core\app.js" />
     <Content Include="Scripts\Core\bootstrap-rating.min.js" />
     <Content Include="Scripts\Core\c3.min.js" />

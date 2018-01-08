@@ -125,7 +125,7 @@ namespace EDU.Web.Dashboard.Controllers
                     }
                 }
 
-                return View(reportListbyYear.OrderBy(x=>x.CountryName));
+                return View(reportListbyYear.OrderBy(x => x.CountryName));
             }
             catch (Exception ex)
             {
@@ -292,6 +292,20 @@ namespace EDU.Web.Dashboard.Controllers
                 }
             }
             ViewData["CountryData"] = countrylist;
+
+            List<blist> bcList = new List<blist>() { new blist() { id = 1, code = "BD" },
+                                                    new blist() { id = 2, code = "KH" },
+                                                    new blist() { id = 3, code = "MM" },
+                                                    new blist() { id = 4, code = "SL" },
+                                                    new blist() { id = 5, code = "PK" },
+                                                    new blist() { id = 6, code = "PH" },
+                                                    new blist() { id = 7, code = "VN" },
+                                                    new blist() { id = 8, code = "LA" },
+                                                    new blist() { id = 9, code = "SG" },
+                                                    new blist() { id = 10, code = "IN" }};
+            list= list.Join(bcList, a => a.CountryName, b => b.code, (a, b) => new TotalRevenueVM() {Year= a.Year, Country=a.Country, CountryName=a.CountryName, TotalRevenue=a.TotalRevenue, AchievedRevenue=a.AchievedRevenue, YetToAchieveRevenue=a.YetToAchieveRevenue, id=b.id }).OrderBy(x=>x.id).ToList<TotalRevenueVM>();
+            
+
             return View(list);
         }
         public ActionResult DashBoard(Int16 country, int month, int year)
@@ -577,4 +591,9 @@ namespace EDU.Web.Dashboard.Controllers
         }
     }
 
+    public class blist
+    {
+        public int id { get; set; }
+        public string code { get; set; }
+    }
 }
