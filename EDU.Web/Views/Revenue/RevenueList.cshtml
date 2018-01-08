@@ -58,7 +58,7 @@
                             <div class="col-md-1">
                                 @Html.DropDownListFor(x => x.FirstOrDefault().CurrencyCode,
                              new SelectList((List<EDU.Web.Models.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
-                             "Select Currency", new { @class = "form-control input-sm" })
+                             "Select", new { @class = "form-control input-sm" })
                             </div>
                             @*<div class="col-md-2">
                                     <label class="control-label">CONVERSION RATE</label>
