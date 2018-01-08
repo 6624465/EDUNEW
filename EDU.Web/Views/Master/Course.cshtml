@@ -18,7 +18,7 @@
                     <div class="col-md-4">
                         @Html.DropDownListFor(x => x.Country,
                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-                    "Select Country", new { @class = "form-control ", onchange = "CountryChange(this);" })
+                    "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                     <div class="col-md-4">
                         @Html.DropDownListFor(x => x.Product,
                     new SelectList((List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"], "Id", "ProductName"),
-                    "Select Product", new { @class = "form-control", onchange = "ProductChange(this);" })
+                    "Select Product", new { @class = "form-control input-sm", onchange = "ProductChange(this);" })
                     </div>
                 </div>
             </div>
@@ -45,14 +45,14 @@
                             @Html.DropDownListFor(x => x.CourseName,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control", disabled = "disabled", onchange = "CourseChange(this)" })
+                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)" })
                         }
                         else
                         {
                             @Html.DropDownListFor(x => x.CourseName,
                                                  new SelectList((List<EZY.EDU.Contract.Course>)ViewData["CourseData"], "Id", "CourseName"),
                                              "Select Course",
-                                        new { @class = "form-control", onchange = "CourseChange(this)" })
+                                        new { @class = "form-control input-sm", onchange = "CourseChange(this)" })
                         }
                     </div>
                     <div class="col-md-1">
@@ -68,7 +68,7 @@
                     </label>
                     <div class="col-md-7">
                         @Html.TextAreaFor(x => x.CourseDescription,
-                    new { @class = "form-control", placeholder = "Course Name" })@*, onblur = "ValidateCourseName(true)"*@
+                    new { @class = "form-control input-sm", placeholder = "Course Name" })@*, onblur = "ValidateCourseName(true)"*@
                 </div>
                 <div class="col-md-1">
                     <button type="button" class="btn btn-danger btn-xs waves-effect" onclick="disableCourseText()"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
@@ -81,7 +81,7 @@
                     <span>No. Of Days</span>
                 </label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(x => x.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select", new { @class = "form-control input-sm" })
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
                 </label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.PublicPrice,
-                    new { @class = "form-control numCss", placeholder = "Public Price", @Value = Convert.ToInt64(Model.PublicPrice) })
+                    new { @class = "form-control numCss input-sm", placeholder = "Public Price", @Value = Convert.ToInt64(Model.PublicPrice) })
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
                 </label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.PrivatePrice,
-                    new { @class = "form-control numCss", placeholder = "Private Price", @Value = Convert.ToInt64(Model.PrivatePrice) })
+                    new { @class = "form-control numCss input-sm", placeholder = "Private Price", @Value = Convert.ToInt64(Model.PrivatePrice) })
                 </div>
             </div>
         </div>

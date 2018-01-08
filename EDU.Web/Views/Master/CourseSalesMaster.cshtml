@@ -48,7 +48,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Country,
                                           new SelectList(Model.branchList, "BranchID", "BranchName"),
                                        "Select Country",
-                                      new { @class = "form-control", onchange = "CountryChange(this);" })
+                                      new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Product,
                                        new SelectList(Model.eduProductList, "Id", "ProductName"),
                                           "Select Product",
-                                        new { @class = "form-control", onchange = "ProductChange(this);" })
+                                        new { @class = "form-control input-sm", onchange = "ProductChange(this);" })
                                     </div>
                                 </div>
                             </div>
@@ -76,14 +76,14 @@
                                             @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
-                                new { @class = "form-control", disabled = "disabled", onchange = "CourseChange(this)" })
+                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)" })
                                         }
                                         else
                                         {
                                             @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                                  new SelectList(Model.courseList, "Id", "CourseName"),
                                              "Select Course",
-                                        new { @class = "form-control", onchange = "CourseChange(this)" })
+                                        new { @class = "form-control input-sm", onchange = "CourseChange(this)" })
                                         }
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                         @Html.DropDownListFor(x => x.courseSalesMaster.Month,
                                        new SelectList(listMonths, "Value", "Text"),
                                        "Select Month",
-                                      new { @class = "form-control", @disabled = "disabled" })
+                                      new { @class = "form-control input-sm", @disabled = "disabled" })
                                     </div>
                                 </div>
                             </div>
@@ -152,8 +152,8 @@
                                     </label>
                                     <div class="col-md-4">
                                         <div class="input-group date" id="StartDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, new { @class = "form-control dtCss" })
-                                            <span class="input-group-addon">
+                                            @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, new { @class = "form-control input-sm dtCss" })
+                                            <span class="input-group-addon input-sm">
                                                 <i class="ion ion-calendar"></i>
                                             </span>
                                         </div>
@@ -163,8 +163,8 @@
                                     </label>
                                     <div class="col-md-4">
                                         <div class="input-group date" id="EndDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, new { @class = "form-control dtCss" })
-                                            <span class="input-group-addon">
+                                            @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, new { @class = "form-control input-sm dtCss" })
+                                            <span class="input-group-addon input-sm">
                                                 <i class="ion ion-calendar"></i>
                                             </span>
                                         </div>
@@ -188,7 +188,7 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextBoxFor(x => x.courseSalesMaster.LeadsOnHead, "{0:#.#}",
-                                    new { @class = "form-control numCss" })
+                                    new { @class = "form-control input-sm numCss" })
                                     </div>
                                     <label class="col-md-2 control-label">
                                         <span class="pull-right">Registered</span>
@@ -205,7 +205,7 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
-                                      new { @class = "form-control", @style = "overflow-y: scroll" })
+                                      new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
 
                                     </div>
                                     <label class="col-md-2 control-label">
@@ -213,7 +213,7 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextAreaFor(x => x.courseSalesMaster.RegisteredRemarks,
-                                    new { @class = "form-control", @style = "overflow-y: scroll" })
+                                    new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
                                     </div>
                                 </div>
                             </div>
@@ -224,14 +224,14 @@
                                     </label>
                                     <div class="col-md-4">
                                         @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
-                                 new { @class = "form-control numCss", @readonly = "readonly" })
+                                 new { @class = "form-control input-sm numCss", @readonly = "readonly" })
                                     </div>
                                     <div class="col-md-2 control-label">
                                         <label class="pull-right">Revenue</label>
                                     </div>
                                     <div class="col-md-4">
                                         @Html.TextBoxFor(x => x.courseSalesMaster.Revenue, "{0:#.#}",
-                        new { @class = "form-control numCss" })
+                        new { @class = "form-control input-sm numCss" })
                                     </div>
                                 </div>
                             </div>
@@ -242,27 +242,12 @@
                                     </label>
                                     <div class="col-md-4">
                                         <div class="input-group date" id="RegClosingDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate, new { @class = "form-control dtCss" })
-                                            <span class="input-group-addon">
+                                            @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate, new { @class = "form-control input-sm dtCss" })
+                                            <span class="input-group-addon input-sm">
                                                 <i class="ion ion-calendar"></i>
                                             </span>
                                         </div>
                                     </div>
-
-                                    @*<label class="col-md-2 control-label">
-                                            <span class="pull-right">Closing Date</span>
-                                        </label>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <div class="input-group date" id="RegClosingDt">
-                                                    @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate,
-                                                   new { @class = "form-control dtCss" })
-                                                    <span class="input-group-addon">
-                                                        <span class="fa fa-calendar"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>*@
                                     <div class="col-md-2">
                                     </div>
                                     <div class="col-md-4">
@@ -298,9 +283,7 @@
     }
 </div>
 <style type="text/css">
-    .select2 {
-        width: 522px !important;
-    }
+    
 </style>
 
 @section SectionScripts{
