@@ -48,7 +48,7 @@
                                     <span class="pull-right">Month</span>
                                 </label>
                                 <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);" })
+                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);", @style = "width:60%" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Year</span>

@@ -23,7 +23,7 @@
                         <span class="pull-right">Customer Name</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.CustomerName, new { @class = "form-control", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.CustomerName, new { @class = "form-control input-sm", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                         <span class="pull-right">Invoice Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Invoice Amount", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "Invoice Amount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         <span class="pull-right">Paid Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.PaidAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "PaidAmount", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.PaidAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "PaidAmount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         <span class="pull-right">Balance Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.BalanceAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Balance Amount", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.BalanceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "Balance Amount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                         <span class="pull-right">Other Receivables</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "Other Receivables Amount", onkeyup = "CalculateTotalAmount()" })
+                        @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "Other Receivables Amount", onkeyup = "CalculateTotalAmount()" })
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                         <span class="pull-right">Total Amount</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.TotalAmount, "{0:#.#}", new { @class = "form-control numCss", @placeholder = "TotalAmount", @disabled = "disabled" })
+                        @Html.TextBoxFor(x => x.TotalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "TotalAmount", @disabled = "disabled" })
                     </div>
                 </div>
             </div>
@@ -85,8 +85,8 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="DDate">
-                            @Html.TextBoxFor(x => x.DueDate, new { @class = "form-control dtCss" })
-                            <span class="input-group-addon">
+                            @Html.TextBoxFor(x => x.DueDate, new { @class = "form-control input-sm dtCss" })
+                            <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
                         </div>
@@ -100,8 +100,8 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="RDate">
-                            @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control dtCss",@required=true })
-                            <span class="input-group-addon">
+                            @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control input-sm dtCss", @required=true })
+                            <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
                         </div>
@@ -114,7 +114,7 @@
                         <span class="pull-right">Reference Doc</span>
                     </label>
                     <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control", id = Profile })
+                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control input-sm", id = Profile })
                         &nbsp;@Model.ReferenceDoc
                         @Html.HiddenFor(x => x.ReferenceDoc)
                     </div>

@@ -320,7 +320,7 @@
                     success: function (data) {
                         debugger;
                         $('#CourseName').empty();
-                        $('#CourseName').append($('<option></option>').val('').html(''));
+                        //$('#CourseName').append($('<option></option>').val('').html(''));
                         $('#NoOfDays').val('');
                         $.each(data, function (key, value) {
                             $('#CourseName').append($('<option></option>').val(value.Id).html(value.CourseName));
@@ -335,7 +335,7 @@
             else {
                 $('#CourseName').empty();
                 $('#CourseName').attr('disabled', 'disabled');
-                $('#CourseName').append($('<option></option>').val('').html(''));
+                //$('#CourseName').append($('<option></option>').val('').html(''));
                 $('#NoOfDays').val('');
             }
         }
