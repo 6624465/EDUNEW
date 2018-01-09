@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    WebGrid grid = new WebGrid(Model);/*, rowsPerPage: 15*/
-                                      //grid.Pager(WebGridPagerModes.All);
+    WebGrid grid = new WebGrid(Model, canPage: false);/*, rowsPerPage: 15*/
+                                                      //grid.Pager(WebGridPagerModes.All);
 }
 @functions {
     public string CheckString(string remarks)
@@ -91,7 +91,7 @@
                                 </text>)
 
                          ),
-                                tableStyle: "table")
+                                tableStyle: "table tblSearch")
                     </div>
 
                     @*<div class="row">
