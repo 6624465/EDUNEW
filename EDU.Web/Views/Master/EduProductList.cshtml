@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<EZY.EDU.Contract.EduProduct>
 
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 15);
-    grid.Pager(WebGridPagerModes.All);
+WebGrid grid = new WebGrid(Model, canSort:false); //rowsPerPage: 15
+                                                    //grid.Pager(WebGridPagerModes.All);
 }
 <div class="page">
     <div class="page-wrap">
@@ -36,13 +36,13 @@
                                 </text>),
 
                                 grid.Column("ProductName", "Product Name", canSort: true)),
-                                tableStyle: "table")
+                                tableStyle: "table tblSearch")
                     </div>
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-sm-12">
                             <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="row" style="margin-top:20px;">
