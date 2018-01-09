@@ -150,9 +150,7 @@
                             </div>
                         </div>
 
-                        <div class="row" style="margin-top:20px;">
-                        </div>
-                        <div class="css10 table-responsive">
+                        <div class="css25 table-responsive">
                             <table class="table-bordered" id="tblVendorPayment" style="white-space:nowrap">
                                 <thead>
                                     <tr>
@@ -265,111 +263,111 @@
 @section SectionScripts
     {
     <script type="text/javascript">
-        $('#tblVendorPayment').DataTable({
-            "bPaginate": false,
-
-            footerCallback: function (row, data, start, end, display) {
-                var api = this.api();
-                // Remove the formatting to get integer data for summation
-                var intVal = function (i) {
-
-                    var amt = typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '') * 1 :
-                        typeof i === 'number' ?
-                            i : 0;
-                    debugger;
-                    return amt;
-
-                };
-
-                // Total over this page
-                debugger
-                if (api.column(5).data().length) {
-                    var pageTotal5 = api
-                        .column(5, { page: 'current' })
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-                }
-                else { pageTotal5 = 0 };
-
-                // Update footer
-                $(api.column(5).footer()).html(
-                    '$ ' + pageTotal5
-                );
-
-                // Total over this page
-
-                if (api.column(6).data().length) {
-                    var pageTotal6 = api
-                        .column(6, { page: 'current' })
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-                }
-                else { pageTotal6 = 0 };
-
-                // Update footer
-                $(api.column(6).footer()).html(
-                    '$ ' + pageTotal6
-                );
-
-                // Total over this page
-
-                if (api.column(7).data().length) {
-                    var pageTotal7 = api
-                        .column(7, { page: 'current' })
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-                }
-                else { pageTotal7 = 0 };
-
-                // Update footer
-                $(api.column(7).footer()).html(
-                    '$ ' + pageTotal7
-                );
-
-                // Total over this page
-
-                if (api.column(8).data().length) {
-                    var pageTotal8 = api
-                        .column(8, { page: 'current' })
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-                }
-                else { pageTotal8 = 0 };
-
-                // Update footer
-                $(api.column(8).footer()).html(
-                    '$ ' + pageTotal8
-                );
-
-                // Total over this page
-
-                if (api.column(9).data().length) {
-                    var pageTotal9 = api
-                        .column(9, { page: 'current' })
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-                }
-                else { pageTotal9 = 0 };
-
-                // Update footer
-                $(api.column(9).footer()).html(
-                    '$ ' + pageTotal9
-                );
-            }
-        });
+        
         $(function () {
-           
+            $('#tblVendorPayment').DataTable({
+                "bPaginate": false,
+
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+
+                        var amt = typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                        debugger;
+                        return amt;
+
+                    };
+
+                    // Total over this page
+                    debugger
+                    if (api.column(5).data().length) {
+                        var pageTotal5 = api
+                            .column(5, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal5 = 0 };
+
+                    // Update footer
+                    $(api.column(5).footer()).html(
+                        '$ ' + pageTotal5
+                    );
+
+                    // Total over this page
+
+                    if (api.column(6).data().length) {
+                        var pageTotal6 = api
+                            .column(6, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal6 = 0 };
+
+                    // Update footer
+                    $(api.column(6).footer()).html(
+                        '$ ' + pageTotal6
+                    );
+
+                    // Total over this page
+
+                    if (api.column(7).data().length) {
+                        var pageTotal7 = api
+                            .column(7, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal7 = 0 };
+
+                    // Update footer
+                    $(api.column(7).footer()).html(
+                        '$ ' + pageTotal7
+                    );
+
+                    // Total over this page
+
+                    if (api.column(8).data().length) {
+                        var pageTotal8 = api
+                            .column(8, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal8 = 0 };
+
+                    // Update footer
+                    $(api.column(8).footer()).html(
+                        '$ ' + pageTotal8
+                    );
+
+                    // Total over this page
+
+                    if (api.column(9).data().length) {
+                        var pageTotal9 = api
+                            .column(9, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal9 = 0 };
+
+                    // Update footer
+                    $(api.column(9).footer()).html(
+                        '$ ' + pageTotal9
+                    );
+                }
+            });
             $('#liVendorPaymentStatusList').addClass('active');
             $("#tblVendorPayment tbody tr").each(function (i, row) {
                 debugger;

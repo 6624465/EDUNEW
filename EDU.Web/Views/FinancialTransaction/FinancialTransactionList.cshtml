@@ -6,14 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    var grid = new WebGrid(Model, rowsPerPage: 15);
-    grid.Pager(WebGridPagerModes.All);
-
-
-    var ftCount = Model.Count();
-    var myArray = (List<decimal?>)ViewData["Summary"];
-}
 @functions {
     public string CheckString(string remarks)
     {
@@ -38,7 +30,7 @@
     public string ConvertToInt64Percent(decimal? data)
     {
         if (data != null && data != 0)
-            return new HtmlString(Convert.ToInt64(data) + " %" ).ToString();
+            return new HtmlString(Convert.ToInt64(data) + " %").ToString();
         else
             return null;
     }
@@ -84,6 +76,20 @@
         color: #D73925;
         /*font-family: 'Bebas Neue';*/
     }
+
+    #tblFinancialTransaction {
+        font-weight: bold;
+    }
+
+        #tblFinancialTransaction td {
+            padding: 2px;
+        }
+
+        #tblFinancialTransaction thead {
+            background-color: powderblue;
+            font-weight: bold;
+            color: blue;
+        }
 </style>
 
 @using (Html.BeginForm("SaveFinancialTransaction", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancial", name = "frmFinancial", enctype = "multipart/form-data" }))
@@ -114,312 +120,393 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row css25">
-                            <div class="col-md-12">
-                                <div id="gridContent" style="overflow-x: scroll; width: 100%">
-                                    @grid.GetHtml(
-                                     tableStyle: "table table-striped table-bordered",
-                                     mode: WebGridPagerModes.All,
-                                     columns:
-                                        grid.Columns(
-
-                                              grid.Column("", "Action", format: @<text>
+                        <div class="css25 table-responsive">
+                            <table class="table-bordered" id="tblFinancialTransaction" style="white-space:nowrap">
+                                <thead>
+                                    <tr>
+                                        <td style='width:60px;'>#Action</td>
+                                        <td style='width:90px;'>Event ID</td>
+                                        <td style='width:100px;'>Country Name</td>
+                                        <td style='width:80px;'>Rev Amount</td>
+                                        <td style='width:80px;'>Trainer Fee Amt.</td>
+                                        <td style='width:80px;'>Trainer Airfare Amt.</td>
+                                        <td style='width:80px;'>Hotel Bookings Amt.</td>
+                                        <td style='width:80px;'>Trainer Claims Amt.</td>
+                                        <td style='width:80px;'>Regional exp Amt.</td>
+                                        <td style='width:80px;'>Courseware Material Amt.</td>
+                                        <td style='width:80px;'>Gross Profit</td>
+                                        <td style='width:80px;'>P&L Percent</td>
+                                        <td style='width:100px;'>Rev Ref Doc</td>
+                                        <td style='width:100px;'>Rev Remarks</td>
+                                        <td style='width:100px;'>Trainer Exp Ref Doc</td>
+                                        <td style='width:100px;'>Trainer Exp Remarks</td>
+                                        <td style='width:100px;'>Trainer Airfare Ref Doc</td>
+                                        <td style='width:100px;'>Trainer Airfare Remarks</td>
+                                        <td style='width:100px;'>Hotel Bookings Ref Doc</td>
+                                        <td style='width:100px;'>Hotel Bookings Remarks</td>
+                                        <td style='width:100px;'>Trainer Claims Ref Doc</td>
+                                        <td style='width:100px;'>Trainer Claims Remarks</td>
+                                        <td style='width:100px;'>Regional exp Ref Doc</td>
+                                        <td style='width:100px;'>Regional exp Remarks</td>
+                                        <td style='width:100px;'>Courseware Material Ref Doc</td>
+                                        <td style='width:100px;'>Courseware Material Remarks</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int recCount = -1;}
+                                    @foreach (var item in Model)
+                                    {
+                                        { recCount = recCount + 1; }
+                                        <tr>
+                                            <td>
                                                 @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
                                                 {
                                                     <input type="hidden" id="hdnFinancialTransactionId" value="@item.FinancialTransactionId" />
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.trainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.TrainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                 }
-                                            </text>, style: "col3Width", canSort: false),
-
-                                        grid.Column("TrainingConfirmationID", "Event ID",
-                                        format:
-                                        @<text>
-                                            <div style='width:100px;'>
-                                                <span>@item.TrainingConfirmationID</span>
-                                            </div>
-                                        </text>, canSort: true),
-                                            grid.Column("CountryName", "Country Name",
-                                        format:
-                                        @<text>
-                                            <div style='width:100px;'>
-                                                <span>@item.CountryName</span>
-                                            </div>
-                                        </text>, canSort: true),
-                                                grid.Column("TotalRevenueAmount", "Rev Amount", format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64dollar(item.TotalRevenueAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true, style: "center"),
-
-                                                grid.Column("TrainerExpensesAmount", " Trainer Fee Amt.", format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64dollar(item.TrainerExpensesAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true, style: "center"),
-                                                   grid.Column("TrainerTravelExpensesAmount", "Trainer Airfare Amt.", format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64dollar(item.TrainerTravelExpensesAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true, style: "center"),
-
-                                                grid.Column("LocalExpensesAmount", "Hotel Bookings Amt.", format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64dollar(item.LocalExpensesAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true, style: "center"),
-
-                                                 grid.Column("TrainerClaimsAmount", "Trainer Claims Amt.", format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64dollar(item.TrainerClaimsAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true, style: "center"),
-
-                                                 grid.Column("MiscExpensesAmount", "Regional exp Amt.", format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64dollar(item.MiscExpensesAmount)
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true, style: "center"),
-                                             grid.Column("CoursewareMaterialAmount", " Courseware Material Amt.", format:
-                                            @<text>
-                                                <div style='width:100px;'>
-                                                    <span class="center">
-                                                        @ConvertToInt64dollar(item.CoursewareMaterialAmount)
-                                                    </span>
-                                                </div>
-                                            </text>, canSort: true, style: "center"),
-
-                                            grid.Column("GrossProfit", "Gross Profit",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            @ConvertToInt64dollar(item.GrossProfit)
-                                                        </span>
-                                                    </div>
-
-                                                </text>, canSort: true, style: "center"),
-                                            grid.Column("ProfitAndLossPercent", "P&L Percent",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                            <span class="center">
-                                                                @ConvertToInt64Percent(item.ProfitAndLossPercent)
-                                                            </span>
-                                                    </div>
-                                                </text>, canSort: true, style: "center"),
-
-                                                grid.Column("TotalRevenueReferenceDoc", "Rev Ref Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("TotalRevenueRemarks", "Rev Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TotalRevenueRemarks)" data-original-title="" title="">@item.TotalRevenueRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.TotalRevenueRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("TrainerExpensesReferenceDoc", "Trainer Exp Ref Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("TrainerExpensesRemarks", "Trainer Exp Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        @if (item.TrainerExpensesRemarks != null && item.TrainerExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerExpensesRemarks)" data-original-title="" title="">@item.TrainerExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.TrainerExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("TrainerTravelExpensesReferenceDoc", "Trainer Airfare Ref Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("TrainerTravelExpensesRemarks", "Trainer Airfare Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        @if (item.TrainerTravelExpensesRemarks != null && item.TrainerTravelExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerTravelExpensesRemarks)" data-original-title="" title="">@item.TrainerTravelExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.TrainerTravelExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("LocalExpensesReferenceDoc", "Hotel Bookings Ref Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("LocalExpensesRemarks", "Hotel Bookings Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        @if (item.LocalExpensesRemarks != null && item.LocalExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.LocalExpensesRemarks)" data-original-title="" title="">@item.LocalExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.LocalExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("TrainerClaimsReferenceDoc", "Trainer Claims Ref Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerClaims/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("MiscExpensesRemarks", "Trainer Claims Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        @if (item.TrainerClaimsRemarks != null && item.TrainerClaimsRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerClaimsRemarks)" data-original-title="" title="">@item.TrainerClaimsRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.TrainerClaimsRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("MiscExpensesReferenceDoc", "Regional exp Ref Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("MiscExpensesRemarks", "Regional exp Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.MiscExpensesRemarks)" data-original-title="" title="">@item.MiscExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.MiscExpensesRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("CoursewareMaterialReferenceDoc", "Courseware Material Ref Doc",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        <span class="center">
-                                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
-                                                        </span>
-                                                    </div>
-                                                </text>, canSort: true),
-                                                grid.Column("CoursewareMaterialRemarks", "Courseware Material Remarks",
-                                                format:
-                                                @<text>
-                                                    <div style='width:100px;'>
-                                                        @if (item.CoursewareMaterialRemarks != null && item.CoursewareMaterialRemarks.ToString().Length > 20)
-                                                        {
-                                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.CoursewareMaterialRemarks)" data-original-title="" title="">@item.CoursewareMaterialRemarks.ToString().Substring(0, 20)...</span>
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@item.CoursewareMaterialRemarks</span>
-                                                        }
-                                                    </div>
-                                                </text>, canSort: true)
-                                                     ))
-                                </div>
-                            </div>
-                            <div class="col-sm-12 css10">
-                                <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                            </div>
+                                            </td>
+                                            <td>
+                                                @item.TrainingConfirmationID
+                                            </td>
+                                            <td>
+                                                @item.CountryName
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.TotalRevenueAmount)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.TrainerExpensesAmount)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.TrainerTravelExpensesAmount)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.LocalExpensesAmount)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.TrainerClaimsAmount)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.MiscExpensesAmount)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.CoursewareMaterialAmount)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64dollar(item.GrossProfit)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64Percent(item.ProfitAndLossPercent)
+                                            </td>
+                                            <td>
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
+                                            </td>
+                                            <td>
+                                                @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TotalRevenueRemarks)" data-original-title="" title="">@item.TotalRevenueRemarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.TotalRevenueRemarks</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
+                                            </td>
+                                            <td>
+                                                @if (item.TrainerExpensesRemarks != null && item.TrainerExpensesRemarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerExpensesRemarks)" data-original-title="" title="">@item.TrainerExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.TrainerExpensesRemarks</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
+                                            </td>
+                                            <td>
+                                                @if (item.TrainerTravelExpensesRemarks != null && item.TrainerTravelExpensesRemarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerTravelExpensesRemarks)" data-original-title="" title="">@item.TrainerTravelExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.TrainerTravelExpensesRemarks</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
+                                            </td>
+                                            <td>
+                                                @if (item.LocalExpensesRemarks != null && item.LocalExpensesRemarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.LocalExpensesRemarks)" data-original-title="" title="">@item.LocalExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.LocalExpensesRemarks</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerClaims/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                            </td>
+                                            <td>
+                                                @if (item.TrainerClaimsRemarks != null && item.TrainerClaimsRemarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerClaimsRemarks)" data-original-title="" title="">@item.TrainerClaimsRemarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.TrainerClaimsRemarks</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                            </td>
+                                            <td>
+                                                @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.MiscExpensesRemarks)" data-original-title="" title="">@item.MiscExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.MiscExpensesRemarks</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
+                                            </td>
+                                            <td>
+                                                @if (item.CoursewareMaterialRemarks != null && item.CoursewareMaterialRemarks.ToString().Length > 20)
+                                                {
+                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.CoursewareMaterialRemarks)" data-original-title="" title="">@item.CoursewareMaterialRemarks.ToString().Substring(0, 20)...</span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>@item.CoursewareMaterialRemarks</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="bordertop">
+                                        <td>Summary</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-}
+                                        }
 @section SectionScripts {
     <script type="text/javascript">
         $(function () {
+            $('#tblFinancialTransaction').DataTable({
+                "bPaginate": false,
+
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+
+                        var amt = typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                        debugger;
+                        return amt;
+
+                    };
+
+                    // Total over this page
+
+                    if (api.column(3).data().length) {
+                        var pageTotal3 = api
+                            .column(3, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal3 = 0 };
+
+                    // Update footer
+                    $(api.column(3).footer()).html(
+                        '$ ' + pageTotal3
+                    );
+
+                    // Total over this page
+
+                    if (api.column(4).data().length) {
+                        var pageTotal4 = api
+                            .column(4, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal4 = 0 };
+
+                    // Update footer
+                    $(api.column(4).footer()).html(
+                        '$ ' + pageTotal4
+                    );
+
+
+                    // Total over this page
+                    debugger
+                    if (api.column(5).data().length) {
+                        var pageTotal5 = api
+                            .column(5, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal5 = 0 };
+
+                    // Update footer
+                    $(api.column(5).footer()).html(
+                        '$ ' + pageTotal5
+                    );
+
+                    // Total over this page
+
+                    if (api.column(6).data().length) {
+                        var pageTotal6 = api
+                            .column(6, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal6 = 0 };
+
+                    // Update footer
+                    $(api.column(6).footer()).html(
+                        '$ ' + pageTotal6
+                    );
+
+                    // Total over this page
+
+                    if (api.column(7).data().length) {
+                        var pageTotal7 = api
+                            .column(7, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal7 = 0 };
+
+                    // Update footer
+                    $(api.column(7).footer()).html(
+                        '$ ' + pageTotal7
+                    );
+
+                    // Total over this page
+
+                    if (api.column(8).data().length) {
+                        var pageTotal8 = api
+                            .column(8, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal8 = 0 };
+
+                    // Update footer
+                    $(api.column(8).footer()).html(
+                        '$ ' + pageTotal8
+                    );
+
+                    // Total over this page
+
+                    if (api.column(9).data().length) {
+                        var pageTotal9 = api
+                            .column(9, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal9 = 0 };
+
+                    // Update footer
+                    $(api.column(9).footer()).html(
+                        '$ ' + pageTotal9
+                    );
+
+                    // Total over this page
+
+                    if (api.column(10).data().length) {
+                        var pageTotal10 = api
+                            .column(10, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal10 = 0 };
+
+                    // Update footer
+                    $(api.column(10).footer()).html(
+                        '$ ' + pageTotal10
+                    );
+                }
+            });
+
             $('#liFinancialTransactionList').addClass('active');
 
-            $("#gridContent tbody tr").each(function (i, row) {
+            $("#tblFinancialTransaction tbody tr").each(function (i, row) {
                 debugger;
                 var $actualRow = $(row);
                 if ($actualRow.find('#hdnFinancialTransactionId').val() != -1) {
@@ -428,13 +515,6 @@
 
             });
 
-            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
-            @if (ftCount > 0)
-        {
-            <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td></td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[7])</td><td class="center">@ConvertToInt64Percent(myArray[8])</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
-            </text>
-            }
         });
 
         function ChangeMonth() {
