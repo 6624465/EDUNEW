@@ -5,7 +5,7 @@
 }
 @{
     WebGrid grid = new WebGrid(Model, canPage: false); /*rowsPerPage: 15,*/
-                                                       //grid.Pager(WebGridPagerModes.All);
+    var searchtext = (string)ViewData["SearchText"];                                  //grid.Pager(WebGridPagerModes.All);
 }
 @functions {
     public string ConvertToInt64dollar(decimal? data)
@@ -30,16 +30,16 @@
                     </div>
                 </div>
                 @*<nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a href="#" class="navbar-brand">Search</a>
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <a href="#" class="navbar-brand">Search</a>
+                            </div>
+                            <div class="collapse navbar-collapse">
+                                <input type="text" class="form-control" />
+                                <button type="button" class="btn btn-success btn-sm">Search</button>
+                            </div>
                         </div>
-                        <div class="collapse navbar-collapse">
-                            <input type="text" class="form-control" />
-                            <button type="button" class="btn btn-success btn-sm">Search</button>
-                        </div>
-                    </div>
-                </nav>*@
+                    </nav>*@
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
@@ -51,7 +51,9 @@
                             </div>
                             <div class="col-md-1">
                                 <button type="button" class="btn btn-success btn-sm" onclick="SearchData()">Search</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="ClearData()">Clear</button>
                             </div>
+
                         </div>
                     </div>
                     <div>
@@ -117,12 +119,20 @@
     {
     <script type="text/javascript">
         $(function () {
+            debugger;
             $('#liCourse').addClass('active');
+            $('#txtSearch').val('@searchtext');
+            
         });
 
-        function SearchData()
+        function SearchData() {
+            var SearchText = $('#txtSearch').val().toLowerCase();
+            window.location = '@Url.Action("CourseListSearch", "Master", new { search = "" })' + '?search=' + SearchText;
+        }
+
+        function ClearData()
         {
-            window.location = '@Url.Action("CourseListSearch", "Master", new { search = "" })' + '?search=' + $('#txtSearch').val();
+            window.location = '@Url.Action("CourseList", "Master")';
         }
 
         function AddCourse() {

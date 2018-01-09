@@ -95,7 +95,7 @@ namespace EDU.Web.Controllers
         public ViewResult CourseListSearch(string search)
         {
             var list = new CourseBO().GetList();
-
+            ViewData["SearchText"] = search;
              list = list.Where(x=>x.CountryName.ToLower().Contains(search) ||
                 x.ProductName.ToLower().Contains(search) || 
                 x.CourseName.ToLower().Contains(search) || 
