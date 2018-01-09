@@ -5,12 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    WebGrid grid = new WebGrid(Model, canPage: false); /*rowsPerPage: 15,*/
-                                                       //grid.Pager(WebGridPagerModes.All);
-
-}
-
 @functions {
     public string TypeColumn(bool isPrivate, bool isPublic, bool islvc)
     {
@@ -116,78 +110,71 @@
                         </div>
                     </div>
                     <div class="row css25">
-                        <div class="col-md-12">
-                            <div class="" style="overflow-x: scroll; width: 100%">
-                                @grid.GetHtml(
-                                columns: grid.Columns(
-
-                             grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    <div style="width:100px;">
-                                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </div>
-
-                                </text>),
-
-                    grid.Column("TrainingConfirmationID", "Event ID", canSort: true),
-                       grid.Column("CountryName", "Country Name", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @item.CountryName
-                                    </div>
-                                </text>),
-                    grid.Column("ProductName", "Product Name", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @item.ProductName
-                                    </div>
-                                </text>),
-                    grid.Column("CourseName", "Course Name", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:300px;'>
-                                        <span class="center">@item.CourseName</span>
-                                    </div>
-                                </text>, style: ""),
-                    grid.Column("NoOfStudents", "No Of Students", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:100px;'>
-                                        @item.NoOfStudents
-                                    </div>
-                                </text>, style: "center"),
-                    grid.Column("Private", "Type", format: @<text>@TypeColumn(item.Private, item.Public, item.LVC)</text>, canSort: true),
-                    grid.Column("StartDate", "Start Date", format:@<text>@validateDate(item.StartDate)</text>, canSort: true),
-                    grid.Column("EndDate", "End Date", format:@<text> @validateDate(item.EndDate) </text>, canSort: true),
-                    grid.Column("TotalNoOfDays", "Total # of days", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:100px;'>
-                                        @ConvertToInt64(item.TotalNoOfDays)
-                                    </div>
-                                </text>, style: "center"),
-                    grid.Column("TrianerName", "Trianer Name", canSort: true,
-                    format:
-                    @<text>
-                        <div style='width:100px;'>
-                            @item.TrianerName
-                        </div>
-                    </text>)),
-                                tableStyle: "table tblSearch")
-                            </div>
-                            @*<div class="row">
-                                <div class="col-sm-12">
-                                    <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                                </div>
-                            </div>*@
-                        </div>
+                        <div class="css10 table-responsive">
+                            <table class="table-bordered tblSearch" id="tnlTrainingConfirmation" style="white-space:nowrap">
+                                <thead>
+                                    <tr>
+                                        <td style='width:60px;'>#Action</td>
+                                        <td style='width:100px;'>Event ID</td>
+                                        <td style='width:100px;'>Country Name</td>
+                                        <td style='width:100px;'>Product Name</td>
+                                        <td style='width:200px;'>Course Name</td>
+                                        <td style='width:80px;'>No Of Students</td>
+                                        <td style='width:80px;'>Type</td>
+                                        <td style='width:100px;'>Start Date</td>
+                                        <td style='width:100px;'>End Date</td>
+                                        <td style='width:80px;'>Total # of days</td>
+                                        <td style='width:150px;'>Trianer Name</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div style='width:60px;'>
+                                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                                    {
+                                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @(item.TrainingConfirmationID)
+                                            </td>
+                                            <td>
+                                                @item.CountryName
+                                            </td>
+                                            <td>
+                                                @item.ProductName
+                                            </td>
+                                            <td>
+                                                @item.CourseName
+                                            </td>
+                                            <td class="center">
+                                                @item.NoOfStudents
+                                            </td>
+                                            <td>
+                                                @TypeColumn(item.Private, item.Public, item.LVC)
+                                            </td>
+                                            <td class="center">
+                                                @validateDate(item.StartDate)
+                                            </td>
+                                            <td class="center">
+                                                @validateDate(item.EndDate)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64(item.TotalNoOfDays)
+                                            </td>
+                                            <td>
+                                                @item.TrianerName
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>                                
+                            </table>
+                        </div>                        
                     </div>
                 </div>
             </div>

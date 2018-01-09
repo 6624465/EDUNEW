@@ -45,16 +45,7 @@
         .font20 {
             font-size: 20px !important;
         }
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('@Url.Content("~/Images/ajax-loader.gif")') 50% 50% no-repeat #DCD6D6;
-            opacity: .8;
-        }
+        
         span.error {
             outline: none;
             border-bottom-color: #F44336 !important;
@@ -65,6 +56,24 @@
 
     .tblSearch td {
             padding: 2px;
+        }
+            .tblSearch thead {
+                background-color:powderblue;
+                font-weight:bold;
+                color:blue;
+            }
+
+    </style>
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('@Url.Content("~/Images/ajax-loader.gif")') 50% 50% no-repeat #DCD6D6;
+            opacity: .8;
         }
     </style>
     @RenderSection("Styles", false)
