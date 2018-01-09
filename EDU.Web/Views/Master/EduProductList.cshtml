@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EZY.EDU.Contract.EduProduct>
 
 @{
-WebGrid grid = new WebGrid(Model, canSort:false); //rowsPerPage: 15
+WebGrid grid = new WebGrid(Model, canPage:false); //rowsPerPage: 15
                                                     //grid.Pager(WebGridPagerModes.All);
 }
 <div class="page">
