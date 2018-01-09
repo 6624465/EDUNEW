@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 15);
-    grid.Pager(WebGridPagerModes.All);
+    WebGrid grid = new WebGrid(Model, canPage:false); /*rowsPerPage: 15,*/
+                                                      //grid.Pager(WebGridPagerModes.All);
 }
 @functions {
     public string ConvertToInt64dollar(decimal? data)
@@ -64,11 +64,11 @@
                     </text>, style: "", canSort: true)),
                                 tableStyle: "table")
                     </div>
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-sm-12">
                             <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

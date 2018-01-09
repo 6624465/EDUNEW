@@ -16,7 +16,7 @@ namespace EDU.Web.Controllers
             return View();
         }
 
-        public ActionResult ViewReport()
+        public PartialViewResult ViewReport()
         { 
             //string branchID, string dateFrom, string dateTo, string Url
             var url = "DNeX.DeclarationK1Chit"; // Url; 
@@ -25,7 +25,13 @@ namespace EDU.Web.Controllers
             //ViewBag.DateFrom = dateFrom;
             //ViewBag.DateTo = dateTo;
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
-            return View("ViewReport");
+            return PartialView("ViewReport");
         }
+        public ActionResult VendorsAndTrainersReport()
+        {
+            return View();
+        }
+
+
     }
 }

@@ -1794,6 +1794,7 @@
     <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusList.cshtml" />
     <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusDetail.cshtml" />
     <Content Include="Views\Dashboard\ProfitAndLoss.cshtml" />
+    <Content Include="Views\Report\VendorsAndTrainersReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
