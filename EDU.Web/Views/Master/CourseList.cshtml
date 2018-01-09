@@ -62,7 +62,7 @@
                     grid.Column("PrivatePrice", "Private Price", format: @<text>
                                         <span class="display-mode">@ConvertToInt64dollar(item.PrivatePrice) </span>
                     </text>, style: "", canSort: true)),
-                                tableStyle: "table")
+                                tableStyle: "table tblSearch")
                     </div>
                     @*<div class="row">
                         <div class="col-sm-12">
@@ -96,6 +96,7 @@
         $(function () {
             $('#liCourse').addClass('active');
         });
+
         function AddCourse() {
             debugger;
             $.ajax({

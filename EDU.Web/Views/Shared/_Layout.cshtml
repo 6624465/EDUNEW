@@ -348,6 +348,8 @@
     <script src="@Url.Content("~/Scripts/Core/index.init.js")"></script>
     <script src="@Url.Content("~/Scripts/layout.js")"></script>
     <script src="@Url.Content("~/Scripts/select2.full.min.js")"></script>
+    <script src="@Url.Content("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js")"></script>
+
     @RenderSection("SectionScripts", false)
     <script type="text/javascript">
         $("select").select2();
@@ -362,7 +364,36 @@
 
             displayLinks();
             hideLinksByRole();
+
+            $('.tblSearch').dataTable({
+                "bPaginate": false
+            });
+
+            $('input.global_filter').on('keyup click', function () {
+                filterGlobal();
+            });
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).parents('tr').attr('data-column'));
+            });
         });
+
+        function filterGlobal() {
+
+            $('.tblSearch').DataTable().search(
+                $('#global_filter').val(),
+                $('#global_regex').prop('checked'),
+                $('#global_smart').prop('checked')
+            ).draw();
+        }
+
+        function filterColumn(i) {
+            $('.tblSearch').DataTable().column(i).search(
+                $('#col' + i + '_filter').val(),
+                $('#col' + i + '_regex').prop('checked'),
+                $('#col' + i + '_smart').prop('checked')
+            ).draw();
+        }
 
         function displayLinks()
         {
