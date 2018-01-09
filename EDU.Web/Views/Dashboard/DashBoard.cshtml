@@ -4,6 +4,8 @@
     ViewBag.Title = "DashBoard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    var cyear = Convert.ToInt16(DateTime.Now.Year.ToString());
+
     var productTotalRevenueByMonth = Model.productTotalRevenueByMonth;
     var productRevenueByMonth = Model.productRevenueByMonth;
     var productRevenueToAchieve = Model.productRevenueToAchieve;
@@ -79,7 +81,7 @@
                                     <span class="pull-right">Month</span>
                                 </label>
                                 <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.productTotalRevenueByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);", @style = "width:60%" })
+                                    @Html.DropDownListFor(x => x.productTotalRevenueByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);", @style = "width:70%" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Year</span>
@@ -294,14 +296,17 @@
 
             var monthsArray = [1,2,3,4,5,6,7,8,9,10,11,12];
             var currentMonthNum = @Model.productRevenueToAchieve.FirstOrDefault().Month;
-
+            var year = @Model.productRevenueToAchieve.FirstOrDefault().Year;
             var querySelector = '';
             for (var i = 1; i < monthsArray.length; i++) {
                 if (monthsArray[i] > currentMonthNum)
                     querySelector += '.' + monthsArray[i] + '_Css' + (i < 11 ? ',' : '');
             }
-
+            @if (cyear == Model.productRevenueToAchieve.FirstOrDefault().Year)
+            {<text>
             $(querySelector).addClass('changecolor');
+            </text>
+            }
 
             var count = 0;
             @foreach(var item in productTotalRevenueByMonth)
@@ -335,7 +340,7 @@
                 valueFormatString: "MMM"
             },
             toolTip: {
-                borderColor: "red"   //change color 
+                borderColor: "red"   //change color
             },
             axisY:{
                 title: "",
@@ -383,7 +388,7 @@
             data: [{
                 type: "pie",
                 startAngle: 240,
-                indexLabel: "{label} {y}",                
+                indexLabel: "{label} {y}",
                 dataPoints: [
                     { y: @achievedtotal, label: "Achieved", color: "Red"},
                     { y: @yettoachieve, label: "Yet To Achieve", color: "Black"}

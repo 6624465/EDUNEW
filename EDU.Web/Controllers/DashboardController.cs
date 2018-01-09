@@ -443,17 +443,17 @@ namespace EDU.Web.Dashboard.Controllers
                     TotalRevenue = item.TotalRevenue,
                     MonthlyTarget = item.MonthlyTarget,
                     JanAmount = item.JanAmount,
-                    FebAmount = (cMonth >= 2 ? item.FebAmount : yetToAchieve),
-                    MarAmount = (cMonth >= 3 ? item.MarAmount : yetToAchieve),
-                    AprAmount = (cMonth >= 4 ? item.AprAmount : yetToAchieve),
-                    MayAmount = (cMonth >= 5 ? item.MayAmount : yetToAchieve),
-                    JuneAmount = (cMonth >= 6 ? item.JuneAmount : yetToAchieve),
-                    JulyAmount = (cMonth >= 7 ? item.JulyAmount : yetToAchieve),
-                    AugAmount = (cMonth >= 8 ? item.AugAmount : yetToAchieve),
-                    SepAmount = (cMonth >= 9 ? item.SepAmount : yetToAchieve),
-                    OctAmount = (cMonth >= 10 ? item.OctAmount : yetToAchieve),
-                    NovAmount = (cMonth >= 11 ? item.NovAmount : yetToAchieve),
-                    DecAmount = (cMonth >= 12 ? item.DecAmount : yetToAchieve)
+                    FebAmount = (year != DateTime.UtcNow.Year? item.FebAmount: (cMonth >= 2 ? item.FebAmount : yetToAchieve)),
+                    MarAmount = (year != DateTime.UtcNow.Year? item.MarAmount : (cMonth >= 3 ? item.MarAmount : yetToAchieve)),
+                    AprAmount = (year != DateTime.UtcNow.Year ? item.AprAmount : (cMonth >= 4 ? item.AprAmount : yetToAchieve)),
+                    MayAmount = (year != DateTime.UtcNow.Year ? item.MayAmount : (cMonth >= 5 ? item.MayAmount : yetToAchieve)),
+                    JuneAmount = (year != DateTime.UtcNow.Year ? item.JuneAmount : (cMonth >= 6 ? item.JuneAmount : yetToAchieve)),
+                    JulyAmount = (year != DateTime.UtcNow.Year ? item.JulyAmount : (cMonth >= 7 ? item.JulyAmount : yetToAchieve)),
+                    AugAmount = (year != DateTime.UtcNow.Year ? item.AugAmount : (cMonth >= 8 ? item.AugAmount : yetToAchieve)),
+                    SepAmount = (year != DateTime.UtcNow.Year ? item.SepAmount : (cMonth >= 9 ? item.SepAmount : yetToAchieve)),
+                    OctAmount = (year != DateTime.UtcNow.Year ? item.OctAmount : (cMonth >= 10 ? item.OctAmount : yetToAchieve)),
+                    NovAmount = (year != DateTime.UtcNow.Year ? item.NovAmount : (cMonth >= 11 ? item.NovAmount : yetToAchieve)),
+                    DecAmount = (year != DateTime.UtcNow.Year ? item.DecAmount : (cMonth >= 12 ? item.DecAmount : yetToAchieve))
                 });
             }
 
