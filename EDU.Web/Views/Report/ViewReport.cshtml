@@ -10,8 +10,11 @@
     string BranchID = Convert.ToString(ViewBag.BranchID);
     string DeclarationNo = Convert.ToString(ViewBag.DeclarationNo);
 }
+@*<script src="@Url.Content("~/Scripts/jquery-2.2.4.min.js")"></script>*@
+<script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/MvcReportViewer.js")"></script>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+@*<html>
 <head>
     <title> View Report </title>
     <script src="@Url.Content("~/Scripts/jquery-2.2.4.min.js")"></script>
@@ -33,6 +36,32 @@
             style = "border: none;"
         }).ControlSettings(settings)
 </body>
-</html>
+</html>*@
 
 
+<div class="modal-dialog"style="width:55%">
+    <!-- Modal content-->
+    <div class="modal-content" style="height:80%">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">@ViewBag.Title</h4>
+        </div>
+        <div class="modal-body" id="VendorandTrainerModalBody" >
+         
+            @Html.MvcReportViewer(url,
+        new
+        {
+            DeclarationNo = DeclarationNo,
+            BranchID = BranchID
+        },
+        new
+        {
+            Height = 420,
+            Width = "100%",
+            style = "border: none;"
+        }).ControlSettings(settings)
+           
+    </div>
+</div>
+
+</div>
