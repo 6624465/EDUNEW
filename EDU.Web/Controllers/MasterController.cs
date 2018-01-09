@@ -92,6 +92,21 @@ namespace EDU.Web.Controllers
         }
 
         [HttpGet]
+        public ViewResult CourseListSearch(string search)
+        {
+            var list = new CourseBO().GetList();
+
+             list = list.Where(x=>x.CountryName.ToLower().Contains(search) ||
+                x.ProductName.ToLower().Contains(search) || 
+                x.CourseName.ToLower().Contains(search) || 
+                x.NoOfDays.ToString().ToLower().Contains(search) || 
+                x.PublicPrice.ToString().ToLower().Contains(search) || 
+                x.PrivatePrice.ToString().ToLower().Contains(search))
+                .ToList();
+            return View("CourseList", list);
+        }
+
+        [HttpGet]
         public PartialViewResult Course(int? Id)
         {
             ViewData["ProductData"] = new EduProductBO().GetList();

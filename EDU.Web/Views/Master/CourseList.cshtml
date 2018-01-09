@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    WebGrid grid = new WebGrid(Model, canPage:false); /*rowsPerPage: 15,*/
-                                                      //grid.Pager(WebGridPagerModes.All);
+    WebGrid grid = new WebGrid(Model, canPage: false); /*rowsPerPage: 15,*/
+                                                       //grid.Pager(WebGridPagerModes.All);
 }
 @functions {
     public string ConvertToInt64dollar(decimal? data)
@@ -29,8 +29,31 @@
                         }
                     </div>
                 </div>
+                @*<nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a href="#" class="navbar-brand">Search</a>
+                        </div>
+                        <div class="collapse navbar-collapse">
+                            <input type="text" class="form-control" />
+                            <button type="button" class="btn btn-success btn-sm">Search</button>
+                        </div>
+                    </div>
+                </nav>*@
                 <div class="box-body">
-
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Search</span>
+                            </label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control input-sm" id="txtSearch" name="txtSearch" />
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success btn-sm" onclick="SearchData()">Search</button>
+                            </div>
+                        </div>
+                    </div>
                     <div>
                         @grid.GetHtml(
                                 columns: grid.Columns(
@@ -62,13 +85,13 @@
                     grid.Column("PrivatePrice", "Private Price", format: @<text>
                                         <span class="display-mode">@ConvertToInt64dollar(item.PrivatePrice) </span>
                     </text>, style: "", canSort: true)),
-                                tableStyle: "table tblSearch")
+                                tableStyle: "table")
                     </div>
                     @*<div class="row">
-                        <div class="col-sm-12">
-                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                        </div>
-                    </div>*@
+                            <div class="col-sm-12">
+                                <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
+                            </div>
+                        </div>*@
                 </div>
             </div>
         </div>
@@ -96,6 +119,11 @@
         $(function () {
             $('#liCourse').addClass('active');
         });
+
+        function SearchData()
+        {
+            window.location = '@Url.Action("CourseListSearch", "Master", new { search = "" })' + '?search=' + $('#txtSearch').val();
+        }
 
         function AddCourse() {
             debugger;
@@ -307,7 +335,7 @@
         };
 
         function CountryChange(el) {
-            $("#Product").select2().select2("val", '');           
+            $("#Product").select2().select2("val", '');
             $('#CourseName').select2().empty();
             //$('#CourseName').append($('<option></option>').val('').html(''));
         }
@@ -380,25 +408,3 @@
         };
     </script>
 }
-<style>
-    .Grid-Footer > td {
-        padding-top: 10px;
-        text-align: right;
-        margin-bottom: 10px;
-    }
-
-        .Grid-Footer > td > a {
-            background: #fff;
-            display: inline-block;
-            border-radius: 1px;
-            padding: 6px 12px;
-            font-size: 16px;
-            cursor: pointer;
-            border: 2px solid #eeeeee;
-        }
-
-            .Grid-Footer > td > a:hover {
-                color: #3f51b5;
-                text-decoration: none;
-            }
-</style>
