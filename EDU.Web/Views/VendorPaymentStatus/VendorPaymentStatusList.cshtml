@@ -6,13 +6,6 @@
 }
 
 @{
-    WebGrid grid = new WebGrid(Model.VendorPayment, rowsPerPage: 15);
-    grid.Pager(WebGridPagerModes.All);
-    var vPayment = Model.VendorPayment.Count();
-    var myArray =(List<decimal?>) ViewData["Summary"];
-}
-
-@{
     var listMonths = new List<SelectListItem>()
                                           {
                                            new SelectListItem {Text = "All",   Value = "0"},
@@ -68,6 +61,19 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+    #tblVendorPayment {
+        font-weight: bold;
+    }
+
+        #tblVendorPayment td {
+            padding: 2px;
+        }
+
+        #tblVendorPayment thead {
+            background-color: powderblue;
+            font-weight: bold;
+            color: blue;
+        }
 </style>
 @functions {
     public string ConvertToInt64dollar(decimal? data)
@@ -146,130 +152,101 @@
 
                         <div class="row" style="margin-top:20px;">
                         </div>
-                        <div class="css10" style="overflow-x: scroll; width: 100%" id="gridContent">
-                            @grid.GetHtml(
-                     columns: grid.Columns(
-                          grid.Column("", "#Action", canSort: false,
-                                         format:
-                                        @<text>
-                                            <div style='width:80px;'>
-                                                @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
-                                                {
-                                                    <input type="hidden" id="hdnvenderpaymentId" value="@item.VendorPaymentId" />
-                                                    <button type="button" id="btn_edit_@item.WebGrid.Rows.IndexOf(item)" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[item.WebGrid.Rows.IndexOf(item)])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                    if (item.VendorPaymentId > 0)
+                        <div class="css10 table-responsive">
+                            <table class="table-bordered" id="tblVendorPayment" style="white-space:nowrap">
+                                <thead>
+                                    <tr>
+                                        <td style='width:60px;'>#Action</td>
+                                        <td style='width:90px;'>Event ID</td>
+                                        <td style='width:150px;'>Vendor Name</td>
+                                        <td style='width:100px;'>Product Name</td>
+                                        <td style='width:200px;'>Course Name</td>
+                                        <td style='width:80px;'>Invoice Amount</td>
+                                        <td style='width:80px;'>Paid Amount</td>
+                                        <td style='width:80px;'>Balance Amount</td>
+                                        <td style='width:80px;'>Other Receivables</td>
+                                        <td style='width:80px;'>Total Amount</td>
+                                        <td style='width:80px;'>Due Date</td>
+                                        <td style='width:80px;'>Receipt Date</td>
+                                        <td style='width:100px;'>Reference Doc</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int recCount = -1;}
+                                    @foreach (var item in Model.VendorPayment)
+                                    {
+                                        { recCount = recCount + 1; }
+                                        <tr>
+                                            <td>
+                                                <div style='width:60px;'>
+                                                    @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
                                                     {
-                                                        <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                        <input type="hidden" id="hdnvenderpaymentId" value="@item.VendorPaymentId" />
+                                                        <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[recCount])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        if (item.VendorPaymentId > 0)
+                                                        {
+                                                            <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                        }
                                                     }
-                                                }
-                                            </div>
-                                        </text>),
-                         grid.Column("TrainingConfirmationID", "Event ID", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:90px;'>
-                                            @(item.TrainingConfirmationID)
-                                        </div>
-                                    </text>),
-                             grid.Column("VendorName", "Vendor Name", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:150px;'>
-                                            @GetCustomerName(item.TrainingConfirmationID)
-                                        </div>
-                                    </text>),
-                          grid.Column("ProductName", "Product Name", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:90px;'>
-                                            @GetProductName(item.TrainingConfirmationID)
-                                        </div>
-                                    </text>),
-                             grid.Column("CourseName", "Course Name", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:300px;'>
-                                            @GetCourseName(item.TrainingConfirmationID)
-                                        </div>
-                                    </text>),
-                             grid.Column("InvoiceAmount", "Invoice Amount", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:88px;'>
-                                            <span class="center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @item.TrainingConfirmationID
+                                            </td>
+                                            <td>
+                                                @GetCustomerName(item.TrainingConfirmationID)
+                                            </td>
+                                            <td>
+                                                @GetProductName(item.TrainingConfirmationID)
+                                            </td>
+                                            <td>
+                                                @GetCourseName(item.TrainingConfirmationID)
+                                            </td>
+                                            <td class="center">
                                                 @ConvertToInt64dollar(item.InvoiceAmount)
-                                            </span>
-                                        </div>
-                                    </text>, style: "center"),
-                             grid.Column("PaidAmount", "Paid Amount", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:78px;'>
-                                            <span class="center">
+                                            </td>
+                                            <td class="center">
                                                 @ConvertToInt64dollar(item.PaidAmount)
-                                            </span>
-                                        </div>
-                                    </text>, style: "center"),
-                             grid.Column("BalanceAmount", "Balance Amount", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:100px;'>
-                                            <span class="center">
+                                            </td>
+                                            <td class="center">
                                                 @ConvertToInt64dollar(item.BalanceAmount)
-                                            </span>
-                                        </div>
-                                    </text>, style: "center"),
-                             grid.Column("OtherReceivablesAmount", "Other Receivables", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:120px;'>
-                                            <span class="center">
+                                            </td>
+                                            <td class="center">
                                                 @ConvertToInt64dollar(item.OtherReceivablesAmount)
-                                            </span>
-                                        </div>
-                                    </text>, style: "center"),
-                              grid.Column("TotalAmount", "Total Amount", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:75px;'>
-                                            <span class="center">
+                                            </td>
+                                            <td class="center">
                                                 @ConvertToInt64dollar(item.TotalAmount)
-                                            </span>
-                                        </div>
-                                    </text>, style: "center"),
-                              grid.Column("DueDate", "Due Date", canSort: true,
-                                     format: @<text>
-                                <div style='width:70px;'>
-                                    <span class="center">
-                                        @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy"))
-                                    </span>
-                                </div>
-                                    </text>
-                                     , style: "center"),
-                              grid.Column("ReceiptDate", "Receipt Date", canSort: true,
-                                     format: @<text>
-                                <div style='width:90px;'>
-                                    <span class="center">
-                                        @(item.DueDate == null ? null : item.DueDate.ToString("dd/MM/yyyy"))
-                                    </span>
-                                </div>
-                                    </text>
-                                     , style: "center"),
-                             grid.Column("ReferenceDoc", "Reference Doc",
-                             format:
-                            @<text>
-                                <div style='width:100px;'>
-                                    <span class="center">
-                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
-                                    </span>
-                                </div>
-                            </text>, canSort: true)),
-                                         tableStyle: "table")
-                        </div>
-                        <div class="row css10">
-                            <div class="col-sm-12">
-                                <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                            </div>
+                                            </td>
+                                            <td class="center">
+                                                @(item.DueDate == null ? null : item.DueDate.Value.ToString("dd/MM/yyyy"))
+                                            </td>
+                                            <td class="center">
+                                                @(item.ReceiptDate == null ? null : item.ReceiptDate.Value.ToString("dd/MM/yyyy"))
+                                            </td>
+                                            <td class="center">
+                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="bordertop">
+                                        <td>Summary</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -288,24 +265,119 @@
 @section SectionScripts
     {
     <script type="text/javascript">
+        $('#tblVendorPayment').DataTable({
+            "bPaginate": false,
+
+            footerCallback: function (row, data, start, end, display) {
+                var api = this.api();
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+
+                    var amt = typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                    debugger;
+                    return amt;
+
+                };
+
+                // Total over this page
+                debugger
+                if (api.column(5).data().length) {
+                    var pageTotal5 = api
+                        .column(5, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                }
+                else { pageTotal5 = 0 };
+
+                // Update footer
+                $(api.column(5).footer()).html(
+                    '$ ' + pageTotal5
+                );
+
+                // Total over this page
+
+                if (api.column(6).data().length) {
+                    var pageTotal6 = api
+                        .column(6, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                }
+                else { pageTotal6 = 0 };
+
+                // Update footer
+                $(api.column(6).footer()).html(
+                    '$ ' + pageTotal6
+                );
+
+                // Total over this page
+
+                if (api.column(7).data().length) {
+                    var pageTotal7 = api
+                        .column(7, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                }
+                else { pageTotal7 = 0 };
+
+                // Update footer
+                $(api.column(7).footer()).html(
+                    '$ ' + pageTotal7
+                );
+
+                // Total over this page
+
+                if (api.column(8).data().length) {
+                    var pageTotal8 = api
+                        .column(8, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                }
+                else { pageTotal8 = 0 };
+
+                // Update footer
+                $(api.column(8).footer()).html(
+                    '$ ' + pageTotal8
+                );
+
+                // Total over this page
+
+                if (api.column(9).data().length) {
+                    var pageTotal9 = api
+                        .column(9, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                }
+                else { pageTotal9 = 0 };
+
+                // Update footer
+                $(api.column(9).footer()).html(
+                    '$ ' + pageTotal9
+                );
+            }
+        });
         $(function () {
            
             $('#liVendorPaymentStatusList').addClass('active');
-            $("#gridContent tbody tr").each(function (i, row) {
+            $("#tblVendorPayment tbody tr").each(function (i, row) {
                 debugger;
                 var $actualRow = $(row);
                 if ($actualRow.find('#hdnvenderpaymentId').val() != -1) {
                     $actualRow.css('background-color', '#b3f7da');
                 }
-            });
-             var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
-            @if (vPayment > 0)
-            {
-                <text>
-                $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td><td></td><td></td></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[0]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[1])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[2])</span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[3]) </span></td><td class="center"><span class="center">@ConvertToInt64dollar(myArray[4]) </span></td><td></td><td></td><td></td></tr>');
-                </text>
-            }
-
+            });             
         });
 
         function mouseleave(el) {

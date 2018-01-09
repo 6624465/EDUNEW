@@ -86,12 +86,17 @@
         display: block;
     }
 
-    #customerPayment {
+    #tblCustomerPayment {
         font-weight: bold;
     }
 
-        #customerPayment td {
-            padding:2px;
+        #tblCustomerPayment td {
+            padding: 2px;
+        }
+        #tblCustomerPayment thead {
+            background-color: powderblue;
+            font-weight: bold;
+            color: blue;
         }
 </style>
 @functions {
@@ -177,7 +182,7 @@
                         <div class="row" style="margin-top:20px;">
                         </div>
                         <div class="css10 table-responsive">
-                            <table class="table-bordered" id="customerPayment" style="white-space:nowrap">
+                            <table class="table-bordered" id="tblCustomerPayment" style="white-space:nowrap">
                                 <thead>
                                     <tr>
                                         <td style='width:60px;'>#Action</td>
@@ -284,7 +289,7 @@
 @section SectionScripts
     {
     <script type="text/javascript">
-        $('#customerPayment').DataTable({
+        $('#tblCustomerPayment').DataTable({
             "bPaginate": false,
 
             footerCallback: function (row, data, start, end, display) {
@@ -390,7 +395,7 @@
 
         $(function () {
             $('#liCustomerPaymentStatusList').addClass('active');
-            $("#customerPayment tbody tr").each(function (i, row) {
+            $("#tblCustomerPayment tbody tr").each(function (i, row) {
                 var $actualRow = $(row);
                 if ($actualRow.find('#hdncustomerpaymentId').val() != -1) {
                     $actualRow.css('background-color', '#b3f7da');
