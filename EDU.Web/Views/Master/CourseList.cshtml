@@ -5,7 +5,7 @@
 }
 @{
     WebGrid grid = new WebGrid(Model, canPage: false); /*rowsPerPage: 15,*/
-                                                       //grid.Pager(WebGridPagerModes.All);
+    var searchtext = (string)ViewData["SearchText"];                                  //grid.Pager(WebGridPagerModes.All);
 }
 @functions {
     public string ConvertToInt64dollar(decimal? data)
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-md-1">
                                 <button type="button" class="btn btn-success btn-sm" onclick="SearchData()">Search</button>
-                                <button type="button" class="btn btn-danger btn-sm" onclick="ClearData()">Clear</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="ClearData()">Clear</button>
                             </div>
 
                         </div>
@@ -119,15 +119,19 @@
     {
     <script type="text/javascript">
         $(function () {
+            debugger;
             $('#liCourse').addClass('active');
+            $('#txtSearch').val('@searchtext');
+            
         });
 
         function SearchData() {
-            window.location = '@Url.Action("CourseListSearch", "Master", new { search = "" })' + '?search=' + $('#txtSearch').val();
+            var SearchText = $('#txtSearch').val().toLowerCase();
+            window.location = '@Url.Action("CourseListSearch", "Master", new { search = "" })' + '?search=' + SearchText;
         }
 
         function ClearData()
-        { 
+        {
             window.location = '@Url.Action("CourseList", "Master")';
         }
 
