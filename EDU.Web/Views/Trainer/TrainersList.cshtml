@@ -3,14 +3,18 @@
     ViewBag.Title = "TrainersList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{
-    WebGrid grid = new WebGrid(Model, canPage: false);/*, rowsPerPage: 15*/
-                                                      //grid.Pager(WebGridPagerModes.All);
-}
 @functions {
     public string CheckString(string remarks)
     {
         return remarks.Replace(System.Environment.NewLine, "<br/>");
+    }
+
+    public string ConvertToInt64dollar(decimal? data)
+    {
+        if (data != null && data > 0)
+            return new HtmlString("$ " + Convert.ToInt64(data.Value)).ToString();
+        else
+            return null;
     }
 }
 <div class="page">
@@ -28,77 +32,85 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="" style="overflow-x: scroll; width: 100%">
-                        @grid.GetHtml(
-                                columns: grid.Columns(
-
-                                    grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                        {
-                                            <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Trainer?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                        }
-                                    </div>
-                                </text>),
-
-                    grid.Column("TrainerName", "Trainer Name", canSort: true),
-                    grid.Column("Technology", "Technology", canSort: true),
-                    grid.Column("CountryName", "Country Name", canSort: true),
-                    grid.Column("TrainerRate", "Trainer Rate", format: (item) => new HtmlString("$" + Convert.ToInt64(item.TrainerRate)), canSort: true),
-                    grid.Column("VendorName", "Vendor Name", canSort: true),
-
-                    grid.Column("Address", "Address", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:140px;'>
-                                        @if (item.Address != null && item.Address.ToString().Length > 20)
-                                        {
-                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Address" data-content="@CheckString(item.Address)" data-original-title="" title="">@item.Address.ToString().Substring(0, 20)...</span>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <span>@item.Address</span>
-                                        }
-                                    </div>
-                                </text>),
-                    grid.Column("Contact", "Contact", canSort: true),
-                        grid.Column("Profile", "Profile", format:
-                        @<text>
-                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
-                        </text>
-                         , canSort: true),
-
-                                     grid.Column("Remarks", "Remarks", canSort: true,
-                                format:
-                                @<text>
-                                    <div style='width:140px;'>
-                                        @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
-                                        {
+                    <div class="css10 table-responsive">
+                        <table class="table-bordered tblSearch" id="tblTrainer" style="white-space:nowrap">
+                            <thead>
+                                <tr>
+                                    <td style='width:60px;'>#Action</td>
+                                    <td style='width:150px;'>Trainer Name</td>
+                                    <td style='width:150px;'>Technology</td>
+                                    <td style='width:150px;'>Country Name</td>
+                                    <td style='width:100px;'>Trainer Rate</td>
+                                    <td style='width:150px;'>Vendor Name</td>
+                                    <td style='width:150px;'>Address</td>
+                                    <td style='width:100px;'>Contact</td>
+                                    <td style='width:150px;'>Profile</td>
+                                    <td style='width:150px;'>Remarks</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                            {
+                                                <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Trainer?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.TrainerName
+                                        </td>
+                                        <td>
+                                            @item.Technology
+                                        </td>
+                                        <td>
+                                            @item.CountryName
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(item.TrainerRate)
+                                        </td>
+                                        <td>
+                                            @item.VendorName
+                                        </td>
+                                        <td>
+                                            @if (item.Address != null && item.Address.ToString().Length > 20)
+                                            {
+                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                    <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Address" data-content="@CheckString(item.Address)" data-original-title="" title="">@item.Address.ToString().Substring(0, 20)...</span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span>@item.Address</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.Contact
+                                        </td>
+                                        <td>
+                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
+                                        </td>
+                                        <td>
+                                           @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
+                                           {
                                             <a style="cursor:pointer;text-decoration:underline;">
                                                 <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
                                             </a>
-                                        }
-                                        else
-                                        {
+                                           }
+                                           else
+                                           {
                                             <span>@item.Remarks</span>
-                                        }
-                                    </div>
-                                </text>)
-
-                         ),
-                                tableStyle: "table tblSearch")
+                                           }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
 
-                    @*<div class="row">
-                            <div class="col-sm-12">
-                                <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                            </div>
-                        </div>*@
+
 
                     @*<div class="row css10">
                         <div class="col-sm-12 pull-left">
