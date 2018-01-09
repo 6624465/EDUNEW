@@ -3,10 +3,6 @@
     ViewBag.Title = "CourseList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{
-    WebGrid grid = new WebGrid(Model, canPage: false); /*rowsPerPage: 15,*/
-    var searchtext = (string)ViewData["SearchText"];                                  //grid.Pager(WebGridPagerModes.All);
-}
 @functions {
     public string ConvertToInt64dollar(decimal? data)
     {
@@ -16,6 +12,9 @@
             return "N/A";
     }
 }
+<style>
+    
+</style>
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">
@@ -41,7 +40,7 @@
                         </div>
                     </nav>*@
                 <div class="box-body">
-                    <div class="row">
+                    @*<div class="row">
                         <div class="form-group">
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Search</span>
@@ -55,45 +54,54 @@
                             </div>
 
                         </div>
+                    </div>*@
+                    <div class="css10 table-responsive">
+                        <table class="table-bordered tblSearch" id="tblCourse" style="white-space:nowrap">
+                            <thead>
+                                <tr>
+                                    <td style='width:60px;'>#Action</td>
+                                    <td style='width:90px;'>Country</td>
+                                    <td style='width:150px;'>Product</td>
+                                    <td style='width:90px;'>Course Name</td>
+                                    <td style='width:200px;'>No Of Days</td>
+                                    <td style='width:88px;'>Public Price</td>
+                                    <td style='width:78px;'>Private Price</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                                {
+                                                    <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                }
+                                        </td>
+                                        <td>
+                                            @item.CountryName
+                                        </td>
+                                        <td>
+                                            @item.ProductName
+                                        </td>
+                                        <td>
+                                           @item.CourseName
+                                        </td>
+                                        <td class="center">
+                                            @item.NoOfDays
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(item.PublicPrice)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(item.PrivatePrice)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>                            
+                        </table>
                     </div>
-                    <div>
-                        @grid.GetHtml(
-                                columns: grid.Columns(
-
-                                      grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                    {
-                                        <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                    }
-                                </text>),
-
-                     grid.Column("CountryName", "Country", canSort: true),
-                    grid.Column("ProductName", "Product", canSort: true),
-                    grid.Column("CourseName", "Course Name", canSort: true),
-                    grid.Column("NoOfDays", "No Of Days",
-                    format:
-                    @<text>
-                        <div style='width:80px;'>
-                            @item.NoOfDays
-                        </div>
-                    </text>
-                    , canSort: true, style: "center"),
-                    grid.Column("PublicPrice", "Public Price", format: @<text>
-                                        <span class="display-mode">@ConvertToInt64dollar(item.PublicPrice) </span>
-                    </text>, style: "", canSort: true),
-                    grid.Column("PrivatePrice", "Private Price", format: @<text>
-                                        <span class="display-mode">@ConvertToInt64dollar(item.PrivatePrice) </span>
-                    </text>, style: "", canSort: true)),
-                                tableStyle: "table")
-                    </div>
-                    @*<div class="row">
-                            <div class="col-sm-12">
-                                <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                            </div>
-                        </div>*@
                 </div>
             </div>
         </div>
@@ -121,19 +129,7 @@
         $(function () {
             debugger;
             $('#liCourse').addClass('active');
-            $('#txtSearch').val('@searchtext');
-            
         });
-
-        function SearchData() {
-            var SearchText = $('#txtSearch').val().toLowerCase();
-            window.location = '@Url.Action("CourseListSearch", "Master", new { search = "" })' + '?search=' + SearchText;
-        }
-
-        function ClearData()
-        {
-            window.location = '@Url.Action("CourseList", "Master")';
-        }
 
         function AddCourse() {
             debugger;
