@@ -109,10 +109,9 @@
                     <img src="@Url.Content("~/Css/ionicons-2.0.1/png/512/android-contact.png")" alt="admin-pic">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    @*<li><a href="javascript:;"><span class="ion ion-person">&nbsp;&nbsp;</span>Profile</a></li>
-                        <li><a href="javascript:;"><span class="ion ion-settings">&nbsp;&nbsp;</span>Settings</a></li>
+                    <li><a href="javascript:;"><span class="ion ion-person">&nbsp;&nbsp;</span>@(Session["UserID"])</a></li>
+                        <li><a href="javascript:;"><span class="ion ion-star">&nbsp;&nbsp;</span>@(Session["UserName"])</a></li>
                         <li class="divider"></li>
-                        <li><a href="javascript:;"><span class="ion ion-lock-combination">&nbsp;&nbsp;</span>Lock Screen</a></li>*@
                     <li><a href="@Url.Content("~/Layout/LogOut")"><span class="ion ion-power">&nbsp;&nbsp;</span>LogOut</a></li>
                 </ul>
             </li>
