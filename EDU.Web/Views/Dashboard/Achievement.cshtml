@@ -170,7 +170,7 @@
             //Tooltip//
             $('#jqChartdoughnut').bind('tooltipFormat', function (e, data) {
                 return '<b>' + data.dataItem[0] + '</b><br />' +
-                       '$ '+data.value;
+                     "<b>$ " + data.value + "</b>";
             });
             //Tooltip//
             var i = 0;
@@ -252,7 +252,7 @@
             });
             //Tooltip//
             $('#jqChart').bind('tooltipFormat', function (e, data) {
-                return "$ " + data.y ;
+                return "<b>$ " + data.y + "</b>";
             });
             //Tooltip//
             var count = 0;
@@ -343,7 +343,7 @@
             });
             //Tooltip//
             $('#jqChart' + count).bind('tooltipFormat', function (e, data) {
-                return "$ " + data.y ;
+                return "<b>$ " + data.y + "</b>";
             });
             //Tooltip//
             count++;
