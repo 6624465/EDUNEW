@@ -31,11 +31,18 @@
     }
 
     .highcharts-credits {
-        display: none !important
+        display: none !important;
     }
 
     .highcharts-axis-title {
-        display: none !important
+        display: none !important;
+    }
+
+    .dot {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        display: inline-block;
     }
 </style>
 <div class="page page-forms-elements">
@@ -79,6 +86,16 @@
                             <div id="container">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="dot" style="background-color: blue;"><span style="padding-left:30px;font-size:20px">Revenue</span></div>
+
+                            <br />
+                            <div class="dot css5" style="background-color: orange;"><span style="padding-left:30px;font-size:20px">Expenses</span></div>
+                            <br />
+                            <div class="dot css5" style="background-color: forestgreen;"><span style="padding-left:30px;font-size:20px">Profit</span></div>
+                            <br />
+                            <div class="dot css5" style="background-color: red;"><span style="padding-left:30px;font-size:20px">Loss</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,12 +109,12 @@
             @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
             {
                 <text>
-            $('#Country').attr('disabled','disabled');
-             </text>
+            $('#Country').attr('disabled', 'disabled');
+            </text>
             }
         });
         function ChangeMonth() {
-            window.location = '@Url.Action("ProfitAndLoss", "Dashboard", new { month = "", year = "", country = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() +"&country=" + $('#Country').val();
+            window.location = '@Url.Action("ProfitAndLoss", "Dashboard", new { month = "", year = "", country = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
         };
         Highcharts.chart('container', {
             chart: {
@@ -142,27 +159,27 @@
                 ]
             },
          {
-                name: 'Expenses',
-                color: "orange",
-                data: [
-                @foreach (var item in Model)
+             name: 'Expenses',
+             color: "orange",
+             data: [
+             @foreach (var item in Model)
                     {
                         <text>
-                            @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
-                        </text>
+                         @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
+                     </text>
                 }]
-            },
+         },
          {
-                name: 'profit',
-                color: "green",
-                data: [
-                @foreach (var item in Model)
+             name: 'profit',
+             color: "green",
+             data: [
+             @foreach (var item in Model)
                     {
                         <text>
-                            @(item.GrossProfit > 0?item.GrossProfit : 0),
-                        </text>
+                         @(item.GrossProfit > 0?item.GrossProfit : 0),
+                     </text>
                     }]
-            },
+         },
             {
                 name: 'loss',
                 color: "red",
