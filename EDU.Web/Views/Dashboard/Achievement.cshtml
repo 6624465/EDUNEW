@@ -34,7 +34,7 @@
                                 <span class="pull-right">Year</span>
                             </label>
                             <div class="col-md-1">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }),  new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
             window.location = '@Url.Action("Achievement", "Dashboard", new { year = "" })' + '?year=' + $('#Year').val();
         };
         $(document).ready(function () {
-            var fillStyles = ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2', 
+            var fillStyles = ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2',
                 '#bcb7c1', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
                 '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
                 '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
@@ -125,7 +125,7 @@
             for (var i = 0; i < @productData.Count(); i++) {
                 $container.append('<div class="row css10" style="height: 20px; padding-left:10px;" ><div class="col-md-1 round" style="height: 20px; background:' + fillStyles[i] + ';" id="answerdiv' + $container.children().length + '"><div class="col-md-11" style="padding-left:35px; padding-top:2px; white-space:nowrap"><b>' + myArray[i].ProductName + '</b></div></div></div>');
             }
-                
+
             $('#jqChartdoughnut').jqChart({
                 title: { text: '' },
                 legend: {
@@ -142,7 +142,7 @@
                         type: 'doughnut',
                         innerExtent: 0.5,
                         outerExtent: 1.0,
-                        fillStyles: ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2', 
+                        fillStyles: ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2',
                             '#bcb7c1', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
                             '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
                             '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
@@ -167,7 +167,12 @@
                     }
                 ]
             });
-          
+            //Tooltip//
+            $('#jqChartdoughnut').bind('tooltipFormat', function (e, data) {
+                return '<b>' + data.dataItem[0] + '</b><br />' +
+                       '$ '+data.value;
+            });
+            //Tooltip//
             var i = 0;
             $('#jqChart').jqChart({
                 title: { text: '' },
@@ -218,7 +223,7 @@
                                              '',
                                                  </text>
                                          }
-                                    ],
+                        ],
                         labels: {
 
                         }
@@ -227,7 +232,7 @@
                 series: [
                     {
                         type: 'column',
-                        fillStyles: ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2', 
+                        fillStyles: ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2',
                             '#bcb7c1', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
                             '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
                             '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
@@ -245,10 +250,11 @@
                     }
                 ]
             });
+            //Tooltip//
             $('#jqChart').bind('tooltipFormat', function (e, data) {
                 return "$ " + data.y ;
             });
-
+            //Tooltip//
             var count = 0;
             @foreach (var item in CountryData)
                 {
@@ -283,14 +289,14 @@
                         },
                                 </text>
                              }
-                        ],
+                    ],
                     title: {
-                                     text: 'Products',
+                        text: 'Products',
                         font: '14px sans-serif',
                         fillStyle: 'red'
                     },
                     border: {
-                                     lineWidth: 2,
+                        lineWidth: 2,
                         strokeStyle: 'green'
                     },
                     font: '12px sans-serif',
@@ -311,13 +317,13 @@
                                 '',
                                 </text>
                             }
-                    ],
+                        ],
                     }
                 ],
                 series: [
                     {
                         type: 'column',
-                        fillStyles: ['#fb0000', '#00a65a', '#8cb1f3', '#333333', '#8a2be2', 
+                        fillStyles: ['#fb0000', '#00a65a', '#8cb1f3', '#333333', '#8a2be2',
                             '#bcb7c1', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
                             '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
                             '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
@@ -335,9 +341,11 @@
                     }
                 ]
             });
+            //Tooltip//
             $('#jqChart' + count).bind('tooltipFormat', function (e, data) {
                 return "$ " + data.y ;
             });
+            //Tooltip//
             count++;
             </text>
         }
