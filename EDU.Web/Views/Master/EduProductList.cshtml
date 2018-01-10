@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<EZY.EDU.Contract.EduProduct>
 
 @{
-WebGrid grid = new WebGrid(Model, canPage:false); //rowsPerPage: 15
-                                                    //grid.Pager(WebGridPagerModes.All);
+    WebGrid grid = new WebGrid(Model, canPage: false); //rowsPerPage: 15
+                                                       //grid.Pager(WebGridPagerModes.All);
 }
 <div class="page">
     <div class="page-wrap">
@@ -20,32 +20,38 @@ WebGrid grid = new WebGrid(Model, canPage:false); //rowsPerPage: 15
                         }
                     </div>
                 </div>
+
                 <div class="box-body">
-                    <div class="row">
-                        @grid.GetHtml(
-                                columns: grid.Columns(
+                    <div class="css10 table-responsive">
+                        <table class="table-bordered tblSearch" id="tblProduct" style="white-space:nowrap;width:100%">
+                            <thead style="cursor:pointer">
+                                <tr>
+                                    <td style='width:60px;'>#Action</td>
+                                    <td style='width:150px;'>Product</td>
 
-                                    grid.Column("", "#Action", canSort: false,
-                                format:
-                                @<text>
-                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                    {
-                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditEduProduct(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteProductCategory(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                    }
-                                </text>),
-
-                                grid.Column("ProductName", "Product Name", canSort: true)),
-                                tableStyle: "table tblSearch")
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                            {
+                                                <button class="btn btn-xs btn-success waves-effect" onclick="EditEduProduct(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteProductCategory(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.ProductName
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                    @*<div class="row">
-                        <div class="col-sm-12">
-                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                        </div>
-                    </div>*@
+
                 </div>
-            </div>
-            <div class="row" style="margin-top:20px;">
             </div>
         </div>
     </div>
@@ -176,12 +182,12 @@ WebGrid grid = new WebGrid(Model, canPage:false); //rowsPerPage: 15
 
 <style>
     .center {
-    margin: auto;
-    width: 35%;
-    border: 3px solid gray;
-    padding: 10px;
-    border-radius: 20px;
-}
+        margin: auto;
+        width: 35%;
+        border: 3px solid gray;
+        padding: 10px;
+        border-radius: 20px;
+    }
 
     .Grid-Footer > td {
         padding-top: 10px;
