@@ -5,11 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var ProductData = (List<EZY.EDU.Contract.EduProduct>)ViewData["ProductList"];
-    var count = 0;
 
-    var totalrevenue = 0;
-
-    var totalRevenueArray = new List<Decimal>();
 
 }
 @functions {
@@ -129,173 +125,148 @@
                                 <div class="tab-content">
                                     @for (int j = 0; j < ProductData.Count(); j++)
                                     {
-                                        totalrevenue = 0;
                                         <div class="tab-pane" id="div_@j">
                                             <div class="clearfix">
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <div style="overflow-x: scroll; width: 100%" id="gridContent">
-                                                            @{
-                                                                WebGrid grid = new WebGrid(Model.Where(x => x.ProductName == @ProductData[j].ProductName), canPage: false);/*, rowsPerPage: 15*/
-                                                                                                                                                                           //grid.Pager(WebGridPagerModes.All);
-
-                                                                count = Model.Where(x => x.ProductName == @ProductData[j].ProductName).Count();
-                                                                foreach (var ritem in Model.Where(x => x.ProductName == @ProductData[j].ProductName))
-                                                                {
-                                                                    totalrevenue += Convert.ToInt32(ritem.Revenue);
-                                                                }
-
-                                                                var tblId = "table_" + j;
-                                                                <input type="hidden" id="hdn_@j" value="@totalrevenue">
-                                                            }
-
-                                                            @grid.GetHtml(
-                          columns: grid.Columns(
-
-                               grid.Column("", "#Action", canSort: false,
-                          format:
-                        @<text>
-                            <div style='width:80px;'>
-                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "SALES" || Session["RoleCode"].ToString() == "REGIONAL")
-                                {
-                                    <button class="btn btn-xs btn-success waves-effect" onclick="navigateToDetail(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                }
-                                @if (item.IsConfirm == true)
-                                {
-                                    <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
-                                }
-                                else if (item.IsDrop == true)
-                                {
-                                    <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                }
-                                else
-                                {
-                                    <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
-                                }
-                            </div>
-                        </text>),
-
-                          grid.Column("CountryName", "Country", canSort: true),
-                          grid.Column("ProductName", "Product Name", canSort: true,
-                          format:
-                        @<text>
-                            <div style='width:110px;'>
-                                @item.ProductName
-                            </div>
-                        </text>),
-                              grid.Column("CourseName", "Course Name", canSort: true,
-                          format:
-                        @<text>
-                            <div style='width:300px;'>
-                                <span class="center">@item.CourseName</span>
-                            </div>
-                        </text>, style: ""),
-                          grid.Column("NoOfDays", "No Of Days", canSort: true,
-                          format:
-                        @<text>
-                            <div style='width:80px;'>
-                                @item.NoOfDays
-                            </div>
-                        </text>, style: "center"),
-                          grid.Column("Month", "Month", format: @<text>
-                                @GetMonthById(item.Month == null ? 0 : item.Month) </text>, canSort: true),
-                          grid.Column("StartDate", "Start Dt", format:
-                        @<text>
-                            <div style='width:90px;'>
-                                @(item.StartDate == null ? null : item.StartDate.ToString("dd/MM/yyyy"))
-                            </div>
-                        </text>, style: ""),
-                          grid.Column("EndDate", "End Dt", format: @<text>
-                                <div style='width:90px;'>
-                                    @(item.EndDate == null ? null : item.EndDate.ToString("dd/MM/yyyy"))
-                                </div>
-                        </text>, canSort: true, style: ""),
-
-                          grid.Column("MinimumReg", "Min. Reg", canSort: true,
-                          format:
-                        @<text>
-                            <div style='width:60px;'>
-                                @item.MinimumReg
-                            </div>
-                        </text>, style: "center"),
-
-                          grid.Column("LeadsOnHead", "Leads on hand",
-                          format:
-                        @<text>
-                            <div style='width:110px;'>
-                                @if (string.IsNullOrWhiteSpace(item.LeadsOnHeadRemarks))
-                                {
-                                    <span>@item.LeadsOnHead</span>
-                                }
-                                else
-                                {
-                                    <a style="cursor:pointer;text-decoration:underline;">
-                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
-                                    </a>
-                                }
-                            </div>
-                        </text>, canSort: true, style: "center LeadsOnHead"),
-                          grid.Column("Registered", "Registered",
-                                  format:
-                                @<text>
-                                    @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
-                                    {
-                                        <span>@item.Registered</span>
-                                    }
-                                    else
-                                    {
-                                        <a style="cursor:pointer;text-decoration:underline;">
-                                            <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.RegisteredRemarks)"
-                                                  onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
-                                            </a>
-                                    }
-                                </text>, canSort: true, style: "center"),
-
-                          grid.Column("AvailableSeats", "Avl. Seats", canSort: true,
-                                  format:
-                                @<text>
-                                    <div style='width:70px;'>
-                                        @item.AvailableSeats
-                                    </div>
-                                </text>, style: "center"),
-
-                          grid.Column("RegClosingDate", "Reg. Closing Dt.", canSort: true,
-                                  format:
-                                @<text>
-                                    <div style='width:110px;'>
-                                        @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
-                                    </div>
-                                </text>, style: "center"),
-                              grid.Column("Revenue", "Revenue", canSort: true,
-                               format:
-                            @<text>
-                                <div style='width:80px;'>
-                                    <span class="">
-                                        @ConvertToInt64dollar(item.Revenue)
-                                    </span>
-                                </div>
-                            </text>, style: "center")),
-                      tableStyle: "table tblCss", htmlAttributes: new { id = tblId, @class = tblId })
+                                                        <div class="css10 table-responsive">
+                                                            <table class="table-bordered tblstyle" id="tblRegional_@j" style="white-space:nowrap;width:100%">
+                                                                <thead style="cursor:pointer">
+                                                                    <tr>
+                                                                        <td style='width:80px;'>#Action</td>
+                                                                        <td style='width:100px;'>Country</td>
+                                                                        <td style='width:80px;'>Product Name</td>
+                                                                        <td style='width:200px;'>Course Name</td>
+                                                                        <td style='width:80px;'>No Of Days</td>
+                                                                        <td style='width:80px;'>Month</td>
+                                                                        <td style='width:80px;'>Start Dt.</td>
+                                                                        <td style='width:80px;'>End Dt.</td>
+                                                                        <td style='width:80px;'>Min. Reg</td>
+                                                                        <td style='width:80px;'>Leads on hand</td>
+                                                                        <td style='width:80px;'>Registered</td>
+                                                                        <td style='width:80px;'>Avl. Seats</td>
+                                                                        <td style='width:80px;'>Reg. Closing Dt.</td>
+                                                                        <td style='width:80px;'>Revenue</td>
+                                                                        <td style='width:80px;'>Created Dt.</td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>                                                                  
+                                                                    @foreach (var item in Model.Where(x => x.ProductName == ProductData[j].ProductName))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>
+                                                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "SALES" || Session["RoleCode"].ToString() == "REGIONAL")
+                                                                                {
+                                                                                    <button class="btn btn-xs btn-success waves-effect" onclick="navigateToDetail(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                                }
+                                                                                @if (item.IsConfirm == true)
+                                                                                {
+                                                                                    <span class="text-green"><i class="fa fa-circle" style="font-size:12pt; "></i></span>
+                                                                                }
+                                                                                else if (item.IsDrop == true)
+                                                                                {
+                                                                                    <span class="text-red"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span class="text-gray"><i class="fa fa-circle" style="font-size:12pt;"></i></span>
+                                                                                }
+                                                                            </td>
+                                                                            <td>
+                                                                                @item.CountryName
+                                                                            </td>
+                                                                            <td>
+                                                                                @item.ProductName
+                                                                            </td>
+                                                                            <td>
+                                                                                @item.CourseName
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @item.NoOfDays
+                                                                            </td>
+                                                                            <td>
+                                                                                @GetMonthById(item.Month == null ? 0 : item.Month.Value)
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @(item.StartDate == null ? null : item.StartDate.Value.ToString("dd/MM/yyyy"))
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @(item.EndDate == null ? null : item.EndDate.Value.ToString("dd/MM/yyyy"))
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @item.MinimumReg
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @if (string.IsNullOrWhiteSpace(item.LeadsOnHeadRemarks))
+                                                                                {
+                                                                                    <span>@item.LeadsOnHead</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.LeadsOnHeadRemarks)" data-original-title="" title="">@item.LeadsOnHead</span>
+                                                                                    </a>
+                                                                                }
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @if (string.IsNullOrWhiteSpace(item.RegisteredRemarks))
+                                                                                {
+                                                                                    <span>@item.Registered</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <a style="cursor:pointer;text-decoration:underline;">
+                                                                                        <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.RegisteredRemarks)"
+                                                                                              onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
+                                                                                        </a>
+                                                                                }
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @item.AvailableSeats
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @(item.RegClosingDate == null ? null : item.RegClosingDate.ToString("dd/MM/yyyy"))
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @ConvertToInt64dollar(item.Revenue)
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                @(item.CreatedOn == null ? null : item.CreatedOn.ToString("dd/MM/yyyy"))
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                                <tfoot>
+                                                                    <tr class="bordertop">
+                                                                        <td colspan="2">Summary</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td class="center"></td>
+                                                                        <td></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @*<div class="row">
-                                                        <div class="col-sm-12">
-                                                            <div class="pull-right css10">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                                                        </div>
-                                                    </div>*@
                                             </div>
                                         </div>
-                                                                }
-
+                                                                        }
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -304,6 +275,21 @@
     .select2 {
         width: 121px !important;
     }
+
+
+    .tblstyle {
+        font-weight: bold;
+    }
+
+        .tblstyle td {
+            padding: 2px;
+        }
+
+        .tblstyle thead {
+            background-color: powderblue;
+            font-weight: bold;
+            color: blue;
+        }
 </style>
 
 @using (Html.BeginForm("DeleteCourseSalesMaster", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
@@ -319,10 +305,43 @@
             $("#li_0").addClass('active');
             $('#liRegionalLeads').addClass('active');
             for (var j = 0; j < @ProductData.Count(); j++) {
-                $('#table_' + j).dataTable({
-                    "bPaginate": false
+                $('#tblRegional_' + j).dataTable({
+                    "bPaginate": false,
+
+                    footerCallback: function (row, data, start, end, display) {
+                        var api = this.api();
+                        // Remove the formatting to get integer data for summation
+                        var intVal = function (i) {
+
+                            var amt = typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                    i : 0;
+                            debugger;
+                            return amt;
+
+                        };
+
+                        // Total over this page
+                        if (api.column(13).data().length) {
+                            var pageTotal13 = api
+                                .column(13, { page: 'current' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    var x = intVal(a) + intVal(b);
+                                    debugger;
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+                        }
+                        else { pageTotal13 = 0 };
+
+                        // Update footer
+                        $(api.column(13).footer()).html(
+                            '$ ' + pageTotal13
+                        );
+                    }
                 });
-            }       
+            }
 
             $('input.global_filter').on('keyup click', function () {
                 filterGlobal();
@@ -336,7 +355,7 @@
         function filterGlobal() {
             for (var j = 0; j < @ProductData.Count(); j++)
             {
-                $('#table_' + j).DataTable().search(
+                $('#tblRegional_' + j).DataTable().search(
                     $('#global_filter').val(),
                     $('#global_regex').prop('checked'),
                     $('#global_smart').prop('checked')
@@ -347,22 +366,13 @@
         function filterColumn(i) {
             for (var j = 0; j < @ProductData.Count(); j++)
             {
-                $('#table_' + j).DataTable().column(i).search(
+                $('#tblRegional_' + j).DataTable().column(i).search(
                     $('#col' + i + '_filter').val(),
                     $('#col' + i + '_regex').prop('checked'),
                     $('#col' + i + '_smart').prop('checked')
                 ).draw();
             }
         }
-
-
-        $(document).ready(function () {
-            var tbls = $('.tblCss');
-            $.each(tbls, function (index, item) {
-                var totalRevenue = '$ ' + $('#hdn_' + index).val();
-                $('#table_' + index + ' tbody').append('<tr class="bordertop"><td>Summary</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="center">' + totalRevenue + '</td><td>');
-            });
-        });
 
         function navigateToDetail(id) {
             var month = $('#Month').val();
@@ -401,5 +411,5 @@
         function mouseover(el) {
             $(el).popover("show");
         }
-    </script>
+</script>
 }
