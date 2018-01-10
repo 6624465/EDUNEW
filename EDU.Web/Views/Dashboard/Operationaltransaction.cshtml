@@ -182,6 +182,12 @@
                         }
                     ]
                 });
+
+                $('#jqChart').bind('tooltipFormat', function (e, data) {
+                    return "<b>" + data.x + "</b><br />" +
+                           "<b> $ " + data.y + "</b><br />";
+                });
+
             });
         </script>
     }
