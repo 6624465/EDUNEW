@@ -303,8 +303,8 @@ namespace EDU.Web.Dashboard.Controllers
                                                     new blist() { id = 8, code = "LA" },
                                                     new blist() { id = 9, code = "SG" },
                                                     new blist() { id = 10, code = "IN" }};
-            list= list.Join(bcList, a => a.CountryName, b => b.code, (a, b) => new TotalRevenueVM() {Year= a.Year, Country=a.Country, CountryName=a.CountryName, TotalRevenue=a.TotalRevenue, AchievedRevenue=a.AchievedRevenue, YetToAchieveRevenue=a.YetToAchieveRevenue, id=b.id }).OrderBy(x=>x.id).ToList<TotalRevenueVM>();
-            
+            list = list.Join(bcList, a => a.CountryName, b => b.code, (a, b) => new TotalRevenueVM() { Year = a.Year, Country = a.Country, CountryName = a.CountryName, TotalRevenue = a.TotalRevenue, AchievedRevenue = a.AchievedRevenue, YetToAchieveRevenue = a.YetToAchieveRevenue, id = b.id }).OrderBy(x => x.id).ToList<TotalRevenueVM>();
+
 
             return View(list);
         }
@@ -443,8 +443,8 @@ namespace EDU.Web.Dashboard.Controllers
                     TotalRevenue = item.TotalRevenue,
                     MonthlyTarget = item.MonthlyTarget,
                     JanAmount = item.JanAmount,
-                    FebAmount = (year != DateTime.UtcNow.Year? item.FebAmount: (cMonth >= 2 ? item.FebAmount : yetToAchieve)),
-                    MarAmount = (year != DateTime.UtcNow.Year? item.MarAmount : (cMonth >= 3 ? item.MarAmount : yetToAchieve)),
+                    FebAmount = (year != DateTime.UtcNow.Year ? item.FebAmount : (cMonth >= 2 ? item.FebAmount : yetToAchieve)),
+                    MarAmount = (year != DateTime.UtcNow.Year ? item.MarAmount : (cMonth >= 3 ? item.MarAmount : yetToAchieve)),
                     AprAmount = (year != DateTime.UtcNow.Year ? item.AprAmount : (cMonth >= 4 ? item.AprAmount : yetToAchieve)),
                     MayAmount = (year != DateTime.UtcNow.Year ? item.MayAmount : (cMonth >= 5 ? item.MayAmount : yetToAchieve)),
                     JuneAmount = (year != DateTime.UtcNow.Year ? item.JuneAmount : (cMonth >= 6 ? item.JuneAmount : yetToAchieve)),
@@ -527,7 +527,13 @@ namespace EDU.Web.Dashboard.Controllers
             try
             {
                 List<FinancialTransactionsVM> financialTransactionReport = new List<FinancialTransactionsVM>();
-                List<TrainingConfirmation> trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month && x.Country == country).ToList();
+                List<TrainingConfirmation> trainingConfirmationList = new List<TrainingConfirmation>();
+                if (month == 0)
+                {
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Country == country).ToList();
+                }
+                else
+                    trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month && x.Country == country).ToList();
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
                 List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
