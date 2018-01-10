@@ -69,6 +69,7 @@
 </div>
 
 @section SectionScripts{
+    
     <script type="text/javascript">
         function ChangeYear() {
             window.location = '@Url.Action("OperationalExpenses", "Dashboard", new { year = ""})' + '?year=' + $('#Year').val();
@@ -87,27 +88,31 @@
                 },
                 animation: { duration: 1 },
                 border: { visible: false },
-                        shadows: {
-                        enabled: true
-                        },
-                        legend: {
-                            visible:false
-                        },
-                        series: [
-                            {
-                                type: 'column',
-                                fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
-                                data: [
-                                    ['JAN', @item.JanAmount], ['FEB', @item.FebAmount], ['MAR', @item.MarAmount],
-                                ['APR', @item.AprAmount], ['MAY', @item.MayAmount], ['JUN', @item.JunAmount], ['JUL', @item.JulAmount],
-                                ['AUG', @item.AugAmount], ['SEP', @item.SepAmount], ['OCT', @item.OctAmount], ['NOV', @item.NovAmount], ['DEC', @item.DecAmount]
-                                ]
-                            }
+                shadows: {
+                    enabled: true
+                },
+                legend: {
+                    visible: false
+                },
+                series: [
+                    {
+                        type: 'column',
+                        fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
+                        data: [
+                            ['JAN', @item.JanAmount], ['FEB', @item.FebAmount], ['MAR', @item.MarAmount],
+                        ['APR', @item.AprAmount], ['MAY', @item.MayAmount], ['JUN', @item.JunAmount], ['JUL', @item.JulAmount],
+                        ['AUG', @item.AugAmount], ['SEP', @item.SepAmount], ['OCT', @item.OctAmount], ['NOV', @item.NovAmount], ['DEC', @item.DecAmount]
                         ]
+                    }
+                ]
+            });
+            $('#jqChart' + count).bind('tooltipFormat', function (e, data) {
+                return "<b>" + data.x + "</b><br />" +
+                       "$ " + data.y + "<br />";
             });
             count++;
             </text>
                 }
-            });
+        });
     </script>
 }

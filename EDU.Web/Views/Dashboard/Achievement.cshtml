@@ -127,7 +127,7 @@
             }
                 
             $('#jqChartdoughnut').jqChart({
-                title: { text: 'Products' },
+                title: { text: '' },
                 legend: {
                     title: 'Products',
                     visible:false
@@ -167,6 +167,7 @@
                     }
                 ]
             });
+          
             var i = 0;
             $('#jqChart').jqChart({
                 title: { text: '' },
@@ -243,6 +244,9 @@
                         ]
                     }
                 ]
+            });
+            $('#jqChart').bind('tooltipFormat', function (e, data) {
+                return "$ " + data.y ;
             });
 
             var count = 0;
@@ -330,6 +334,9 @@
                         ]
                     }
                 ]
+            });
+            $('#jqChart' + count).bind('tooltipFormat', function (e, data) {
+                return "$ " + data.y ;
             });
             count++;
             </text>
