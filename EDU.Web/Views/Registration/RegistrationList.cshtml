@@ -7,31 +7,30 @@
 }
 
 @{
-    WebGrid grid = new WebGrid(Model.registration, rowsPerPage: 16);
-    grid.Pager(WebGridPagerModes.All);
+    //WebGrid grid = new WebGrid(Model.registration, canPage: false);
 
-    var Student = Model.trainingconfDetail.NoOfStudents;
-    var reg = Model.registration.Count();
+    //var Student = Model.trainingconfDetail.NoOfStudents;
+    //var reg = Model.registration.Count();
 
-    var remainReg = Student - reg;
+    //var remainReg = Student - reg;
 
-    var myArray = (List<decimal?>)ViewData["Summary"];
+    //var myArray = (List<decimal?>)ViewData["Summary"];
 
     var coursename = Model.trainingconfDetail.CourseName == null ? null : Model.trainingconfDetail.CourseName.TrimEnd().ToString();
-    
-    if (Model.trainingconfDetail.Private)
-    {
-        Model.registration[0].Amount = null;
-        Model.registration[0].WHTAmount = null;
-        Model.registration[0].WHTPercent = null;
-        Model.registration[0].VATAmount = null;
-        Model.registration[0].VATPercent = null;
-        Model.registration[0].Payment1 = null;
-        Model.registration[0].Payment2 = null;
-        Model.registration[0].Payment3 = null;
-        Model.registration[0].TotalAmount = null;
-        Model.registration[0].BalanceAmount = null;
-    }
+
+    //if (Model.trainingconfDetail.Private)
+    //{
+    //    Model.registration[0].Amount = null;
+    //    Model.registration[0].WHTAmount = null;
+    //    Model.registration[0].WHTPercent = null;
+    //    Model.registration[0].VATAmount = null;
+    //    Model.registration[0].VATPercent = null;
+    //    Model.registration[0].Payment1 = null;
+    //    Model.registration[0].Payment2 = null;
+    //    Model.registration[0].Payment3 = null;
+    //    Model.registration[0].TotalAmount = null;
+    //    Model.registration[0].BalanceAmount = null;
+    //}
 }
 <style>
     .centerbox {
@@ -71,6 +70,7 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+
     .bordertopnocolor {
         border-top: 2px solid gray !important;
         border-bottom: 2px solid gray !important;
@@ -90,6 +90,20 @@
         position: absolute !important;
         z-index: 5000 !important;
     }
+
+    #tblRegistration {
+        font-weight: bold;
+    }
+
+        #tblRegistration td {
+            padding: 2px;
+        }
+
+        #tblRegistration thead {
+            background-color: powderblue;
+            font-weight: bold;
+            color: blue;
+        }
 </style>
 @functions {
     public string CheckString(string remarks)
@@ -535,169 +549,198 @@
                             </div>
                         </div>
                     }
-                    <div class="row css25" id="webGridDisplay">
-                        <div class="col-sm-12">
-                            <div id="gridContent" style="overflow-x: scroll; width: 100%">
-                                @grid.GetHtml(
-                        columns: grid.Columns(
-                            grid.Column("", "S No.", canSort: false,
-                                        format:
-                                        @<text>
-                                            <div style='width:35px;'>
-                                                @(item.WebGrid.Rows.IndexOf(item) + 1).
-                                            </div>
-                                        </text>),
-                                grid.Column("StudentName", "Student Name", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:150px;'>
-                                                @(item.StudentName)
-                                            </div>
-                                        </text>),
-                                grid.Column("Amount", "Amount", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:70px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64dollar(item.Amount)
+
+                    <div class="css10 table-responsive" id="webGridDisplay">
+                        <table class="table-bordered" id="tblRegistration" style="white-space:nowrap;width:100%">
+                            <thead style="cursor:pointer">
+                                <tr>
+                                    <td style='width:40px;'>S No.</td>
+                                    <td style='width:100px;'>Student Name</td>
+                                    <td style='width:80px;'>Amount</td>
+                                    <td style='width:80px;'>WHT %</td>
+                                    <td style='width:80px;'>WHT Amount</td>
+                                    <td style='width:80px;'>VAT/TAX %</td>
+                                    <td style='width:80px;'>VAT/TAX Amount</td>
+                                    <td style='width:80px;'>Total Amount</td>
+                                    <td style='width:80px;'>Payment Receipt 1</td>
+                                    <td style='width:80px;'>Payment Receipt 2</td>
+                                    <td style='width:80px;'>Payment Receipt 3</td>
+                                    <td style='width:80px;'>Balance</td>
+                                    <td style='width:100px;'>Email</td>
+                                    <td style='width:80px;'>Contact</td>
+                                    <td style='width:80px;'>Company Name</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int recCount = 0;}
+                                @foreach (var item in Model.registration)
+                                {
+                                    { recCount = recCount + 1; }
+                                    <tr>
+                                        <td>
+                                            @(recCount).
+                                        </td>
+                                        <td>
+                                            @item.StudentName
+                                        </td>
+                                        <td class="center">
+                                            <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                @ConvertToInt64dollar(item.Amount)
+                                            </span>
+                                        </td>
+                                        <td class="center">
+                                            <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                @ConvertToInt64percent(item.WHTPercent)
+                                            </span>
+                                        </td>
+                                        <td class="center">
+                                            <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                @ConvertToInt64dollar(item.WHTAmount)
+                                            </span>
+                                        </td>
+                                        <td class="center">
+                                            <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                @ConvertToInt64percent(item.VATPercent)
+                                            </span>
+                                        </td>
+                                        <td class="center">
+                                            <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                @ConvertToInt64dollar(item.VATAmount)
+                                            </span>
+                                        </td>
+                                        <td class="center">
+                                            <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                @ConvertToInt64dollar(item.TotalAmount)
+                                            </span>
+                                        </td>
+                                        <td class="center">
+                                            <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                <a style="cursor:pointer;text-decoration:underline;">
+                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
+                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment1)</span>
+                                                    </a>
                                                 </span>
-                                            </div>
-                                        </text>, style: "center"),
-                                grid.Column("WHTPercent", "WHT %", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:50px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64percent(item.WHTPercent)
-                                                </span>
-                                            </div>
-                                        </text>, style: "center"),
-                                grid.Column("WHTAmount", "WHT Amount", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:80px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64dollar(item.WHTAmount)
-                                                </span>
-                                            </div>
-                                        </text>, style: "center"),
-                                grid.Column("VATPercent", "VAT/TAX %",
-                                format:
-                                @<text>
-                                    <div style='width:80px;'>
-                                        <span class="center">
-                                            @ConvertToInt64percent(item.VATPercent)
-                                        </span>
-                                    </div>
-                                </text>
-                                , canSort: true, style: "center"),
-                                grid.Column("VATAmount", "VAT/TAX Amount", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:100px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64dollar(item.VATAmount)
-                                                </span>
-                                            </div>
-                                        </text>, style: "center"),
-                                 grid.Column("TotalAmount", "Total Amount", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:75px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64dollar(item.TotalAmount)
-                                                </span>
-                                            </div>
-                                        </text>, style: "center"),
-                                grid.Column("Payment1", "Payment Receipt 1", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:110px;'>
-                                                <span class="center">
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
-                                                              onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment1)</span>
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                        </text>, style: "center"),
-                                grid.Column("Payment2", "Payment Receipt 2", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:110px;'>
-                                                <span class="center">
+                                            </td>
+                                            <td class="center">
+                                                <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                     <a style="cursor:pointer;text-decoration:underline;">
                                                         <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
                                                               onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment2)</span>
                                                         </a>
                                                     </span>
-                                                </div>
-                                        </text>, style: "center"),
-                                grid.Column("Payment3", "Payment Receipt 3", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:110px;'>
-                                                <span class="center">
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
-                                                              onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment3)</span>
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                        </text>, style: "center"),
-                                grid.Column("BalanceAmount", "Balance", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:70px;'>
-                                                <span class="center">
-                                                    @ConvertToInt64dollarBalance(item.BalanceAmount)
-                                                </span>
-                                            </div>
-                                        </text>, style: "center"),
-                                grid.Column("Email", "Email", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:200px;'>
-                                                <span class="center">
-                                                    @if (item.Email != null && item.Email.ToString().Length > 20)
-                                                    {
+                                                </td>
+                                                <td class="center">
+                                                    <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                         <a style="cursor:pointer;text-decoration:underline;">
-                                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Email)" data-original-title="" title="">@item.Email.ToString().Substring(0, 20)...</span>
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>@item.Email</span>
-                                                    }
-                                                </span>
-                                            </div>
-                                        </text>),
-                                grid.Column("Contact", "Contact", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:100px;'>
-                                                <span class="center">
-                                                    @(item.Contact)
-                                                </span>
-                                            </div>
-                                        </text>),
-                                grid.Column("CompanyName", "Company Name", canSort: true,
-                                        format:
-                                        @<text>
-                                            <div style='width:200px;'>
-                                                <span class="center">
-                                                    @(item.CompanyName)
-                                                </span>
-                                            </div>
-                                        </text>)),
-                                            tableStyle: "table")
-                            </div>
-                        </div>
-                        <div class="col-sm-12 css10">
-                            <div class="pull-right">@grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-sm")</div>
-                        </div>
+                                                            <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
+                                                                  onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@ConvertToInt64dollar(item.Payment3)</span>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                    <td class="center">
+                                                        <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
+                                                            @ConvertToInt64dollarBalance(item.BalanceAmount)
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.Email != null && item.Email.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Email)" data-original-title="" title="">@item.Email.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.Email</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @item.Contact
+                                                    </td>
+                                                    <td>
+                                                        @item.CompanyName
+                                                    </td>
+                                                </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                @if (Model.trainingconfDetail.Private)
+                                {
+                                    <tr class="bordertopnocolor">
+                                        <td colspan="2">Payment Details</td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="bordertop">
+                                        <td colspan="2">Summary</td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(Model.registration.FirstOrDefault().Amount)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64percent(Model.registration.FirstOrDefault().WHTPercent)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(Model.registration.FirstOrDefault().WHTAmount)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64percent(Model.registration.FirstOrDefault().VATPercent)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(Model.registration.FirstOrDefault().VATAmount)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(Model.registration.FirstOrDefault().TotalAmount)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(Model.registration.FirstOrDefault().Payment1)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(Model.registration.FirstOrDefault().Payment2)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollar(Model.registration.FirstOrDefault().Payment3)
+                                        </td>
+                                        <td class="center">
+                                            @ConvertToInt64dollarBalance(Model.registration.FirstOrDefault().BalanceAmount)
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="bordertop">
+                                        <td colspan="2">Summary</td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </tfoot>
+                        </table>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -707,8 +750,206 @@
 @section SectionScripts {
     <script type="text/javascript">
         $(function () {
-            //$("#TrainingConfirmationID").chosen();
-            //$.validator.setDefaults({ ignore: ":hidden:not(select)" })
+            $('#tblRegistration').DataTable({
+                "bPaginate": false,
+
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        var amt2 = (typeof i === 'string') ? ($(i).text().trim()) : i;
+                        var amt = 0;
+
+                        if (typeof amt2 === 'string') {
+                            if (amt2 === '') {
+                                return 0;
+                            }
+                            amt = amt2.replace(/[\$,]/g, '').replace(/[\%,]/g, '') * 1
+                        }
+                        else if (typeof amt2 === 'number') {
+                            amt = amt2;
+                        }
+                        else
+                        {
+                            amt = 0;
+                        }
+                        return amt;
+
+                    };
+
+                    // Total over this page
+                    if (api.column(2).data().length) {
+                        var pageTotal2 = api
+                            .column(2, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                var x = intVal(a) + intVal(b);
+                                debugger;
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal2 = 0 };
+
+                    // Update footer
+                    $(api.column(2).footer()).html(
+                        '$ ' + pageTotal2
+                    );
+
+
+                    // Total over this page
+                    if (api.column(3).data().length) {
+                        var pageTotal3 = api
+                            .column(3, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal3 = 0 };
+
+                    // Update footer
+                    $(api.column(3).footer()).html(
+                        pageTotal3+'%'
+                    );
+
+
+                    // Total over this page
+                    if (api.column(4).data().length) {
+                        var pageTotal4 = api
+                            .column(4, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal4 = 0 };
+
+                    // Update footer
+                    $(api.column(4).footer()).html(
+                        '$ ' + pageTotal4
+                    );
+
+                    // Total over this page
+                    if (api.column(5).data().length) {
+                        var pageTotal5 = api
+                            .column(5, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal5 = 0 };
+
+                    // Update footer
+                    $(api.column(5).footer()).html(
+                        pageTotal5+'%'
+                    );
+
+                    // Total over this page
+
+                    if (api.column(6).data().length) {
+                        var pageTotal6 = api
+                            .column(6, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal6 = 0 };
+
+                    // Update footer
+                    $(api.column(6).footer()).html(
+                        '$ ' + pageTotal6
+                    );
+
+                    // Total over this page
+
+                    if (api.column(7).data().length) {
+                        var pageTotal7 = api
+                            .column(7, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal7 = 0 };
+
+                    // Update footer
+                    $(api.column(7).footer()).html(
+                        '$ ' + pageTotal7
+                    );
+
+                    // Total over this page
+
+                    if (api.column(8).data().length) {
+                        var pageTotal8 = api
+                            .column(8, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal8 = 0 };
+
+                    // Update footer
+                    $(api.column(8).footer()).html(
+                        '$ ' + pageTotal8
+                    );
+
+                    // Total over this page
+
+                    if (api.column(9).data().length) {
+                        var pageTotal9 = api
+                            .column(9, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal9 = 0 };
+
+                    // Update footer
+                    $(api.column(9).footer()).html(
+                        '$ ' + pageTotal9
+                    );
+
+                    // Total over this page
+                    if (api.column(10).data().length) {
+                        var pageTotal10 = api
+                            .column(10, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal10 = 0 };
+
+                    // Update footer
+                    $(api.column(10).footer()).html(
+                        '$ ' + pageTotal10
+                    );
+
+
+                    // Total over this page
+                    if (api.column(11).data().length) {
+                        var pageTotal11 = api
+                            .column(11, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    }
+                    else { pageTotal11 = 0 };
+
+                    // Update footer
+                    $(api.column(11).footer()).html(
+                        '$ ' + pageTotal11
+                    );
+
+                }
+            });
+
+
             $('#Payment1Dt,#Payment2Dt,#Payment3Dt,#Payment1Dte,#Payment2Dte,#Payment3Dte').datetimepicker({
                 icons: {
                     time: 'fa fa-clock-o',
@@ -780,7 +1021,7 @@
 
             $('#liRegistrationList').addClass('active');
 
-            var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
+            @*var myArray = @Html.Raw(JsonConvert.SerializeObject(myArray));
             @if (reg > 0)
         {
             <text>
@@ -790,7 +1031,7 @@
            }
             $('#gridContent tbody').append('<tr class="bordertop"><td></td><td>Summary</td><td class="center">@ConvertToInt64dollar(myArray[0])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[1])</td><td></td><td class="center">@ConvertToInt64dollar(myArray[2])</td><td class="center">@ConvertToInt64dollar(myArray[3])</td><td class="center">@ConvertToInt64dollar(myArray[4])</td><td class="center">@ConvertToInt64dollar(myArray[5])</td><td class="center">@ConvertToInt64dollar(myArray[6])</td><td class="center">@ConvertToInt64dollar(myArray[8])</td><td></td><td></td><td></td></tr>');
             </text>
-            }
+            }*@
 
             $('#lblmsg').hide();
             $('#TrainingDetails').hide();
@@ -978,7 +1219,7 @@
             $('#registrationPrivate_0__BalanceAmount').val(balanceamount);
         }
 
-       
+
         $("#frmregistration").validate({
             rules: {
                 TrainingConfirmationID: "required"
@@ -987,11 +1228,11 @@
             highlight: function (element, errorClass, validClass) {
                 var elem = $(element);
                 if (elem.hasClass("select2-hidden-accessible")) {
-                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass); 
+                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass);
                 } else {
                     elem.addClass(errorClass);
                 }
-            },    
+            },
             unhighlight: function (element, errorClass, validClass) {
                 var elem = $(element);
                 if (elem.hasClass("select2-hidden-accessible")) {
@@ -1003,7 +1244,7 @@
             errorPlacement: function(error, element) {
                 var elem = $(element);
                 if (elem.hasClass("select2-hidden-accessible")) {
-                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    element = $("#select2-" + elem.attr("id") + "-container").parent();
                     error.insertAfter(element);
                 } else {
                     error.insertAfter(element);
