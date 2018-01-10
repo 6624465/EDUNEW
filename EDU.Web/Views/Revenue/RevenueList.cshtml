@@ -68,7 +68,7 @@
                                 new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
                             </div>
                             <div class="col-md-1">
-                                @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
+                                @if (Session["RoleCode"].ToString() == "ADMIN")
                                 {
                                     <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
                                 }
@@ -93,7 +93,7 @@
                                         grid.Column("MonthlyTargetAmt", header: "", format: @<input type="hidden" name="MonthlyTargetAmt" value="@item.MonthlyTargetAmt" />, style: "width0"),
 
                                             @*grid.Column("Action", format: @<text>
-            @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
+            @if (Session["RoleCode"].ToString() == "ADMIN")
             {
                 <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
             }
@@ -111,7 +111,7 @@
                                         grid.Column("MonthlyTarget", "Monthly", format:
                                         @<text> <span class="display-mode">@ConvertToInt64dollar(item.MonthlyTarget)  </span> </text>, style: "MonthlyTarget alignright"),
                                         grid.Column("Action", format: @<text>
-                                                @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
+                                                @if (Session["RoleCode"].ToString() == "ADMIN")
                                                 {
                                                     <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                 }
@@ -123,7 +123,7 @@
                             </div>
 
                             @*<div class="col-md-6 col-md-offset-3 css10">
-        @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
+        @if (Session["RoleCode"].ToString() == "ADMIN")
         {
             <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
         }
@@ -318,7 +318,7 @@
         };
 
         $(function () {
-            @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
+            @if (Session["RoleCode"].ToString() != "ADMIN")
             {
                 <text>
             $('#Country').attr('disabled', 'disabled');

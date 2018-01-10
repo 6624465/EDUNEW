@@ -59,7 +59,7 @@
         border-right: none;
     }
      .circleclr {
-        color: #000000!important;
+       
     }
 </style>
 <div class="page page-forms-elements">
@@ -168,7 +168,7 @@
                                         </div>
                                     </div>
                                     <div class="row" style="margin:25px 10px 0px 0px; border:1px solid #d2d6de">
-                                        <div id="chartContainer5" style="height: 330px; width: 100%;"></div>
+                                        <div id="chartContainer" style="height: 330px; width: 100%;"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
@@ -287,7 +287,7 @@
             $("tbody tr:even").css("background-color", "#eeeeee");
             $("tbody tr:odd").css("background-color", "#ffffff");
 
-            @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
+            @if (Session["RoleCode"].ToString() != "ADMIN" && Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["UserID"].ToString().ToUpper() != "MGMTSG" && Session["UserID"].ToString().ToUpper() != "SALESSG")
             {
                 <text>
             $('#Country').attr('disabled','disabled');
@@ -327,6 +327,25 @@
             }
 
         });
+
+        var chart5 = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            colorSet: "greenShades",
+            title: {
+                text: 'Total Revenue - @totalrevenue.Value.ToString("#0")'
+            },
+            data: [{
+                type: "pie",
+                startAngle: 240,
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                    { y: @achievedtotal, label: "Achieved", color: "Red"},
+                    { y: @yettoachieve, label: "Yet To Achieve", color: "Black"}
+                ]
+            }]
+        });
+        chart5.render();
+
         var count = 0;
         @foreach (var item in productRevenueByMonth)
         {
@@ -382,23 +401,6 @@
         }
 
 
-        var chart5 = new CanvasJS.Chart("chartContainer5", {
-            animationEnabled: true,
-            colorSet: "greenShades",
-            title: {
-                text: 'Total Revenue - @totalrevenue.Value.ToString("#0")'
-            },
-            data: [{
-                type: "pie",
-                startAngle: 240,
-                indexLabel: "{label} {y}",
-                dataPoints: [
-                    { y: @achievedtotal, label: "Achieved", color: "Red"},
-                    { y: @yettoachieve, label: "Yet To Achieve", color: "Black"}
-                ]
-            }]
-        });
-        chart5.render();
     </script>
 }
 

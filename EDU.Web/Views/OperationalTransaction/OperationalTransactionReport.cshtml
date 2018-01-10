@@ -183,7 +183,7 @@
         $(document).ready(function () {
 
             $('#liOperationalTransactionReportList').addClass('active');
-            @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
+            @if (Session["RoleCode"].ToString() != "ADMIN" && Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["UserID"].ToString().ToUpper() != "MGMTSG")
             {
                 <text>
             $('#Country').attr('disabled','disabled');

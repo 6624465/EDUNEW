@@ -97,7 +97,7 @@
     @section SectionScripts{
         <script type="text/javascript">
             $(function () {
-                 @if (Session["RoleCode"].ToString().ToUpper() != "ADMIN")
+                 @if (Session["RoleCode"].ToString() != "ADMIN" && Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["UserID"].ToString().ToUpper() != "MGMTSG")
                  {
                      <text>
                  $('#Country').attr('disabled','disabled');
