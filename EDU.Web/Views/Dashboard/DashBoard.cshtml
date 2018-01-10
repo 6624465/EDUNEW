@@ -58,6 +58,9 @@
         border-left: none;
         border-right: none;
     }
+     .circleclr {
+        color: #000000!important;
+    }
 </style>
 <div class="page page-forms-elements">
     <div class="page-wrap">
@@ -98,35 +101,35 @@
                                     <div class="row">
                                         <div class="pull-left">
                                             <div class="c100 p100 center">
-                                                <span id="achieve0"></span>
+                                                <span class="circleclr" id="achieve0"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod0"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center green">
-                                                <span id="achieve1"></span>
+                                                <span  class="circleclr"id="achieve1"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod1"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center orange">
-                                                <span id="achieve2"></span>
+                                                <span class="circleclr" id="achieve2"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod2"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center red">
-                                                <span id="achieve3"></span>
+                                                <span class="circleclr" id="achieve3"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod3"></span></em></p>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 p100 center orange">
-                                                <span id="achieve4"></span>
+                                                <span class="circleclr" id="achieve4"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                             <p class="text-center"><em><span id="Prod4"></span></em></p>
@@ -135,31 +138,31 @@
                                     <div class="row">
                                         <div class="pull-left">
                                             <div class="c100 center" id="div0">
-                                                <span id="achieved0"></span>
+                                                <span class="circleclr" id="achieved0"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 center green" id="div1">
-                                                <span id="achieved1"></span>
+                                                <span class="circleclr" id="achieved1"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 center orange" id="div2">
-                                                <span id="achieved2"></span>
+                                                <span class="circleclr" id="achieved2"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 center red" id="div3">
-                                                <span id="achieved3"></span>
+                                                <span class="circleclr" id="achieved3"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                         </div>
                                         <div class="pull-left">
                                             <div class="c100 center orange" id="div4">
-                                                <span id="achieved4"></span>
+                                                <span class="circleclr" id="achieved4"></span>
                                                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                             </div>
                                         </div>
@@ -288,7 +291,7 @@
             {
                 <text>
             $('#Country').attr('disabled','disabled');
-             </text>
+            </text>
             }
 
             $('#liDashboardDashboard').addClass('active');
@@ -314,12 +317,12 @@
             <text>
             var achievedPercent = @item.TotalRevenue>0 ? ((@item.AchievedRevenue * 100) / @item.TotalRevenue): 0;
             var mtarget = @item.TotalRevenue;
-                $('#achieve' + count).text(mtarget.toFixed());
-                $('#achieved' + count).text(achievedPercent.toFixed() + '%');
+            $('#achieve' + count).text('$'+mtarget.toFixed());
+            $('#achieved' + count).text(achievedPercent.toFixed() + '%');
 
-                $('#Prod' + count).text('@item.ProductName');
-                $('#div' + count).addClass('p' + parseInt(achievedPercent));
-                count++;
+            $('#Prod' + count).text('@item.ProductName');
+            $('#div' + count).addClass('p' + parseInt(achievedPercent));
+            count++;
             </text>
             }
 
@@ -371,8 +374,8 @@
                     { x: new Date(@item.Year, 10, 1), y: @item.NovAmount },
                     { x: new Date(@item.Year, 11, 1), y: @item.DecAmount }
                 ]
-                }]
-            });
+            }]
+        });
         chart.render();
         count++;
         </text>
