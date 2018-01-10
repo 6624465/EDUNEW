@@ -151,8 +151,8 @@
                         </div>
 
                         <div class="css25 table-responsive">
-                            <table class="table-bordered" id="tblVendorPayment" style="white-space:nowrap">
-                                <thead>
+                            <table class="table-bordered" id="tblVendorPayment" style="white-space:nowrap;width:100%">
+                                <thead style="cursor:pointer">
                                     <tr>
                                         <td style='width:60px;'>#Action</td>
                                         <td style='width:90px;'>Event ID</td>
@@ -267,7 +267,6 @@
         $(function () {
             $('#tblVendorPayment').DataTable({
                 "bPaginate": false,
-
                 footerCallback: function (row, data, start, end, display) {
                     var api = this.api();
                     // Remove the formatting to get integer data for summation
