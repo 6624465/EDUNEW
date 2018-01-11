@@ -29,9 +29,19 @@ namespace EDU.Web.Controllers
         }
         public ActionResult VendorsAndTrainersReport()
         {
-            return View();
+            var url = "Edu.VendorsAndTrainersReport";
+            ViewBag.Title = "Vendors And Trainers Report";
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
         }
 
 
+        public ActionResult ProductsReport()
+        {
+            var url = "Edu.ProductReport";
+            ViewBag.Title = "Products Report";
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
     }
 }

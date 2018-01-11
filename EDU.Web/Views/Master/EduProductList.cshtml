@@ -9,6 +9,8 @@
                 <div class="box-header">
                     <h4>Product List</h4>
                     <div class="box-tools">
+                        <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintProductList()"><i class="fa fa-print"></i>Print</button>
+
                         @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                         {
                             <button class="btn btn-info btn-sm waves-effect" type="button" onclick="AddEduProduct();"><i class="fa fa-plus"></i> Add New Product</button>
@@ -17,7 +19,7 @@
                 </div>
 
                 <div class="box-body">
-                    <div class="css10 table-responsive">
+                    <div class="table-responsive">
                         <table class="table-bordered tblSearch" id="tblProduct" style="white-space:nowrap;width:100%">
                             <thead style="cursor:pointer">
                                 <tr>
@@ -69,7 +71,19 @@
             debugger;
             $('#liEduProductList').addClass('active');
         });
-
+        function PrintProductList() {
+            $.ajax({
+                url: '@Url.Content("~/Report/ProductsReport")',
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
+        }
         function AddEduProduct() {
             $.ajax({
                 url: '@Url.Content("~/Master/EduProduct")',
@@ -178,7 +192,7 @@
 <style>
     .center {
         margin: auto;
-        width: 35%;
+        width: 45%;
         border: 3px solid gray;
         padding: 10px;
         border-radius: 20px;
