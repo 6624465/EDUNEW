@@ -41,12 +41,12 @@
                     <div class="row css10">
                         <div class="col-md-12">
                             <div class="col-md-4">
-                                <div class="row">
+                                <div class="row" id="dvChartdoughnut">
                                     <div class="col-md-12">
                                         <div id="jqChartdoughnut"></div>
                                     </div>
                                 </div>
-                                <div class="row css10">
+                                <div class="row css10" id="dvProducts">
                                     <div class="col-md-12">
                                         <div id="jqChart"></div>
                                     </div>
@@ -59,38 +59,38 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvBangladesh">
                                         <div id="jqChart0" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvCombodia">
                                         <div id="jqChart1" style="height: 150px; width: 100%;"></div>
                                     </div>
 
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvMyanmar">
                                         <div id="jqChart4" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvSrilanka">
                                         <div id="jqChart8" style="height: 150px; width: 100%;"></div>
                                     </div>
 
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvPakistan">
                                         <div id="jqChart5" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvPhillipines">
                                         <div id="jqChart6" style="height: 150px; width: 100%;"></div>
                                     </div>
 
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvVietnam">
                                         <div id="jqChart9" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvLaos">
                                         <div id="jqChart3" style="height: 150px; width: 100%;"></div>
                                     </div>
 
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvSingapore">
                                         <div id="jqChart7" style="height: 150px; width: 100%;"></div>
                                     </div>
-                                    <div class="col-md-6 css10">
+                                    <div class="col-md-6 css10" id="dvIndia">
                                         <div id="jqChart2" style="height: 150px; width: 100%;"></div>
                                     </div>
                                 </div>
@@ -105,13 +105,169 @@
 @section SectionScripts {
 
     <script lang="javascript" type="text/javascript">
-        $(function () {
-            $('#liDashboardAchievement').addClass('active');
-        });
+
         function ChangeMonth() {
             window.location = '@Url.Action("Achievement", "Dashboard", new { year = "" })' + '?year=' + $('#Year').val();
         };
-        $(document).ready(function () {
+        $(function () {
+
+         @if (Session["UserID"].ToString().ToUpper() == "MGMTSL")
+         {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+         }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTVN")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvSrilanka').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTBD")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvSrilanka').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTIN")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvSrilanka').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTKH")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvSrilanka').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTLA")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvSrilanka').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTMM")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvSrilanka').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPH")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvSrilanka').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPK")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvSrilanka').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+
+            $('#liDashboardAchievement').addClass('active');
+
+
             var fillStyles = ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2',
                 '#bcb7c1', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
                 '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
