@@ -499,7 +499,10 @@
                 //$("#liDashboardOperationaltransaction").hide();
                 //$("#liDashboardOperationalExpenses").hide();
                 //$("#liDashboardDashboardOperationaltransaction").hide();
-                $("#liDashboardTotalRevenue").hide();
+                if (@Session["UserID"].ToString().ToUpper() != "MGMTSG")
+                {
+                    $("#liDashboardTotalRevenue").hide();
+                }
                 //$("#liDashboardDashboard").hide();
                 //$("#liDashboardProfitandloss").hide();
             }

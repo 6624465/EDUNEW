@@ -61,42 +61,38 @@
                     </div>
                     <div class="row css25">
                         <div class="col-md-9">
-
                             <div class="row">
-                                <div class="col-md-4 allotspace">
+                                <div class="col-md-4 allotspace css10" id="dvBangladesh">
                                     <div id="container0"></div>
                                 </div>
-                                <div class="col-md-4 allotspace">
+                                <div class="col-md-4 allotspace css10" id="dvCombodia">
                                     <div id="container1"></div>
                                 </div>
-                                <div class="col-md-4 allotspace">
+                                <div class="col-md-4 allotspace css10" id="dvMyanmar">
                                     <div id="container4"></div>
                                 </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="col-md-4 allotspace col-md-offset-1">
+
+                                <div class="col-md-4 allotspace css10" id="dvSrilanka">
                                     <div id="container8"></div>
                                 </div>
-                                <div class="col-md-4 allotspace">
+                                <div class="col-md-4 allotspace css10" id="dvPakistan">
                                     <div id="container5"></div>
                                 </div>
-                                <div class="col-md-4 allotspace">
+                                <div class="col-md-4 allotspace css10" id="dvPhillipines">
                                     <div id="container6"></div>
                                 </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="col-md-4 allotspace">
+
+                                <div class="col-md-4 allotspace css10" id="dvVietnam">
                                     <div id="container9"></div>
                                 </div>
-                                <div class="col-md-4 allotspace">
+                                <div class="col-md-4 allotspace css10" id="dvLaos">
                                     <div id="container3"></div>
                                 </div>
-                                <div class="col-md-4 allotspace">
+                                <div class="col-md-4 allotspace css10" id="dvSingapore">
                                     <div id="container7"></div>
                                 </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="col-md-4 allotspace">
+
+                                <div class="col-md-4 allotspace css10" id="dvIndia">
                                     <div id="container2"></div>
                                 </div>
                             </div>
@@ -143,6 +139,160 @@
         };
 
         $(function () {
+            @if (Session["UserID"].ToString().ToUpper() == "MGMTSL")
+         {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+         }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTVN")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvSrilanka').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTBD")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvSrilanka').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTIN")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvSrilanka').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTKH")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvSrilanka').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTLA")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvSrilanka').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTMM")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvSrilanka').hide();
+            $('#dvPakistan').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPH")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvPakistan').hide();
+            $('#dvSrilanka').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPK")
+            {
+                <text>
+            $('#dvChartdoughnut').hide();
+            $('#dvProducts').hide();
+            $('#dvBangladesh').hide();
+            $('#dvCombodia').hide();
+            $('#dvMyanmar').hide();
+            $('#dvSrilanka').hide();
+            $('#dvPhillipines').hide();
+            $('#dvVietnam').hide();
+            $('#dvLaos').hide();
+            $('#dvSingapore').hide();
+            $('#dvIndia').hide();
+
+            </text>
+            }
+
             $('#liDashboardDashboardOperationaltransaction').addClass('active');
 
             //Highcharts.setOptions({
