@@ -35,11 +35,18 @@ namespace EDU.Web.Controllers
             return PartialView("ViewReport");
         }
 
-
         public ActionResult ProductsReport()
         {
             var url = "Edu.ProductReport";
             ViewBag.Title = "Products Report";
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+        public ActionResult CoursesReport()
+        {
+            var url = "Edu.CourseReport";
+            ViewBag.Title = "Courses Report";
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
