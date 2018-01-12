@@ -89,6 +89,8 @@
                 <div class="box-header">
                     <h4>Regional Leads List</h4>
                     <div class="box-tools">
+                        <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintRegionalLeadsList()"><i class="fa fa-print"></i>Print</button>
+
                         @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "SALES" || Session["RoleCode"].ToString() == "REGIONAL")
                         {
                             <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="navigateToDetail(-1)"><i class="fa fa-plus"></i>Add New Regional Lead</button>
@@ -271,6 +273,9 @@
         </div>
     </div>
 </div>
+<div id="myModal" class="modal fade" role="dialog">
+
+</div>
 <style type="text/css">
     .select2 {
         width: 121px !important;
@@ -304,6 +309,7 @@
             $("#div_0").addClass('active');
             $("#li_0").addClass('active');
             $('#liRegionalLeads').addClass('active');
+
             for (var j = 0; j < @ProductData.Count(); j++) {
                 $('#tblRegional_' + j).dataTable({
                     "bPaginate": false,
@@ -383,6 +389,23 @@
          function ChangeMonth() {
             window.location = '@Url.Action("CourseSalesMasterList", "Master", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
+        
+        function PrintRegionalLeadsList() {
+            var year = $('#Year').val();
+            var month = $('#Month').val() == 0 ? null : $('#Month').val();
+            debugger;
+            $.ajax({
+                url: '@Url.Content("~/Report/RegionalLeadsReport?year=")' + year + '&month=' + month,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
+        }
 
         function DeleteCourseSalesMaster(Id) {
             swal({

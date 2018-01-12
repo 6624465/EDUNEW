@@ -5,40 +5,14 @@
 @{
     var settings = new ControlSettings { ShowToolBar = true, ShowParameterPrompts = false };
     string url = Convert.ToString(ViewBag.url);
-    string DateFrom = Convert.ToString(ViewBag.DateFrom);
-    string DateTo = Convert.ToString(ViewBag.DateTo);
-    string BranchID = Convert.ToString(ViewBag.BranchID);
-    string DeclarationNo = Convert.ToString(ViewBag.DeclarationNo);
+    string Year = Convert.ToString(ViewBag.year);
+    string Month = Convert.ToString(ViewBag.month);
+    string Country = Convert.ToString(ViewBag.country);
 }
 @*<script src="@Url.Content("~/Scripts/jquery-2.2.4.min.js")"></script>*@
 <script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")"></script>
 <script src="@Url.Content("~/Scripts/MvcReportViewer.js")"></script>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-@*<html>
-<head>
-    <title> View Report </title>
-    <script src="@Url.Content("~/Scripts/jquery-2.2.4.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/MvcReportViewer.js")"></script>
-</head>
-<body>
-    
-        @Html.MvcReportViewer(url,
-        new
-        {
-            DeclarationNo = DeclarationNo,
-            BranchID = BranchID
-        },
-        new
-        {
-            Height = 420,
-            Width = "100%",
-            style = "border: none;"
-        }).ControlSettings(settings)
-</body>
-</html>*@
-
-
 <div class="modal-dialog"style="width:75%">
     <!-- Modal content-->
     <div class="modal-content" style="height:100%">
@@ -47,20 +21,46 @@
             <h4 class="modal-title">@ViewBag.Title</h4>
         </div>
         <div class="modal-body" id="VendorandTrainerModalBody" >
-         
+         @if (url.Contains("Edu.RegionalLeads") || url.Contains("Edu.EventConfirmation"))
+         {
+             @Html.MvcReportViewer(url,
+              new
+              {
+                  year = Year,
+                  month = Month
+              },
+              new
+              {
+                  Height = 500,
+                  Width = "100%",
+                  style = "border: none;"
+              }).ControlSettings(settings)
+         }
+         else if (url.Contains("Edu.RevenueReport"))
+         {
             @Html.MvcReportViewer(url,
-        //new
-        //{
-        //    DeclarationNo = DeclarationNo,
-        //    BranchID = BranchID
-        //},
-        new
-        {
-            Height = 500,
-            Width = "100%",
-            style = "border: none;"
-        }).ControlSettings(settings)
-           
+              new
+              {
+                  year = Year,
+                  country = Country
+              },
+              new
+              {
+                  Height = 500,
+                  Width = "100%",
+                  style = "border: none;"
+              }).ControlSettings(settings)
+         }
+         else
+         {
+            @Html.MvcReportViewer(url,
+              new
+              {
+                  Height = 500,
+                  Width = "100%",
+                  style = "border: none;"
+              }).ControlSettings(settings)
+         }
     </div>
 </div>
 

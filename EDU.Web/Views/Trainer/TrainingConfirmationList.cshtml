@@ -85,6 +85,8 @@
                 <div class="box-header">
                     <h4>Event Confirmation List</h4>
                     <div class="box-tools">
+                        <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintEventConfirmationList()"><i class="fa fa-print"></i>Print</button>
+
                         @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                         {
                             <button type="button" class="btn btn-info btn-sm waves-effect" data-toggle="modal" onclick="TrainerConfirmation()"><i class="fa fa-plus"></i>Add New Event Confirmation</button>
@@ -229,6 +231,23 @@
 
                 }
             })
+        }
+        
+        function PrintEventConfirmationList() {
+            var year = $('#Year').val();
+            var month = $('#Month').val() == 0 ? '' : $('#Month').val();
+            debugger;
+            $.ajax({
+                url: '@Url.Content("~/Report/EventConfirmationReport?year=")' + year + '&month=' + month,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
         }
 
         function DeletetrainingConf(Id) {

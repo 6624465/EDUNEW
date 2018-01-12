@@ -44,6 +44,9 @@
                         <div style="display:-webkit-inline-box">
                             <h4> Set Revenue</h4>
                         </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintRevenueList()"><i class="fa fa-print"></i>Print</button>
+                        </div>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -93,13 +96,13 @@
                                         grid.Column("MonthlyTargetAmt", header: "", format: @<input type="hidden" name="MonthlyTargetAmt" value="@item.MonthlyTargetAmt" />, style: "width0"),
 
                                             @*grid.Column("Action", format: @<text>
-            @if (Session["RoleCode"].ToString() == "ADMIN")
-            {
-                <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-            }
-            <button type="button" class="save-user edit-mode btn btn-success btn-xs waves-effect" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o" style="padding-left: 5px;"></i></button>
-            <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
-    </text>, style: "col3Width", canSort: false),*@
+                                                        @if (Session["RoleCode"].ToString() == "ADMIN")
+                                                        {
+                                                            <button type="button" class="edit-user display-mode btn btn-primary btn-xs waves-effect"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        }
+                                                        <button type="button" class="save-user edit-mode btn btn-success btn-xs waves-effect" onclick="SaveRevenue(@item.RevenueId,@item.Product,@item.Year,'@item.ProductName')"><i class="fa fa-floppy-o" style="padding-left: 5px;"></i></button>
+                                                        <button type="button" class="cancel-user edit-mode btn btn-default btn-xs waves-effect"><i class="fa fa-times" style="padding-left: 5px;"></i></button>
+                                                </text>, style: "col3Width", canSort: false),*@
 
                                         grid.Column("ProductName", "Product Name", format: @<text>  @item.ProductName  </text>, style: ""),
                                         grid.Column("YearlyTarget", "YearlyTarget", format:
@@ -123,11 +126,11 @@
                             </div>
 
                             @*<div class="col-md-6 col-md-offset-3 css10">
-        @if (Session["RoleCode"].ToString() == "ADMIN")
-        {
-            <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
-        }
-    </div>*@
+                                    @if (Session["RoleCode"].ToString() == "ADMIN")
+                                    {
+                                        <button type="button" onclick="updateRevenueInfoByExRate()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-floppy-o"></i>&nbsp;Update</button>
+                                    }
+                                </div>*@
                             <div class="col-md-8 col-md-offset-2 css10">
                                 @{
                                     var grid1 = new WebGrid(Model);
@@ -160,6 +163,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+
     </div>
 </form>
 
@@ -218,10 +224,24 @@
             });
             $('#gridContent1 tbody').append('<tr class="bordertop"><td>Summary</td><td class="alignright">' + totalytamt + '</td><td class="alignright">' + totalhytamt + '</td><td class="alignright">' + totalqytamt + '</td><td class="alignright">' + totalmtamt + '</td><td></td></tr>');
         });
-    </script>
 
-    <script type="text/javascript">
 
+        function PrintRevenueList() {
+            var year = $('#Year').val();
+            var month = $('#Month').val() == 0 ? '' : $('#Month').val();
+            debugger;
+            $.ajax({
+                url: '@Url.Content("~/Report/RevenueReport?year=")' + year + '&country=' + $('#Country').val(),
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
+        }
 
 
         $("#frmRevenue").validate({

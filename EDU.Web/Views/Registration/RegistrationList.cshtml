@@ -199,8 +199,8 @@
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Year</span>
                                 </label>
-                                <div class="col-md-1">
-                                    @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:60%" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Month</span>
@@ -215,7 +215,7 @@
                                     <input type="hidden" id="eventid" name="eventid" />
                                     @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
                                  new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
-                                 "Select Event No.", new { @class = "form-control input-sm chosen-select", onchange = "ChangeEventID(this);" })
+                                 "Select Event No.", new { @class = "form-control input-sm chosen-select", onchange = "ChangeEventID(this);", @style = "width:100%" })
                                 </div>
                                 <div class="col-md-2">
                                     @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")

@@ -50,5 +50,35 @@ namespace EDU.Web.Controllers
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
+
+        public ActionResult RegionalLeadsReport(int year, int? month)
+        {
+            var url = "Edu.RegionalLeads";
+            ViewBag.Title = "Regional Leads Report";
+            ViewBag.year = year;
+            ViewBag.month = month;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+        public ActionResult EventConfirmationReport(int year, int? month)
+        {
+            var url = "Edu.EventConfirmation";
+            ViewBag.Title = "Event Confirmation Report";
+            ViewBag.year = year;
+            ViewBag.month = month;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+        public ActionResult RevenueReport(int year, int country)
+        {
+            var url = "Edu.RevenueReport";
+            ViewBag.Title = "Revenue Report";
+            ViewBag.year = year;
+            ViewBag.country = country;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
     }
 }
