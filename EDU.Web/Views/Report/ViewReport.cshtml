@@ -51,6 +51,22 @@
                   style = "border: none;"
               }).ControlSettings(settings)
          }
+         else if (url.Contains("Edu.ProfitAndLossReport"))
+         {
+            @Html.MvcReportViewer(url,
+              new
+              {
+                  country = Country,
+                  year = Year,
+                  month = Month
+              },
+              new
+              {
+                  Height = 500,
+                  Width = "100%",
+                  style = "border: none;"
+              }).ControlSettings(settings)
+         }
          else
          {
             @Html.MvcReportViewer(url,
