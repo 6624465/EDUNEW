@@ -67,6 +67,21 @@
                   style = "border: none;"
               }).ControlSettings(settings)
          }
+         else if (url.Contains("Edu.OperationalExpenses"))
+         {
+            @Html.MvcReportViewer(url,
+              new
+              {
+                  countryid = Country,
+                  year = Year
+              },
+              new
+              {
+                  Height = 500,
+                  Width = "100%",
+                  style = "border: none;"
+              }).ControlSettings(settings)
+         }
          else
          {
             @Html.MvcReportViewer(url,

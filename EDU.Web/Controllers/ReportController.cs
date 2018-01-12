@@ -102,5 +102,37 @@ namespace EDU.Web.Controllers
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
+
+        public ActionResult OperationalExpensesReport(int? country, int year)
+        {
+            var url = "Edu.OperationalExpenses";
+            ViewBag.Title = "Operational Expenses Report";
+            ViewBag.country = country;
+            ViewBag.year = year;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+
+        public ActionResult MTDOperationalTransactionReport(int? country, int year, int month)
+        {
+            var url = "Edu.DashboardOperationalTransaction";
+            ViewBag.Title = "Operational Transaction Report - MTD";
+            ViewBag.country = country;
+            ViewBag.year = year;
+            ViewBag.month = month;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+        public ActionResult YTDOperationaTransactionReport(int? country, int year)
+        {
+            var url = "Edu.OperationalExpenses";
+            ViewBag.Title = "Operational Transaction Report - YTD";
+            ViewBag.country = country;
+            ViewBag.year = year;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
     }
 }

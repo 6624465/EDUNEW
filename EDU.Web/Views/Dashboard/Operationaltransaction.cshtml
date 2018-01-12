@@ -6,7 +6,7 @@
 }
 
 @{
-    var listMonths = new List<SelectListItem> ()
+    var listMonths = new List<SelectListItem>()
     {
     new SelectListItem {Text = "January",   Value = "1"},
     new SelectListItem {Text = "February", Value = "2"},
@@ -24,78 +24,84 @@
 
 
 }
-    <div class="page page-forms-elements">
-        <div class="page-wrap">
-            <div class="panel panel-default">
-                <div class="box" id="grid">
-                    <div class="box-header">
-                        <h4>Operational transaction</h4>
-                        <div class="box-tools">
-                        </div>
+<div class="page page-forms-elements">
+    <div class="page-wrap">
+        <div class="panel panel-default">
+            <div class="box" id="grid">
+                <div class="box-header">
+                    <h4>Operational transaction</h4>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintMTDOperationalTransactionsList()"><i class="fa fa-print"></i>Print-MTD</button>
+                        <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintYTDOperationalTransactionsList()"><i class="fa fa-print"></i>Print-YTD</button>
                     </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="form-group">
-                                <label class="col-md-1 control-label">
-                                    <span class="pull-right">Country</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Country,
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Country</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Country,
                                      new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
                                      new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
-                                </div>
-                                <label class="col-md-1 control-label">
-                                    <span class="pull-right">Month</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);", @style = "width:70%" })
-                                </div>
-                                <label class="col-md-1 control-label">
-                                    <span class="pull-right">Year</span>
-                                </label>
-                                <div class="col-md-1">
-                                    @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
-                                </div>
-                              
                             </div>
-                            <div class="col-md-12">
-                                <div class="col-md-6">
-                                    <div class="row css25">
-                                        <div class="col-md-12">
-                                            <div id="container"></div>
-                                        </div>
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Month</span>
+                            </label>
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth(this);", @style = "width:70%" })
+                            </div>
+                            <label class="col-md-1 control-label">
+                                <span class="pull-right">Year</span>
+                            </label>
+                            <div class="col-md-1">
+                                @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="row css25">
+                                    <div class="col-md-12">
+                                        <div id="container"></div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="row css25">
-                                        <div class="col-md-10">
-                                            <div id="jqChart"></div>
-                                        </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row css25">
+                                    <div class="col-md-10">
+                                        <div id="jqChart"></div>
                                     </div>
-
                                 </div>
 
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <style>
-        .highcharts-button-symbol {
-            display: none;
-        }
-        .highcharts-credits
-        {
-            display: none;
-        }
-         .highcharts-button-box{
-             display:none;
-         }
-    </style>
-    @section SectionScripts{
-        <script type="text/javascript">
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+</div>
+<style>
+    .highcharts-button-symbol {
+        display: none;
+    }
+
+    .highcharts-credits {
+        display: none;
+    }
+
+    .highcharts-button-box {
+        display: none;
+    }
+</style>
+@section SectionScripts{
+    <script type="text/javascript">
+
             $(function () {
                  @if (Session["RoleCode"].ToString() != "ADMIN" && Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["UserID"].ToString().ToUpper() != "MGMTSG")
                  {
@@ -107,10 +113,48 @@
                  $('#liDashboardOperationaltransaction').addClass('active');
             });
 
+
+            function PrintYTDOperationalTransactionsList() {
+            debugger;
+            
+            var year = $('#Year').val();
+            debugger;
+            $.ajax({
+                url: '@Url.Content("~/Report/YTDOperationaTransactionReport?country=")' + $('#Country').val() + '&year=' + year,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
+            }
+
+            function PrintMTDOperationalTransactionsList() {
+            debugger;
+            
+            var year = $('#Year').val();
+            var month = $('#Month').val();
+            debugger;
+            $.ajax({
+                url: '@Url.Content("~/Report/MTDOperationalTransactionReport?country=")' + $('#Country').val() + '&year=' + year + '&month=' + month,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
+        }
+
             function ChangeMonth() {
                 window.location = '@Url.Action("Operationaltransaction", "Dashboard", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
             };
-           
+
             Highcharts.chart('container', {
                 chart: {
                     type: 'pie',
@@ -118,7 +162,7 @@
                         enabled: true,
                         alpha: 65,
                         beta: 0
-                    }                 
+                    }
                 },
                 title: {
                     text: 'MTD'
@@ -155,7 +199,7 @@
                     ]
                 }]
             });
-       
+
             $(document).ready(function () {
 
                 $('#jqChart').jqChart({
@@ -175,8 +219,8 @@
                             fillStyles: ['#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970', '#191970'],
                             data: [
                                 ['JAN',   @Model.otReportByYear.JanAmount], ['FEB', @Model.otReportByYear.FebAmount], ['MAR',  @Model.otReportByYear.MarAmount],
-                                ['APR',  @Model.otReportByYear.AprAmount], ['MAY',  @Model.otReportByYear.MayAmount], ['JUN',  @Model.otReportByYear.JunAmount], 
-                                ['JUL',  @Model.otReportByYear.JulAmount], ['AUG',  @Model.otReportByYear.AugAmount], ['SEP',  @Model.otReportByYear.SepAmount], 
+                                ['APR',  @Model.otReportByYear.AprAmount], ['MAY',  @Model.otReportByYear.MayAmount], ['JUN',  @Model.otReportByYear.JunAmount],
+                                ['JUL',  @Model.otReportByYear.JulAmount], ['AUG',  @Model.otReportByYear.AugAmount], ['SEP',  @Model.otReportByYear.SepAmount],
                                 ['OCT',  @Model.otReportByYear.OctAmount], ['NOV',  @Model.otReportByYear.NovAmount], ['DEC',  @Model.otReportByYear.DecAmount]
                             ]
                         }
@@ -189,5 +233,5 @@
                 });
 
             });
-        </script>
-    }
+    </script>
+}
