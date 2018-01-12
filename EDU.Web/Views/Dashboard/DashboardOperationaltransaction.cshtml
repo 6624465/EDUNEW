@@ -39,6 +39,7 @@
                 <div class="box-header">
                     <h4>Dashboard Operational transaction</h4>
                     <div class="box-tools">
+                        <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintDashboardOperationaltransactionList()"><i class="fa fa-print"></i>Print</button>
                     </div>
                 </div>
 
@@ -110,6 +111,8 @@
         </div>
     </div>
 </div>
+<div id="myModal" class="modal fade" role="dialog">
+</div>
 <style>
     .allotspace {
         margin-left: 0px;
@@ -137,6 +140,30 @@
         function ChangeMonth() {
             window.location = '@Url.Action("DashboardOperationaltransaction", "Dashboard", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
+
+        function PrintDashboardOperationaltransactionList() {
+            debugger;
+            var country = null;
+            @if (Session["UserID"].ToString().ToUpper().Contains("MGMT") && Session["UserID"].ToString().ToUpper() != "MGMTSG")
+            {<text>
+            country = @Session["BranchId"].ToString();
+            </text>
+            }
+            var year = $('#Year').val();
+            var month = $('#Month').val();
+            debugger;
+            $.ajax({
+                url: '@Url.Content("~/Report/DashboardOperationalTransactionReport?country=")' + country + '&year=' + year + '&month=' + month,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
+        }
 
         $(function () {
             @if (Session["UserID"].ToString().ToUpper() == "MGMTSL")
@@ -295,15 +322,6 @@
 
             $('#liDashboardDashboardOperationaltransaction').addClass('active');
 
-            //Highcharts.setOptions({
-            //    colors: ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69', '#0000FF',
-            //            '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
-            //            '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
-            //            '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
-            //            '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082', '#F08080',
-            //            '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080'
-            //    ]
-            //});
             var getColor = {
                 'SALARIES': '#418CF0',
                 'TRAVELLING EXPENSES': '#FCB441',

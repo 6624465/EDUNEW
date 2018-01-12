@@ -91,5 +91,16 @@ namespace EDU.Web.Controllers
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
+
+        public ActionResult DashboardOperationalTransactionReport(int? country, int year, int month)
+        {
+            var url = "Edu.DashboardOperationalTransaction";
+            ViewBag.Title = "Dashboard Operational Transaction Report";
+            ViewBag.country = country;
+            ViewBag.year = year;
+            ViewBag.month = month;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
     }
 }
