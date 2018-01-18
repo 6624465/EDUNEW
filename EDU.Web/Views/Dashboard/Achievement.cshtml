@@ -25,6 +25,7 @@
                 <div class="box-header">
                     <h4>PRODUCT - Achievement  YTD</h4>
                     <div class="box-tools">
+                        <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintProductAchievementReportList()"><i class="fa fa-print"></i>Print</button>
                     </div>
                 </div>
                 <div class="box-body">
@@ -102,6 +103,8 @@
         </div>
     </div>
 </div>
+<div id="myModal" class="modal fade" role="dialog">
+</div>
 @section SectionScripts {
 
     <script lang="javascript" type="text/javascript">
@@ -109,6 +112,28 @@
         function ChangeMonth() {
             window.location = '@Url.Action("Achievement", "Dashboard", new { year = "" })' + '?year=' + $('#Year').val();
         };
+
+        function PrintProductAchievementReportList() {
+            var country = null;
+            @if (Session["UserID"].ToString().ToUpper().Contains("MGMT") && Session["UserID"].ToString().ToUpper() != "MGMTSG")
+            {<text>
+            country = @Session["BranchId"].ToString();
+            </text>
+            }
+            var year = $('#Year').val();
+            $.ajax({
+                url: '@Url.Content("~/Report/ProductAchievementReport?country=")' + country + '&year=' + year,
+                method: 'get',
+                contentType: 'text/html',
+                success: function (html) {
+                    $('#myModal').html(html);
+                    $('#myModal').modal('show');
+                },
+                error: function (err) {
+                }
+            });
+        }
+
         $(function () {
 
          @if (Session["UserID"].ToString().ToUpper() == "MGMTSL")

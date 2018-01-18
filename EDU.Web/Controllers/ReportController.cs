@@ -53,7 +53,7 @@ namespace EDU.Web.Controllers
 
         public ActionResult RegionalLeadsReport(int year, int? month)
         {
-            var url = "Edu.RegionalLeads";
+            var url = "Edu.RegionalLeadsReport";
             ViewBag.Title = "Regional Leads Report";
             ViewBag.year = year;
             ViewBag.month = month;
@@ -63,7 +63,7 @@ namespace EDU.Web.Controllers
 
         public ActionResult EventConfirmationReport(int year, int? month)
         {
-            var url = "Edu.EventConfirmation";
+            var url = "Edu.EventConfirmationReport";
             ViewBag.Title = "Event Confirmation Report";
             ViewBag.year = year;
             ViewBag.month = month;
@@ -94,7 +94,7 @@ namespace EDU.Web.Controllers
 
         public ActionResult DashboardOperationalTransactionReport(int? country, int year, int month)
         {
-            var url = "Edu.DashboardOperationalTransaction";
+            var url = "Edu.DashboardOperationalTransactionReport";
             ViewBag.Title = "Dashboard Operational Transaction Report";
             ViewBag.country = country;
             ViewBag.year = year;
@@ -105,7 +105,7 @@ namespace EDU.Web.Controllers
 
         public ActionResult OperationalExpensesReport(int? country, int year)
         {
-            var url = "Edu.OperationalExpenses";
+            var url = "Edu.OperationalExpensesReport";
             ViewBag.Title = "Operational Expenses Report";
             ViewBag.country = country;
             ViewBag.year = year;
@@ -116,7 +116,7 @@ namespace EDU.Web.Controllers
 
         public ActionResult MTDOperationalTransactionReport(int? country, int year, int month)
         {
-            var url = "Edu.DashboardOperationalTransaction";
+            var url = "Edu.DashboardOperationalTransactionReport";
             ViewBag.Title = "Operational Transaction Report - MTD";
             ViewBag.country = country;
             ViewBag.year = year;
@@ -127,8 +127,30 @@ namespace EDU.Web.Controllers
 
         public ActionResult YTDOperationaTransactionReport(int? country, int year)
         {
-            var url = "Edu.OperationalExpenses";
+            var url = "Edu.OperationalExpensesReport";
             ViewBag.Title = "Operational Transaction Report - YTD";
+            ViewBag.country = country;
+            ViewBag.year = year;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+        public ActionResult YTDDashboardOperationalTransactionReport(int country, int year)
+        {
+            var url = "Edu.YTDOperationalTransactionReport";
+            ViewBag.Title = "Operational Transaction Report - YTD";
+            ViewBag.country = country;
+            ViewBag.year = year;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+
+
+        public ActionResult ProductAchievementReport(int? country, int year)
+        {
+            var url = "Edu.ProductAchievementReport";
+            ViewBag.Title = "Product Achievement Report - YTD";
             ViewBag.country = country;
             ViewBag.year = year;
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);

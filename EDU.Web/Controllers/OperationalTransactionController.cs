@@ -323,17 +323,18 @@ namespace EDU.Web.Controllers
                 int fYear;
                 int cYear;
 
-                if (month < 4)
-                {
-                    cYear = year - 1;
-                    fYear = year;
-                }
-                else
-                {
-                    fYear = year + 1;
-                    cYear = year;
-                }
-
+                //if (month < 4)
+                //{
+                //    cYear = year - 1;
+                //    fYear = year;
+                //}
+                //else
+                //{
+                //    fYear = year + 1;
+                //    cYear = year;
+                //}
+                cYear = year;
+                fYear = year;
 
                 List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
                     .Where(x => x.IsActive == true && x.Country == country)
@@ -363,14 +364,17 @@ namespace EDU.Web.Controllers
                 List<OperationalTransactionReportVM> list1 = new List<OperationalTransactionReportVM>();
                 foreach (var item in list)
                 {
-                    item.YTD = item.AprAmount + item.MayAmount + item.JuneAmount + item.JulyAmount + item.AugAmount + item.SepAmount +
-                              item.OctAmount + item.NovAmount + item.DecAmount + item.JanAmount + item.FebAmount + item.MarAmount;
+                    item.YTD = item.JanAmount + item.FebAmount + item.MarAmount+item.AprAmount + item.MayAmount + item.JuneAmount + item.JulyAmount + item.AugAmount + item.SepAmount +
+                              item.OctAmount + item.NovAmount + item.DecAmount;
 
                     list1.Add(item);
                 }
 
                 List<decimal?> summary = new List<decimal?>();
 
+                summary.Add(list1.Sum(x => x.JanAmount));
+                summary.Add(list1.Sum(x => x.FebAmount));
+                summary.Add(list1.Sum(x => x.MarAmount));
                 summary.Add(list1.Sum(x => x.AprAmount));
                 summary.Add(list1.Sum(x => x.MayAmount));
                 summary.Add(list1.Sum(x => x.JuneAmount));
@@ -380,9 +384,6 @@ namespace EDU.Web.Controllers
                 summary.Add(list1.Sum(x => x.OctAmount));
                 summary.Add(list1.Sum(x => x.NovAmount));
                 summary.Add(list1.Sum(x => x.DecAmount));
-                summary.Add(list1.Sum(x => x.JanAmount));
-                summary.Add(list1.Sum(x => x.FebAmount));
-                summary.Add(list1.Sum(x => x.MarAmount));
                 summary.Add(list1.Sum(x => x.YTD));
                 ViewData["Summary"] = summary;
                 ViewData["CountryData"] = new BranchBO().GetList();
