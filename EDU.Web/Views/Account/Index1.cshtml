@@ -1,0 +1,133 @@
+﻿@model EDU.Web.ViewModels.Account.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EDUCATION</title>
+    <link rel="shortcut icon" href="@Url.Content("~/images/EDU-Logo.png")" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="@Url.Content("~/Css/bootstrap.min.css")">
+    <link href="@Url.Content("~/Css/style.css?v=1.1")" rel="stylesheet" />
+    <style type="text/css">
+        .pointer {
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        @@font-face {
+            font-family: 'proximanovalight';
+            src: url('../fonts/proximanovalight.eot');
+            src: local('proximanovalight'), url('../fonts/proximanovalight.woff') format('woff'), url('../fonts/proximanovalight.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'proximanovalight';
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href=""><img src="@Url.Content("~/images/EDU-Logo.png")" style="width:60px; margin-top:10px; margin-left:10px;" /></a>
+    </header>
+    <section>
+        <div class="main-content">
+            <ul>
+                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(120);"><div class="content"><img src="@Url.Content("~/images/sri.png")" /><span>SRI LANKA</span> </div></a></li>
+                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(110);"><div class="content"><img src="@Url.Content("~/images/col.png")" /><span>CAMBODIA</span> </div></a></li>
+                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(100);"><div class="content"><img src="@Url.Content("~/images/ban.png")" /><span>BANGLADESH</span> </div></a></li>
+                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(90);"><div class="content"><img src="@Url.Content("~/images/myn.png")" /> <span>MYANMAR</span> </div></a></li>
+                @*<li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(@Model.BranchList[0].Value);"><div class="content"><img src="@Url.Content("~/images/laos.png")" /><span>LAOS</span> </div></a></li>*@
+                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(10);"><div class="content"> <img src="@Url.Content("~/images/sing.png")" /><span>SINGAPORE</span></div></a></li>
+                @*<li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(@Model.BranchList[0].Value);"><div class="content"><img src="@Url.Content("~/images/phi.png")" /><span>PHILIPPINES</span> </div></a></li>*@
+                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(160);"><div class="content"> <img src="@Url.Content("~/images/pak.png")" /><span>PAKISTAN</span></div></a></li>
+                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(180);"><div class="content"> <img src="@Url.Content("~/images/phi.png")" /><span>PHILLIPINES</span></div></a></li>
+                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(190);"><div class="content"> <img src="@Url.Content("~/images/laos.png")" /><span>LAOS</span></div></a></li>
+                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(200);"><div class="content"> <img src="@Url.Content("~/images/VIETNAM.png")" /><span>VIETNAM</span></div></a></li>
+                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(20);"><div class="content"> <img src="@Url.Content("~/images/india.png")" /><span>INDIA</span></div></a></li>
+            </ul>
+            <div id="popover_content_wrapper" style="display: none">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "signin", id = "frmLogin", name = "frmLogin" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="login-div">
+                        <div class="form-group">
+                            <label for="usr">Name:</label>
+                            @Html.TextBoxFor(x => x.UserID, new
+                       {
+                           @class = "form-control",
+                           placeholder = "User ID",
+                           required = "required"
+                       })
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            @Html.PasswordFor(x => x.Password, new
+                       {
+                           @class = "form-control",
+                           placeholder = "Password",
+                           required = "required"
+                       })
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-danger">Sign in</button>
+                        @*<a href="#" class="pull-right">Forget Password ?</a>*@
+                    </div>
+                    @Html.HiddenFor(x => x.BranchID)
+                    <input type="hidden" id="CompanyCode" name="CompanyCode" value="EZY" />
+                }
+            </div>
+        </div>
+    </section>
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.danger').popover({
+                html: true,
+                content: function () {
+                    return $('#popover_content_wrapper').html();
+                }
+            });
+
+            $('#frmLogin').validate({
+                rules: {
+                    Email: {
+                        required: true
+                    },
+                    Password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    Email: {
+                        required: 'Username is required'
+                    },
+                    Password: {
+                        required: 'Password is required'
+                    }
+                }
+            });
+        });
+
+        function OpenPopOver(branchID) {
+            debugger;
+            $('#BranchID').val(branchID);
+            $('.danger').each(function () {
+                $(this).popover('hide');
+            });
+
+            $('.danger').popover({
+                html: true,
+                content: function () {
+                    return $('#popover_content_wrapper').html();
+                }
+            });
+        };
+    </script>
+</body>
+</html>

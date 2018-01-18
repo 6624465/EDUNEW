@@ -1,0 +1,115 @@
+﻿@model EDU.Web.ViewModels.Account.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Materia - Admin Template">
+    <meta name="keywords" content="materia, webapp, admin, dashboard, template, ui">
+    <meta name="author" content="solutionportal">
+    <!-- <base href="/"> -->
+
+    <title>HR</title>
+
+    <!-- Icons -->
+    <script src="@Url.Content("~/Scripts/Core/sitescript.js")"></script>
+    <link href="@Url.Content("~/Css/ionicons.min.css")" rel="stylesheet" />
+    <link rel="stylesheet" href="@Url.Content("~/Css/font-awesome-4.7.0/css/font-awesome.css")">
+
+    <!-- Plugins -->
+    <link href="@Url.Content("~/Css/waves.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/perfect-scrollbar.css")" rel="stylesheet" />
+
+    <!-- Css/Less Stylesheets -->
+    <link href="@Url.Content("~/Css/lib/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/main.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/sitecss.css")" rel="stylesheet" />
+</head>
+<body id="app" class="app off-canvas body-full">
+    <!-- main-container -->
+    <div class="main-container clearfix">
+        <!-- content-here -->
+        <div class="content-container" id="content">
+            <div class="page page-auth">
+                <div class="auth-container">
+
+                    <div class="form-head mb20">
+                        <h1 class="site-logo h2 mb5 mt5 text-center text-uppercase text-bold"><a href="index.html">Login-HR</a></h1>
+                        @*<h5 class="text-normal h5 text-center">Sign In to Dashboard</h5>*@
+                    </div>
+
+                    <div class="form-container">
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "frmLogin", name = "frmLogin" }))
+                        {
+                            <div class="md-input-container">
+                                @Html.TextBoxFor(x => x.UserID, new { @class = "md-input" })
+                                <label>Email Id</label>
+                            </div>
+
+                            <div class="md-input-container">
+                                @Html.PasswordFor(x => x.Password, new { @class = "md-input" })
+                                <label>Password</label>
+                            </div>
+
+                            @*<div class="clearfix">
+                                    <div class="ui-checkbox ui-checkbox-primary right">
+                                        <label>
+                                            <input type="checkbox">
+                                            <span>Remember me</span>
+                                        </label>
+                                    </div>
+                                </div>*@
+                            @*<div class="clearfix mb15"><a href="forget-pass.html" class="text-success small">Forget your password?</a></div>*@
+                            <div class="btn-group btn-group-justified mb15">
+                                @*<div class="btn-group">
+                                        <button type="button" class="btn btn-facebook"><span class="ion ion-social-facebook"></span>&nbsp;&nbsp;Facebook</button>
+                                    </div>*@
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-success">Sign In</button>
+                                </div>
+                            </div>
+                            @*<div class="clearfix text-center small">
+                                    <p>Don't have an account? <a href="signup.html">Create Now</a></p>
+                                </div>*@
+                        }
+                    </div>
+
+                </div> <!-- #end signin-container -->
+            </div>
+
+
+
+        </div>
+        <!-- #end content-container -->
+
+    </div> <!-- #end main-container -->
+    <!-- Dev only -->
+    <!-- Vendors -->
+    <script src="@Url.Content("~/Scripts/jquery-2.2.3.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript">
+        $("#frmLogin").validate({
+            rules: {
+                'UserName': {
+                    required: true
+                },
+                'Password': {
+                    required: true
+                },
+            }
+            //,
+            //messages: {
+            //    UserID: 'Username is Required',
+            //    Password: 'Password is Required'
+            //}
+        })
+
+    </script>
+</body>
+</html>
+
