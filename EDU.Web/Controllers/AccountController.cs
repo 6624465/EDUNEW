@@ -11,8 +11,13 @@ namespace EDU.Web.Controllers
 {
     public class AccountController : BaseController
     {
-        [HttpGet]
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Index1()
         {
             LoginViewModel model = new LoginViewModel();
 
@@ -38,28 +43,17 @@ namespace EDU.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            model.CompanyCode = "EZY";
-            var BranchDetails = new BranchBO().GetList().Where(x => x.BranchID == model.BranchID).ToList();
-            string BranchName = BranchDetails.Select(x => x.BranchName).FirstOrDefault();
-
-
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Index");
-            }
-
-            var lstUsers = new UsersBO().GetList();
-
-            var currentUser = lstUsers.Where(
-                ur => ur.UserID.ToLower() == model.UserID.ToLower() &&
-                ur.Password.ToLower() == model.Password.ToLower()).FirstOrDefault();
+            var currentUser = new UsersBO().GetList().Where(
+                ur => ur.UserID == model.UserID &&
+                ur.Password == model.Password).FirstOrDefault();
 
             var userBranch = new UserBranchBO().GetList(model.UserID)
-                                    .Where(x => x.BranchID == model.BranchID)
                                     .FirstOrDefault();
+
+            var BranchDetails = new BranchBO().GetList().Where(x => x.BranchID == userBranch.BranchID).ToList();
+            string BranchName = BranchDetails.Select(x => x.BranchName).FirstOrDefault();
 
             if (currentUser != null && userBranch != null)// 
             {
@@ -72,22 +66,16 @@ namespace EDU.Web.Controllers
                     UserName = currentUser.UserName,
                     Email = currentUser.Email,
                     RoleCode = currentUser.RoleCode,
-                    BranchId = model.BranchID,
-                    BranchName = BranchName,
-                    CompanyId = _CompanyId,
-                    CompanyName = new CompanyBO().GetList().Where(x => x.CompanyCode == _CompanyId).FirstOrDefault().CompanyName
+                    BranchId = userBranch.BranchID,
+                    BranchName = BranchName
                 };
 
                 USER_OBJECT = SsnObj;
                 USER_SECURABLES = new RoleRightsBO().GetSecurableItemsListByRoleCode(SsnObj.RoleCode);
 
-                //if (currentUser.UserID.ToLower().Contains("cxo@ezy") || currentUser.UserID.ToLower() == "rgldata")
-                //    Session["UserID"] = "ADMIN";
-                //else
-
                 Session["UserID"] = currentUser.UserID;
                 Session["UserName"] = currentUser.UserName;
-                Session["BranchId"] = model.BranchID;
+                Session["BranchId"] = userBranch.BranchID;
                 Session["RoleCode"] = currentUser.RoleCode.ToUpper();
 
                 if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")

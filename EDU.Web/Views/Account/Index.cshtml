@@ -1,133 +1,125 @@
 ﻿@model EDU.Web.ViewModels.Account.LoginViewModel
 @{
+    ViewBag.Title = "Index";
     Layout = null;
 }
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>EDUCATION</title>
-    <link rel="shortcut icon" href="@Url.Content("~/images/EDU-Logo.png")" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="@Url.Content("~/Css/bootstrap.min.css")">
-    <link href="@Url.Content("~/Css/style.css?v=1.1")" rel="stylesheet" />
-    <style type="text/css">
-        .pointer {
-            cursor: pointer;
-        }
-    </style>
-    <style>
-        @@font-face {
-            font-family: 'proximanovalight';
-            src: url('../fonts/proximanovalight.eot');
-            src: local('proximanovalight'), url('../fonts/proximanovalight.woff') format('woff'), url('../fonts/proximanovalight.ttf') format('truetype');
-        }
 
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Materia - Admin Template">
+    <meta name="keywords" content="materia, webapp, admin, dashboard, template, ui">
+    <meta name="author" content="solutionportal">
+    <!-- <base href="/"> -->
+
+    <title>EDUCATION</title>
+
+    <!-- Icons -->
+    <script src="@Url.Content("~/Scripts/Core/sitescript.js")"></script>
+    <link href="@Url.Content("~/Css/ionicons.min.css")" rel="stylesheet" />
+    <link rel="stylesheet" href="@Url.Content("~/Css/font-awesome-4.7.0/css/font-awesome.css")">
+
+    <!-- Plugins -->
+    <link href="@Url.Content("~/Css/waves.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/perfect-scrollbar.css")" rel="stylesheet" />
+
+    <!-- Css/Less Stylesheets -->
+    <link href="@Url.Content("~/Css/lib/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/main.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Css/sitecss.css")" rel="stylesheet" />
+    <style>
         body {
-            font-family: 'proximanovalight';
+            background: #efefef !important;
+        }
+        label {
+        font-weight:bold !important;
+        }
+        .page {
+            background: #efefef !important;
         }
     </style>
 </head>
-<body>
-    <header>
-        <a href=""><img src="@Url.Content("~/images/EDU-Logo.png")" style="width:60px; margin-top:10px; margin-left:10px;" /></a>
-    </header>
-    <section>
-        <div class="main-content">
-            <ul>
-                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(120);"><div class="content"><img src="@Url.Content("~/images/sri.png")" /><span>SRI LANKA</span> </div></a></li>
-                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(110);"><div class="content"><img src="@Url.Content("~/images/col.png")" /><span>CAMBODIA</span> </div></a></li>
-                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(100);"><div class="content"><img src="@Url.Content("~/images/ban.png")" /><span>BANGLADESH</span> </div></a></li>
-                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(90);"><div class="content"><img src="@Url.Content("~/images/myn.png")" /> <span>MYANMAR</span> </div></a></li>
-                @*<li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(@Model.BranchList[0].Value);"><div class="content"><img src="@Url.Content("~/images/laos.png")" /><span>LAOS</span> </div></a></li>*@
-                <li><a class="danger pointer" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(10);"><div class="content"> <img src="@Url.Content("~/images/sing.png")" /><span>SINGAPORE</span></div></a></li>
-                @*<li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(@Model.BranchList[0].Value);"><div class="content"><img src="@Url.Content("~/images/phi.png")" /><span>PHILIPPINES</span> </div></a></li>*@
-                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(160);"><div class="content"> <img src="@Url.Content("~/images/pak.png")" /><span>PAKISTAN</span></div></a></li>
-                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(180);"><div class="content"> <img src="@Url.Content("~/images/phi.png")" /><span>PHILLIPINES</span></div></a></li>
-                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(190);"><div class="content"> <img src="@Url.Content("~/images/laos.png")" /><span>LAOS</span></div></a></li>
-                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(200);"><div class="content"> <img src="@Url.Content("~/images/VIETNAM.png")" /><span>VIETNAM</span></div></a></li>
-                <li><a class="danger" href="#" data-toggle="popover" data-placement="bottom" onclick="OpenPopOver(20);"><div class="content"> <img src="@Url.Content("~/images/india.png")" /><span>INDIA</span></div></a></li>
-            </ul>
-            <div id="popover_content_wrapper" style="display: none">
-                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "signin", id = "frmLogin", name = "frmLogin" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="login-div">
-                        <div class="form-group">
-                            <label for="usr">Name:</label>
-                            @Html.TextBoxFor(x => x.UserID, new
-                       {
-                           @class = "form-control",
-                           placeholder = "User ID",
-                           required = "required"
-                       })
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd">Password:</label>
-                            @Html.PasswordFor(x => x.Password, new
-                       {
-                           @class = "form-control",
-                           placeholder = "Password",
-                           required = "required"
-                       })
-                        </div>
-                        <button type="submit" class="btn btn-sm btn-danger">Sign in</button>
-                        @*<a href="#" class="pull-right">Forget Password ?</a>*@
+<body id="app" class="app off-canvas body-full">
+    
+    <!-- main-container -->
+    <div class="main-container clearfix">
+        <!-- content-here -->
+        <div class="content-container" id="content">
+            <div class="page page-auth">
+                <div class="auth-container">
+                    <div class="form-head">
+                        <h1 class="site-logo h2 mb5 mt5 text-uppercase text-bold" ><a href="@Url.Content("~/Account/Index")" style="text-decoration:none"><img src="@Url.Content("~/images/EDU-Logo.png")" style="width:60px; margin-top:10px; margin-left:50px;" />Login-EMS</a></h1>
                     </div>
-                    @Html.HiddenFor(x => x.BranchID)
-                    <input type="hidden" id="CompanyCode" name="CompanyCode" value="EZY" />
-                }
+
+                    <div class="form-container">
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "frmLogin", name = "frmLogin", autocomplete = "off" }))
+                        {
+                            <div class="md-input-container">
+                                @Html.TextBoxFor(x => x.UserID, new { @class = "md-input" })
+                                <label>User Id</label>
+                            </div>
+
+                            <div class="md-input-container">
+                                @Html.PasswordFor(x => x.Password, new { @class = "md-input" , autocomplete = "new-password" })
+                                <label>Password</label>
+                            </div>
+
+                            @*<div class="clearfix">
+                                    <div class="ui-checkbox ui-checkbox-primary right">
+                                        <label>
+                                            <input type="checkbox">
+                                            <span>Remember me</span>
+                                        </label>
+                                    </div>
+                                </div>*@
+                            @*<div class="clearfix mb15"><a href="forget-pass.html" class="text-success small">Forget your password?</a></div>*@
+                            <div class="btn-group btn-group-justified mb15">
+                                @*<div class="btn-group">
+                                        <button type="button" class="btn btn-facebook"><span class="ion ion-social-facebook"></span>&nbsp;&nbsp;Facebook</button>
+                                    </div>*@
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-success">Sign In</button>
+                                </div>
+                            </div>
+                            @*<div class="clearfix text-center small">
+                                    <p>Don't have an account? <a href="signup.html">Create Now</a></p>
+                                </div>*@
+                        }
+                    </div>
+
+                </div> <!-- #end signin-container -->
             </div>
+
+
+
         </div>
-    </section>
-    <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+        <!-- #end content-container -->
+
+    </div> <!-- #end main-container -->
+    <!-- Dev only -->
+    <!-- Vendors -->
+    <script src="@Url.Content("~/Scripts/jquery-2.2.3.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('.danger').popover({
-                html: true,
-                content: function () {
-                    return $('#popover_content_wrapper').html();
-                }
-            });
-
-            $('#frmLogin').validate({
-                rules: {
-                    Email: {
-                        required: true
-                    },
-                    Password: {
-                        required: true
-                    }
+    <script type="text/javascript">
+        $("#frmLogin").validate({
+            rules: {
+                'UserID': {
+                    required: true
                 },
-                messages: {
-                    Email: {
-                        required: 'Username is required'
-                    },
-                    Password: {
-                        required: 'Password is required'
-                    }
-                }
-            });
-        });
+                'Password': {
+                    required: true
+                },
+            }
+            //,
+            //messages: {
+            //    UserID: 'Username is Required',
+            //    Password: 'Password is Required'
+            //}
+        })
 
-        function OpenPopOver(branchID) {
-            debugger;
-            $('#BranchID').val(branchID);
-            $('.danger').each(function () {
-                $(this).popover('hide');
-            });
-
-            $('.danger').popover({
-                html: true,
-                content: function () {
-                    return $('#popover_content_wrapper').html();
-                }
-            });
-        };
     </script>
 </body>
 </html>
+

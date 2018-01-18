@@ -1546,8 +1546,6 @@
     <Content Include="Scripts\Charts\jquery.jqRangeSlider.min.js" />
     <Content Include="Scripts\Charts\jquery.mousewheel.js" />
     <Content Include="Scripts\Charts\prettify.js" />
-    <Content Include="Scripts\chosen.css" />
-    <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\Core\app.js" />
     <Content Include="Scripts\Core\bootstrap-rating.min.js" />
     <Content Include="Scripts\Core\c3.min.js" />
@@ -1599,7 +1597,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Index1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionFilters\SessionFilter.cs" />
@@ -1795,6 +1793,7 @@
     <Content Include="Views\VendorPaymentStatus\VendorPaymentStatusDetail.cshtml" />
     <Content Include="Views\Dashboard\ProfitAndLoss.cshtml" />
     <Content Include="Views\Report\VendorsAndTrainersReport.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
