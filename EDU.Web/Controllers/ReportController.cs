@@ -144,14 +144,21 @@ namespace EDU.Web.Controllers
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
-
-
-
+        
         public ActionResult ProductAchievementReport(int? country, int year)
         {
             var url = "Edu.ProductAchievementReport";
             ViewBag.Title = "Product Achievement Report - YTD";
             ViewBag.country = country;
+            ViewBag.year = year;
+            ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
+            return PartialView("ViewReport");
+        }
+
+        public ActionResult RevenueReportYTD(int year)
+        {
+            var url = "Edu.RevenueReportYTD";
+            ViewBag.Title = "Revenue Report - YTD";
             ViewBag.year = year;
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");

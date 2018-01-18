@@ -82,6 +82,20 @@
                   style = "border: none;"
               }).ControlSettings(settings)
          }
+         else if (url.Contains("Edu.RevenueReportYTD"))
+         {
+            @Html.MvcReportViewer(url,
+              new
+              {
+                  year = Year
+              },
+              new
+              {
+                  Height = 500,
+                  Width = "100%",
+                  style = "border: none;"
+              }).ControlSettings(settings)
+         }
          else
          {
             @Html.MvcReportViewer(url,
