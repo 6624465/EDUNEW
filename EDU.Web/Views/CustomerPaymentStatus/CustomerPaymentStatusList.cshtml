@@ -179,98 +179,99 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row" style="margin-top:20px;">
-                        </div>
-                        <div class="css10 table-responsive">
-                            <table class="table-bordered" id="tblCustomerPayment" style="white-space:nowrap;width:100%">
-                                <thead style="cursor:pointer">
-                                    <tr>
-                                        <td style='width:60px;'>#Action</td>
-                                        <td style='width:90px;'>Event ID</td>
-                                        <td style='width:150px;'>Customer</td>
-                                        <td style='width:90px;'>Product Name</td>
-                                        <td style='width:200px;'>Course Name</td>
-                                        <td style='width:88px;'>Invoice Amount</td>
-                                        <td style='width:78px;'>Paid Amount</td>
-                                        <td style='width:100px;'>Balance Amount</td>
-                                        <td style='width:120px;'>Other Receivables</td>
-                                        <td style='width:75px;'>Total Amount</td>
-                                        <td style='width:70px;'>Due Date</td>
-                                        <td style='width:90px;'>Receipt Date</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ int recCount = -1;}
-                                    @foreach (var item in Model.customerPayment)
-                                    {
-                                        { recCount = recCount + 1; }
-                                        <tr>
-                                            <td>
-                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
-                                                {
-                                                    <input type="hidden" id="hdncustomerpaymentId" value="@item.CustomerPaymentId" />
-                                                        <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[recCount])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                    if (item.CustomerPaymentId > 0)
-                                                    {
-                                                        <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                    }
-                                                }
-                                            </td>
-                                            <td>
-                                                @(item.TrainingConfirmationID)
-                                            </td>
-                                            <td>
-                                                @GetCustomerName(item.RegistrationId)
-                                            </td>
-                                            <td>
-                                                @GetProductName(item.TrainingConfirmationID)
-                                            </td>
-                                            <td>
-                                                @GetCourseName(item.TrainingConfirmationID)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.InvoiceAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.PaidAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.BalanceAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.OtherReceivablesAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.TotalAmount)
-                                            </td>
-                                            <td class="center">
-                                                @(item.DueDate == null ? null : item.DueDate.Value.ToString("dd/MM/yyyy"))
-                                            </td>
-                                            <td class="center">
-                                                @(item.ReceiptDate == null ? null : item.ReceiptDate.Value.ToString("dd/MM/yyyy"))
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                                <tfoot>
-                                    <tr class="bordertop">
-                                        <td>Summary</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table-bordered" id="tblCustomerPayment" style="white-space:nowrap;width:100%">
+                                        <thead style="cursor:pointer">
+                                            <tr>
+                                                <td style='width:60px;'>#Action</td>
+                                                <td style='width:90px;'>Event ID</td>
+                                                <td style='width:150px;'>Customer</td>
+                                                <td style='width:90px;'>Product Name</td>
+                                                <td style='width:200px;'>Course Name</td>
+                                                <td style='width:88px;'>Invoice Amount</td>
+                                                <td style='width:78px;'>Paid Amount</td>
+                                                <td style='width:100px;'>Balance Amount</td>
+                                                <td style='width:120px;'>Other Receivables</td>
+                                                <td style='width:75px;'>Total Amount</td>
+                                                <td style='width:70px;'>Due Date</td>
+                                                <td style='width:90px;'>Receipt Date</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ int recCount = -1;}
+                                            @foreach (var item in Model.customerPayment)
+                                            {
+                                                { recCount = recCount + 1; }
+                                                <tr>
+                                                    <td>
+                                                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
+                                                        {
+                                                            <input type="hidden" id="hdncustomerpaymentId" value="@item.CustomerPaymentId" />
+                                                            <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[recCount])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                            if (item.CustomerPaymentId > 0)
+                                                            {
+                                                                <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @(item.TrainingConfirmationID)
+                                                    </td>
+                                                    <td>
+                                                        @GetCustomerName(item.RegistrationId)
+                                                    </td>
+                                                    <td>
+                                                        @GetProductName(item.TrainingConfirmationID)
+                                                    </td>
+                                                    <td>
+                                                        @GetCourseName(item.TrainingConfirmationID)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.InvoiceAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.PaidAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.BalanceAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.OtherReceivablesAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.TotalAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @(item.DueDate == null ? null : item.DueDate.Value.ToString("dd/MM/yyyy"))
+                                                    </td>
+                                                    <td class="center">
+                                                        @(item.ReceiptDate == null ? null : item.ReceiptDate.Value.ToString("dd/MM/yyyy"))
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="bordertop">
+                                                <td>Summary</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                    </div>
                     </div>
                 </div>
             </div>

@@ -33,82 +33,86 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="css10 table-responsive">
-                        <table class="table-bordered tblSearch" id="tblTrainer" style="white-space:nowrap;width:100%">
-                            <thead style="cursor:pointer">
-                                <tr>
-                                    <td style='width:60px;'>#Action</td>
-                                    <td style='width:150px;'>Trainer Name</td>
-                                    <td style='width:150px;'>Technology</td>
-                                    <td style='width:150px;'>Country Name</td>
-                                    <td style='width:100px;'>Trainer Rate</td>
-                                    <td style='width:150px;'>Vendor Name</td>
-                                    <td style='width:150px;'>Address</td>
-                                    <td style='width:100px;'>Contact</td>
-                                    <td style='width:150px;'>Profile</td>
-                                    <td style='width:150px;'>Remarks</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                            {
-                                                <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Trainer?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                            }
-                                        </td>
-                                        <td>
-                                            @item.TrainerName
-                                        </td>
-                                        <td>
-                                            @item.Technology
-                                        </td>
-                                        <td>
-                                            @item.CountryName
-                                        </td>
-                                        <td class="center">
-                                            @ConvertToInt64dollar(item.TrainerRate)
-                                        </td>
-                                        <td>
-                                            @item.VendorName
-                                        </td>
-                                        <td>
-                                            @if (item.Address != null && item.Address.ToString().Length > 20)
-                                            {
-                                                <a style="cursor:pointer;text-decoration:underline;">
-                                                    <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Address" data-content="@CheckString(item.Address)" data-original-title="" title="">@item.Address.ToString().Substring(0, 20)...</span>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <span>@item.Address</span>
-                                            }
-                                        </td>
-                                        <td>
-                                            @item.Contact
-                                        </td>
-                                        <td>
-                                            <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
-                                        </td>
-                                        <td>
-                                           @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
-                                           {
-                                            <a style="cursor:pointer;text-decoration:underline;">
-                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
-                                            </a>
-                                           }
-                                           else
-                                           {
-                                            <span>@item.Remarks</span>
-                                           }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table-bordered tblSearch" id="tblTrainer" style="white-space:nowrap;width:100%">
+                                    <thead style="cursor:pointer">
+                                        <tr>
+                                            <td style='width:60px;'>#Action</td>
+                                            <td style='width:150px;'>Trainer Name</td>
+                                            <td style='width:150px;'>Technology</td>
+                                            <td style='width:150px;'>Country Name</td>
+                                            <td style='width:100px;'>Trainer Rate</td>
+                                            <td style='width:150px;'>Vendor Name</td>
+                                            <td style='width:150px;'>Address</td>
+                                            <td style='width:100px;'>Contact</td>
+                                            <td style='width:150px;'>Profile</td>
+                                            <td style='width:150px;'>Remarks</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                                    {
+                                                        <button class="btn btn-xs btn-success waves-effect" onclick="location.href ='@Url.Content("~/Trainer/Trainer?Id=" + item.TrianerId)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteTrainer(@item.TrianerId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @item.TrainerName
+                                                </td>
+                                                <td>
+                                                    @item.Technology
+                                                </td>
+                                                <td>
+                                                    @item.CountryName
+                                                </td>
+                                                <td class="center">
+                                                    @ConvertToInt64dollar(item.TrainerRate)
+                                                </td>
+                                                <td>
+                                                    @item.VendorName
+                                                </td>
+                                                <td>
+                                                    @if (item.Address != null && item.Address.ToString().Length > 20)
+                                                    {
+                                                        <a style="cursor:pointer;text-decoration:underline;">
+                                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Address" data-content="@CheckString(item.Address)" data-original-title="" title="">@item.Address.ToString().Substring(0, 20)...</span>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@item.Address</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @item.Contact
+                                                </td>
+                                                <td>
+                                                    <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/@item.TrianerId/@item.Profile" target="_blank">@item.Profile</a>
+                                                </td>
+                                                <td>
+                                                    @if (item.Remarks != null && item.Remarks.ToString().Length > 20)
+                                                    {
+                                                        <a style="cursor:pointer;text-decoration:underline;">
+                                                            <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.Remarks)" data-original-title="" title="">@item.Remarks.ToString().Substring(0, 20)...</span>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@item.Remarks</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

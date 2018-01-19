@@ -61,6 +61,7 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+
     #tblVendorPayment {
         font-weight: bold;
     }
@@ -138,8 +139,8 @@
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Year</span>
                                 </label>
-                                <div class="col-md-1">
-                                    @Html.DropDownListFor(x => x.VendorPayment.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:100%" })
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.VendorPayment.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:60%" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Month</span>
@@ -149,102 +150,107 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="css25 table-responsive">
-                            <table class="table-bordered" id="tblVendorPayment" style="white-space:nowrap;width:100%">
-                                <thead style="cursor:pointer">
-                                    <tr>
-                                        <td style='width:60px;'>#Action</td>
-                                        <td style='width:90px;'>Event ID</td>
-                                        <td style='width:150px;'>Vendor Name</td>
-                                        <td style='width:100px;'>Product Name</td>
-                                        <td style='width:200px;'>Course Name</td>
-                                        <td style='width:80px;'>Invoice Amount</td>
-                                        <td style='width:80px;'>Paid Amount</td>
-                                        <td style='width:80px;'>Balance Amount</td>
-                                        <td style='width:80px;'>Other Receivables</td>
-                                        <td style='width:80px;'>Total Amount</td>
-                                        <td style='width:80px;'>Due Date</td>
-                                        <td style='width:80px;'>Receipt Date</td>
-                                        <td style='width:100px;'>Reference Doc</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ int recCount = -1;}
-                                    @foreach (var item in Model.VendorPayment)
-                                    {
-                                        { recCount = recCount + 1; }
-                                        <tr>
-                                            <td>
-                                                <div style='width:60px;'>
-                                                    @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
-                                                    {
-                                                        <input type="hidden" id="hdnvenderpaymentId" value="@item.VendorPaymentId" />
-                                                        <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[recCount])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                        if (item.VendorPaymentId > 0)
-                                                        {
-                                                            <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                        }
-                                                    }
-                                                </div>
-                                            </td>
-                                            <td>
-                                                @item.TrainingConfirmationID
-                                            </td>
-                                            <td>
-                                                @GetCustomerName(item.TrainingConfirmationID)
-                                            </td>
-                                            <td>
-                                                @GetProductName(item.TrainingConfirmationID)
-                                            </td>
-                                            <td>
-                                                @GetCourseName(item.TrainingConfirmationID)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.InvoiceAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.PaidAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.BalanceAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.OtherReceivablesAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.TotalAmount)
-                                            </td>
-                                            <td class="center">
-                                                @(item.DueDate == null ? null : item.DueDate.Value.ToString("dd/MM/yyyy"))
-                                            </td>
-                                            <td class="center">
-                                                @(item.ReceiptDate == null ? null : item.ReceiptDate.Value.ToString("dd/MM/yyyy"))
-                                            </td>
-                                            <td class="center">
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                                <tfoot>
-                                    <tr class="bordertop">
-                                        <td>Summary</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table-bordered" id="tblVendorPayment" style="white-space:nowrap;width:100%">
+                                        <thead style="cursor:pointer">
+                                            <tr>
+                                                <td style='width:60px;'>#Action</td>
+                                                <td style='width:90px;'>Event ID</td>
+                                                <td style='width:150px;'>Vendor Name</td>
+                                                <td style='width:100px;'>Product Name</td>
+                                                <td style='width:200px;'>Course Name</td>
+                                                <td style='width:80px;'>Invoice Amount</td>
+                                                <td style='width:80px;'>Paid Amount</td>
+                                                <td style='width:80px;'>Balance Amount</td>
+                                                <td style='width:80px;'>Other Receivables</td>
+                                                <td style='width:80px;'>Total Amount</td>
+                                                <td style='width:80px;'>Due Date</td>
+                                                <td style='width:80px;'>Receipt Date</td>
+                                                <td style='width:100px;'>Reference Doc</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ int recCount = -1;}
+                                            @foreach (var item in Model.VendorPayment)
+                                            {
+                                                {
+                                                    recCount = recCount + 1;
+                                                }
+                                                <tr>
+                                                    <td>
+                                                        <div style='width:60px;'>
+                                                            @if (Session["RoleCode"].ToString().ToUpper() == "ADMIN")
+                                                            {
+                                                                <input type="hidden" id="hdnvenderpaymentId" value="@item.VendorPaymentId" />
+                                                                <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.VendorPayment[recCount])' onclick="EditVendorPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                                if (item.VendorPaymentId > 0)
+                                                                {
+                                                                    <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteVendorPaymentStatus(@item.VendorPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @item.TrainingConfirmationID
+                                                    </td>
+                                                    <td>
+                                                        @GetCustomerName(item.TrainingConfirmationID)
+                                                    </td>
+                                                    <td>
+                                                        @GetProductName(item.TrainingConfirmationID)
+                                                    </td>
+                                                    <td>
+                                                        @GetCourseName(item.TrainingConfirmationID)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.InvoiceAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.PaidAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.BalanceAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.OtherReceivablesAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.TotalAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @(item.DueDate == null ? null : item.DueDate.Value.ToString("dd/MM/yyyy"))
+                                                    </td>
+                                                    <td class="center">
+                                                        @(item.ReceiptDate == null ? null : item.ReceiptDate.Value.ToString("dd/MM/yyyy"))
+                                                    </td>
+                                                    <td class="center">
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/VPS_@item.VendorPaymentId/@item.ReferenceDoc" target="_blank">@item.ReferenceDoc</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="bordertop">
+                                                <td>Summary</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -255,7 +261,7 @@
     <div id="myModal" class="modal fade" role="dialog">
 
     </div>
-}
+                                                }
 @using (Html.BeginForm("DeleteVendorPaymentStatus", "VendorPaymentStatus", FormMethod.Post, new { id = "frmDeleteVendorPaymentStatus", name = "frmDeleteVendorPaymentStatus", enctype = "multipart/form-data" }))
 {
 
@@ -263,7 +269,7 @@
 @section SectionScripts
     {
     <script type="text/javascript">
-        
+
         $(function () {
             $('#tblVendorPayment').DataTable({
                 "bPaginate": false,
@@ -374,7 +380,7 @@
                 if ($actualRow.find('#hdnvenderpaymentId').val() != -1) {
                     $actualRow.css('background-color', '#b3f7da');
                 }
-            });             
+            });
         });
 
         function mouseleave(el) {
@@ -444,7 +450,7 @@
             $('#TotalAmount').val(result);
         }
 
-      
+
         $("#frmVendorPaymentStatus").validate({
             rules: {
                 InvoiceAmount: "required",
@@ -457,11 +463,11 @@
             highlight: function (element, errorClass, validClass) {
                 var elem = $(element);
                 if (elem.hasClass("select2-hidden-accessible")) {
-                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass); 
+                    $("#select2-" + elem.attr("id") + "-container").parent().addClass(errorClass);
                 } else {
                     elem.addClass(errorClass);
                 }
-            },    
+            },
             unhighlight: function (element, errorClass, validClass) {
                 var elem = $(element);
                 if (elem.hasClass("select2-hidden-accessible")) {
@@ -473,7 +479,7 @@
             errorPlacement: function(error, element) {
                 var elem = $(element);
                 if (elem.hasClass("select2-hidden-accessible")) {
-                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    element = $("#select2-" + elem.attr("id") + "-container").parent();
                     error.insertAfter(element);
                 } else {
                     error.insertAfter(element);

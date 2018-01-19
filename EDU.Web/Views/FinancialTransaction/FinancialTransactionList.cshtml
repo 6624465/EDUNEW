@@ -109,8 +109,8 @@
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Year</span>
                                 </label>
-                                <div class="col-md-1">
-                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:100%" })
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:60%" })
                                 </div>
                                 <label class="col-md-1 control-label">
                                     <span class="pull-right">Month</span>
@@ -120,231 +120,236 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="css25 table-responsive">
-                            <table class="table-bordered" id="tblFinancialTransaction" style="white-space:nowrap">
-                                <thead style="cursor:pointer">
-                                    <tr>
-                                        <td style='width:60px;'>#Action</td>
-                                        <td style='width:90px;'>Event ID</td>
-                                        <td style='width:100px;'>Country Name</td>
-                                        <td style='width:80px;'>Rev Amount</td>
-                                        <td style='width:80px;'>Trainer Fee Amt.</td>
-                                        <td style='width:80px;'>Trainer Airfare Amt.</td>
-                                        <td style='width:80px;'>Hotel Bookings Amt.</td>
-                                        <td style='width:80px;'>Trainer Claims Amt.</td>
-                                        <td style='width:80px;'>Regional exp Amt.</td>
-                                        <td style='width:80px;'>Courseware Material Amt.</td>
-                                        <td style='width:80px;'>Gross Profit</td>
-                                        <td style='width:80px;'>P&L Percent</td>
-                                        <td style='width:100px;'>Rev Ref Doc</td>
-                                        <td style='width:100px;'>Rev Remarks</td>
-                                        <td style='width:100px;'>Trainer Exp Ref Doc</td>
-                                        <td style='width:100px;'>Trainer Exp Remarks</td>
-                                        <td style='width:100px;'>Trainer Airfare Ref Doc</td>
-                                        <td style='width:100px;'>Trainer Airfare Remarks</td>
-                                        <td style='width:100px;'>Hotel Bookings Ref Doc</td>
-                                        <td style='width:100px;'>Hotel Bookings Remarks</td>
-                                        <td style='width:100px;'>Trainer Claims Ref Doc</td>
-                                        <td style='width:100px;'>Trainer Claims Remarks</td>
-                                        <td style='width:100px;'>Regional exp Ref Doc</td>
-                                        <td style='width:100px;'>Regional exp Remarks</td>
-                                        <td style='width:100px;'>Courseware Material Ref Doc</td>
-                                        <td style='width:100px;'>Courseware Material Remarks</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ int recCount = -1;}
-                                    @foreach (var item in Model)
-                                    {
-                                        { recCount = recCount + 1; }
-                                        <tr>
-                                            <td>
-                                                @if (Session["RoleCode"].ToString() == "ADMIN")
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table-bordered" id="tblFinancialTransaction" style="white-space:nowrap">
+                                        <thead style="cursor:pointer">
+                                            <tr>
+                                                <td style='width:60px;'>#Action</td>
+                                                <td style='width:90px;'>Event ID</td>
+                                                <td style='width:100px;'>Country Name</td>
+                                                <td style='width:80px;'>Rev Amount</td>
+                                                <td style='width:80px;'>Trainer Fee Amt.</td>
+                                                <td style='width:80px;'>Trainer Airfare Amt.</td>
+                                                <td style='width:80px;'>Hotel Bookings Amt.</td>
+                                                <td style='width:80px;'>Trainer Claims Amt.</td>
+                                                <td style='width:80px;'>Regional exp Amt.</td>
+                                                <td style='width:80px;'>Courseware Material Amt.</td>
+                                                <td style='width:80px;'>Gross Profit</td>
+                                                <td style='width:80px;'>P&L Percent</td>
+                                                <td style='width:100px;'>Rev Ref Doc</td>
+                                                <td style='width:100px;'>Rev Remarks</td>
+                                                <td style='width:100px;'>Trainer Exp Ref Doc</td>
+                                                <td style='width:100px;'>Trainer Exp Remarks</td>
+                                                <td style='width:100px;'>Trainer Airfare Ref Doc</td>
+                                                <td style='width:100px;'>Trainer Airfare Remarks</td>
+                                                <td style='width:100px;'>Hotel Bookings Ref Doc</td>
+                                                <td style='width:100px;'>Hotel Bookings Remarks</td>
+                                                <td style='width:100px;'>Trainer Claims Ref Doc</td>
+                                                <td style='width:100px;'>Trainer Claims Remarks</td>
+                                                <td style='width:100px;'>Regional exp Ref Doc</td>
+                                                <td style='width:100px;'>Regional exp Remarks</td>
+                                                <td style='width:100px;'>Courseware Material Ref Doc</td>
+                                                <td style='width:100px;'>Courseware Material Remarks</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ int recCount = -1;}
+                                            @foreach (var item in Model)
+                                            {
                                                 {
-                                                    <input type="hidden" id="hdnFinancialTransactionId" value="@item.FinancialTransactionId" />
-                                                    <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.TrainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    recCount = recCount + 1;
                                                 }
-                                            </td>
-                                            <td>
-                                                @item.TrainingConfirmationID
-                                            </td>
-                                            <td>
-                                                @item.CountryName
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.TotalRevenueAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.TrainerExpensesAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.TrainerTravelExpensesAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.LocalExpensesAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.TrainerClaimsAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.MiscExpensesAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.CoursewareMaterialAmount)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64dollar(item.GrossProfit)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64Percent(item.ProfitAndLossPercent)
-                                            </td>
-                                            <td>
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
-                                            </td>
-                                            <td>
-                                                @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TotalRevenueRemarks)" data-original-title="" title="">@item.TotalRevenueRemarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.TotalRevenueRemarks</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
-                                            </td>
-                                            <td>
-                                                @if (item.TrainerExpensesRemarks != null && item.TrainerExpensesRemarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerExpensesRemarks)" data-original-title="" title="">@item.TrainerExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.TrainerExpensesRemarks</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
-                                            </td>
-                                            <td>
-                                                @if (item.TrainerTravelExpensesRemarks != null && item.TrainerTravelExpensesRemarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerTravelExpensesRemarks)" data-original-title="" title="">@item.TrainerTravelExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.TrainerTravelExpensesRemarks</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
-                                            </td>
-                                            <td>
-                                                @if (item.LocalExpensesRemarks != null && item.LocalExpensesRemarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.LocalExpensesRemarks)" data-original-title="" title="">@item.LocalExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.LocalExpensesRemarks</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerClaims/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
-                                            </td>
-                                            <td>
-                                                @if (item.TrainerClaimsRemarks != null && item.TrainerClaimsRemarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerClaimsRemarks)" data-original-title="" title="">@item.TrainerClaimsRemarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.TrainerClaimsRemarks</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
-                                            </td>
-                                            <td>
-                                                @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.MiscExpensesRemarks)" data-original-title="" title="">@item.MiscExpensesRemarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.MiscExpensesRemarks</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
-                                            </td>
-                                            <td>
-                                                @if (item.CoursewareMaterialRemarks != null && item.CoursewareMaterialRemarks.ToString().Length > 20)
-                                                {
-                                                    <a style="cursor:pointer;text-decoration:underline;">
-                                                        <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.CoursewareMaterialRemarks)" data-original-title="" title="">@item.CoursewareMaterialRemarks.ToString().Substring(0, 20)...</span>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <span>@item.CoursewareMaterialRemarks</span>
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                                <tfoot>
-                                    <tr class="bordertop">
-                                        <td>Summary</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                                <tr>
+                                                    <td>
+                                                        @if (Session["RoleCode"].ToString() == "ADMIN")
+                                                        {
+                                                            <input type="hidden" id="hdnFinancialTransactionId" value="@item.FinancialTransactionId" />
+                                                            <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.TrainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @item.TrainingConfirmationID
+                                                    </td>
+                                                    <td>
+                                                        @item.CountryName
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.TotalRevenueAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.TrainerExpensesAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.TrainerTravelExpensesAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.LocalExpensesAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.TrainerClaimsAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.MiscExpensesAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.CoursewareMaterialAmount)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64dollar(item.GrossProfit)
+                                                    </td>
+                                                    <td class="center">
+                                                        @ConvertToInt64Percent(item.ProfitAndLossPercent)
+                                                    </td>
+                                                    <td>
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TotalRevenue/@item.TotalRevenueReferenceDoc" target="_blank">@item.TotalRevenueReferenceDoc</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.TotalRevenueRemarks != null && item.TotalRevenueRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TotalRevenueRemarks)" data-original-title="" title="">@item.TotalRevenueRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TotalRevenueRemarks</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerExpenses/@item.TrainerExpensesReferenceDoc" target="_blank">@item.TrainerExpensesReferenceDoc</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.TrainerExpensesRemarks != null && item.TrainerExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerExpensesRemarks)" data-original-title="" title="">@item.TrainerExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TrainerExpensesRemarks</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerTravelExpenses/@item.TrainerTravelExpensesReferenceDoc" target="_blank">@item.TrainerTravelExpensesReferenceDoc</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.TrainerTravelExpensesRemarks != null && item.TrainerTravelExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerTravelExpensesRemarks)" data-original-title="" title="">@item.TrainerTravelExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TrainerTravelExpensesRemarks</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/LocalExpenses/@item.LocalExpensesReferenceDoc" target="_blank">@item.LocalExpensesReferenceDoc</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.LocalExpensesRemarks != null && item.LocalExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.LocalExpensesRemarks)" data-original-title="" title="">@item.LocalExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.LocalExpensesRemarks</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/TrainerClaims/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.TrainerClaimsRemarks != null && item.TrainerClaimsRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.TrainerClaimsRemarks)" data-original-title="" title="">@item.TrainerClaimsRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.TrainerClaimsRemarks</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/MiscExpenses/@item.MiscExpensesReferenceDoc" target="_blank">@item.MiscExpensesReferenceDoc</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.MiscExpensesRemarks != null && item.MiscExpensesRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.MiscExpensesRemarks)" data-original-title="" title="">@item.MiscExpensesRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.MiscExpensesRemarks</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a style="cursor:pointer;text-decoration:underline;" href="~/Uploads/ft_@item.FinancialTransactionId/CoursewareMaterial/@item.CoursewareMaterialReferenceDoc" target="_blank">@item.CoursewareMaterialReferenceDoc</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.CoursewareMaterialRemarks != null && item.CoursewareMaterialRemarks.ToString().Length > 20)
+                                                        {
+                                                            <a style="cursor:pointer;text-decoration:underline;">
+                                                                <span onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-placement="top" data-toggle="popover" data-html="true" data-title="Remarks" data-content="@CheckString(item.CoursewareMaterialRemarks)" data-original-title="" title="">@item.CoursewareMaterialRemarks.ToString().Substring(0, 20)...</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.CoursewareMaterialRemarks</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="bordertop">
+                                                <td>Summary</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td class="center"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-                                        }
+                                                }
 @section SectionScripts {
     <script type="text/javascript">
         $(function () {

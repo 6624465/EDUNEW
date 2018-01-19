@@ -71,7 +71,7 @@
                             <div class="col-md-2">
                                 @*@if (month < 4)
                                 {*@
-                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();" })
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeCountryMonth();", @style = "width:60%" })
                                     @*((i - 1) + " - " + i)*@
                                 @*}
                                 else
