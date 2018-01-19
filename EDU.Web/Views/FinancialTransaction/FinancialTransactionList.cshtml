@@ -166,7 +166,7 @@
                                                         @if (Session["RoleCode"].ToString() == "ADMIN")
                                                         {
                                                             <input type="hidden" id="hdnFinancialTransactionId" value="@item.FinancialTransactionId" />
-                                                            <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=" +item.FinancialTransactionId+"&trainingConfirmationID="+item.TrainingConfirmationID+"&country="+item.Country+"&totalRevenueAmount="+item.TotalRevenueAmount+"&month="+item.Month+"&year="+item.Year)'"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                            <button id="btn_edit" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" onclick="UpdateFinancialTransaction(@item.FinancialTransactionId,'@item.TrainingConfirmationID',@item.Country,@(item.TotalRevenueAmount==null ? 0:item.TotalRevenueAmount),@item.Month,@item.Year)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                         }
                                                     </td>
                                                     <td>
@@ -365,7 +365,6 @@
                             i.replace(/[\$,]/g, '') * 1 :
                             typeof i === 'number' ?
                                 i : 0;
-                        debugger;
                         return amt;
 
                     };
@@ -526,43 +525,51 @@
             window.location = '@Url.Action("FinancialTransactionList", "FinancialTransaction", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
 
+        function UpdateFinancialTransaction(FinancialTransactionId, TrainingConfirmationID, Country, TotalRevenueAmount, Month, Year) {
+            if (TotalRevenueAmount > 0) {
+                location.href = '@Url.Content("~/FinancialTransaction/FinancialTransactionDetail?Id=")' + FinancialTransactionId + "&trainingConfirmationID=" + TrainingConfirmationID + "&country=" + Country + "&totalRevenueAmount=" + TotalRevenueAmount + "&month=" + Month + "&year=" + Year;
+            }
+            else {
+                swal("Cannot proceed without Revenue Amount. Please fulfill the Registration Details for this event '" + TrainingConfirmationID+"'.", "");
+            }
+        }
 
         function SaveFinancialTransaction() {
-            if ($('#frmFinancial').valid()) {
+                if ($('#frmFinancial').valid()) {
 
-                debugger;
+                    debugger;
                 $('#Amount').removeAttr('disabled');
                 $('#LocalAmount').removeAttr('disabled');
                 $('#frmFinancial').submit();
-            }
-        };
+                }
+            };
 
         $('#frmFinancial').validate({
-            rules: {
-                'financialTransaction.Country': {
-                    required: true
-                },
+                rules: {
+                    'financialTransaction.Country': {
+                        required: true
+                    },
                 'financialTransaction.CurrencyCode': {
-                    required: true
+                        required: true
                 },
                 'financialTransaction.CurrencyExRate': {
-                    required: true,
+                        required: true,
                 }
                 ,
                 'Amount': {
-                    required: true,
+                        required: true,
                 },
                 'financialTransaction.TrainingConfirmationID': {
-                    required: true
+                        required: true
                 }
-            }
-        });
-        function mouseleave(el) {
+                }
+            });
+            function mouseleave(el) {
             $(el).popover("hide");
-        }
+            }
 
-        function mouseover(el) {
+            function mouseover(el) {
             $(el).popover("show");
-        }
+            }
     </script>
 }
