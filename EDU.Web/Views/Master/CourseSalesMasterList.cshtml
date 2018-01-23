@@ -389,8 +389,16 @@
          function ChangeMonth() {
             window.location = '@Url.Action("CourseSalesMasterList", "Master", new { month = "", year = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val();
         };
-        
+
         function PrintRegionalLeadsList() {
+
+            var country = null;
+            @if (Session["UserID"].ToString().ToUpper().Contains("MGMT") && Session["UserID"].ToString().ToUpper() != "MGMTSG")
+            {<text>
+            country = @Session["BranchId"].ToString();
+            </text>
+            }
+
             var year = $('#Year').val();
             var month = $('#Month').val() == 0 ? null : $('#Month').val();
             debugger;

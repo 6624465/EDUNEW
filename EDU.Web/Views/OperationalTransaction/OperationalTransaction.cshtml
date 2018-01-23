@@ -56,7 +56,7 @@
                                     <div class="col-md-2">
                                         @Html.DropDownListFor(x => x.Country,
                              new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-                             "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);",@disabled=true })
+                             "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);", @disabled = true })
                                     </div>
                                     <label class="col-md-1 control-label">
                                         <span class="pull-right">Year</span>
@@ -73,127 +73,152 @@
                                 </div>
                             </div>
                             <hr />
-                            <div class="row col-md-offset-1">
-                                <h4>Operational Expenses</h4>
-                            </div>
                             <div class="row">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Salaries</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.SalariesAmount,"{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Travelling Expenses</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.TravellingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-
-                                <label class="col-md-1 control-label">
-                                    <span class="pull-right">Rental</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.RentalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Telephone Expenses</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.TelephoneexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Courier Charges</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.CourierchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-1 control-label">
-                                    <span class="pull-right">Insurance</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.InsuranceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Utility</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.UtilityAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Marketingexp</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.MarketingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-1 control-label">
-                                    <span class="pull-right">Depreciation</span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.DepreciationAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="row col-md-offset-1">
-                                <h4>Other Expenses</h4>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">LegalExpenses/Consultancy </span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.LegalexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Repair&Maintenance </span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.RepairmaintenanceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Bankcharges </span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.BankchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">Printing&Stationery </span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.PrintingstationeryAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">StaffWelfare </span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.StaffwelfareAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                                <label class="col-md-2 control-label">
-                                    <span class="pull-right">OtherExpenses/Income </span>
-                                </label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(x => x.OtherexpensesincomeAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="text-center">
-                                        @*<button type="button" class="btn btn-success btn-sm btndisable"><i class="fa fa-floppy-o"></i>&nbsp;Submit</button> &nbsp;&nbsp;&nbsp;*@
-                                        <button type="button" onclick="SaveOperationalTransaction()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-default btn-sm" type="button" onclick="navigateToList();"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8" style="border: 2px solid gray; border-radius: 20px;">
+                                    <div class="col-md-6">
+                                        <div class="row col-md-offset-1">
+                                            <h4>Operational Expenses</h4>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Salaries</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.SalariesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Travelling Expenses</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.TravellingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Rental</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.RentalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Telephone Expenses</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.TelephoneexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Courier Charges</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.CourierchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Insurance</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.InsuranceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Utility</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.UtilityAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Marketingexp</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.MarketingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Depreciation</span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.DepreciationAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row col-md-offset-1">
+                                            <h4>Other Expenses</h4>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>LegalExpenses/Consultancy </span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.LegalexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Repair&Maintenance </span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.RepairmaintenanceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Bankcharges </span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.BankchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>Printing&Stationery </span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.PrintingstationeryAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>StaffWelfare </span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.StaffwelfareAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-8 control-label">
+                                                <span>OtherExpenses/Income </span>
+                                            </label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.OtherexpensesincomeAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="text-center css10">
+                                                <button type="button" onclick="SaveOperationalTransaction()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                <button class="btn btn-default btn-sm" type="button" onclick="navigateToList();"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css10">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <hr />
                     </div>
                 </div>
             </div>

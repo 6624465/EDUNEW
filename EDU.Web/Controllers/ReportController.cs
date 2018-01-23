@@ -51,12 +51,13 @@ namespace EDU.Web.Controllers
             return PartialView("ViewReport");
         }
 
-        public ActionResult RegionalLeadsReport(int year, int? month)
+        public ActionResult RegionalLeadsReport(int year, int? month, int? country)
         {
             var url = "Edu.RegionalLeadsReport";
             ViewBag.Title = "Regional Leads Report";
             ViewBag.year = year;
             ViewBag.month = month;
+            ViewBag.country = country;
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }

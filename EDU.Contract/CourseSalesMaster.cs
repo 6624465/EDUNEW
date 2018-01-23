@@ -43,6 +43,7 @@ namespace EZY.EDU.Contract
     {
         public int Id { get; set; }
         public string CountryName { get; set; }
+        public short Country { get; set; }
         public string ProductName { get; set; }
         public string CourseName { get; set; }
         public Int16 NoOfDays { get; set; }

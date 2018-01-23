@@ -21,7 +21,7 @@
             <h4 class="modal-title">@ViewBag.Title</h4>
         </div>
         <div class="modal-body" id="VendorandTrainerModalBody" >
-         @if (url.Contains("Edu.RegionalLeads") || url.Contains("Edu.EventConfirmation"))
+         @if (url.Contains("Edu.EventConfirmation"))
          {
              @Html.MvcReportViewer(url,
               new
@@ -51,7 +51,7 @@
                   style = "border: none;"
               }).ControlSettings(settings)
          }
-         else if (url.Contains("Edu.ProfitAndLossReport") || url.Contains("Edu.DashboardOperationalTransaction") || url.Contains("Edu.DashboardAchievementYTDReport"))
+         else if (url.Contains("Edu.RegionalLeads") || url.Contains("Edu.ProfitAndLossReport") || url.Contains("Edu.DashboardOperationalTransaction") || url.Contains("Edu.DashboardAchievementYTDReport"))
          {
             @Html.MvcReportViewer(url,
               new
