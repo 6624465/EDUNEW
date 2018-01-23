@@ -88,8 +88,8 @@
                         </div>
                         <div class="row">
                             <div class="dot" style="background-color: blue;"><span style="padding-left:30px;font-size:10pt">Revenue</span></div>
-                            <br />
-                            <div class="dot css5" style="background-color: orange;"><span style="padding-left:30px;font-size:10pt">Expenses</span></div>
+                            @*<br />
+                            <div class="dot css5" style="background-color: orange;"><span style="padding-left:30px;font-size:10pt">Expenses</span></div>*@
                             <br />
                             <div class="dot css5" style="background-color: forestgreen;"><span style="padding-left:30px;font-size:10pt">Profit</span></div>
                             <br />
@@ -178,7 +178,7 @@
                     }
                 ]
             },
-         {
+         @*{
              name: 'Expenses',
              color: "orange",
              data: [
@@ -188,7 +188,7 @@
                          @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
                      </text>
                 }]
-         },
+         },*@
          {
              name: 'profit',
              color: "green",

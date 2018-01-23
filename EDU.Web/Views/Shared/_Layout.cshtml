@@ -455,7 +455,10 @@
                 $("#liDashboardOperationaltransaction").hide();
                 $("#liDashboardOperationalExpenses").hide();
                 $("#liDashboardDashboardOperationaltransaction").hide();
-                //$("#liDashboardTotalRevenue").hide();
+                if ('@Session["UserID"].ToString().ToUpper()' != 'SALESSG') {
+                    $("#liDashboardTotalRevenue").hide();
+                }
+
                 //$("#liDashboardDashboard").hide();
                 $("#liDashboardProfitandloss").hide();
             }
@@ -477,7 +480,9 @@
                 //$("#liDashboardOperationaltransaction").hide();
                 //$("#liDashboardOperationalExpenses").hide();
                 //$("#liDashboardDashboardOperationaltransaction").hide();
-                //$("#liDashboardTotalRevenue").hide();
+                if ('@Session["UserID"].ToString().ToUpper()' != 'ACCSG') {
+                    $("#liDashboardTotalRevenue").hide();
+                }
                 //$("#liDashboardDashboard").hide();
                 //$("#liDashboardProfitandloss").hide();
             }
