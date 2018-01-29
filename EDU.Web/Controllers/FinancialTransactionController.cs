@@ -355,7 +355,7 @@ namespace EDU.Web.Controllers
                     financialtransactions.GrossProfit = ftInfo.GrossProfit;
                     financialtransactions.ProfitAndLossPercent = ftInfo.ProfitAndLossPercent;
                     financialtransactions.Year = ftInfo.Year;
-                    financialtransactions.Month = ftInfo.Month;
+                    financialtransactions.Month = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.TrainingConfirmationID == ftInfo.TrainingConfirmationID).FirstOrDefault().Month;
                     financialtransactions.IsActive = true;
                     financialtransactions.IsSubmit = ftInfo.IsSubmit;
 
@@ -445,7 +445,7 @@ namespace EDU.Web.Controllers
                     financialtransactions.TrainingConfirmationID = ftInfo.TrainingConfirmationID;
                     financialtransactions.Country = ftInfo.Country;
                     financialtransactions.Year = ftInfo.Year;
-                    financialtransactions.Month = ftInfo.Month;
+                    financialtransactions.Month = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.TrainingConfirmationID == ftInfo.TrainingConfirmationID).FirstOrDefault().Month;
                     financialtransactions.CurrencyCode = ftInfo.CurrencyCode;
                     financialtransactions.CurrencyExRate = ftInfo.CurrencyExRate;
 

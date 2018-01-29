@@ -87,21 +87,41 @@
                             </div>
                         </div>
                         <div class="row" id="dvQtr">
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="border: 1px solid gray; border-radius: 20px;">
+                                <label class="col-md-12 control-label" style="text-align:center">
+                                    <span >Q1</span>
+                                </label>
                                 <div id="container1">
                                 </div>
+                                <label class="col-md-1 control-label">
+                                </label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="border: 1px solid gray; border-radius: 20px;">
+                                <label class="col-md-12 control-label" style="text-align:center">
+                                    <span>Q2</span>
+                                </label>
                                 <div id="container2">
                                 </div>
+                                <label class="col-md-1 control-label">
+                                </label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 css10" style="border: 1px solid gray; border-radius: 20px;">
+                                <label class="col-md-12 control-label" style="text-align:center">
+                                    <span>Q3</span>
+                                </label>
                                 <div id="container3">
                                 </div>
+                                <label class="col-md-1 control-label">
+                                </label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 css10" style="border: 1px solid gray; border-radius: 20px;">
+                                <label class="col-md-12 control-label" style="text-align:center">
+                                    <span>Q4</span>
+                                </label>
                                 <div id="container4">
                                 </div>
+                                <label class="col-md-1 control-label">
+                                </label>
                             </div>
                         </div>
                         <div class="row">
@@ -144,16 +164,7 @@
         });
 
         function ChangeMonth() {
-
             window.location = '@Url.Action("ProfitAndLoss", "Dashboard", new { month = "", year = "", country = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
-            if ($('#Month').val() == '0') {
-                $('#dvAll').hide();
-                $('#dvQtr').show();
-            }
-            else {
-                $('#dvAll').show();
-                $('#dvQtr').hide();
-            }
         };
 
         function PrintProfitAndLossReport() {

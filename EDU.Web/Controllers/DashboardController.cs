@@ -556,7 +556,7 @@ namespace EDU.Web.Dashboard.Controllers
                         GrossProfit = x.GrossProfit == null ? 0 : x.GrossProfit,
                         ProfitAndLossPercent = x.ProfitAndLossPercent == null ? 0 : x.ProfitAndLossPercent,
                         Year = year,
-                        Month = month
+                        Month = x.Month
                     })
                     .ToList();
 
@@ -582,7 +582,7 @@ namespace EDU.Web.Dashboard.Controllers
                             GrossProfit = 0,
                             ProfitAndLossPercent = 0,
                             Year = year,
-                            Month = month
+                            Month = item.Month
                         });
                     }
                 }
