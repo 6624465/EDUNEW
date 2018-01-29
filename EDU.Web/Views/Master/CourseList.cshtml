@@ -146,6 +146,7 @@
                     $('#myModal').html(html);
                     $('#myModal').modal('show');
                     $('#Country, #Product').attr('disabled', 'disabled');
+                    $('#CourseName').select2('val', Id);
                     $('#cname').val(cname);
                 },
                 error: function (err) {

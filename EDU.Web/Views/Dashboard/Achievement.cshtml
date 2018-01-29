@@ -6,11 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var CountryData = (List<EZY.EDU.Contract.Branch>)ViewData["CountryData"];
-
     var productData = (List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"];
-
-
-
 }
 <style>
     .round {
@@ -136,7 +132,7 @@
 
         $(function () {
 
-         @if (Session["UserID"].ToString().ToUpper() == "MGMTSL" || Session["UserID"].ToString().ToUpper() == "ACCSL" || Session["UserID"].ToString().ToUpper() == "SALESSL")
+         @if (Session["UserID"].ToString().ToUpper() == "MGMTSL" || Session["UserID"].ToString().ToUpper() == "ACCSL" || Session["UserID"].ToString().ToUpper() == "SALESSL" || Session["UserID"].ToString().ToUpper() == "CXOSL@EZYINTELLECT.COM")
          {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -153,7 +149,7 @@
 
             </text>
          }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTVN" || Session["UserID"].ToString().ToUpper() == "ACCVN" || Session["UserID"].ToString().ToUpper() == "SALESVN")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTVN" || Session["UserID"].ToString().ToUpper() == "ACCVN" || Session["UserID"].ToString().ToUpper() == "SALESVN" || Session["UserID"].ToString().ToUpper() == "CXOVN@EZYINTELLECT.COM")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -170,7 +166,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTBD" || Session["UserID"].ToString().ToUpper() == "ACCBD" || Session["UserID"].ToString().ToUpper() == "SALESBD")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTBD" || Session["UserID"].ToString().ToUpper() == "ACCBD" || Session["UserID"].ToString().ToUpper() == "SALESBD" || Session["UserID"].ToString().ToUpper() == "CXOBD@EZYINTELLECT.COM")
             {
             <text>
             $('#dvChartdoughnut').hide();
@@ -187,7 +183,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTIN" || Session["UserID"].ToString().ToUpper() == "ACCIN" || Session["UserID"].ToString().ToUpper() == "SALESIN")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTIN" || Session["UserID"].ToString().ToUpper() == "ACCIN" || Session["UserID"].ToString().ToUpper() == "SALESIN" || Session["UserID"].ToString().ToUpper() == "CXOIN@EZYINTELLECT.COM")
             {
             <text>
             $('#dvChartdoughnut').hide();
@@ -204,7 +200,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTKH" || Session["UserID"].ToString().ToUpper() == "ACCKH" || Session["UserID"].ToString().ToUpper() == "SALESKH")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTKH" || Session["UserID"].ToString().ToUpper() == "ACCKH" || Session["UserID"].ToString().ToUpper() == "SALESKH" || Session["UserID"].ToString().ToUpper() == "CXOKH@EZYINTELLECT.COM")
             {
             <text>
             $('#dvChartdoughnut').hide();
@@ -221,7 +217,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTLA" || Session["UserID"].ToString().ToUpper() == "ACCLA" || Session["UserID"].ToString().ToUpper() == "SALESLA")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTLA" || Session["UserID"].ToString().ToUpper() == "ACCLA" || Session["UserID"].ToString().ToUpper() == "SALESLA" || Session["UserID"].ToString().ToUpper() == "CXOLA@EZYINTELLECT.COM")
             {
             <text>
             $('#dvChartdoughnut').hide();
@@ -238,7 +234,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTMM" || Session["UserID"].ToString().ToUpper() == "ACCMM" || Session["UserID"].ToString().ToUpper() == "SALESMM")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTMM" || Session["UserID"].ToString().ToUpper() == "ACCMM" || Session["UserID"].ToString().ToUpper() == "SALESMM" || Session["UserID"].ToString().ToUpper() == "CXOMM@EZYINTELLECT.COM")
             {
             <text>
             $('#dvChartdoughnut').hide();
@@ -255,7 +251,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTPH" || Session["UserID"].ToString().ToUpper() == "ACCPH" || Session["UserID"].ToString().ToUpper() == "SALESPH")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPH" || Session["UserID"].ToString().ToUpper() == "ACCPH" || Session["UserID"].ToString().ToUpper() == "SALESPH" || Session["UserID"].ToString().ToUpper() == "CXOPH@EZYINTELLECT.COM")
             {
             <text>
             $('#dvChartdoughnut').hide();
@@ -272,7 +268,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTPK" || Session["UserID"].ToString().ToUpper() == "ACCPK" || Session["UserID"].ToString().ToUpper() == "SALESPK")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPK" || Session["UserID"].ToString().ToUpper() == "ACCPK" || Session["UserID"].ToString().ToUpper() == "SALESPK" || Session["UserID"].ToString().ToUpper() == "CXOPK@EZYINTELLECT.COM")
             {
             <text>
             $('#dvChartdoughnut').hide();
