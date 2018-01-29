@@ -181,11 +181,11 @@
             $('#Country').attr('disabled', 'disabled');
         </text>
             }
-             }
+        }
 
         $('#StartDt').datetimepicker({
-                icons: {
-                    time: 'fa fa-clock-o',
+            icons: {
+                time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',
                 up: 'fa fa-arrow-up',
                 down: 'fa fa-arrow-down'
@@ -195,9 +195,9 @@
         });
 
         $('#EndDt').datetimepicker({
-                useCurrent: false, //Important! See issue #1075
+            useCurrent: false, //Important! See issue #1075
             icons: {
-                    time: 'fa fa-clock-o',
+                time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',
                 up: 'fa fa-arrow-up',
                 down: 'fa fa-arrow-down'
@@ -207,8 +207,8 @@
 
         $("#StartDt").on("dp.change", function (e) {
             $('#EndDate').val('');
-                //$('#EndDt').data("DateTimePicker").minDate(e.date);
-            });
+            //$('#EndDt').data("DateTimePicker").minDate(e.date);
+        });
 
         @if (Model.Id != -1)
         {

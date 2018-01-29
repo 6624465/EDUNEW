@@ -200,17 +200,17 @@ namespace EDU.Web.Controllers
                 list = list.Where(x => x.Country ==Convert.ToUInt16(Session["BranchId"])).ToList();
             }
 
-            var totalleadsonhand = 0;
-            long totalrevenue = 0;
+            //var totalleadsonhand = 0;
+            //long totalrevenue = 0;
 
-            foreach (var item in list)
-            {
-                totalleadsonhand += item.LeadsOnHead;
-                totalrevenue += Convert.ToInt64(item.Revenue == null ? 0 : item.Revenue.Value);
-            }
+            //foreach (var item in list)
+            //{
+            //    totalleadsonhand += item.LeadsOnHead;
+            //    totalrevenue += Convert.ToInt64(item.Revenue == null ? 0 : item.Revenue.Value);
+            //}
 
-            ViewData["totalleadsonhand"] = totalleadsonhand;
-            ViewData["totalrevenue"] = totalrevenue;
+            //ViewData["totalleadsonhand"] = totalleadsonhand;
+            //ViewData["totalrevenue"] = totalrevenue;
 
             ViewData["ProductList"] = new EduProductBO().GetList().OrderBy(x => x.Id).ToList();
             return View("CourseSalesMasterList", list.AsEnumerable());

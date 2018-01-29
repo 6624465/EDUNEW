@@ -213,7 +213,7 @@
                                                         <td>
                                                             <input type="hidden" id="hdncustomerpaymentId" value="@item.CustomerPaymentId" />
                                                             <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[recCount])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                            if (item.CustomerPaymentId > 0)
+                                                            @if (item.CustomerPaymentId > 0)
                                                             {
                                                             <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                             }

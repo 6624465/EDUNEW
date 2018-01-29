@@ -24,7 +24,7 @@
 
     var listMonths = new List<SelectListItem>()
                                           {
-                                           
+
                                            new SelectListItem {Text = "January",   Value = "1"},
                                            new SelectListItem {Text = "February", Value = "2"},
                                            new SelectListItem {Text = "March", Value = "3"},
@@ -48,6 +48,7 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+
     .center {
         text-align: center !important;
     }
@@ -94,7 +95,7 @@
                                 <span class="pull-right">Month</span>
                             </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style="width:60%" })
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:60%" })
                             </div>
                         </div>
                     </div>
@@ -108,12 +109,12 @@
                                 grid.Column("Amount", "Amount", canSort: true,
                                      format:
                                     @<text>
-                                        <div style='width:60px;'>
+                                        <div style='width:100%;'>
                                             <span class="center">
                                                 @ConvertToInt64dollar(item.Amount)
                                             </span>
                                         </div>
-                                    </text>,style: "center")),
+                                    </text>, style: "center")),
                                 tableStyle: "table table-striped table-bordered")
                             </div>
                         </div>
@@ -129,21 +130,33 @@
     <script type="text/javascript">
 
         $(function () {
-            @*@Model.FirstOrDefault().OperationId==''? Add Operational Transactions:Add Operational Transactions
-            btnAdd*@
 
-            @if (Session["RoleCode"].ToString() != "ADMIN" && Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["UserID"].ToString().ToUpper() != "MGMTSG")
+            @if (Model.Count() > 0 && Model.FirstOrDefault().OperationId == -1)
             {
+                if (Session["AccessRights"].ToString() == "false")
+                {
                 <text>
-                    $('#Country').attr('disabled','disabled');
-                 </text>
+                    $("#Country").select2().select2("val", @Session["BranchId"].ToString());
+                    $('#Country').attr('disabled', 'disabled');
+                </text>
+                }
             }
+            else
+            {
+                if (Session["AccessRights"].ToString() == "false")
+                {
+                <text>
+                    $('#Country').attr('disabled', 'disabled');
+                </text>
+                }
+            }
+
             $('#liOperationalTransactionList').addClass('active');
             var totalAmount = "$ " + @ViewData["totalAmount"].ToString();
             @if (count > 0)
         {
             <text>
-            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="left">' + totalAmount + '</td><tr>');
+            $('#gridContent tbody').append('<tr class="bordertop"><td>Total Opex</td><td></td><td class="center">' + totalAmount + '</td><tr>');
              </text>
              }
         });

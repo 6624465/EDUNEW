@@ -35,6 +35,11 @@ namespace EDU.Web.Controllers
                 else
                     tc = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
+                if (Session["AccessRights"].ToString() == "false")
+                {
+                    tc = tc.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+                }
+
                 List<Registration> List = GetList(trainingConfirmationID);
                 TrainingConfirmation tcdtl = tc.Where(x => x.TrainingConfirmationID == trainingConfirmationID).FirstOrDefault();
 
@@ -86,40 +91,40 @@ namespace EDU.Web.Controllers
                 result.Year = year;
                 result.Month = month;
 
-                long amounttotal = 0;
-                long whttotal = 0;
-                long vattotal = 0;
-                long sumamounttotal = 0;
-                long payment1total = 0;
-                long payment2total = 0;
-                long payment3total = 0;
-                long baltotal = 0;
-                long othertotal = 0;
+                //long amounttotal = 0;
+                //long whttotal = 0;
+                //long vattotal = 0;
+                //long sumamounttotal = 0;
+                //long payment1total = 0;
+                //long payment2total = 0;
+                //long payment3total = 0;
+                //long baltotal = 0;
+                //long othertotal = 0;
 
-                foreach (var item in List)
-                {
-                    amounttotal += Convert.ToInt64(item.Amount == null ? 0 : item.Amount.Value);
-                    whttotal += Convert.ToInt64(item.WHTAmount == null ? 0 : item.WHTAmount.Value);
-                    vattotal += Convert.ToInt64(item.VATAmount == null ? 0 : item.VATAmount.Value);
-                    sumamounttotal += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
-                    payment1total += Convert.ToInt64(item.Payment1 == null ? 0 : item.Payment1.Value);
-                    payment2total += Convert.ToInt64(item.Payment2 == null ? 0 : item.Payment2.Value);
-                    payment3total += Convert.ToInt64(item.Payment3 == null ? 0 : item.Payment3.Value);
-                    othertotal += Convert.ToInt64(item.OtherDeductionsAmount == null ? 0 : item.OtherDeductionsAmount.Value);
-                    baltotal += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
-                }
+                //foreach (var item in List)
+                //{
+                //    amounttotal += Convert.ToInt64(item.Amount == null ? 0 : item.Amount.Value);
+                //    whttotal += Convert.ToInt64(item.WHTAmount == null ? 0 : item.WHTAmount.Value);
+                //    vattotal += Convert.ToInt64(item.VATAmount == null ? 0 : item.VATAmount.Value);
+                //    sumamounttotal += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+                //    payment1total += Convert.ToInt64(item.Payment1 == null ? 0 : item.Payment1.Value);
+                //    payment2total += Convert.ToInt64(item.Payment2 == null ? 0 : item.Payment2.Value);
+                //    payment3total += Convert.ToInt64(item.Payment3 == null ? 0 : item.Payment3.Value);
+                //    othertotal += Convert.ToInt64(item.OtherDeductionsAmount == null ? 0 : item.OtherDeductionsAmount.Value);
+                //    baltotal += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+                //}
 
-                List<decimal?> summary = new List<decimal?>();
-                summary.Add(amounttotal);
-                summary.Add(whttotal);
-                summary.Add(vattotal);
-                summary.Add(sumamounttotal);
-                summary.Add(payment1total);
-                summary.Add(payment2total);
-                summary.Add(payment3total);
-                summary.Add(othertotal);
-                summary.Add(baltotal);
-                ViewData["Summary"] = summary;
+                //List<decimal?> summary = new List<decimal?>();
+                //summary.Add(amounttotal);
+                //summary.Add(whttotal);
+                //summary.Add(vattotal);
+                //summary.Add(sumamounttotal);
+                //summary.Add(payment1total);
+                //summary.Add(payment2total);
+                //summary.Add(payment3total);
+                //summary.Add(othertotal);
+                //summary.Add(baltotal);
+                //ViewData["Summary"] = summary;
 
                 //if (tcd.Private==true && !string.IsNullOrWhiteSpace(tcd.CourseName) && !tcd.CourseName.ToUpper().Contains("RENTAL"))
                 //{

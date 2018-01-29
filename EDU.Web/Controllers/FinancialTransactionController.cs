@@ -29,6 +29,11 @@ namespace EDU.Web.Controllers
                     trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year).ToList();
                 else
                     trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
+                var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+                if (Session["AccessRights"].ToString() == "false")
+                {
+                    trainingConfirmationList = trainingConfirmationList.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+                }
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 
@@ -38,7 +43,7 @@ namespace EDU.Web.Controllers
 
                 List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
                                                                          .Where(x => x.IsActive == true && reglist.Contains(x.TrainingConfirmationID)).ToList();
-                var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+
 
                 financialTransactionList = financialTransaction1List
                     .Select(x => new FinancialTransactionsVM
@@ -149,42 +154,42 @@ namespace EDU.Web.Controllers
                     }
                 }
 
-                long revenue = 0;
-                long trainerFee = 0;
-                long trainerAirfare = 0;
-                long hotelBookings = 0;
-                long trainerClaims = 0;
-                long RegionalExp = 0;
-                long coursewareMaterial = 0;
-                long grossProfit = 0;
-                decimal? profitPercent = 0;
+                //long revenue = 0;
+                //long trainerFee = 0;
+                //long trainerAirfare = 0;
+                //long hotelBookings = 0;
+                //long trainerClaims = 0;
+                //long RegionalExp = 0;
+                //long coursewareMaterial = 0;
+                //long grossProfit = 0;
+                //decimal? profitPercent = 0;
 
-                foreach (var item in financialTransactionList)
-                {
-                    revenue += Convert.ToInt64(item.TotalRevenueAmount == null ? 0 : item.TotalRevenueAmount.Value);
-                    trainerFee += Convert.ToInt64(item.TrainerExpensesAmount == null ? 0 : item.TrainerExpensesAmount.Value);
-                    trainerAirfare += Convert.ToInt64(item.TrainerTravelExpensesAmount == null ? 0 : item.TrainerTravelExpensesAmount.Value);
-                    hotelBookings += Convert.ToInt64(item.LocalExpensesAmount == null ? 0 : item.LocalExpensesAmount.Value);
-                    trainerClaims += Convert.ToInt64(item.TrainerClaimsAmount == null ? 0 : item.TrainerClaimsAmount.Value);
-                    RegionalExp += Convert.ToInt64(item.MiscExpensesAmount == null ? 0 : item.MiscExpensesAmount.Value);
-                    coursewareMaterial += Convert.ToInt64(item.CoursewareMaterialAmount == null ? 0 : item.CoursewareMaterialAmount.Value);
-                    grossProfit += Convert.ToInt64(item.GrossProfit == null ? 0 : item.GrossProfit.Value);
-                }
+                //foreach (var item in financialTransactionList)
+                //{
+                //    revenue += Convert.ToInt64(item.TotalRevenueAmount == null ? 0 : item.TotalRevenueAmount.Value);
+                //    trainerFee += Convert.ToInt64(item.TrainerExpensesAmount == null ? 0 : item.TrainerExpensesAmount.Value);
+                //    trainerAirfare += Convert.ToInt64(item.TrainerTravelExpensesAmount == null ? 0 : item.TrainerTravelExpensesAmount.Value);
+                //    hotelBookings += Convert.ToInt64(item.LocalExpensesAmount == null ? 0 : item.LocalExpensesAmount.Value);
+                //    trainerClaims += Convert.ToInt64(item.TrainerClaimsAmount == null ? 0 : item.TrainerClaimsAmount.Value);
+                //    RegionalExp += Convert.ToInt64(item.MiscExpensesAmount == null ? 0 : item.MiscExpensesAmount.Value);
+                //    coursewareMaterial += Convert.ToInt64(item.CoursewareMaterialAmount == null ? 0 : item.CoursewareMaterialAmount.Value);
+                //    grossProfit += Convert.ToInt64(item.GrossProfit == null ? 0 : item.GrossProfit.Value);
+                //}
 
-                profitPercent = financialTransactionList.Where(x => x.FinancialTransactionId != -1).Average(y => y.ProfitAndLossPercent);
+                //profitPercent = financialTransactionList.Where(x => x.FinancialTransactionId != -1).Average(y => y.ProfitAndLossPercent);
 
 
-                List<decimal?> summary = new List<decimal?>();
-                summary.Add(revenue);
-                summary.Add(trainerFee);
-                summary.Add(trainerAirfare);
-                summary.Add(hotelBookings);
-                summary.Add(trainerClaims);
-                summary.Add(RegionalExp);
-                summary.Add(coursewareMaterial);
-                summary.Add(grossProfit);
-                summary.Add(profitPercent);
-                ViewData["Summary"] = summary;
+                //List<decimal?> summary = new List<decimal?>();
+                //summary.Add(revenue);
+                //summary.Add(trainerFee);
+                //summary.Add(trainerAirfare);
+                //summary.Add(hotelBookings);
+                //summary.Add(trainerClaims);
+                //summary.Add(RegionalExp);
+                //summary.Add(coursewareMaterial);
+                //summary.Add(grossProfit);
+                //summary.Add(profitPercent);
+                //ViewData["Summary"] = summary;
 
                 return View(financialTransactionList.OrderBy(x => x.TrainingConfirmationID));
             }

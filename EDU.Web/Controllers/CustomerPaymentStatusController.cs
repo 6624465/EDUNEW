@@ -28,9 +28,12 @@ namespace EDU.Web.Controllers
                 else
                     trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
+                var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
+                var courseList = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
                 if (Session["AccessRights"].ToString() == "false")
                 {
                     trainingConfirmationList = trainingConfirmationList.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+                    courseList = courseList.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
                 }
 
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
@@ -39,8 +42,6 @@ namespace EDU.Web.Controllers
 
 
                 List<int> reglist = registrations.Select(x => x.RegistrationId).ToList();
-                var courseList = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
-                var productList = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
 
                 List<CustomerPaymentVM> customerPaymentVM = dbContext.CustomerPayments
                     .Where(x => x.IsActive == true && reglist.Contains(x.RegistrationId) && x.BalanceAmount >= 1)
@@ -99,31 +100,31 @@ namespace EDU.Web.Controllers
                 result.customerPayment = customerPaymentVM.OrderBy(x => x.TrainingConfirmationID).ToList();
                 result.trainingconfList = trainingConfirmationList;
                 result.productList = new EduProductBO().GetList();
-                result.courseList = new CourseBO().GetList();
+                result.courseList = courseList;
                 result.registrationList = registrations;
 
 
-                long invoiceAmount = 0;
-                long paidAmount = 0;
-                long balanceAmount = 0;
-                long otherreceivablesAmount = 0;
-                long totalAmount = 0;
-                foreach (var item in customerPaymentVM)
-                {
-                    invoiceAmount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
-                    paidAmount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
-                    balanceAmount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
-                    otherreceivablesAmount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
-                    totalAmount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
-                }
+                //long invoiceAmount = 0;
+                //long paidAmount = 0;
+                //long balanceAmount = 0;
+                //long otherreceivablesAmount = 0;
+                //long totalAmount = 0;
+                //foreach (var item in customerPaymentVM)
+                //{
+                //    invoiceAmount += Convert.ToInt64(item.InvoiceAmount == null ? 0 : item.InvoiceAmount.Value);
+                //    paidAmount += Convert.ToInt64(item.PaidAmount == null ? 0 : item.PaidAmount.Value);
+                //    balanceAmount += Convert.ToInt64(item.BalanceAmount == null ? 0 : item.BalanceAmount.Value);
+                //    otherreceivablesAmount += Convert.ToInt64(item.OtherReceivablesAmount == null ? 0 : item.OtherReceivablesAmount.Value);
+                //    totalAmount += Convert.ToInt64(item.TotalAmount == null ? 0 : item.TotalAmount.Value);
+                //}
 
-                List<decimal?> summary = new List<decimal?>();
-                summary.Add(invoiceAmount);
-                summary.Add(paidAmount);
-                summary.Add(balanceAmount);
-                summary.Add(otherreceivablesAmount);
-                summary.Add(totalAmount);
-                ViewData["Summary"] = summary;
+                //List<decimal?> summary = new List<decimal?>();
+                //summary.Add(invoiceAmount);
+                //summary.Add(paidAmount);
+                //summary.Add(balanceAmount);
+                //summary.Add(otherreceivablesAmount);
+                //summary.Add(totalAmount);
+                //ViewData["Summary"] = summary;
                 return View(result);
             }
             catch (Exception ex)

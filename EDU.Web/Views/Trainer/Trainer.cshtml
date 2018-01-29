@@ -112,6 +112,25 @@
     <script type="text/javascript">
         $(function () {
             $('#liTrainersList').addClass('active');
+             @if (Model.TrianerId == -1)
+            {
+                if (Session["AccessRights"].ToString() == "false")
+                {
+                <text>
+                    $("#Country").select2().select2("val", @Session["BranchId"].ToString());
+                    $('#Country').attr('disabled', 'disabled');
+                </text>
+                }
+            }
+            else
+            {
+                if (Session["AccessRights"].ToString() == "false")
+                {
+                <text>
+                    $('#Country').attr('disabled', 'disabled');
+                </text>
+                }
+            }
         });
         $('#Address,#Remarks').keypress(function (event) {
             if (event.which == 13) {
@@ -127,11 +146,12 @@
         function SaveTrainer() {
             $('#frmTrainer').valid()
             {
+                $('#Country').removeAttr('disabled');
                 $('#frmTrainer').submit();
             }
         }
 
-      
+
         $("#frmTrainer").validate({
             rules: {
                 TrainerName: "required",
@@ -182,7 +202,7 @@
 
         $.validator.addMethod('validateFile', function (value, element, param) {
             var Profile = '@Model.Profile';
-            if ((Profile == null || Profile == '') && (value == null || value=="")) {
+            if ((Profile == null || Profile == '') && (value == null || value == "")) {
                 return false;
             }
             else

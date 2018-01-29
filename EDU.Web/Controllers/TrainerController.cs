@@ -153,6 +153,10 @@ namespace EDU.Web.Controllers
         public ActionResult TrainersList()
         {
             List<TrainerInformation> trainerList = dbContext.TrainerInformations.Where(x => x.IsActive == true).ToList();
+            if (Session["AccessRights"].ToString() == "false")
+            {
+                trainerList = trainerList.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+            }
             return View(trainerList);
         }
 
