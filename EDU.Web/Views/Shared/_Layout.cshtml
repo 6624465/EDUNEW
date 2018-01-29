@@ -462,7 +462,7 @@
                 //$("#liDashboardDashboard").hide();
                 $("#liDashboardProfitandloss").hide();
             }
-            else if ('@Session["RoleCode"]' == 'FINANCE'){
+            else if ('@Session["RoleCode"]' == 'FINANCE') {
                 $("#liCourse").hide()
                 $("#liRegionalLeads").hide();
                 $("#liTrainingConfirmationList").hide();
@@ -504,8 +504,7 @@
                 //$("#liDashboardOperationaltransaction").hide();
                 //$("#liDashboardOperationalExpenses").hide();
                 //$("#liDashboardDashboardOperationaltransaction").hide();
-                if ('@Session["UserID"].ToString().ToUpper()' != 'MGMTSG')
-                {
+                if ('@Session["UserID"].ToString().ToUpper()' != 'MGMTSG') {
                     $("#liDashboardTotalRevenue").hide();
                 }
                 //$("#liDashboardDashboard").hide();
@@ -532,6 +531,11 @@
                 $("#liDashboardTotalRevenue").hide();
                 //$("#liDashboardDashboard").hide();
                 $("#liDashboardProfitandloss").hide();
+            }
+            else if ('@Session["RoleCode"]' == 'ADMIN') {
+                if ('@Session["UserID"].ToString().ToUpper()' != 'CXO@EZY-CORP.COM') {
+                    $("#liDashboardTotalRevenue").hide();
+                }
             }
         }
 
