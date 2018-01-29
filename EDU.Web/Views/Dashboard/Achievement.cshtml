@@ -57,38 +57,38 @@
                             <div class="col-md-8">
                                 <div class="row">
                                     <div class="col-md-6 css10" id="dvBangladesh">
-                                        <div id="jqChart0" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut0" style="height: 200px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10" id="dvCombodia">
-                                        <div id="jqChart1" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut1" style="height: 200px; width: 100%;"></div>
                                     </div>
 
                                     <div class="col-md-6 css10" id="dvMyanmar">
-                                        <div id="jqChart4" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut4" style="height: 200px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10" id="dvSrilanka">
-                                        <div id="jqChart8" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut8" style="height: 200px; width: 100%;"></div>
                                     </div>
 
                                     <div class="col-md-6 css10" id="dvPakistan">
-                                        <div id="jqChart5" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut5" style="height: 200px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10" id="dvPhillipines">
-                                        <div id="jqChart6" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut6" style="height: 200px; width: 100%;"></div>
                                     </div>
 
                                     <div class="col-md-6 css10" id="dvVietnam">
-                                        <div id="jqChart9" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut9" style="height: 200px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10" id="dvLaos">
-                                        <div id="jqChart3" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut3" style="height: 200px; width: 100%;"></div>
                                     </div>
 
                                     <div class="col-md-6 css10" id="dvSingapore">
-                                        <div id="jqChart7" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut7" style="height: 200px; width: 100%;"></div>
                                     </div>
                                     <div class="col-md-6 css10" id="dvIndia">
-                                        <div id="jqChart2" style="height: 150px; width: 100%;"></div>
+                                        <div id="jqChartdoughnut2" style="height: 200px; width: 100%;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
 
         $(function () {
 
-         @if (Session["UserID"].ToString().ToUpper() == "MGMTSL" || Session["UserID"].ToString().ToUpper() == "ACCSL" || Session["UserID"].ToString().ToUpper() == "SALESSL" || Session["UserID"].ToString().ToUpper() == "CXOSL@EZYINTELLECT.COM")
+            @if (Session["UserID"].ToString().ToUpper() == "MGMTSL" || Session["UserID"].ToString().ToUpper() == "ACCSL" || Session["UserID"].ToString().ToUpper() == "SALESSL" || Session["UserID"].ToString().ToUpper() == "CXOSL@EZYINTELLECT.COM")
          {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -432,7 +432,69 @@
                 return "<b>$ " + data.y + "</b>";
             });
             //Tooltip//
+
+
+            //new charts
             var count = 0;
+            @foreach (var item in CountryData)
+            {
+                <text>
+            $('#jqChartdoughnut'+count).jqChart({
+                title: { text: '@item.BranchName' },
+                legend: {
+                    title: '',
+                    visible:false
+                },
+                border: { visible:false },
+                animation: { duration: 1 },
+                shadows: {
+                    enabled: true
+                },
+                series: [
+                    {
+                        type: 'doughnut',
+                        innerExtent: 0.5,
+                        outerExtent: 1.0,
+                        fillStyles: ['#fb0000', '#00a65a',  '#8cb1f3', '#333333', '#8a2be2',
+                            '#bcb7c1', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
+                            '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
+                            '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
+                            '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082', '#F08080',
+                            '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
+                        ],
+                        labels: {
+                            stringFormat: '%.1f%%',
+                            valueType: 'percentage',
+                            font: '15px sans-serif',
+                            fillStyle: 'white'
+                        },
+                        data: [ @foreach (var info in Model.Where(x => x.Country == item.BranchID).ToList())
+                        {
+                            <text>
+                                [
+                                    '@info.ProductName',
+                                     @info.AchievedRevenue
+                                ],
+                            </text>
+                        }]
+                    }
+                ]
+            });
+            //Tooltip//
+            $('#jqChartdoughnut'+count).bind('tooltipFormat', function (e, data) {
+                return '<b>' + data.dataItem[0] + '</b><br />' +
+                     "<b>$ " + data.value + "</b>";
+            });
+            //Tooltip//
+            count++;
+            </text>
+        }
+
+            //End new charts
+
+
+
+            @*var count = 0;
             @foreach (var item in CountryData)
                 {
                    <text>
@@ -525,7 +587,7 @@
             //Tooltip//
             count++;
             </text>
-        }
+        }*@
 
         });
     </script>
