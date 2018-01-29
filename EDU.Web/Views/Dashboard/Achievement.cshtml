@@ -112,8 +112,9 @@
         function PrintProductAchievementReportList() {
             var country = null;
             @if (Session["AccessRights"].ToString() == "false")
-            {<text>
-            country = @Session["BranchId"].ToString();
+            {
+            <text>
+                country = @Session["BranchId"].ToString();
             </text>
             }
             var year = $('#Year').val();

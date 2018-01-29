@@ -27,10 +27,11 @@ namespace EDU.Web.Controllers
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
-        public ActionResult VendorsAndTrainersReport()
+        public ActionResult VendorsAndTrainersReport(int? country)
         {
             var url = "Edu.VendorsAndTrainersReport";
             ViewBag.Title = "Vendors And Trainers Report";
+            ViewBag.country = country;
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
@@ -43,10 +44,11 @@ namespace EDU.Web.Controllers
             return PartialView("ViewReport");
         }
 
-        public ActionResult CoursesReport()
+        public ActionResult CoursesReport(int? country)
         {
             var url = "Edu.CourseReport";
             ViewBag.Title = "Courses Report";
+            ViewBag.country = country;
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }
@@ -62,12 +64,13 @@ namespace EDU.Web.Controllers
             return PartialView("ViewReport");
         }
 
-        public ActionResult EventConfirmationReport(int year, int? month)
+        public ActionResult EventConfirmationReport(int year, int? month, int? country)
         {
             var url = "Edu.EventConfirmationReport";
             ViewBag.Title = "Event Confirmation Report";
             ViewBag.year = year;
             ViewBag.month = month;
+            ViewBag.country = country;
             ViewBag.Url = string.Format("{0}{1}", REPORTSUBFOLDER, url);
             return PartialView("ViewReport");
         }

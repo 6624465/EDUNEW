@@ -21,22 +21,7 @@
             <h4 class="modal-title">@ViewBag.Title</h4>
         </div>
         <div class="modal-body" id="VendorandTrainerModalBody" >
-         @if (url.Contains("Edu.EventConfirmation"))
-         {
-             @Html.MvcReportViewer(url,
-              new
-              {
-                  year = Year,
-                  month = Month
-              },
-              new
-              {
-                  Height = 500,
-                  Width = "100%",
-                  style = "border: none;"
-              }).ControlSettings(settings)
-         }
-         else if (url.Contains("Edu.RevenueReport") || url.Contains("Edu.YTDOperationalTransactionReport") || url.Contains("Edu.ProductAchievementReport"))
+         @if (url.Contains("Edu.RevenueReport") || url.Contains("Edu.YTDOperationalTransactionReport") || url.Contains("Edu.ProductAchievementReport"))
          {
             @Html.MvcReportViewer(url,
               new
@@ -51,7 +36,8 @@
                   style = "border: none;"
               }).ControlSettings(settings)
          }
-         else if (url.Contains("Edu.RegionalLeads") || url.Contains("Edu.ProfitAndLossReport") || url.Contains("Edu.DashboardOperationalTransaction") || url.Contains("Edu.DashboardAchievementYTDReport"))
+         else if (url.Contains("Edu.RegionalLeadsReport") || url.Contains("Edu.ProfitAndLossReport") || url.Contains("Edu.DashboardOperationalTransactionReport")
+             || url.Contains("Edu.DashboardAchievementYTDReport") || url.Contains("Edu.EventConfirmationReport"))
          {
             @Html.MvcReportViewer(url,
               new
@@ -67,7 +53,7 @@
                   style = "border: none;"
               }).ControlSettings(settings)
          }
-         else if (url.Contains("Edu.OperationalExpenses"))
+         else if (url.Contains("Edu.OperationalExpensesReport"))
          {
             @Html.MvcReportViewer(url,
               new
@@ -88,6 +74,20 @@
               new
               {
                   year = Year
+              },
+              new
+              {
+                  Height = 500,
+                  Width = "100%",
+                  style = "border: none;"
+              }).ControlSettings(settings)
+         }
+         else if (url.Contains("Edu.CourseReport") || url.Contains("Edu.VendorsAndTrainersReport"))
+         {
+            @Html.MvcReportViewer(url,
+              new
+              {
+                  country = Country
               },
               new
               {

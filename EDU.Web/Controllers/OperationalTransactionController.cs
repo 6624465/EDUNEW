@@ -336,26 +336,33 @@ namespace EDU.Web.Controllers
                 cYear = year;
                 fYear = year;
 
-                List<OperationalTransactionReportVM> list = dbContext.OperationalTransactions
-                    .Where(x => x.IsActive == true && x.Country == country)
+                List<OperationalTransaction> otlist = dbContext.OperationalTransactions
+                    .Where(x => x.IsActive == true && x.Country == country && x.Year == year).ToList();
+
+                if (Session["AccessRights"].ToString() == "false")
+                {
+                    otlist = otlist.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+                }
+
+                List<OperationalTransactionReportVM> list = otlist
                     .Select(y => new OperationalTransactionReportVM
                     {
                         CategoryId = y.CategoryId,
                         ParticularsId = y.ParticularsId,
                         Country = y.Country,
                         CountryName = y.CountryName,
-                        AprAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        MayAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        JuneAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        JulyAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        AugAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        SepAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        OctAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        NovAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        DecAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == cYear && x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,  //fYear
-                        JanAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        FebAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        MarAmount = dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : dbContext.OperationalTransactions.Where(x => x.IsActive == true && x.Year == fYear && x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        JanAmount = otlist.Where(x => x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        FebAmount = otlist.Where(x => x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        MarAmount = otlist.Where(x => x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        AprAmount = otlist.Where(x => x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        MayAmount = otlist.Where(x => x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        JuneAmount = otlist.Where(x => x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        JulyAmount = otlist.Where(x => x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        AugAmount = otlist.Where(x => x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        SepAmount = otlist.Where(x => x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        OctAmount = otlist.Where(x => x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        NovAmount = otlist.Where(x => x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
+                        DecAmount = otlist.Where(x => x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,  //fYear
                         CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
                         ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
 

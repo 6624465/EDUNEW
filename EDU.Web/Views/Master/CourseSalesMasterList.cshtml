@@ -404,7 +404,7 @@
             var month = $('#Month').val() == 0 ? null : $('#Month').val();
             debugger;
             $.ajax({
-                url: '@Url.Content("~/Report/RegionalLeadsReport?year=")' + year + '&month=' + month,
+                url: '@Url.Content("~/Report/RegionalLeadsReport?year=")' + year + '&month=' + month + '&country=' + country,
                 method: 'get',
                 contentType: 'text/html',
                 success: function (html) {

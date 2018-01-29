@@ -108,8 +108,15 @@
         });
 
         function PrintCourseList() {
-            $.ajax({
-                url: '@Url.Content("~/Report/CoursesReport")',
+             var country = null;
+            @if (Session["AccessRights"].ToString() == "false")
+            {
+            <text>
+                country = @Session["BranchId"].ToString();
+            </text>
+            }
+                $.ajax({
+                url: '@Url.Content("~/Report/CoursesReport?country=")' + country,
                 method: 'get',
                 contentType: 'text/html',
                 success: function (html) {

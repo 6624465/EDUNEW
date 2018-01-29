@@ -130,8 +130,15 @@
             $('#liTrainersList').addClass('active');
         });
         function PrintTrainerList() {
+            var country = null;
+            @if (Session["AccessRights"].ToString() == "false")
+            {
+            <text>
+                country = @Session["BranchId"].ToString();
+            </text>
+            }
             $.ajax({
-                url: '@Url.Content("~/Report/VendorsAndTrainersReport")',
+                url: '@Url.Content("~/Report/VendorsAndTrainersReport?country=")' + country,
                 method: 'get',
                 contentType: 'text/html',
                 success: function (html) {

@@ -241,11 +241,19 @@
         }
 
         function PrintEventConfirmationList() {
+            var country = null;
+            @if (Session["AccessRights"].ToString() == "false")
+            {
+            <text>
+                country = @Session["BranchId"].ToString();
+            </text>
+            }
+
             var year = $('#Year').val();
             var month = $('#Month').val() == 0 ? '' : $('#Month').val();
             debugger;
             $.ajax({
-                url: '@Url.Content("~/Report/EventConfirmationReport?year=")' + year + '&month=' + month,
+                url: '@Url.Content("~/Report/EventConfirmationReport?year=")' + year + '&month=' + month + '&country=' + country,
                 method: 'get',
                 contentType: 'text/html',
                 success: function (html) {
