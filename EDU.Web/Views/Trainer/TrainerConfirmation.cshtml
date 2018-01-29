@@ -29,7 +29,7 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Country,
                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                    "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);", @style="width:100%" })
+                    "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);", @style = "width:100%" })
                     </div>
                 </div>
             </div>
@@ -163,22 +163,41 @@
 <script type="text/javascript">
     $(function () {
         $("select").select2();
+        @if (Model.Id == -1)
+        {
+            if (Session["AccessRights"].ToString() == "false")
+            {
+            <text>
+            $("#Country").select2().select2("val", @Session["BranchId"].ToString());
+            $('#Country').attr('disabled', 'disabled');
+         </text>
+            }
+        }
+        else
+        {
+            if (Session["AccessRights"].ToString() == "false")
+            {
+                <text>
+            $('#Country').attr('disabled', 'disabled');
+        </text>
+            }
+             }
 
         $('#StartDt').datetimepicker({
-            icons: {
-                time: 'fa fa-clock-o',
+                icons: {
+                    time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',
                 up: 'fa fa-arrow-up',
                 down: 'fa fa-arrow-down'
-            },
+                },
             //minDate: new Date(),
             format: 'DD/MM/YYYY'
         });
 
         $('#EndDt').datetimepicker({
-            useCurrent: false, //Important! See issue #1075
+                useCurrent: false, //Important! See issue #1075
             icons: {
-                time: 'fa fa-clock-o',
+                    time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',
                 up: 'fa fa-arrow-up',
                 down: 'fa fa-arrow-down'
@@ -188,17 +207,19 @@
 
         $("#StartDt").on("dp.change", function (e) {
             $('#EndDate').val('');
-            //$('#EndDt').data("DateTimePicker").minDate(e.date);
-        });
+                //$('#EndDt').data("DateTimePicker").minDate(e.date);
+            });
 
         @if (Model.Id != -1)
         {
-            <text>
-            @if (Model.StartDate != null) {
+             <text>
+            @if (Model.StartDate != null)
+            {
                             <text>
                 $('#StartDate').val('@Model.StartDate.Value.ToString("dd/MM/yyyy")');</text>
             }
-            @if (Model.EndDate != null) {
+            @if (Model.EndDate != null)
+            {
                         <text>
                 $('#EndDate').val('@Model.EndDate.Value.ToString("dd/MM/yyyy")');</text>
             }
@@ -220,7 +241,7 @@
     });
 
     function CountryChange(el) {
-        $('#Product').select2().select2("val", ''); 
+        $('#Product').select2().select2("val", '');
         $('#Course').select2().empty();
         $('#Course').select2().append($('<option></option>').val('').html(''));
     }

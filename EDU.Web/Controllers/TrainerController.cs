@@ -181,7 +181,14 @@ namespace EDU.Web.Controllers
                 Where(x => x.Id == Id && x.IsActive == true).FirstOrDefault();
 
             ViewData["ProductData"] = new EduProductBO().GetList().Where(x => x.IsActive == true).ToList();
-            ViewData["CourseData"] = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
+            var CourseData = new CourseBO().GetList().Where(x => x.IsActive == true).ToList();
+
+            if (Session["AccessRights"].ToString() == "false")
+            {
+                CourseData = CourseData.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+            }
+
+            ViewData["CourseData"] = CourseData;
             ViewData["TrainerData"] = dbContext.TrainerInformations.Where(x => x.IsActive == true).OrderBy(y=>y.TrainerName).ToList();
             ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
 

@@ -281,6 +281,7 @@
 
         function SaveTrainingConfirmation() {
             if ($('#frmTrainerConfirmation').valid()) {
+                $('#Country').removeAttr('disabled');
                 $('#Private').val($('#rdoPrivate').is(':checked'));
                 $('#Public').val($('#rdoPublic').is(':checked'));
                 $('#LVC').val($('#rdoLvc').is(':checked'));
