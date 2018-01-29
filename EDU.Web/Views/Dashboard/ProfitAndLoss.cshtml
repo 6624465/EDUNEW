@@ -82,14 +82,32 @@
                     </div>
                     <hr />
                     <div class="col-md-12">
-                        <div class="row">
+                        <div class="row" id="dvAll">
                             <div id="container">
+                            </div>
+                        </div>
+                        <div class="row" id="dvQtr">
+                            <div class="col-md-6">
+                                <div id="container1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="container2">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="container3">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="container4">
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="dot" style="background-color: blue;"><span style="padding-left:30px;font-size:10pt">Revenue</span></div>
                             @*<br />
-                            <div class="dot css5" style="background-color: orange;"><span style="padding-left:30px;font-size:10pt">Expenses</span></div>*@
+                                <div class="dot css5" style="background-color: orange;"><span style="padding-left:30px;font-size:10pt">Expenses</span></div>*@
                             <br />
                             <div class="dot css5" style="background-color: forestgreen;"><span style="padding-left:30px;font-size:10pt">Profit</span></div>
                             <br />
@@ -107,21 +125,40 @@
     <script type="text/javascript">
         $(function () {
             $('#liDashboardProfitandloss').addClass('active');
-            @if (Session["RoleCode"].ToString() != "ADMIN" && Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["UserID"].ToString().ToUpper() != "MGMTSG")
+            @if (Session["AccessRights"].ToString() == "false")
             {
-                <text>
-            $('#Country').attr('disabled', 'disabled');
+            <text>
+                $('#Country').attr('disabled', 'disabled');
             </text>
             }
+                debugger;
+                if ($('#Month').val() == '0') {
+
+                    $('#dvAll').hide();
+                    $('#dvQtr').show();
+                }
+                else {
+                    $('#dvAll').show();
+                    $('#dvQtr').hide();
+                }
         });
 
         function ChangeMonth() {
+
             window.location = '@Url.Action("ProfitAndLoss", "Dashboard", new { month = "", year = "", country = "" })' + '?month=' + $('#Month').val() + "&year=" + $('#Year').val() + "&country=" + $('#Country').val();
+            if ($('#Month').val() == '0') {
+                $('#dvAll').hide();
+                $('#dvQtr').show();
+            }
+            else {
+                $('#dvAll').show();
+                $('#dvQtr').hide();
+            }
         };
 
         function PrintProfitAndLossReport() {
             var year = $('#Year').val();
-            var month = $('#Month').val() == 0 ? '' : $('#Month').val();
+            var month = $('#Month').val() == '0' ? '' : $('#Month').val();
             debugger;
             $.ajax({
                 url: '@Url.Content("~/Report/ProfitAndLossReport?country=")' + $('#Country').val() + '&year=' + year + '&month=' + month,
@@ -135,28 +172,29 @@
                 }
             });
         }
-
-        Highcharts.chart('container', {
-            chart: {
-                type: 'column',
-            },
-            title: {
-                text: ''
-            },
-            tooltip: {
-                formatter: function () {
-                    return '$ ' + this.y;
-                }
-            },
-            xAxis: [
+        if ($('#Month').val() == '0') {
+            //1st Qtr
+            Highcharts.chart('container1', {
+                chart: {
+                    type: 'column',
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '$ ' + this.y;
+                    }
+                },
+                xAxis: [
                     {
                         type: 'category',
                         location: 'bottom',
                         categories: [
-                             @foreach (var item in Model)
+                             @foreach (var item in Model.Where(x=>x.Month==1 ||x.Month==2 || x.Month==3))
                         {
                             <text>
-                                '@item.TrainingConfirmationID',
+                            '@item.TrainingConfirmationID',
                             </text>
                             }
                         ],
@@ -165,19 +203,19 @@
                             rotation: -90
                         }
                     }
-            ],
-            series: [{
-                name: 'revenue',
-                color: "blue",
-                data: [
-                    @foreach (var item in Model)
-                    {
+                ],
+                series: [{
+                    name: 'revenue',
+                    color: "blue",
+                    data: [
+                    @foreach (var item in Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3))
+                        {
                         <text>
                             @item.TotalRevenueAmount.Value,
                         </text>
-                    }
-                ]
-            },
+                        }
+                    ]
+                },
          @*{
              name: 'Expenses',
              color: "orange",
@@ -189,30 +227,348 @@
                      </text>
                 }]
          },*@
-         {
-             name: 'profit',
-             color: "green",
+                {
+                    name: 'profit',
+                    color: "green",
+                    data: [
+             @foreach (var item in Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3))
+                    {
+                        <text>
+                         @(item.GrossProfit > 0?item.GrossProfit : 0),
+                     </text>
+                    }]
+                },
+                {
+                    name: 'loss',
+                    color: "red",
+                    data: [@foreach (var item in Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3))
+                    {
+                        <text>
+                            @(item.GrossProfit < 0?item.GrossProfit : 0),
+                        </text>
+                    }
+                    ]
+                }
+                ]
+            });
+
+            //2nd Qtr
+            Highcharts.chart('container2', {
+                chart: {
+                    type: 'column',
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    formatter: function () {
+        return '$ ' + this.y;
+    }
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: [
+                             @foreach (var item in Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6))
+                        {
+                            <text>
+                            '@item.TrainingConfirmationID',
+                            </text>
+                            }
+                        ],
+                        labels: {
+                            font: '8px sans-serif',
+                            rotation: -90
+                        }
+                    }
+                ],
+                series: [{
+                    name: 'revenue',
+                    color: "blue",
+                    data: [
+                    @foreach (var item in Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6))
+                    {
+                        <text>
+                            @item.TotalRevenueAmount.Value,
+                        </text>
+                    }
+                    ]
+                },
+         @*{
+             name: 'Expenses',
+             color: "orange",
              data: [
+             @foreach (var item in Model)
+                    {
+                        <text>
+                         @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
+                     </text>
+                }]
+         },*@
+                {
+                    name: 'profit',
+                    color: "green",
+                    data: [
+             @foreach (var item in Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6))
+                    {
+                        <text>
+                         @(item.GrossProfit > 0?item.GrossProfit : 0),
+                     </text>
+                    }]
+                },
+                {
+                    name: 'loss',
+                    color: "red",
+                    data: [@foreach (var item in Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6))
+                    {
+                        <text>
+                            @(item.GrossProfit < 0?item.GrossProfit : 0),
+                        </text>
+                    }
+                    ]
+                }
+                ]
+            });
+
+            //3rd Qtr
+            Highcharts.chart('container3', {
+                chart: {
+                    type: 'column',
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '$ ' + this.y;
+                    }
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: [
+                             @foreach (var item in Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9))
+                        {
+                            <text>
+                            '@item.TrainingConfirmationID',
+                            </text>
+                            }
+                        ],
+                        labels: {
+                            font: '8px sans-serif',
+                            rotation: -90
+                        }
+                    }
+                ],
+                series: [{
+                    name: 'revenue',
+                    color: "blue",
+                    data: [
+                    @foreach (var item in Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9))
+                    {
+                        <text>
+                            @item.TotalRevenueAmount.Value,
+                        </text>
+                    }
+                    ]
+                },
+         @*{
+             name: 'Expenses',
+             color: "orange",
+             data: [
+             @foreach (var item in Model)
+                    {
+                        <text>
+                         @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
+                     </text>
+                }]
+         },*@
+                {
+                    name: 'profit',
+                    color: "green",
+                    data: [
+             @foreach (var item in Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9))
+                    {
+                        <text>
+                         @(item.GrossProfit > 0?item.GrossProfit : 0),
+                     </text>
+                    }]
+                },
+                {
+                    name: 'loss',
+                    color: "red",
+                    data: [@foreach (var item in Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9))
+                    {
+                        <text>
+                            @(item.GrossProfit < 0?item.GrossProfit : 0),
+                        </text>
+                    }
+                    ]
+                }
+                ]
+            });
+
+            //4th Qtr
+            Highcharts.chart('container4', {
+                chart: {
+                    type: 'column',
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '$ ' + this.y;
+                    }
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: [
+                             @foreach (var item in Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12))
+                        {
+                            <text>
+                            '@item.TrainingConfirmationID',
+                            </text>
+                            }
+                        ],
+                        labels: {
+                            font: '8px sans-serif',
+                            rotation: -90
+                        }
+                    }
+                ],
+                series: [{
+                    name: 'revenue',
+                    color: "blue",
+                    data: [
+                    @foreach (var item in Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12))
+                    {
+                        <text>
+                            @item.TotalRevenueAmount.Value,
+                        </text>
+                    }
+                    ]
+                },
+         @*{
+             name: 'Expenses',
+             color: "orange",
+             data: [
+             @foreach (var item in Model)
+                    {
+                        <text>
+                         @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
+                     </text>
+                }]
+         },*@
+                {
+                    name: 'profit',
+                    color: "green",
+                    data: [
+             @foreach (var item in Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12))
+                    {
+                        <text>
+                         @(item.GrossProfit > 0?item.GrossProfit : 0),
+                     </text>
+                    }]
+                },
+                {
+                    name: 'loss',
+                    color: "red",
+                    data: [@foreach (var item in Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12))
+                    {
+                        <text>
+                            @(item.GrossProfit < 0?item.GrossProfit : 0),
+                        </text>
+                    }
+                    ]
+                }
+                ]
+            });
+        }
+        else {
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column',
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '$ ' + this.y;
+                    }
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        location: 'bottom',
+                        categories: [
+                             @foreach (var item in Model)
+                        {
+                            <text>
+                            '@item.TrainingConfirmationID',
+                            </text>
+                            }
+                        ],
+                        labels: {
+                            font: '8px sans-serif',
+                            rotation: -90
+                        }
+                    }
+                ],
+                series: [{
+                    name: 'revenue',
+                    color: "blue",
+                    data: [
+                    @foreach (var item in Model)
+                    {
+                        <text>
+                            @item.TotalRevenueAmount.Value,
+                        </text>
+                    }
+                    ]
+                },
+         @*{
+             name: 'Expenses',
+             color: "orange",
+             data: [
+             @foreach (var item in Model)
+                    {
+                        <text>
+                         @(item.TrainerExpensesAmount + item.TrainerTravelExpensesAmount + item.LocalExpensesAmount + item.CoursewareMaterialAmount + item.MiscExpensesAmount + item.TrainerClaimsAmount),
+                     </text>
+                }]
+         },*@
+                {
+                    name: 'profit',
+                    color: "green",
+                    data: [
              @foreach (var item in Model)
                     {
                         <text>
                          @(item.GrossProfit > 0?item.GrossProfit : 0),
                      </text>
                     }]
-         },
-            {
-                name: 'loss',
-                color: "red",
-                data: [@foreach (var item in Model)
+                },
+                {
+                    name: 'loss',
+                    color: "red",
+                    data: [@foreach (var item in Model)
                     {
                         <text>
                             @(item.GrossProfit < 0?item.GrossProfit : 0),
                         </text>
                     }
+                    ]
+                }
                 ]
-            }
-            ]
-        });
+            });
+        }
+
     </script>
 }
 

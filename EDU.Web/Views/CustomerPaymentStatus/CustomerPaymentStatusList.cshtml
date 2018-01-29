@@ -185,7 +185,10 @@
                                     <table class="table-bordered" id="tblCustomerPayment" style="white-space:nowrap;width:100%">
                                         <thead style="cursor:pointer">
                                             <tr>
+                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
+                                                {
                                                 <td style='width:60px;'>#Action</td>
+                                                }
                                                 <td style='width:90px;'>Event ID</td>
                                                 <td style='width:150px;'>Customer</td>
                                                 <td style='width:90px;'>Product Name</td>
@@ -205,17 +208,17 @@
                                             {
                                                 { recCount = recCount + 1; }
                                                 <tr>
-                                                    <td>
-                                                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
-                                                        {
+                                                    @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
+                                                    {
+                                                        <td>
                                                             <input type="hidden" id="hdncustomerpaymentId" value="@item.CustomerPaymentId" />
                                                             <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[recCount])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                             if (item.CustomerPaymentId > 0)
                                                             {
-                                                                <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                            <button type="button" class="btn btn-xs btn-danger waves-effect" onclick="DeleteCustomerPaymentStatus(@item.CustomerPaymentId)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                             }
-                                                        }
-                                                    </td>
+                                                        </td>
+                                                    }
                                                     <td>
                                                         @(item.TrainingConfirmationID)
                                                     </td>
@@ -271,7 +274,7 @@
                                     </table>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -281,7 +284,7 @@
     <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
 
     </div>
-                                        }
+                                                }
 @using (Html.BeginForm("DeleteCustomerPaymentStatus", "CustomerPaymentStatus", FormMethod.Post, new { id = "frmDeleteCustomerPaymentStatus", name = "frmDeleteCustomerPaymentStatus", enctype = "multipart/form-data" }))
 {
 

@@ -87,7 +87,13 @@ namespace EDU.Web.Controllers
         [HttpGet]
         public ViewResult CourseList()
         {
-            var list = new CourseBO().GetList().AsEnumerable();
+            var list = new CourseBO().GetList().ToList();
+
+            if (Session["AccessRights"].ToString() == "false")
+            {
+                list = list.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+            }
+
             return View("CourseList", list);
         }
 
@@ -165,6 +171,10 @@ namespace EDU.Web.Controllers
             var result = new CourseBO().DeleteEduCourse(new Course { Id = Id.Value });
 
             var list = new CourseBO().GetList();
+            if (Session["AccessRights"].ToString() == "false")
+            {
+                list = list.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+            }
             return View("CourseList", list);
         }
 
@@ -185,9 +195,7 @@ namespace EDU.Web.Controllers
             else
                 list = list.Where(x => x.Year == year && x.Month == month).ToList();
 
-            if (Session["UserID"].ToString().ToUpper()== "MGMTBD" || Session["UserID"].ToString().ToUpper() == "MGMTIN" || Session["UserID"].ToString().ToUpper() == "MGMTKH" 
-                || Session["UserID"].ToString().ToUpper() == "MGMTLA" || Session["UserID"].ToString().ToUpper() == "MGMTMM" || Session["UserID"].ToString().ToUpper() == "MGMTPH" 
-                || Session["UserID"].ToString().ToUpper() == "MGMTPK" || Session["UserID"].ToString().ToUpper() == "MGMTSL" || Session["UserID"].ToString().ToUpper() == "MGMTVN")
+            if (Session["AccessRights"].ToString() == "false")
             {
                 list = list.Where(x => x.Country ==Convert.ToUInt16(Session["BranchId"])).ToList();
             }

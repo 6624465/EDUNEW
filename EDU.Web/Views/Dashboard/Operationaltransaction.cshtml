@@ -103,7 +103,7 @@
     <script type="text/javascript">
 
             $(function () {
-                 @if (Session["RoleCode"].ToString() != "ADMIN" && Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["UserID"].ToString().ToUpper() != "MGMTSG")
+                 @if (Session["AccessRights"].ToString() == "false")
                  {
                      <text>
                  $('#Country').attr('disabled','disabled');
@@ -116,7 +116,7 @@
 
             function PrintYTDOperationalTransactionsList() {
             debugger;
-            
+
             var year = $('#Year').val();
             debugger;
             $.ajax({
@@ -134,7 +134,7 @@
 
             function PrintMTDOperationalTransactionsList() {
             debugger;
-            
+
             var year = $('#Year').val();
             var month = $('#Month').val();
             debugger;

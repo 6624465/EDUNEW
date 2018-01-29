@@ -28,6 +28,11 @@ namespace EDU.Web.Controllers
                 else
                     trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
+                if (Session["AccessRights"].ToString() == "false")
+                {
+                    trainingConfirmationList = trainingConfirmationList.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+                }
+
                 List<string> list = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
 
                 List<Registration> registrations = dbContext.Registrations.Where(x => x.IsActive == true && list.Contains(x.TrainingConfirmationID) && x.BalanceAmount >= 1).ToList();

@@ -393,9 +393,10 @@
         function PrintRegionalLeadsList() {
 
             var country = null;
-            @if (Session["UserID"].ToString().ToUpper().Contains("MGMT") && Session["UserID"].ToString().ToUpper() != "MGMTSG")
-            {<text>
-            country = @Session["BranchId"].ToString();
+            @if (Session["AccessRights"].ToString() == "false")
+            {
+            <text>
+                country = @Session["BranchId"].ToString();
             </text>
             }
 

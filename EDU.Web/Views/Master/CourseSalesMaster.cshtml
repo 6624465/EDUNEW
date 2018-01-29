@@ -91,26 +91,6 @@
 
                                 </div>
 
-                                @*<div class="col-md-4">
-                                        <div class="ui-radio ui-radio-primary">
-                                            <label class="ui-radio-inline">
-                                                <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
-                                                @Html.Label("LVC")
-                                            </label>
-                                            <label class="ui-radio-inline">
-                                                <input type="radio" name="rdoGroup" id="rdoTOD" title="TOD" checked="@Model.courseSalesMaster.TOD" onclick="todChange()" />
-                                                @Html.Label("TOD")
-                                            </label>
-                                            <label class="ui-radio-inline">
-                                                <input type="radio" name="rdoGroup" id="rdoILT" title="ILT" checked="@Model.courseSalesMaster.ILT" onclick="todChange()" />
-                                                @Html.Label("ILT")
-                                            </label>
-                                        </div>
-                                        @Html.HiddenFor(x => x.courseSalesMaster.LVC)
-                                        @Html.HiddenFor(x => x.courseSalesMaster.TOD)
-                                        @Html.HiddenFor(x => x.courseSalesMaster.ILT)
-                                    </div>*@
-
                                 <div class="col-md-4">
                                     <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
                                     @Html.Label("LVC")
@@ -289,13 +269,21 @@
 @section SectionScripts{
     <script type="text/javascript">
         $(function () {
+            
+            @if (Session["AccessRights"].ToString() == "false")
+            {
+            <text>
+                $("#courseSalesMaster_Country").select2().select2("val", @Session["BranchId"].ToString());
+                $('#courseSalesMaster_Country').attr('disabled', 'disabled');
+            </text>
+            }
+
             $('#liRegionalLeads').addClass('active');
             $('#mnth').val(@mnth);
-        });
-        $(function () {
+
             $('#StartDt, #RegClosingDt').datetimepicker({
-                icons: {
-                    time: 'fa fa-clock-o',
+    icons: {
+        time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
                     up: 'fa fa-arrow-up',
                     down: 'fa fa-arrow-down'
@@ -453,7 +441,7 @@
                 $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
                 $('#courseSalesMaster_Month').removeAttr('disabled');
                 SaveRemoveatrr();
-                
+
                 $('#frmCourseDetail').submit();
             }
         }
@@ -540,7 +528,7 @@
 
 
         function CountryChange(el) {
-            $('#courseSalesMaster_Product').select2().select2("val", ''); 
+            $('#courseSalesMaster_Product').select2().select2("val", '');
             $('#courseSalesMaster_Course').select2().empty();
             $('#courseSalesMaster_Course').select2().append($('<option></option>').val('').html(''));
         }

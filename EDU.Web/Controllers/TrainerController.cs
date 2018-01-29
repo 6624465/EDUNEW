@@ -260,6 +260,11 @@ namespace EDU.Web.Controllers
             else
                 trainingConfList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Month == month).ToList();
 
+            if (Session["AccessRights"].ToString() == "false")
+            {
+                trainingConfList = trainingConfList.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
+            }
+
             List<TrainingConfirmationVM> list = new List<TrainingConfirmationVM>();
             foreach (var item in trainingConfList)
             {

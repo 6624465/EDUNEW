@@ -144,7 +144,7 @@
         function PrintDashboardOperationaltransactionList() {
             debugger;
             var country = null;
-            @if (Session["UserID"].ToString().ToUpper().Contains("MGMT") && Session["UserID"].ToString().ToUpper() != "MGMTSG")
+            @if (Session["AccessRights"].ToString() == "false")
             {<text>
             country = @Session["BranchId"].ToString();
             </text>
@@ -166,7 +166,7 @@
         }
 
         $(function () {
-            @if (Session["UserID"].ToString().ToUpper() == "MGMTSL")
+            @if (Session["UserID"].ToString().ToUpper() == "MGMTSL" || Session["UserID"].ToString().ToUpper() == "ACCSL")
          {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -183,7 +183,7 @@
 
             </text>
          }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTVN")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTVN" || Session["UserID"].ToString().ToUpper() == "ACCVN")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -200,7 +200,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTBD")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTBD" || Session["UserID"].ToString().ToUpper() == "ACCBD")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -217,7 +217,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTIN")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTIN" || Session["UserID"].ToString().ToUpper() == "ACCIN")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -234,7 +234,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTKH")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTKH" || Session["UserID"].ToString().ToUpper() == "ACCKH")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -251,7 +251,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTLA")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTLA" || Session["UserID"].ToString().ToUpper() == "ACCLA")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -268,7 +268,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTMM")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTMM" || Session["UserID"].ToString().ToUpper() == "ACCMM")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -285,7 +285,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTPH")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPH" || Session["UserID"].ToString().ToUpper() == "ACCPH")
             {
                 <text>
             $('#dvChartdoughnut').hide();
@@ -302,7 +302,7 @@
 
             </text>
             }
-         else if (Session["UserID"].ToString().ToUpper() == "MGMTPK")
+         else if (Session["UserID"].ToString().ToUpper() == "MGMTPK" || Session["UserID"].ToString().ToUpper() == "ACCPK")
             {
                 <text>
             $('#dvChartdoughnut').hide();

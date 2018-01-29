@@ -78,6 +78,16 @@ namespace EDU.Web.Controllers
                 Session["BranchId"] = userBranch.BranchID;
                 Session["RoleCode"] = currentUser.RoleCode.ToUpper();
 
+                Session["AccessRights"] = "";
+
+                if ((currentUser.UserID.ToString().ToUpper() != "MGMTSG" && currentUser.RoleCode.ToString().ToUpper() == "MANAGEMENT")
+                    || (currentUser.UserID.ToString().ToUpper() != "ACCSG" && currentUser.RoleCode.ToString().ToUpper() == "FINANCE")
+                    || (currentUser.UserID.ToString().ToUpper() != "SALESSG" && currentUser.RoleCode.ToString().ToUpper() == "SALES")
+                    || (currentUser.UserID.ToString().ToUpper() != "CXO@EZY-CORP.COM" && currentUser.RoleCode.ToString().ToUpper() == "ADMIN"))
+                {
+                    Session["AccessRights"] = "false";
+                }
+
                 if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                     && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                 {

@@ -100,8 +100,8 @@
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Year</span>
                             </label>
-                            <div class="col-md-1">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:100%" })
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:60%" })
                             </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Month</span>
@@ -117,7 +117,10 @@
                                 <table class="table-bordered tblSearch" id="tnlTrainingConfirmation" style="white-space:nowrap;width:100%">
                                     <thead style="cursor:pointer">
                                         <tr>
-                                            <td style='width:60px;'>#Action</td>
+                                            @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                            {
+                                                <td style='width:60px;'>#Action</td>
+                                            }
                                             <td style='width:100px;'>Event ID</td>
                                             <td style='width:100px;'>Country Name</td>
                                             <td style='width:100px;'>Product Name</td>
@@ -132,49 +135,51 @@
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model)
-                                    {
+                                        {
                                             <tr>
+                                            @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                            {
                                                 <td>
                                                     <div style='width:60px;'>
-                                                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                                    {
-                                                            <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                            <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                    }
+
+                                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    @(item.TrainingConfirmationID)
-                                                </td>
-                                                <td>
-                                                    @item.CountryName
-                                                </td>
-                                                <td>
-                                                    @item.ProductName
-                                                </td>
-                                                <td>
-                                                    @item.CourseName
-                                                </td>
-                                                <td class="center">
-                                                    @item.NoOfStudents
-                                                </td>
-                                                <td>
-                                                    @TypeColumn(item.Private, item.Public, item.LVC)
-                                                </td>
-                                                <td class="center">
-                                                    @validateDate(item.StartDate)
-                                                </td>
-                                                <td class="center">
-                                                    @validateDate(item.EndDate)
-                                                </td>
-                                                <td class="center">
-                                                    @ConvertToInt64(item.TotalNoOfDays)
-                                                </td>
-                                                <td>
-                                                    @item.TrianerName
-                                                </td>
-                                            </tr>
-                                    }
+                                            }
+                                            <td>
+                                                @(item.TrainingConfirmationID)
+                                            </td>
+                                            <td>
+                                                @item.CountryName
+                                            </td>
+                                            <td>
+                                                @item.ProductName
+                                            </td>
+                                            <td>
+                                                @item.CourseName
+                                            </td>
+                                            <td class="center">
+                                                @item.NoOfStudents
+                                            </td>
+                                            <td>
+                                                @TypeColumn(item.Private, item.Public, item.LVC)
+                                            </td>
+                                            <td class="center">
+                                                @validateDate(item.StartDate)
+                                            </td>
+                                            <td class="center">
+                                                @validateDate(item.EndDate)
+                                            </td>
+                                            <td class="center">
+                                                @ConvertToInt64(item.TotalNoOfDays)
+                                            </td>
+                                            <td>
+                                                @item.TrianerName
+                                            </td>
+                                        </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -234,7 +239,7 @@
                 }
             })
         }
-        
+
         function PrintEventConfirmationList() {
             var year = $('#Year').val();
             var month = $('#Month').val() == 0 ? '' : $('#Month').val();

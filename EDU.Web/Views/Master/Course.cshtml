@@ -118,15 +118,25 @@
 </div>
 <style type="text/css">
     .select2 {
-     width: 172px !important; 
-}
+        width: 172px !important;
+    }
 </style>
 <script type="text/javascript">
     $(function () {
         $('#newCourse').hide();
         $("select").select2();
+    @if (Model.Id == -1)
+    {
+        if (Session["AccessRights"].ToString() == "false")
+        {
+            <text>
+                $("#Country").select2().select2("val", @Session["BranchId"].ToString());
+                $('#Country').attr('disabled', 'disabled');
+            </text>
+            }
+        }
     });
-   
+
     $('select').select2({}).on("change", function (e) {
         $(this).valid()
     });
