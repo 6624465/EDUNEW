@@ -440,7 +440,10 @@
             {
                 <text>
             $('#jqChartdoughnut'+count).jqChart({
-                title: { text: '@item.BranchName' },
+                title: {
+                    text: '@item.BranchName',
+                    font: '12px sans-serif'
+                },
                 legend: {
                     title: '',
                     visible:false
@@ -473,7 +476,7 @@
                             <text>
                                 [
                                     '@info.ProductName',
-                                     @info.AchievedRevenue
+                                     @Convert.ToInt64(info.AchievedRevenue)
                                 ],
                             </text>
                         }]
