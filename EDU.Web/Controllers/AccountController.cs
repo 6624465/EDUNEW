@@ -95,7 +95,7 @@ namespace EDU.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Achievement", "Dashboard", new { year = DateTime.Now.Year});
                 }
             }
             else

@@ -202,8 +202,8 @@
                         type: 'category',
                         location: 'bottom',
                         categories: [
-                             @foreach (var item in Model.Where(x=>x.Month==1 ||x.Month==2 || x.Month==3))
-                        {
+                             @foreach (var item in Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3))
+                             {
                             <text>
                             '@item.TrainingConfirmationID',
                             </text>
@@ -273,8 +273,8 @@
                 },
                 tooltip: {
                     formatter: function () {
-        return '$ ' + this.y;
-    }
+                        return '$ ' + this.y;
+                    }
                 },
                 xAxis: [
                     {
