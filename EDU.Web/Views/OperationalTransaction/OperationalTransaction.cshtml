@@ -85,7 +85,7 @@
                                                 <span>Salaries</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.SalariesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.SalariesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup= "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -93,7 +93,7 @@
                                                 <span>Travelling Expenses</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.TravellingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.TravellingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -101,7 +101,7 @@
                                                 <span>Rental</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.RentalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.RentalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -109,7 +109,7 @@
                                                 <span>Telephone Expenses</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.TelephoneexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.TelephoneexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -117,7 +117,7 @@
                                                 <span>Courier Charges</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.CourierchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.CourierchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -125,7 +125,7 @@
                                                 <span>Insurance</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.InsuranceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.InsuranceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -133,7 +133,7 @@
                                                 <span>Utility</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.UtilityAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.UtilityAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -141,7 +141,7 @@
                                                 <span>Marketingexp</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.MarketingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.MarketingexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -149,7 +149,7 @@
                                                 <span>Depreciation</span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.DepreciationAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.DepreciationAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                                 <span>LegalExpenses/Consultancy </span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.LegalexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.LegalexpAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -170,7 +170,7 @@
                                                 <span>Repair & Maintenance </span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.RepairmaintenanceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.RepairmaintenanceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -178,7 +178,7 @@
                                                 <span>Bankcharges </span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.BankchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.BankchargesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -186,7 +186,7 @@
                                                 <span>Printing & Stationery </span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.PrintingstationeryAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.PrintingstationeryAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -194,7 +194,7 @@
                                                 <span>StaffWelfare </span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.StaffwelfareAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.StaffwelfareAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
                                         <div class="row">
@@ -202,10 +202,22 @@
                                                 <span>OtherExpenses/Income </span>
                                             </label>
                                             <div class="col-md-3">
-                                                @Html.TextBoxFor(x => x.OtherexpensesincomeAmount, "{0:#.#}", new { @class = "form-control input-sm numCss" })
+                                                @Html.TextBoxFor(x => x.OtherexpensesincomeAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", onkeyup = "CalculateTotalOpex()" })
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="row css25">
+                                            </div>
+                                        <div class="row css25">
+                                        </div>
+                                            <div class="row">
+                                                <label class="col-md-2 control-label">
+                                                    <span>Total Opex</span>
+                                                </label>
+                                                <div class="col-md-3">
+                                                    <input type="text" id="totalopex" class="form-control input-sm" name="totalopex" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="text-center css10">
@@ -258,5 +270,35 @@
 
             }
         });
+
+        function CalculateTotalOpex()
+        {
+           
+            // Operational Expenses
+            var salariesamount = $('#SalariesAmount').val() == "" ? 0 : parseInt($('#SalariesAmount').val());
+            var travellingexpamount = $('#TravellingexpAmount').val() == "" ? 0 : parseInt($('#TravellingexpAmount').val());
+            var rentalamount = $('#RentalAmount').val() == "" ? 0 : parseInt($('#RentalAmount').val());
+            var telephoneexpamount = $('#TelephoneexpAmount').val() == "" ? 0 : parseInt($('#TelephoneexpAmount').val());
+            var courierchargesamount = $('#CourierchargesAmount').val() == "" ? 0 : parseInt($('#CourierchargesAmount').val());
+            var insuranceamount = $('#InsuranceAmount').val() == "" ? 0 : parseInt($('#InsuranceAmount').val());
+            var utilityamount = $('#UtilityAmount').val() == "" ? 0 : parseInt($('#UtilityAmount').val());
+            var marketingexpamount = $('#MarketingexpAmount').val() == "" ? 0 : parseInt($('#MarketingexpAmount').val());
+            var depreciationamount = $('#DepreciationAmount').val() == "" ? 0 : parseInt($('#DepreciationAmount').val());
+
+            //Other Expenses
+            var legalexpamount = $('#LegalexpAmount').val() == "" ? 0 : parseInt($('#LegalexpAmount').val());
+            var repairmaintenanceamount = $('#RepairmaintenanceAmount').val() == "" ? 0 : parseInt($('#RepairmaintenanceAmount').val());
+            var bankchargesamount = $('#BankchargesAmount').val() == "" ? 0 : parseInt($('#BankchargesAmount').val());
+            var printingstationeryamount = $('#PrintingstationeryAmount').val() == "" ? 0 : parseInt($('#PrintingstationeryAmount').val());
+            var staffwelfareamount = $('#StaffwelfareAmount').val() == "" ? 0 : parseInt($('#StaffwelfareAmount').val());
+            var otherexpensesincomeamount = $('#OtherexpensesincomeAmount').val() == "" ? 0 : parseInt($('#OtherexpensesincomeAmount').val());
+            
+            var result = salariesamount + travellingexpamount + rentalamount + telephoneexpamount + courierchargesamount + insuranceamount +
+                utilityamount + marketingexpamount + depreciationamount + legalexpamount + repairmaintenanceamount + bankchargesamount +
+                 printingstationeryamount + staffwelfareamount + otherexpensesincomeamount;
+           
+            $('#totalopex').val(result);
+          
+        }
     </script>
 }
