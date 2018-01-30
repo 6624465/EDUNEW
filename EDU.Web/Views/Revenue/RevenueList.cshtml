@@ -50,25 +50,25 @@
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-1 col-md-offset-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                            <div class="col-md-2 col-md-offset-2">
+                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "CountryChange(this);", style = "width:60%" })
                             </div>
                             <div class="col-md-2">
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Country,
                              new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
-                             "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);" })
+                             "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange(this);", style = "width:100%" })
                             </div>
                             <div class="col-md-1">
                                 @Html.DropDownListFor(x => x.FirstOrDefault().CurrencyCode,
                              new SelectList((List<EDU.Web.Models.Lookup>)ViewData["CurrencyList"], "LookupCode", "LookupCode"),
-                             "Select", new { @class = "form-control input-sm" })
+                             "Select", new { @class = "form-control input-sm", style = "width:100%" })
                             </div>
                             @*<div class="col-md-2">
                                     <label class="control-label">CONVERSION RATE</label>
                                 </div>*@
                             <div class="col-md-1">
                                 @Html.TextBoxFor(x => x.FirstOrDefault().CurrencyExRate, "{0:#.#}",
-                                new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss" })
+                                new { placeholder = "CONVERSION RATE", @class = "form-control input-sm numCss", style = "width:100%" })
                             </div>
                             <div class="col-md-1">
                                 @if (Session["RoleCode"].ToString() == "ADMIN")
