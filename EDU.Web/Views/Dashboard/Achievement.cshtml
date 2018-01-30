@@ -328,10 +328,11 @@
                             '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
                         ],
                         labels: {
-                            stringFormat: '%.1f%%',
-                            valueType: 'percentage',
-                            font: '15px sans-serif',
-                            fillStyle: 'white'
+                            //stringFormat: '%.1f%%',
+                            //valueType: 'percentage',
+                            //font: '15px sans-serif',
+                            //fillStyle: 'white'
+                            visible:false
                         },
                         data: [ @foreach (var item in Model.GroupBy(x=>x.ProductName).ToList())
                         {
@@ -347,8 +348,10 @@
             });
             //Tooltip//
             $('#jqChartdoughnut').bind('tooltipFormat', function (e, data) {
+                debugger;
                 return '<b>' + data.dataItem[0] + '</b><br />' +
-                     "<b>$ " + data.value + "</b>";
+                     "<b>$ " + data.value + "</b><br />"+
+                    "<b>" +parseFloat(data.percentage).toFixed(1)+ " %</b>";
             });
             //Tooltip//
             var i = 0;
@@ -467,10 +470,11 @@
                             '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
                         ],
                         labels: {
-                            stringFormat: '%.1f%%',
-                            valueType: 'percentage',
-                            font: '15px sans-serif',
-                            fillStyle: 'white'
+                            //stringFormat: '%.0f%%',
+                            //valueType: 'percentage',
+                            //font: '15px sans-serif',
+                            //fillStyle: 'white'
+                            visible:false
                         },
                         data: [ @foreach (var info in Model.Where(x => x.Country == item.BranchID).ToList())
                         {
@@ -487,7 +491,8 @@
             //Tooltip//
             $('#jqChartdoughnut'+count).bind('tooltipFormat', function (e, data) {
                 return '<b>' + data.dataItem[0] + '</b><br />' +
-                     "<b>$ " + data.value + "</b>";
+                     "<b>$ " + data.value + "</b><br />"+
+                    "<b>" +parseFloat(data.percentage).toFixed(1)+ " %</b>";
             });
             //Tooltip//
             count++;
