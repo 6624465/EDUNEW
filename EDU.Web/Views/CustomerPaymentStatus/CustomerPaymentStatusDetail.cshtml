@@ -19,8 +19,8 @@
             @Html.HiddenFor(x => x.Month)
             <div class="row">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Customer Name</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Customer Name</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.CustomerName, new { @class = "form-control input-sm", @disabled = "disabled" })
@@ -29,8 +29,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Invoice Amount</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Invoice Amount</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.InvoiceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "Invoice Amount", @disabled = "disabled" })
@@ -39,8 +39,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Paid Amount</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Paid Amount</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.PaidAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "PaidAmount", @disabled = "disabled" })
@@ -49,8 +49,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Balance Amount</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Balance Amount</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.BalanceAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "Balance Amount", @disabled = "disabled" })
@@ -59,8 +59,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Other Receivables</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Other Receivables</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.OtherReceivablesAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "Other Receivables Amount", onkeyup = "CalculateTotalAmount()" })
@@ -69,8 +69,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Total Amount</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Total Amount</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.TotalAmount, "{0:#.#}", new { @class = "form-control input-sm numCss", @placeholder = "TotalAmount", @disabled = "disabled" })
@@ -80,8 +80,8 @@
 
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Due Date</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Due Date</span>
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="DDate">
@@ -95,8 +95,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Receipt Date</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Receipt Date</span>
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="RDate">
@@ -110,8 +110,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Reference Doc</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Reference Doc</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control input-sm", id = Profile })

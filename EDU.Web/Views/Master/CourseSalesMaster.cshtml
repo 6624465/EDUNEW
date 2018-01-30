@@ -36,222 +36,226 @@
                     <div class="panel panel-default panel-hovered panel-stacked mb30">
                         <div class="panel-heading">Course Sales Master</div>
                         <div class="panel-body">
-                            @*<form role="form" class="form-horizontal" action="javascript:;">*@
-                            <!-- form horizontal acts as a row -->
-                            <!-- normal control -->
                             <div class="row">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Country</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.Country,
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10" style="border: 2px solid gray; border-radius: 20px;">
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Country</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(x => x.courseSalesMaster.Country,
                                           new SelectList(Model.branchList, "BranchID", "BranchName"),
                                        "Select Country",
                                       new { @class = "form-control input-sm", onchange = "CountryChange(this);", @style = "width:100%" })
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Product</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.Product,
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Product</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(x => x.courseSalesMaster.Product,
                                        new SelectList(Model.eduProductList, "Id", "ProductName"),
                                           "Select Product",
                                         new { @class = "form-control input-sm", onchange = "ProductChange(this);", @style = "width:100%" })
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Course</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @if (Model.courseSalesMaster.Id == -1)
-                                        {
-                                            @Html.DropDownListFor(x => x.courseSalesMaster.Course,
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Course</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @if (Model.courseSalesMaster.Id == -1)
+                                                {
+                                                    @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                 Enumerable.Empty<SelectListItem>(),
                                 "Select Course",
                                 new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)", @style = "width:100%" })
-                                        }
-                                        else
-                                        {
-                                            @Html.DropDownListFor(x => x.courseSalesMaster.Course,
+                                                }
+                                                else
+                                                {
+                                                    @Html.DropDownListFor(x => x.courseSalesMaster.Course,
                                                  new SelectList(Model.courseList, "Id", "CourseName"),
                                              "Select Course",
                                         new { @class = "form-control input-sm", onchange = "CourseChange(this)", @style = "width:100%" })
-                                        }
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
+                                            @Html.Label("LVC")
+                                            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                            <input type="radio" name="rdoGroup" id="rdoTOD" title="TOD" checked="@Model.courseSalesMaster.TOD" onclick="todChange()" />
+                                            @Html.Label("TOD")
+                                            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                            <input type="radio" name="rdoGroup" id="rdoILT" title="ILT" checked="@Model.courseSalesMaster.ILT" onclick="todChange()" />
+                                            @Html.Label("ILT")
+
+                                            @Html.HiddenFor(x => x.courseSalesMaster.LVC)
+                                            @Html.HiddenFor(x => x.courseSalesMaster.TOD)
+                                            @Html.HiddenFor(x => x.courseSalesMaster.ILT)
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-
-                                </div>
-
-                                <div class="col-md-4">
-                                    <input type="radio" name="rdoGroup" id="rdoLVC" title="LVC" checked="@((Model.courseSalesMaster.LVC==null && Model.courseSalesMaster.TOD==null && Model.courseSalesMaster.ILT==null)?true: Model.courseSalesMaster.LVC)" onclick="todChange()" />
-                                    @Html.Label("LVC")
-                                    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                                    <input type="radio" name="rdoGroup" id="rdoTOD" title="TOD" checked="@Model.courseSalesMaster.TOD" onclick="todChange()" />
-                                    @Html.Label("TOD")
-                                    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                                    <input type="radio" name="rdoGroup" id="rdoILT" title="ILT" checked="@Model.courseSalesMaster.ILT" onclick="todChange()" />
-                                    @Html.Label("ILT")
-
-                                    @Html.HiddenFor(x => x.courseSalesMaster.LVC)
-                                    @Html.HiddenFor(x => x.courseSalesMaster.TOD)
-                                    @Html.HiddenFor(x => x.courseSalesMaster.ILT)
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">No Of Days</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select NoOfDays ", new { @class = "form-control numCss", @disabled = "disabled", @style = "width:100%" })
-                                    </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Month</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.Month,
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>No Of Days</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(x => x.courseSalesMaster.NoOfDays, Enumerable.Range(0, 11).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select NoOfDays ", new { @class = "form-control numCss", @disabled = "disabled", @style = "width:100%" })
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>Month</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(x => x.courseSalesMaster.Month,
                                        new SelectList(listMonths, "Value", "Text"),
                                        "Select Month",
                                       new { @class = "form-control input-sm", @disabled = "disabled", @style = "width:100%" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Start Date</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        <div class="input-group date" id="StartDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, new { @class = "form-control input-sm dtCss" })
-                                            <span class="input-group-addon input-sm">
-                                                <i class="ion ion-calendar"></i>
-                                            </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">End Date</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        <div class="input-group date" id="EndDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, new { @class = "form-control input-sm dtCss" })
-                                            <span class="input-group-addon input-sm">
-                                                <i class="ion ion-calendar"></i>
-                                            </span>
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Start Date</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                <div class="input-group date" id="StartDt">
+                                                    @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, new { @class = "form-control input-sm dtCss" })
+                                                    <span class="input-group-addon input-sm">
+                                                        <i class="ion ion-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>End Date</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                <div class="input-group date" id="EndDt">
+                                                    @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, new { @class = "form-control input-sm dtCss" })
+                                                    <span class="input-group-addon input-sm">
+                                                        <i class="ion ion-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Min. Registrations</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control", onchange = "MinimumRegUser()" })
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Min. Registrations</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(x => x.courseSalesMaster.MinimumReg, Enumerable.Range(1, 25).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Min.Registrations", new { @class = "form-control", onchange = "MinimumRegUser()" })
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Leads on hand</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.courseSalesMaster.LeadsOnHead, "{0:#.#}",
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Leads on hand</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.courseSalesMaster.LeadsOnHead, "{0:#.#}",
                                     new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>Registered</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(x => x.courseSalesMaster.Registered, Enumerable.Range(0, 26).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Registered", new { @class = "form-control", onchange = "RegisteredUser()" })
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Registered</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.courseSalesMaster.Registered, Enumerable.Range(0, 26).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), "Select Registered", new { @class = "form-control", onchange = "RegisteredUser()" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Leads on hand Details</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Leads on hand Details</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
                                       new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
 
-                                    </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Registration Details</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.courseSalesMaster.RegisteredRemarks,
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>Registration Details</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextAreaFor(x => x.courseSalesMaster.RegisteredRemarks,
                                     new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Available Seats</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
-                                 new { @class = "form-control input-sm numCss", @readonly = "readonly" })
-                                    </div>
-                                    <div class="col-md-2 control-label">
-                                        <label class="pull-right">Revenue</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.courseSalesMaster.Revenue, "{0:#.#}",
-                        new { @class = "form-control input-sm numCss" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Closing Date</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        <div class="input-group date" id="RegClosingDt">
-                                            @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate, new { @class = "form-control input-sm dtCss" })
-                                            <span class="input-group-addon input-sm">
-                                                <i class="ion ion-calendar"></i>
-                                            </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Available Seats</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
+                                 new { @class = "form-control input-sm numCss", @readonly = "readonly" })
+                                            </div>
+                                            <div class="col-md-2 control-label">
+                                                <label>Revenue</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.courseSalesMaster.Revenue, "{0:#.#}",
+                        new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="rdoConfirmGroup" id="rdoOpen" title="Open" checked="@((Model.courseSalesMaster.IsConfirm==null && Model.courseSalesMaster.IsDrop==null && Model.courseSalesMaster.IsOpen==null)?true: Model.courseSalesMaster.IsOpen)" />
-                                        @Html.Label("Open")
-                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                                        <input type="radio" name="rdoConfirmGroup" id="rdoDrop" title="Drop" checked="@Model.courseSalesMaster.IsDrop" />
-                                        @Html.Label("Drop")
-                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                                        <input type="radio" name="rdoConfirmGroup" id="rdoConfirm" title="Confirm" checked="@Model.courseSalesMaster.IsConfirm" />
-                                        @Html.Label("Confirm")
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Closing Date</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                <div class="input-group date" id="RegClosingDt">
+                                                    @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate, new { @class = "form-control input-sm dtCss" })
+                                                    <span class="input-group-addon input-sm">
+                                                        <i class="ion ion-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="radio" name="rdoConfirmGroup" id="rdoOpen" title="Open" checked="@((Model.courseSalesMaster.IsConfirm==null && Model.courseSalesMaster.IsDrop==null && Model.courseSalesMaster.IsOpen==null)?true: Model.courseSalesMaster.IsOpen)" />
+                                                @Html.Label("Open")
+                                                &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                                <input type="radio" name="rdoConfirmGroup" id="rdoDrop" title="Drop" checked="@Model.courseSalesMaster.IsDrop" />
+                                                @Html.Label("Drop")
+                                                &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                                <input type="radio" name="rdoConfirmGroup" id="rdoConfirm" title="Confirm" checked="@Model.courseSalesMaster.IsConfirm" />
+                                                @Html.Label("Confirm")
 
-                                        @Html.HiddenFor(x => x.courseSalesMaster.IsOpen)
-                                        @Html.HiddenFor(x => x.courseSalesMaster.IsDrop)
-                                        @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)
+                                                @Html.HiddenFor(x => x.courseSalesMaster.IsOpen)
+                                                @Html.HiddenFor(x => x.courseSalesMaster.IsDrop)
+                                                @Html.HiddenFor(x => x.courseSalesMaster.IsConfirm)
 
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="text-center">
-                                        <button type="button" onclick="SaveCourseSalesMaster()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-default btn-sm" type="button" onclick="navigateToList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                    <div class="row css10">
+                                        <div class="col-md-12">
+                                            <div class="text-center">
+                                                <button type="button" onclick="SaveCourseSalesMaster()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                <button class="btn btn-default btn-sm" type="button" onclick="navigateToList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css10">
                                     </div>
                                 </div>
                             </div>
@@ -261,13 +265,10 @@
             </div>
         </div>
     }
-</div>
-<style type="text/css">
+    </div>
 
-</style>
-
-@section SectionScripts{
-    <script type="text/javascript">
+    @section SectionScripts{
+        <script type="text/javascript">
         $(function () {
 
              @if (Model.courseSalesMaster.Id == -1) {
@@ -636,6 +637,6 @@
             }
         }
 
-    </script>
+        </script>
 
-}
+    }

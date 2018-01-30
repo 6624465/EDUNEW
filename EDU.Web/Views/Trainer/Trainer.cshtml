@@ -17,86 +17,93 @@
                         <div class="panel-heading">Trainer</div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Trainer Name</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerName, new { @class = "form-control input-sm" })
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8" style="border: 2px solid gray; border-radius: 20px;">
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Trainer Name</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.TrainerName, new { @class = "form-control input-sm" })
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>Technology</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.Technology, new { @class = "form-control input-sm" })
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Technology</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Technology, new { @class = "form-control input-sm" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Country</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.DropDownListFor(x => x.Country,
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Country</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.DropDownListFor(x => x.Country,
                                         new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchID", "BranchName"),
                                         "Select Country", new { @class = "form-control input-sm", onchange = "CountryChange();",@style="width:100%" })
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>Profile</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control input-sm", id = Profile })&nbsp;@Model.Profile
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Profile</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.FileName, new { type = "file", @class = "form-control input-sm", id = Profile })&nbsp;@Model.Profile
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Trainer Rate</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.TrainerRate, new { @class = "form-control input-sm numCss" })
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>Vendor Name</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control input-sm" })
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Trainer Rate</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.TrainerRate, new { @class = "form-control input-sm numCss" })
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Address</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextAreaFor(x => x.Address, new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
+                                            </div>
+                                            <label class="col-md-2 control-label">
+                                                <span>Contact</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.Contact, new { @class = "form-control input-sm numCsspuls" })
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Vendor Name</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control input-sm" })
+                                    <div class="row css10">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">
+                                                <span>Remarks</span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Address</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.Address, new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
+                                    <div class="row css10">
+                                        <div class="col-md-12">
+                                            <div class="text-center">
+                                                <button type="button" onclick="SaveTrainer()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Trainer/TrainersList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Contact</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextBoxFor(x => x.Contact, new { @class = "form-control input-sm numCsspuls" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row css10">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="pull-right">Remarks</span>
-                                    </label>
-                                    <div class="col-md-4">
-                                        @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="text-center">
-                                        <button type="button" onclick="SaveTrainer()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Trainer/TrainersList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
+                                    <div class="css10">
                                     </div>
                                 </div>
                             </div>

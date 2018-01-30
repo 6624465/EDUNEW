@@ -176,7 +176,7 @@
                                     <div class="row" style="margin-top:5px; border:1px solid #d2d6de">
                                         <div id="chartContainer0" style="height: 120px; width: 100%;"></div>
                                     </div>
-                                    <div class="row" style="padding-top:5px; border:1px solid #d2d6de">
+                                    <div class="row" style="margin-top:5px; border:1px solid #d2d6de">
                                         <div id="chartContainer1" style="height: 120px; width: 100%;"></div>
                                     </div>
                                     <div class="row" style="margin-top:5px; border:1px solid #d2d6de">
@@ -370,6 +370,27 @@
         @foreach (var item in productRevenueByMonth)
         {
         <text>
+        var maxAmtvalue = '';
+        @{
+            List<decimal?> listdata = new List<decimal?>();
+
+            listdata.Add(item.MonthlyTarget);
+            listdata.Add(item.JanAmount);
+            listdata.Add(item.FebAmount);
+            listdata.Add(item.MarAmount);
+            listdata.Add(item.AprAmount);
+            listdata.Add(item.MayAmount);
+            listdata.Add(item.JuneAmount);
+            listdata.Add(item.JulyAmount);
+            listdata.Add(item.AugAmount);
+            listdata.Add(item.SepAmount);
+            listdata.Add(item.OctAmount);
+            listdata.Add(item.NovAmount);
+            listdata.Add(item.DecAmount);
+
+        }
+        debugger;
+
         var chart = new CanvasJS.Chart("chartContainer" + count, {
             theme: "light2", // "light1", "light2", "dark1", "dark2"
             animationEnabled: true,
@@ -392,7 +413,7 @@
                     label: '@item.MonthlyTarget.Value.ToString("#0")',
                     labelFontSize: 9,
                 }],
-                maximum: @item.MonthlyTarget*6,
+                maximum: @listdata.Max()+500, @*@(item.MonthlyTarget*6),*@
             },
             data: [{
                 type: "line",

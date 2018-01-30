@@ -13,8 +13,8 @@
             @Html.HiddenFor(x => x.Month)
             <div class="row">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Event ID</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Event ID</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.TrainingConfirmationID, new { @class = "form-control input-sm", placeholder = "Event ID", @disabled = "disabled" })
@@ -23,8 +23,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Country</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Country</span>
                     </label>
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Country,
@@ -35,8 +35,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Product</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Product</span>
                     </label>
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.Product,
@@ -47,8 +47,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Course Name</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Course Name</span>
                     </label>
                     <div class="col-md-6">
                         @if (Model.Id == -1)
@@ -71,8 +71,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Number of Students</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Number of Students</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.NoOfStudents, "{0:#.#}", new { @class = "form-control input-sm numCss", placeholder = "Number of Students" })
@@ -81,8 +81,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Type</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Type</span>
                     </label>
                     <div class="col-md-6">
                         <input type="radio" name="type" id="rdoPrivate" title="Private" checked="@Model.Private" />
@@ -103,8 +103,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Start Date</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Start Date</span>
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="StartDt">
@@ -118,8 +118,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">End Date</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>End Date</span>
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="EndDt">
@@ -133,8 +133,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Total # of days</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Total # of days</span>
                     </label>
                     <div class="col-md-6">
                         @Html.TextBoxFor(x => x.TotalNoOfDays, "{0:#.#}", new { @class = "form-control input-sm numCss", placeholder = "Total # of days" })
@@ -143,8 +143,8 @@
             </div>
             <div class="row css10">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">
-                        <span class="pull-right">Trainer Name</span>
+                    <label class="col-md-3 control-label col-md-offset-1">
+                        <span>Trainer Name</span>
                     </label>
                     <div class="col-md-6">
                         @Html.DropDownListFor(x => x.TrianerId,
@@ -170,16 +170,16 @@
             <text>
             $("#Country").select2().select2("val", @Session["BranchId"].ToString());
             $('#Country').attr('disabled', 'disabled');
-         </text>
+            </text>
             }
         }
         else
         {
             if (Session["AccessRights"].ToString() == "false")
             {
-                <text>
+            <text>
             $('#Country').attr('disabled', 'disabled');
-        </text>
+            </text>
             }
         }
 
