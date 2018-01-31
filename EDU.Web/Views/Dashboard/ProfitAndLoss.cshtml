@@ -2,6 +2,21 @@
 @{
     ViewBag.Title = "ProfitAndLoss";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var trevenue = Model.Count() > 0 ? Convert.ToInt64(Model.Sum(y => y.TotalRevenueAmount)) : 0;
+    var tprofit = Model.Count() > 0 ? Convert.ToInt64(Model.Sum(y => y.GrossProfit)) : 0;
+
+    var trevenueq1 = Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3).Sum(y => y.TotalRevenueAmount)) : 0;
+    var tprofitq1 = Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 1 || x.Month == 2 || x.Month == 3).Sum(y => y.GrossProfit)) : 0;
+
+    var trevenueq2 = Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6).Sum(y => y.TotalRevenueAmount)) : 0;
+    var tprofitq2 = Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 4 || x.Month == 5 || x.Month == 6).Sum(y => y.GrossProfit)) : 0;
+
+    var trevenueq3 = Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9).Sum(y => y.TotalRevenueAmount)) : 0;
+    var tprofitq3 = Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 7 || x.Month == 8 || x.Month == 9).Sum(y => y.GrossProfit)) : 0;
+
+    var trevenueq4 = Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12).Sum(y => y.TotalRevenueAmount)) : 0;
+    var tprofitq4 = Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12).Count() > 0 ? Convert.ToInt64(Model.Where(x => x.Month == 10 || x.Month == 11 || x.Month == 12).Sum(y => y.GrossProfit)) : 0;
+
 }
 @{
     var listMonths = new List<SelectListItem>()
@@ -83,13 +98,33 @@
                     <hr />
                     <div class="col-md-12">
                         <div class="row" id="dvAll">
-                            <div id="container">
+                            <div class="col-md-12" style="border: 1px solid gray; border-radius: 20px;">
+                                <label class="col-md-12 control-label" style="text-align:center">
+                                    <span class=" pull-right">
+                                        <span style="color:red">
+                                            <br />
+                                            Total Revenue - $@trevenue <br />
+                                            Total Profit - $@tprofit
+                                        </span>
+                                    </span>
+                                </label>
+                                <div id="container">
+                                </div>
+                                <label class="col-md-1 control-label">
+                                </label>
                             </div>
                         </div>
                         <div class="row" id="dvQtr">
                             <div class="col-md-6" style="border: 1px solid gray; border-radius: 20px;">
                                 <label class="col-md-12 control-label" style="text-align:center">
-                                    <span >Q1</span>
+                                    <span class=" pull-right">
+                                        Q1
+                                        <span style="color:red">
+                                            <br />
+                                            Total Revenue - $@trevenueq1 <br />
+                                            Total Profit - $@tprofitq1
+                                        </span>
+                                    </span>
                                 </label>
                                 <div id="container1">
                                 </div>
@@ -98,7 +133,14 @@
                             </div>
                             <div class="col-md-6" style="border: 1px solid gray; border-radius: 20px;">
                                 <label class="col-md-12 control-label" style="text-align:center">
-                                    <span>Q2</span>
+                                    <span class=" pull-right">
+                                        Q2
+                                        <span style="color:red">
+                                            <br />
+                                            Total Revenue - $@trevenueq2 <br />
+                                            Total Profit - $@tprofitq2
+                                        </span>
+                                    </span>
                                 </label>
                                 <div id="container2">
                                 </div>
@@ -107,7 +149,14 @@
                             </div>
                             <div class="col-md-6 css10" style="border: 1px solid gray; border-radius: 20px;">
                                 <label class="col-md-12 control-label" style="text-align:center">
-                                    <span>Q3</span>
+                                    <span class=" pull-right">
+                                        Q3
+                                        <span style="color:red">
+                                            <br />
+                                            Total Revenue - $@trevenueq3 <br />
+                                            Total Profit - $@tprofitq3
+                                        </span>
+                                    </span>
                                 </label>
                                 <div id="container3">
                                 </div>
@@ -116,7 +165,14 @@
                             </div>
                             <div class="col-md-6 css10" style="border: 1px solid gray; border-radius: 20px;">
                                 <label class="col-md-12 control-label" style="text-align:center">
-                                    <span>Q4</span>
+                                    <span class=" pull-right">
+                                        Q4
+                                        <span style="color:red">
+                                            <br />
+                                            Total Revenue - $@trevenueq4 <br />
+                                            Total Profit - $@tprofitq4
+                                        </span>
+                                    </span>
                                 </label>
                                 <div id="container4">
                                 </div>

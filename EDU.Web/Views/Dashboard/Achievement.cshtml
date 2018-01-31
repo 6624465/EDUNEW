@@ -456,9 +456,10 @@
                 },
                 series: [
                     {
-                        type: 'doughnut',
+                        type: 'pie',
                         innerExtent: 0.5,
                         outerExtent: 1.0,
+                        labelsPosition: 'outside',
                         fillStyles: ['#fb0000', '#00a65a', '#333333',  '#8cb1f3', '#8a2be2',
                             '#bcb7c1', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
                             '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
@@ -469,8 +470,8 @@
                         labels: {
                             stringFormat: '%.1f%%',
                             valueType: 'percentage',
-                            font: '15px sans-serif',
-                            fillStyle: 'white'
+                            font: '12px sans-serif',
+                            fillStyle: 'black'
                         },
                         data: [ @foreach (var info in Model.Where(x => x.Country == item.BranchID).ToList())
                         {
