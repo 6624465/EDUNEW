@@ -116,7 +116,7 @@ namespace EDU.Web.Controllers
             {
                 ViewBag.Title = "Update Operational Transaction";
                 //operationalTransactionvm.OperationalTransactionId = -1;
-                List<OperationalTransaction> otList = dbContext.OperationalTransactions.Where(x => x.OperationId == operationId && x.IsActive == true).ToList();
+                List<OperationalTransaction> otList = dbContext.OperationalTransactions.Where(x => x.OperationId == operationId && x.Country == country && x.IsActive == true).ToList();
 
                 operationalTransactionvm.OperationId = operationId;
 
@@ -320,21 +320,8 @@ namespace EDU.Web.Controllers
             try
             {
                 int month = DateTime.Now.Month;
-                int fYear;
-                int cYear;
-
-                //if (month < 4)
-                //{
-                //    cYear = year - 1;
-                //    fYear = year;
-                //}
-                //else
-                //{
-                //    fYear = year + 1;
-                //    cYear = year;
-                //}
-                cYear = year;
-                fYear = year;
+                int fYear= year;
+                int cYear= year;
 
                 List<OperationalTransaction> otlist = dbContext.OperationalTransactions
                     .Where(x => x.IsActive == true && x.Country == country && x.Year == year).ToList();
@@ -344,34 +331,39 @@ namespace EDU.Web.Controllers
                     otlist = otlist.Where(x => x.Country == Convert.ToUInt16(Session["BranchId"])).ToList();
                 }
 
-                List<OperationalTransactionReportVM> list = otlist
-                    .Select(y => new OperationalTransactionReportVM
-                    {
-                        CategoryId = y.CategoryId,
-                        ParticularsId = y.ParticularsId,
-                        Country = y.Country,
-                        CountryName = y.CountryName,
-                        JanAmount = otlist.Where(x => x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 1 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        FebAmount = otlist.Where(x => x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 2 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        MarAmount = otlist.Where(x => x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 3 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        AprAmount = otlist.Where(x => x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 4 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        MayAmount = otlist.Where(x => x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 5 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        JuneAmount = otlist.Where(x => x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 6 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        JulyAmount = otlist.Where(x => x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 7 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        AugAmount = otlist.Where(x => x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 8 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        SepAmount = otlist.Where(x => x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 9 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        OctAmount = otlist.Where(x => x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 10 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        NovAmount = otlist.Where(x => x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 11 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,
-                        DecAmount = otlist.Where(x => x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 12 && x.ParticularsId == y.ParticularsId).FirstOrDefault().Amount,  //fYear
-                        CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.CategoryId).FirstOrDefault().LookupDescription,
-                        ParticularsIdDesc = dbContext.Lookups.Where(c => c.LookupID == y.ParticularsId).FirstOrDefault().LookupDescription
+                var ParticularsList = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").OrderBy(y => y.LookupID).ToList();
 
-                    }).Distinct()
-                    .ToList();
+                List<OperationalTransactionReportVM> list = new List<OperationalTransactionReportVM>();
+                foreach (var item in ParticularsList)
+                {
+                    list.Add(new OperationalTransactionReportVM()
+                    {
+                        CategoryId = dbContext.Lookups.Where(c => c.LookupCode == item.MappingCode).FirstOrDefault().LookupID,
+                        ParticularsId = item.LookupID,
+                        //Country = otlist.FirstOrDefault().Country,
+                        //CountryName = otlist.FirstOrDefault().CountryName,
+                        JanAmount = otlist.Where(x => x.Month == 1 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 1 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        FebAmount = otlist.Where(x => x.Month == 2 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 2 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        MarAmount = otlist.Where(x => x.Month == 3 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 3 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        AprAmount = otlist.Where(x => x.Month == 4 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 4 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        MayAmount = otlist.Where(x => x.Month == 5 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 5 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        JuneAmount = otlist.Where(x => x.Month == 6 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 6 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        JulyAmount = otlist.Where(x => x.Month == 7 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 7 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        AugAmount = otlist.Where(x => x.Month == 8 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 8 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        SepAmount = otlist.Where(x => x.Month == 9 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 9 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        OctAmount = otlist.Where(x => x.Month == 10 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 10 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        NovAmount = otlist.Where(x => x.Month == 11 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 11 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        DecAmount = otlist.Where(x => x.Month == 12 && x.ParticularsId == item.LookupID).FirstOrDefault() == null ? 0 : otlist.Where(x => x.Month == 12 && x.ParticularsId == item.LookupID).FirstOrDefault().Amount,
+                        CategoryIdDesc = dbContext.Lookups.Where(c => c.LookupCode == item.MappingCode).FirstOrDefault().LookupDescription,
+                        ParticularsIdDesc = item.LookupDescription
+
+                    });
+                }
+
                 List<OperationalTransactionReportVM> list1 = new List<OperationalTransactionReportVM>();
                 foreach (var item in list)
                 {
-                    item.YTD = item.JanAmount + item.FebAmount + item.MarAmount+item.AprAmount + item.MayAmount + item.JuneAmount + item.JulyAmount + item.AugAmount + item.SepAmount +
+                    item.YTD = item.JanAmount + item.FebAmount + item.MarAmount + item.AprAmount + item.MayAmount + item.JuneAmount + item.JulyAmount + item.AugAmount + item.SepAmount +
                               item.OctAmount + item.NovAmount + item.DecAmount;
 
                     list1.Add(item);
@@ -379,19 +371,19 @@ namespace EDU.Web.Controllers
 
                 List<decimal?> summary = new List<decimal?>();
 
-                summary.Add(list1.Sum(x => x.JanAmount));
-                summary.Add(list1.Sum(x => x.FebAmount));
-                summary.Add(list1.Sum(x => x.MarAmount));
-                summary.Add(list1.Sum(x => x.AprAmount));
-                summary.Add(list1.Sum(x => x.MayAmount));
-                summary.Add(list1.Sum(x => x.JuneAmount));
-                summary.Add(list1.Sum(x => x.JulyAmount));
-                summary.Add(list1.Sum(x => x.AugAmount));
-                summary.Add(list1.Sum(x => x.SepAmount));
-                summary.Add(list1.Sum(x => x.OctAmount));
-                summary.Add(list1.Sum(x => x.NovAmount));
-                summary.Add(list1.Sum(x => x.DecAmount));
-                summary.Add(list1.Sum(x => x.YTD));
+                summary.Add(list.Sum(x => x.JanAmount));
+                summary.Add(list.Sum(x => x.FebAmount));
+                summary.Add(list.Sum(x => x.MarAmount));
+                summary.Add(list.Sum(x => x.AprAmount));
+                summary.Add(list.Sum(x => x.MayAmount));
+                summary.Add(list.Sum(x => x.JuneAmount));
+                summary.Add(list.Sum(x => x.JulyAmount));
+                summary.Add(list.Sum(x => x.AugAmount));
+                summary.Add(list.Sum(x => x.SepAmount));
+                summary.Add(list.Sum(x => x.OctAmount));
+                summary.Add(list.Sum(x => x.NovAmount));
+                summary.Add(list.Sum(x => x.DecAmount));
+                summary.Add(list.Sum(x => x.YTD));
                 ViewData["Summary"] = summary;
                 ViewData["CountryData"] = new BranchBO().GetList();
                 return View(list1);
