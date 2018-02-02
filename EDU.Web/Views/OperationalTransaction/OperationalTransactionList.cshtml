@@ -23,21 +23,21 @@
 @{
 
     var listMonths = new List<SelectListItem>()
-                                          {
+                          {
 
-                                           new SelectListItem {Text = "January",   Value = "1"},
-                                           new SelectListItem {Text = "February", Value = "2"},
-                                           new SelectListItem {Text = "March", Value = "3"},
-                                           new SelectListItem {Text = "April",   Value = "4"},
-                                           new SelectListItem {Text = "May", Value = "5"},
-                                           new SelectListItem {Text = "June", Value = "6"},
-                                           new SelectListItem {Text = "July",   Value = "7"},
-                                           new SelectListItem {Text = "August", Value = "8"},
-                                           new SelectListItem {Text = "September", Value = "9"},
-                                           new SelectListItem {Text = "October",   Value = "10"},
-                                           new SelectListItem {Text = "November", Value = "11"},
-                                           new SelectListItem {Text = "December", Value = "12"}
-                                       };
+                           new SelectListItem {Text = "January",   Value = "1"},
+                           new SelectListItem {Text = "February", Value = "2"},
+                           new SelectListItem {Text = "March", Value = "3"},
+                           new SelectListItem {Text = "April",   Value = "4"},
+                           new SelectListItem {Text = "May", Value = "5"},
+                           new SelectListItem {Text = "June", Value = "6"},
+                           new SelectListItem {Text = "July",   Value = "7"},
+                           new SelectListItem {Text = "August", Value = "8"},
+                           new SelectListItem {Text = "September", Value = "9"},
+                           new SelectListItem {Text = "October",   Value = "10"},
+                           new SelectListItem {Text = "November", Value = "11"},
+                           new SelectListItem {Text = "December", Value = "12"}
+                       };
 
 
 }
@@ -59,45 +59,54 @@
             <div class="box" id="grid">
                 <div class="box-header">
                     <h4>Operational Transaction List</h4>
-                    <div class="box-tools">
+                    <div class="box-tools" style="right:180px">
                         <button type="button" class="btn btn-primary btn-sm waves-effect" data-toggle="modal" onclick="PrintDashboardOperationaltransactionList()"><i class="fa fa-print"></i>Print</button>
-
-                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
-                        {
-                            if (Model.FirstOrDefault() == null)
-                            {
-                                <button type="button" id="btnAdd" class="btn btn-info btn-sm waves-effect" onclick="AddOperationalTransaction()"><i class="fa fa-plus"></i>Add Operational Transactions</button>
-                            }
-                            else
-                            {
-                                <button type="button" id="btnAdd" class="btn btn-info btn-sm waves-effect" onclick="AddOperationalTransaction()"><i class="fa fa-pencil"></i>Update Operational Transactions</button>
-                            }
-                        }
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-md-1 col-md-offset-2 control-label">
+                            <label class="col-md-1 col-md-offset-1 control-label">
                                 <span class="pull-right">Country</span>
                             </label>
                             <div class="col-md-2">
                                 @Html.HiddenFor(x => x.FirstOrDefault().CountryName)
                                 @Html.HiddenFor(x => x.FirstOrDefault().OperationId)
                                 @Html.DropDownListFor(x => x.FirstOrDefault().Country,
-                                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"), new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
-                            <label class="col-md-1 control-label">
-                                <span class="pull-right">Year</span>
-                            </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:60%" })
+                                <div style="width:30%;float:left">
+                                    <label class="control-label">
+                                        <span class="pull-left">Year</span>
+                                    </label>
+                                </div>
+                                <div style="width:70%; float:left">
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Year, Enumerable.Range(2014, 14).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:100%" })
+                                </div>
                             </div>
-                            <label class="col-md-1 control-label">
-                                <span class="pull-right">Month</span>
-                            </label>
                             <div class="col-md-2">
-                                @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm", onchange = "ChangeMonth();", @style = "width:70%" })
+                                <div style="width:30%;float:left">
+                                    <label class="control-label">
+                                        <span class="pull-left">Month</span>
+                                    </label>
+                                </div>
+                                <div style="width:70%; float:left">
+                                    @Html.DropDownListFor(x => x.FirstOrDefault().Month, listMonths, new { @class = "form-control input-sm pull-right", onchange = "ChangeMonth();", @style = "width:100%" })
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
+                                {
+                                    if (Model.FirstOrDefault() == null)
+                                    {
+                                        <button type="button" id="btnAdd" class="btn btn-info btn-sm waves-effect" onclick="AddOperationalTransaction()"><i class="fa fa-plus"></i>Add Operational Transactions</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" id="btnAdd" class="btn btn-info btn-sm waves-effect" onclick="AddOperationalTransaction()"><i class="fa fa-pencil"></i>Update Operational Transactions</button>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
@@ -106,19 +115,19 @@
                         <div class="col-md-8 col-md-offset-2 ">
                             <div id="gridContent">
                                 @grid.GetHtml(
-                                columns: grid.Columns(
-                                grid.Column("CategoryIdDesc", "Category", canSort: true),
-                                grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
-                                grid.Column("Amount", "Amount", canSort: true,
-                                     format:
-                                    @<text>
-                                        <div style='width:100%;'>
-                                            <span class="center">
-                                                @ConvertToInt64dollar(item.Amount)
-                                            </span>
-                                        </div>
-                                    </text>, style: "center")),
-                                tableStyle: "table table-striped table-bordered")
+                                          columns: grid.Columns(
+                                          grid.Column("CategoryIdDesc", "Category", canSort: true),
+                                          grid.Column("ParticularsIdDesc", "Particulars", canSort: true),
+                                          grid.Column("Amount", "Amount", canSort: true,
+                                               format:
+                                            @<text>
+                                                <div style='width:100%;'>
+                                                    <span class="center">
+                                                        @ConvertToInt64dollar(item.Amount)
+                                                    </span>
+                                                </div>
+                                            </text>, style: "center")),
+  tableStyle: "table table-striped table-bordered")
                             </div>
                         </div>
                     </div>
