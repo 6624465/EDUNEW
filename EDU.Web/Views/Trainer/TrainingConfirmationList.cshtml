@@ -290,6 +290,7 @@
 
         function SaveTrainingConfirmation() {
             if ($('#frmTrainerConfirmation').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 $('#Country').removeAttr('disabled');
                 $('#Private').val($('#rdoPrivate').is(':checked'));
                 $('#Public').val($('#rdoPublic').is(':checked'));

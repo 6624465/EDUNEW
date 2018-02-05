@@ -187,6 +187,7 @@
         function SaveCourse() {
             debugger;
             if ($('#frmCourse').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 $('#CourseName').removeAttr('disabled');
                 $('#Country').removeAttr('disabled');
                 $('#Product').removeAttr('disabled');

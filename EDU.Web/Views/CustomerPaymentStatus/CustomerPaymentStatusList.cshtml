@@ -502,6 +502,7 @@
         });
         function SaveCustomerPaymentStatus(id) {
             if ($('#frmCustomerPaymentStatus').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 RemoveDisabledFields();
                 $('#frmCustomerPaymentStatus').submit();
             }

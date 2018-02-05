@@ -221,7 +221,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="text-center css10">
-                                                <button type="button" onclick="SaveOperationalTransaction()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                <button id="btnSave" type="button" onclick="SaveOperationalTransaction()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                                 <button class="btn btn-default btn-sm" type="button" onclick="navigateToList();"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                             </div>
                                         </div>
@@ -244,6 +244,7 @@
             CalculateTotalOpex();
         });
         function SaveOperationalTransaction() {
+            $('#btnSave').attr('disabled', 'disabled');
             $('#Country').removeAttr('disabled');
             $('#Year').removeAttr('disabled');
             $('#Month').removeAttr('disabled');

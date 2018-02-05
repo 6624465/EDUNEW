@@ -489,6 +489,7 @@
         });
         function SaveVendorPaymentStatus(id) {
             if ($('#frmVendorPaymentStatus').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 RemoveDisabledFields();
                 $('#frmVendorPaymentStatus').submit();
             }
