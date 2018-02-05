@@ -25,6 +25,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1536,6 +1537,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap1.min.css" />
     <Content Include="Scripts\bootstrap1.min.js" />
+    <Content Include="Scripts\Charts\canvasjs.min.js" />
     <Content Include="Scripts\Charts\exporting.js" />
     <Content Include="Scripts\Charts\highcharts-3d.js" />
     <Content Include="Scripts\Charts\highcharts.js" />

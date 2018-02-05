@@ -109,8 +109,8 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="javascript:;"><span class="ion ion-person">&nbsp;&nbsp;</span>@(Session["UserID"])</a></li>
-                        <li><a href="javascript:;"><span class="ion ion-star">&nbsp;&nbsp;</span>@(Session["UserName"])</a></li>
-                        <li class="divider"></li>
+                    <li><a href="javascript:;"><span class="ion ion-star">&nbsp;&nbsp;</span>@(Session["UserName"])</a></li>
+                    <li class="divider"></li>
                     <li><a href="@Url.Content("~/Layout/LogOut")"><span class="ion ion-power">&nbsp;&nbsp;</span>LogOut</a></li>
                 </ul>
             </li>
@@ -145,7 +145,7 @@
                                     <i class="fa fa-bars font20"></i>
                                     <span class="text ptop7">&nbsp;Courses</span>
                                 </a>
-                            </li>                            
+                            </li>
                             <li id="liRegionalLeads">
                                 <a href="@Url.Content("~/Master/CourseSalesMasterList?month=0&year=" + year)">
                                     <i class="fa fa-chain font20"></i>
@@ -343,7 +343,8 @@
     <script src="@Url.Content("~/Scripts/Charts/prettify.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
 
-
+    <script src="@Url.Content("~/Scripts/Charts/canvasjs.min.js")"></script>
+    
     @*<script src="@Url.Content("~/Scripts/Core/vendors.js")"></script>*@
     @*<script src="@Url.Content("~/Scripts/Core/d3.min.js")"></script>
         <script src="@Url.Content("~/Scripts/Core/c3.min.js")"></script>*@
