@@ -403,7 +403,7 @@
                             <div class="row css25">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <button id="btnSave" type="button" onclick="SaveRegistrationPublic()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        <button id="btnSavePublic" type="button" onclick="SaveRegistrationPublic()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                         <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
@@ -540,7 +540,7 @@
                                 <div class="row css25">
                                     <div class="col-md-12">
                                         <div class="text-center">
-                                            <button id="btnSave" type="button" onclick="SaveRegistrationPrivate()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                            <button id="btnSavePrivate" type="button" onclick="SaveRegistrationPrivate()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                             <button class="btn btn-default btn-sm" type="button" onclick="navigatetoList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                         </div>
                                     </div>
@@ -1044,11 +1044,13 @@
 
         function SaveRegistrationPublic() {
             if ($('#frmRegistrationPublic').valid()) {
+                $('#btnSavePublic').attr('disabled','disabled');
                 $('#frmRegistrationPublic').submit();
             }
         }
         function SaveRegistrationPrivate() {
             if ($('#frmRegistrationPrivate').valid()) {
+                $('#btnSavePrivate').attr('disabled', 'disabled');
                 $('#frmRegistrationPrivate').submit();
             }
         }

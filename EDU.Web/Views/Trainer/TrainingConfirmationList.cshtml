@@ -290,6 +290,7 @@
 
         function SaveTrainingConfirmation() {
             if ($('#frmTrainerConfirmation').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 $('#Country').removeAttr('disabled');
                 $('#Private').val($('#rdoPrivate').is(':checked'));
                 $('#Public').val($('#rdoPublic').is(':checked'));
@@ -348,7 +349,7 @@
             var product = $('#Product').find("option:selected").text();
             var coursetext = $("#Course").find("option:selected").text();
 
-            if (product.toLowerCase() == "other" && (coursetext.toLowerCase().indexOf("exam") != -1 || coursetext.toLowerCase().indexOf("voucher") != -1)) {
+            if ((coursetext.toLowerCase().indexOf("exam") != -1 || coursetext.toLowerCase().indexOf("voucher") != -1)) {
                 DisbledExamOrVocherFields();
             }
             else {

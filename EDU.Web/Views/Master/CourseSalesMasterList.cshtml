@@ -33,21 +33,21 @@
 }
 @{
     var listMonths = new List<SelectListItem>()
-                                          {
-                                           new SelectListItem {Text = "All",   Value = "0"},
-                                           new SelectListItem {Text = "January",   Value = "1"},
-                                           new SelectListItem {Text = "February", Value = "2"},
-                                           new SelectListItem {Text = "March", Value = "3"},
-                                           new SelectListItem {Text = "April",   Value = "4"},
-                                           new SelectListItem {Text = "May", Value = "5"},
-                                           new SelectListItem {Text = "June", Value = "6"},
-                                           new SelectListItem {Text = "July",   Value = "7"},
-                                           new SelectListItem {Text = "August", Value = "8"},
-                                           new SelectListItem {Text = "September", Value = "9"},
-                                           new SelectListItem {Text = "October",   Value = "10"},
-                                           new SelectListItem {Text = "November", Value = "11"},
-                                           new SelectListItem {Text = "December", Value = "12"}
-                                       };
+                          {
+                           new SelectListItem {Text = "All",   Value = "0"},
+                           new SelectListItem {Text = "January",   Value = "1"},
+                           new SelectListItem {Text = "February", Value = "2"},
+                           new SelectListItem {Text = "March", Value = "3"},
+                           new SelectListItem {Text = "April",   Value = "4"},
+                           new SelectListItem {Text = "May", Value = "5"},
+                           new SelectListItem {Text = "June", Value = "6"},
+                           new SelectListItem {Text = "July",   Value = "7"},
+                           new SelectListItem {Text = "August", Value = "8"},
+                           new SelectListItem {Text = "September", Value = "9"},
+                           new SelectListItem {Text = "October",   Value = "10"},
+                           new SelectListItem {Text = "November", Value = "11"},
+                           new SelectListItem {Text = "December", Value = "12"}
+                       };
 }
 <style>
     .bordertop {
@@ -152,7 +152,7 @@
                                                                         <td style='width:80px;'>Created Dt.</td>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>                                                                  
+                                                                <tbody>
                                                                     @foreach (var item in Model.Where(x => x.ProductName == ProductData[j].ProductName))
                                                                     {
                                                                         <tr>
@@ -160,7 +160,10 @@
                                                                                 @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "SALES" || Session["RoleCode"].ToString() == "REGIONAL")
                                                                                 {
                                                                                     <button class="btn btn-xs btn-success waves-effect" onclick="navigateToDetail(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                                                                }
+                                                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL" || (Session["RoleCode"].ToString() == "SALES" && Session["UserID"].ToString() == "SALESSG"))
+                                                                                {
+                                                                                <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteCourseSalesMaster(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
                                                                                 }
                                                                                 @if (item.IsConfirm == true)
                                                                                 {
@@ -222,7 +225,7 @@
                                                                                         <span data-placement="top" data-toggle="popover" data-html="true" data-title="Leads on hand Details" data-content="@CheckString(item.RegisteredRemarks)"
                                                                                               onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">@item.Registered</span>
                                                                                         </a>
-                                                                                }
+                                                                                    }
                                                                             </td>
                                                                             <td class="center">
                                                                                 @item.AvailableSeats
@@ -263,7 +266,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                                                        }
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -323,7 +326,6 @@
                                 i.replace(/[\$,]/g, '') * 1 :
                                 typeof i === 'number' ?
                                     i : 0;
-                            debugger;
                             return amt;
 
                         };
@@ -335,7 +337,6 @@
                                 .data()
                                 .reduce(function (a, b) {
                                     var x = intVal(a) + intVal(b);
-                                    debugger;
                                     return intVal(a) + intVal(b);
                                 }, 0);
                         }
@@ -443,5 +444,5 @@
         function mouseover(el) {
             $(el).popover("show");
         }
-</script>
+    </script>
 }

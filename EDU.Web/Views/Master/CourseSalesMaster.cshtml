@@ -250,7 +250,7 @@
                                     <div class="row css10">
                                         <div class="col-md-12">
                                             <div class="text-center">
-                                                <button type="button" onclick="SaveCourseSalesMaster()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                <button type="button" id="btnSave" onclick="SaveCourseSalesMaster()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                                 <button class="btn btn-default btn-sm" type="button" onclick="navigateToList()"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                             </div>
                                         </div>
@@ -441,6 +441,7 @@
             $('#courseSalesMaster_IsConfirm').val($('#rdoConfirm').is(':checked'));
 
             if ($('#frmCourseDetail').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 $('#courseSalesMaster_NoOfDays').removeAttr('disabled');
                 $('#courseSalesMaster_Month').removeAttr('disabled');
                 SaveRemoveatrr();

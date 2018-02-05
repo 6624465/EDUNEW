@@ -98,7 +98,7 @@
                                     <div class="row css10">
                                         <div class="col-md-12">
                                             <div class="text-center">
-                                                <button type="button" onclick="SaveTrainer()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                                <button type="button" id="btnSave" onclick="SaveTrainer()" class="btn btn-success btn-frmt green btn-sm"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                                 <button class="btn btn-default btn-sm" type="button" onclick="location.href = '@Url.Content("~/Trainer/TrainersList")'"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                             </div>
                                         </div>
@@ -151,8 +151,10 @@
             $('#CountryName').val($("#Country option:selected").text());
         }
         function SaveTrainer() {
-            $('#frmTrainer').valid()
+            if ($('#frmTrainer').valid())
             {
+                debugger;
+                $('#btnSave').attr('disabled', 'disabled');
                 $('#Country').removeAttr('disabled');
                 $('#frmTrainer').submit();
             }

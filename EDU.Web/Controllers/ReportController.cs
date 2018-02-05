@@ -99,7 +99,7 @@ namespace EDU.Web.Controllers
         public ActionResult DashboardOperationalTransactionReport(int? country, int year, int month)
         {
             var url = "Edu.DashboardOperationalTransactionReport";
-            ViewBag.Title = "Dashboard Operational Transaction Report";
+            ViewBag.Title = "Operational Transaction Report - MTD";
             ViewBag.country = country;
             ViewBag.year = year;
             ViewBag.month = month;
@@ -171,7 +171,7 @@ namespace EDU.Web.Controllers
         public ActionResult DashboardAchievementReport(int country, int year, int month)
         {
             var url = "Edu.DashboardAchievementYTDReport";
-            ViewBag.Title = "Dashboard Achievement Report - YTD";
+            ViewBag.Title = "Achievement Report - YTD";
             ViewBag.country = country;
             ViewBag.year = year;
             ViewBag.month = month;

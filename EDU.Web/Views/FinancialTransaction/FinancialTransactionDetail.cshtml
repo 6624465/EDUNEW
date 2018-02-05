@@ -204,7 +204,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <button type="button" onclick="SaveFinancialTransactionDetail()" class="btn btn-success btn-frmt green btn-sm editdisable"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
+                                        <button type="button" id="btnSave" onclick="SaveFinancialTransactionDetail()" class="btn btn-success btn-frmt green btn-sm editdisable"><i class="fa fa-floppy-o"></i>&nbsp;Save</button> &nbsp;&nbsp;&nbsp;
                                         <button class="btn btn-default btn-sm" type="button" onclick="navigateToList();"><i class="fa fa-backward"></i>&nbsp;Back</button>&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
@@ -256,8 +256,8 @@
         });
 
         function SaveFinancialTransactionDetail() {
-            debugger;
             if ($('#frmFinancialTransaction').valid()) {
+                $('#btnSave').attr('disabled', 'disabled');
                 $('#Country').removeAttr('disabled');
                 $('#TrainingConfirmationID').removeAttr('disabled');
                 $('#TotalRevenueAmount').removeAttr('disabled');
