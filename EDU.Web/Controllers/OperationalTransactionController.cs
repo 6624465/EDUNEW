@@ -260,7 +260,7 @@ namespace EDU.Web.Controllers
                     {
 
                         OperationalTransaction otInfo = dbContext.OperationalTransactions.
-                            Where(x => x.OperationId == otvm.OperationId && x.ParticularsId == perticulars.Key && x.Month == otvm.Month && x.Year == otvm.Year).FirstOrDefault();
+                            Where(x => x.OperationId == otvm.OperationId && x.ParticularsId == perticulars.Key && x.Month == otvm.Month && x.Year == otvm.Year && x.Country == otvm.Country).FirstOrDefault();
 
                         if (otInfo != null)
                         {

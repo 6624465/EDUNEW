@@ -1,26 +1,27 @@
-﻿
+﻿@using Newtonsoft.Json;
 @model EDU.Web.ViewModels.OperationalTransaction.OperationalTransactionReportVM
 @{
     ViewBag.Title = "Operationaltransaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var particularsData = (List<EDU.Web.Models.Lookup>)ViewData["ParticularsData"];
 }
 
 @{
     var listMonths = new List<SelectListItem>()
-    {
-    new SelectListItem {Text = "January",   Value = "1"},
-    new SelectListItem {Text = "February", Value = "2"},
-    new SelectListItem {Text = "March", Value = "3"},
-    new SelectListItem {Text = "April",   Value = "4"},
-    new SelectListItem {Text = "May", Value = "5"},
-    new SelectListItem {Text = "June", Value = "6"},
-    new SelectListItem {Text = "July",   Value = "7"},
-    new SelectListItem {Text = "August", Value = "8"},
-    new SelectListItem {Text = "September", Value = "9"},
-    new SelectListItem {Text = "October",   Value = "10"},
-    new SelectListItem {Text = "November", Value = "11"},
-    new SelectListItem {Text = "December", Value = "12"}
-    };
+{
+new SelectListItem {Text = "January",   Value = "1"},
+new SelectListItem {Text = "February", Value = "2"},
+new SelectListItem {Text = "March", Value = "3"},
+new SelectListItem {Text = "April",   Value = "4"},
+new SelectListItem {Text = "May", Value = "5"},
+new SelectListItem {Text = "June", Value = "6"},
+new SelectListItem {Text = "July",   Value = "7"},
+new SelectListItem {Text = "August", Value = "8"},
+new SelectListItem {Text = "September", Value = "9"},
+new SelectListItem {Text = "October",   Value = "10"},
+new SelectListItem {Text = "November", Value = "11"},
+new SelectListItem {Text = "December", Value = "12"}
+};
 
 
 }
@@ -43,8 +44,8 @@
                             </label>
                             <div class="col-md-2">
                                 @Html.DropDownListFor(x => x.otReportByMonth.FirstOrDefault().Country,
-                                     new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
-                                     new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
+                                                    new SelectList((List<EZY.EDU.Contract.Branch>)ViewData["CountryData"], "BranchId", "BranchName"),
+                                                    new { @class = "form-control input-sm", onchange = "ChangeMonth();" })
                             </div>
                             <label class="col-md-1 control-label">
                                 <span class="pull-right">Month</span>
@@ -65,6 +66,11 @@
                                 <div class="row css25">
                                     <div class="col-md-12">
                                         <div id="container"></div>
+                                    </div>
+                                </div>
+                                <div class="row css25">
+                                    <div id="legend">
+                                        <div><h4>Particulars</h4></div>
                                     </div>
                                 </div>
                             </div>
@@ -97,6 +103,11 @@
 
     .highcharts-button-box {
         display: none;
+    }
+
+    .round {
+        border-radius: 10px;
+        width: 10px;
     }
 </style>
 @section SectionScripts{
@@ -155,6 +166,37 @@
                 window.location = '@Url.Action("Operationaltransaction", "Dashboard", new { month = "", year = "", country="" })' + '?country=' + $('#Country').val() + "&month=" + $('#Month').val() + "&year=" + $('#Year').val();
             };
 
+            var getColor = {
+                'SALARIES': '#418CF0',
+                'TRAVELLING EXPENSES': '#FCB441',
+                'RENTAL': '#E0400A',
+                'TELEPHONE EXPENSES': '#056492',
+                'COURIER CHARGES': '#1A3B69',
+                'INSURANCE': '#0000FF',
+                'UTILITY': '#8A2BE2',
+                'MARKETING EXPENSES': '#A52A2A',
+                'DEPRECIATION': '#DEB887',
+                'LEGAL EXPENSES/CONSULTANCY': '#5F9EA0',
+                'REPAIR & MAINTENANCE': '#D2691E',
+                'BANK CHARGES': '#FF7F50',
+                'PRINTING & STATIONERY': '#6495ED',
+                'STAFF WELFARE': '#DC143C',
+                'OTHER EXPENSES/INCOME': '#00FFFF'
+            };
+            var fillStyles = ['#418CF0', '#FCB441', '#E0400A', '#056492', '#1A3B69', '#0000FF',
+                '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0', '#D2691E', '#FF7F50',
+                '#6495ED', '#DC143C', '#00FFFF', '#00008B', '#008B8B', '#B8860B',
+                '#006400', '#8B008B', '#556B2F', '#FF8C00', '#8B0000', '#FF1493',
+                '#1E90FF', '#B22222', '#228B22', '#008000', '#4B0082', '#F08080',
+                '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
+            ];
+
+     var myArray = @Html.Raw(JsonConvert.SerializeObject(particularsData));
+            var $container = $("#legend");
+            for (var i = 0; i < @particularsData.Count(); i++) {
+                $container.append('<div class="row css10" style="height: 20px; padding-left:15px;" ><div class="col-md-1 round" style="height: 20px; background:' + fillStyles[i] + ';" id="answerdiv' + $container.children().length + '"><div class="col-md-11" style="padding-left:35px; white-space:nowrap"><b>' + myArray[i].LookupDescription + '</b></div></div></div>');
+            }
+
             Highcharts.chart('container', {
                 chart: {
                     type: 'pie',
@@ -168,7 +210,7 @@
                     text: 'MTD'
                 },
                 tooltip: {
-                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                    pointFormat: '${point.y:.0f}<br/><b>{point.percentage:.1f}%</b>'
                 },
                 plotOptions: {
                     pie: {
@@ -192,7 +234,8 @@
                             name:'@item.ParticularName',
                             y:@item.Amount,
                             sliced: true,
-                            selected:true
+                            selected: true,
+                            color: getColor['@item.ParticularName']
                         },
                         </text>
                             }

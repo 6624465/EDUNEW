@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = null;
+    var msg = ViewBag.ErrMsg;
 }
 <!DOCTYPE html>
 
@@ -33,16 +34,18 @@
         body {
             background: #efefef !important;
         }
+
         label {
-        font-weight:bold !important;
+            font-weight: bold !important;
         }
+
         .page {
             background: #efefef !important;
         }
     </style>
 </head>
 <body id="app" class="app off-canvas body-full">
-    
+
     <!-- main-container -->
     <div class="main-container clearfix">
         <!-- content-here -->
@@ -50,19 +53,20 @@
             <div class="page page-auth">
                 <div class="auth-container">
                     <div class="form-head">
-                        <h1 class="site-logo h2 mb5 mt5 text-uppercase text-bold" ><a href="@Url.Content("~/Account/Index")" style="text-decoration:none"><img src="@Url.Content("~/images/EDU-Logo.png")" style="width:60px; margin-top:10px; margin-left:50px;" />Login-EMS</a></h1>
+                        <h1 class="site-logo h2 mb5 mt5 text-uppercase text-bold"><a href="@Url.Content("~/Account/Index")" style="text-decoration:none"><img src="@Url.Content("~/images/EDU-Logo.png")" style="width:60px; margin-top:10px; margin-left:50px;" />Login-EMS</a></h1>
                     </div>
 
                     <div class="form-container">
                         @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "frmLogin", name = "frmLogin", autocomplete = "off" }))
                         {
+                            <span style="color:red;">@ViewBag.ErrMsg</span>
                             <div class="md-input-container">
                                 @Html.TextBoxFor(x => x.UserID, new { @class = "md-input" })
                                 <label>User Id</label>
                             </div>
 
                             <div class="md-input-container">
-                                @Html.PasswordFor(x => x.Password, new { @class = "md-input" , autocomplete = "new-password" })
+                                @Html.PasswordFor(x => x.Password, new { @class = "md-input", autocomplete = "new-password" })
                                 <label>Password</label>
                             </div>
 

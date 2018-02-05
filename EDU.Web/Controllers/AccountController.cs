@@ -49,6 +49,12 @@ namespace EDU.Web.Controllers
                 ur => ur.UserID == model.UserID &&
                 ur.Password == model.Password).FirstOrDefault();
 
+            if (currentUser == null)
+            {
+                ViewBag.ErrMsg = "The user name or password provided is incorrect.";
+                return View("Index", model);
+            }
+
             var userBranch = new UserBranchBO().GetList(model.UserID)
                                     .FirstOrDefault();
 
@@ -95,7 +101,7 @@ namespace EDU.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Achievement", "Dashboard", new { year = DateTime.Now.Year});
+                    return RedirectToAction("Achievement", "Dashboard", new { year = DateTime.Now.Year });
                 }
             }
             else

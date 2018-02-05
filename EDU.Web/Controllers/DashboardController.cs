@@ -59,6 +59,7 @@ namespace EDU.Web.Dashboard.Controllers
                 }
 
                 ViewData["CountryData"] = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+                ViewData["ParticularsData"] = dbContext.Lookups.Where(x => x.LookupCategory == "Particulars").OrderBy(y => y.LookupID).ToList();
 
                 if (reportList.otReportByYear == null)
                     reportList.otReportByYear = new OperationalTransactionReportByYear();
