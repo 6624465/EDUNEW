@@ -124,6 +124,7 @@
     <Content Include="Css\bootstrap-timepicker.css" />
     <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\c3.css" />
+    <Content Include="Css\circle.css" />
     <Content Include="Css\css.css" />
     <Content Include="Css\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Css\font-awesome-4.7.0\css\font-awesome.min.css" />

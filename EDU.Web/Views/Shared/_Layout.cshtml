@@ -74,6 +74,14 @@
             background: url('@Url.Content("~/Images/ajax-loader.gif")') 50% 50% no-repeat #DCD6D6;
             opacity: .8;
         }
+        html{
+            overflow: hidden;
+            height: 100%;
+        }
+        body{
+            overflow: auto;
+            height: 100%;
+        }
     </style>
     @RenderSection("Styles", false)
     @{
@@ -84,7 +92,7 @@
 <body id="app" class="app off-canvas nav-expand">
 
     <!-- header -->
-    <header class="site-head" id="site-head">
+    <header class="site-head" id="site-head" style="position:fixed">
         <ul class="list-unstyled left-elems">
             <!-- nav trigger/collapse -->
             <li>
