@@ -80,6 +80,25 @@
     .action {
         width: 50px;
     }
+
+    .table-responsive {
+        max-height: 670px;
+        overflow: scroll;
+    }
+
+    @@media only screen and (max-width : 1366px) {
+        .table-responsive {
+            max-height: 360px;
+            overflow: scroll;
+        }
+    }
+
+    @@media only screen and (max-width : 720px) {
+        .table-responsive {
+            max-height: 250px;
+            overflow: scroll;
+        }
+    }
 </style>
 
 <div class="page">

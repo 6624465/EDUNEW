@@ -17,6 +17,27 @@
             return null;
     }
 }
+<style>
+
+    .table-responsive {
+        max-height: 770px;
+        overflow: scroll;
+    }
+
+    @@media only screen and (max-width : 1366px) {
+        .table-responsive {
+            max-height: 450px;
+            overflow: scroll;
+        }
+    }
+
+    @@media only screen and (max-width : 720px) {
+        .table-responsive {
+            max-height: 250px;
+            overflow: scroll;
+        }
+    }
+</style>
 <div class="page">
     <div class="page-wrap">
         <div class="panel panel-default">

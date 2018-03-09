@@ -20,6 +20,8 @@ namespace EDU.Web.Models
         public EducationEntities()
             : base("name=EducationEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

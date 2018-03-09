@@ -81,15 +81,33 @@
         font-weight: bold;
     }
 
-        #tblFinancialTransaction td {
-            padding: 2px;
-        }
+    #tblFinancialTransaction td {
+        padding: 2px;
+    }
 
-        #tblFinancialTransaction thead {
-            background-color: powderblue;
-            font-weight: bold;
-            color: blue;
+    #tblFinancialTransaction thead {
+        background-color: powderblue;
+        font-weight: bold;
+        color: blue;
+    }
+    .table-responsive {
+        max-height: 730px;
+        overflow: scroll;
+    }
+
+    @@media only screen and (max-width : 1366px) {
+        .table-responsive {
+            max-height: 400px;
+            overflow: scroll;
         }
+    }
+
+    @@media only screen and (max-width : 720px) {
+        .table-responsive {
+            max-height: 250px;
+            overflow: scroll;
+        }
+    }
 </style>
 
 @using (Html.BeginForm("SaveFinancialTransaction", "FinancialTransaction", FormMethod.Post, new { id = "frmFinancial", name = "frmFinancial", enctype = "multipart/form-data" }))

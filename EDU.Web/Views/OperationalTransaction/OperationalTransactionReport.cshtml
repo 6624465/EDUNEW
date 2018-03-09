@@ -33,12 +33,23 @@
         color: #D73925;
         /*font-family: 'Bebas Neue'*/
     }
+    #gridContent thead {
+        background-color: powderblue;
+        font-weight: bold;
+        color: blue;
+    }
+    #gridContent {
+        font-weight: bold;
+    }
+    #gridContent td {
+        padding: 2px;
+    }
 </style>
 @functions {
     public string ConvertToInt64(decimal? data)
     {
         if (data != null && data > 0)
-            return new HtmlString("$ " + Convert.ToInt64(data)).ToString();
+            return new HtmlString("$" + Convert.ToInt64(data)).ToString();
         else
             return null;
     }
@@ -91,80 +102,80 @@
                                     <span class="center">
                                         @ConvertToInt64(item.JanAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("FebAmount", "Feb", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.FebAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("MarAmount", "Mar", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.MarAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("AprAmount", "Apr", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.AprAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("MayAmount", "May", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.MayAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
 
                                 grid.Column("JuneAmount", "June", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.JuneAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("JulyAmount", "July", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.JulyAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("AugAmount", "Aug", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.AugAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("SepAmount", "Sep", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.SepAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("OctAmount", "Oct", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.OctAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("NovAmount", "Nov", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.NovAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("DecAmount", "Dec", format:
                                 @<text>
                                     <span class="center">
                                         @ConvertToInt64(item.DecAmount)
                                     </span>
-                                </text>, canSort: false),
+                                </text>, canSort: true),
                                 grid.Column("YTD", "YTD", format:
                                 @<text>
                                     <span class="center last">
                                         @ConvertToInt64(item.YTD)
                                     </span>
-                                </text>, canSort: false)
+                                </text>, canSort: true)
                                ),
                                 tableStyle: "table")
                     </div>

@@ -104,6 +104,24 @@
             font-weight: bold;
             color: blue;
         }
+    .table-responsive {
+        max-height: 660px;
+        overflow: scroll;
+    }
+
+    @@media only screen and (max-width : 1366px) {
+        .table-responsive {
+            max-height: 345px;
+            overflow: scroll;
+        }
+    }
+
+    @@media only screen and (max-width : 720px) {
+        .table-responsive {
+            max-height: 250px;
+            overflow: scroll;
+        }
+    }
 </style>
 @functions {
     public string CheckString(string remarks)
