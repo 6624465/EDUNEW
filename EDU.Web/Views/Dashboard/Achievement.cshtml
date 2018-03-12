@@ -7,11 +7,56 @@
 
     var CountryData = (List<EZY.EDU.Contract.Branch>)ViewData["CountryData"];
     var productData = (List<EZY.EDU.Contract.EduProduct>)ViewData["ProductData"];
+    var revenueData = (List<EDU.Web.ViewModels.FinancialTransactionModel.FinancialTransactionsVM>)ViewData["RevenueData"];
+    var expensesdata = Convert.ToInt64(revenueData.Sum(x => x.TrainerExpensesAmount) +
+                                    revenueData.Sum(x => x.TrainerTravelExpensesAmount) +
+                                    revenueData.Sum(x => x.LocalExpensesAmount) +
+                                    revenueData.Sum(x => x.CoursewareMaterialAmount) +
+                                    revenueData.Sum(x => x.MiscExpensesAmount) +
+                                    revenueData.Sum(x => x.TrainerClaimsAmount));
 }
 <style>
     .round {
         border-radius: 10px;
         width: 10px;
+    }
+
+    .circle {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        font-size: 10pt;
+        font-weight: bold;
+        color: #fff;
+        line-height: 160px;
+        text-align: center;
+        background: #601818
+    }
+
+    .circle1 {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        font-size: 10pt;
+        font-weight:bold;
+        color: #fff;
+        line-height: 140px;
+        text-align: center;
+        background: #0026ff;
+        margin-top: 12px
+    }
+
+    .circle2 {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        font-size: 10pt;
+        font-weight: bold;
+        color: #fff;
+        line-height: 120px;
+        text-align: center;
+        background: #ff6a00;
+        margin-top: 25px
     }
 </style>
 <div class="page page-forms-elements">
@@ -57,23 +102,17 @@
                                 </div>
                                 <div class="row css10" id="dvProducts">
                                     <div class="col-md-12">
-
                                         <div class="col-md-5">
-                                            <div style="text-align:center"><span style="font-size:12pt; font-weight:bold">waefasf</span></div>
-                                            <div style="height: 160px;width: 160px; border-radius:80px; background-color:darkred ">
-                                                @*<b>' + myArray[i].ProductName + '</b>*@
-                                            </div>
+                                            <span style="font-size:8pt; padding-left:20px;font-weight:bold; color:red">TOTAL REVENUE<br/></span>
+                                            <div class="circle">$@Convert.ToInt64(revenueData.Sum(x => x.TotalRevenueAmount))</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="text-align:center"><span style="font-size:12pt; font-weight:bold">waefasf</span></div>
-                                            <div style="height: 140px;width: 140px; border-radius:70px; background-color:blue ">
-                                                @*<b>' + myArray[i].ProductName + '</b>*@
-                                            </div>
+                                            <span style="font-size:8pt; padding-left:8px;font-weight:bold; color:red">TOTAL EXPENSES</span>
+                                            <div class="circle1">$@expensesdata</div>
                                         </div>
                                         <div class="col-md-3">
-                                            <div style="text-align:center"><span style="font-size:12pt; font-weight:bold">waefasf</span></div>
-                                            <div style="height: 120px;width: 120px; border-radius:60px; background-color:orangered; ">
-                                            </div>
+                                            <span style="font-size:8pt; padding-left:6px;font-weight:bold; color:red">GROSS MARGIN</span>
+                                            <div class="circle2">$@Convert.ToInt64(revenueData.Sum(x => x.GrossProfit))</div>
                                         </div>
                                     </div>
                                 </div>

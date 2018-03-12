@@ -518,6 +518,71 @@ namespace EDU.Web.Dashboard.Controllers
                 }
             }
 
+            //added for revenue calculation
+            Int16 country = 0;
+
+            if ((Session["UserID"].ToString().ToUpper() != "MGMTSG" && Session["RoleCode"].ToString().ToUpper() == "MANAGEMENT")
+                || (Session["UserID"].ToString().ToUpper() != "ACCSG" && Session["RoleCode"].ToString().ToUpper() == "FINANCE")
+                || (Session["UserID"].ToString().ToUpper() != "SALESSG" && Session["RoleCode"].ToString().ToUpper() == "SALES")
+                || (Session["UserID"].ToString().ToUpper() != "CXO@EZY-CORP.COM" && Session["RoleCode"].ToString().ToUpper() == "ADMIN"))
+            {
+                country=Convert.ToInt16(Session["BranchId"]);
+            }
+
+            List<FinancialTransactionsVM> financialTransactionReport = new List<FinancialTransactionsVM>();
+            List<TrainingConfirmation> trainingConfirmationList = new List<TrainingConfirmation>();
+            if (country == 0)
+            {
+                trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year).ToList();
+            }
+            else
+                trainingConfirmationList = dbContext.TrainingConfirmations.Where(x => x.IsActive == true && x.Year == year && x.Country == country).ToList();
+
+            List<string> tclist = trainingConfirmationList.Select(x => x.TrainingConfirmationID).ToList();
+            List<FinancialTransaction> financialTransaction1List = dbContext.FinancialTransactions
+                                                                     .Where(x => x.IsActive == true && tclist.Contains(x.TrainingConfirmationID)).ToList();
+            var countryList = new BranchBO().GetList().Where(x => x.IsActive == true).ToList();
+
+            financialTransactionReport = financialTransaction1List
+                .Select(x => new FinancialTransactionsVM
+                {
+                    TotalRevenueAmount = x.TotalRevenueAmount == null ? 0 : x.TotalRevenueAmount,
+                    TrainerExpensesAmount = x.TrainerExpensesAmount == null ? 0 : x.TrainerExpensesAmount,
+                    TrainerTravelExpensesAmount = x.TrainerTravelExpensesAmount == null ? 0 : x.TrainerTravelExpensesAmount,
+                    LocalExpensesAmount = x.LocalExpensesAmount == null ? 0 : x.LocalExpensesAmount,
+                    CoursewareMaterialAmount = x.CoursewareMaterialAmount == null ? 0 : x.CoursewareMaterialAmount,
+                    MiscExpensesAmount = x.MiscExpensesAmount == null ? 0 : x.MiscExpensesAmount,
+                    TrainerClaimsAmount = x.TrainerClaimsAmount == null ? 0 : x.TrainerClaimsAmount,
+                    GrossProfit = x.GrossProfit == null ? 0 : x.GrossProfit,
+                    ProfitAndLossPercent = x.ProfitAndLossPercent == null ? 0 : x.ProfitAndLossPercent
+                })
+                .ToList();
+
+
+            foreach (var item in trainingConfirmationList)
+            {
+                if (financialTransaction1List.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID).Count() == 0)
+                {
+                    decimal? TotalAmount = dbContext.Registrations.Where(x => x.TrainingConfirmationID == item.TrainingConfirmationID && x.IsActive == true).Sum(y => y.TotalAmount);
+
+                    financialTransactionReport.Add(new FinancialTransactionsVM()
+                    {
+                        TotalRevenueAmount = TotalAmount == null ? 0 : TotalAmount,
+                        TrainerExpensesAmount = 0,
+                        TrainerTravelExpensesAmount = 0,
+                        LocalExpensesAmount = 0,
+                        CoursewareMaterialAmount = 0,
+                        MiscExpensesAmount = 0,
+                        TrainerClaimsAmount = 0,
+                        GrossProfit = 0,
+                        ProfitAndLossPercent = 0
+                    });
+                }
+            }
+
+            ViewData["RevenueData"] = financialTransactionReport;
+            //end
+
             ViewData["CountryData"] = countrylist;
             ViewData["ProductData"] = productList;
             return View(list.OrderBy(x => x.ProductId));
