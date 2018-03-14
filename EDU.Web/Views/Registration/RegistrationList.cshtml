@@ -104,25 +104,29 @@
             font-weight: bold;
             color: blue;
         }
-    .table-responsive {
-        max-height: 660px;
-        overflow: scroll;
+
+    table tbody, table thead, tfoot {
+        display: block;
+    }
+
+    table tbody {
+        max-height: 540px;
+        overflow: auto;
     }
 
     @@media only screen and (max-width : 1366px) {
-        .table-responsive {
-            max-height: 345px;
-            overflow: scroll;
+        table tbody {
+            max-height: 200px;
+            overflow: auto;
         }
     }
 
     @@media only screen and (max-width : 720px) {
-        .table-responsive {
+        table tbody {
             max-height: 250px;
-            overflow: scroll;
+            overflow: auto;
         }
     }
-
 </style>
 @functions {
     public string CheckString(string remarks)
@@ -171,21 +175,21 @@
 }
 @{
     var listMonths = new List<SelectListItem>()
-                                          {
-                                           new SelectListItem {Text = "All",   Value = "0"},
-                                           new SelectListItem {Text = "January",   Value = "1"},
-                                           new SelectListItem {Text = "February", Value = "2"},
-                                           new SelectListItem {Text = "March", Value = "3"},
-                                           new SelectListItem {Text = "April",   Value = "4"},
-                                           new SelectListItem {Text = "May", Value = "5"},
-                                           new SelectListItem {Text = "June", Value = "6"},
-                                           new SelectListItem {Text = "July",   Value = "7"},
-                                           new SelectListItem {Text = "August", Value = "8"},
-                                           new SelectListItem {Text = "September", Value = "9"},
-                                           new SelectListItem {Text = "October",   Value = "10"},
-                                           new SelectListItem {Text = "November", Value = "11"},
-                                           new SelectListItem {Text = "December", Value = "12"}
-                                       };
+                                  {
+                                   new SelectListItem {Text = "All",   Value = "0"},
+                                   new SelectListItem {Text = "January",   Value = "1"},
+                                   new SelectListItem {Text = "February", Value = "2"},
+                                   new SelectListItem {Text = "March", Value = "3"},
+                                   new SelectListItem {Text = "April",   Value = "4"},
+                                   new SelectListItem {Text = "May", Value = "5"},
+                                   new SelectListItem {Text = "June", Value = "6"},
+                                   new SelectListItem {Text = "July",   Value = "7"},
+                                   new SelectListItem {Text = "August", Value = "8"},
+                                   new SelectListItem {Text = "September", Value = "9"},
+                                   new SelectListItem {Text = "October",   Value = "10"},
+                                   new SelectListItem {Text = "November", Value = "11"},
+                                   new SelectListItem {Text = "December", Value = "12"}
+                               };
 }
 @functions {
     public string TypeColumn(bool isPrivate, bool isPublic, bool islvc)
@@ -233,8 +237,8 @@
                                 <div class="col-md-2">
                                     <input type="hidden" id="eventid" name="eventid" />
                                     @Html.DropDownListFor(x => x.registration.FirstOrDefault().TrainingConfirmationID,
-                                 new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
-                                 "Select Event No.", new { @class = "form-control input-sm chosen-select", onchange = "ChangeEventID(this);", @style = "width:100%" })
+                                      new SelectList(Model.trainingconf, "TrainingConfirmationID", "TrainingConfirmationID"),
+                                      "Select Event No.", new { @class = "form-control input-sm chosen-select", onchange = "ChangeEventID(this);", @style = "width:100%" })
                                 </div>
                                 <div class="col-md-2">
                                     @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
@@ -320,7 +324,7 @@
                                 <table class="table tablescroll">
                                     <thead>
                                         <tr>
-                                            <td class="center"><b>S No.</b></td>
+                                            <td class="center" style="min-width:75px;"><b>S No.</b></td>
                                             <td class="center"><b>Student Name</b></td>
                                             <td class="center"><b>Email Id</b></td>
                                             <td class="center"><b>Contact</b></td>
@@ -346,7 +350,7 @@
                                             @Html.HiddenFor(x => x.registration[i].RegistrationId)
                                             @Html.HiddenFor(x => x.registration[i].TrainingConfirmationID)
                                             <tr>
-                                                <td style="min-width:35px;">@(i + 1).</td>
+                                                <td style="min-width:75px;">@(i + 1).</td>
                                                 <td style="min-width:200px;">
                                                     @Html.TextBoxFor(x => x.registration[i].StudentName, new { @class = "form-control input-sm" })
                                                 </td>
@@ -570,24 +574,24 @@
                     }
 
                     <div class="css10 table-responsive" id="webGridDisplay">
-                        <table class="table-bordered" id="tblRegistration" style="white-space:nowrap;width:100%">
+                        <table class="table-bordered tblstyle" id="tblRegistration" style="width:100%">
                             <thead style="cursor:pointer">
                                 <tr>
-                                    <td style='width:40px;'>S No.</td>
-                                    <td style='width:100px;'>Student Name</td>
-                                    <td style='width:80px;'>Amount</td>
-                                    <td style='width:80px;'>WHT %</td>
-                                    <td style='width:80px;'>WHT Amount</td>
-                                    <td style='width:80px;'>VAT/TAX %</td>
-                                    <td style='width:80px;'>VAT/TAX Amount</td>
-                                    <td style='width:80px;'>Total Amount</td>
-                                    <td style='width:80px;'>Payment Receipt 1</td>
-                                    <td style='width:80px;'>Payment Receipt 2</td>
-                                    <td style='width:80px;'>Payment Receipt 3</td>
-                                    <td style='width:80px;'>Balance</td>
-                                    <td style='width:100px;'>Email</td>
-                                    <td style='width:80px;'>Contact</td>
-                                    <td style='width:80px;'>Company Name</td>
+                                    <td style='min-width:95px;'>S No.</td>
+                                    <td style='min-width:100px;'>Student Name</td>
+                                    <td style='min-width:80px;'>Amount</td>
+                                    <td style='min-width:80px;'>WHT %</td>
+                                    <td style='min-width:80px;'>WHT Amount</td>
+                                    <td style='min-width:80px;'>VAT/TAX %</td>
+                                    <td style='min-width:103px;'>VAT/TAX Amount</td>
+                                    <td style='min-width:80px;'>Total Amount</td>
+                                    <td style='min-width:112px;'>Payment Receipt 1</td>
+                                    <td style='min-width:112px;'>Payment Receipt 2</td>
+                                    <td style='min-width:112px;'>Payment Receipt 3</td>
+                                    <td style='min-width:80px;'>Balance</td>
+                                    <td style='min-width:100px;'>Email</td>
+                                    <td style='min-width:80px;'>Contact</td>
+                                    <td style='min-width:215px;'>Company Name</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -596,43 +600,43 @@
                                 {
                                     { recCount = recCount + 1; }
                                     <tr>
-                                        <td>
+                                        <td style="min-width:95px;">
                                             @(recCount).
                                         </td>
-                                        <td>
+                                        <td style="min-width:100px;">
                                             @item.StudentName
                                         </td>
-                                        <td class="center">
+                                        <td class="center" style="min-width:80px;">
                                             <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                 @ConvertToInt64dollar(item.Amount)
                                             </span>
                                         </td>
-                                        <td class="center">
+                                        <td class="center" style="min-width:80px;">
                                             <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                 @ConvertToInt64percent(item.WHTPercent)
                                             </span>
                                         </td>
-                                        <td class="center">
+                                        <td class="center" style="min-width:80px;">
                                             <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                 @ConvertToInt64dollar(item.WHTAmount)
                                             </span>
                                         </td>
-                                        <td class="center">
+                                        <td class="center" style="min-width:80px;">
                                             <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                 @ConvertToInt64percent(item.VATPercent)
                                             </span>
                                         </td>
-                                        <td class="center">
+                                        <td class="center" style="min-width:103px;">
                                             <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                 @ConvertToInt64dollar(item.VATAmount)
                                             </span>
                                         </td>
-                                        <td class="center">
+                                        <td class="center" style="min-width:80px;">
                                             <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                 @ConvertToInt64dollar(item.TotalAmount)
                                             </span>
                                         </td>
-                                        <td class="center">
+                                        <td class="center" style="min-width:112px;">
                                             <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                 <a style="cursor:pointer;text-decoration:underline;">
                                                     <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 1 Details" data-content="@PaymentDetails(item.Payment1Date, item.Payment1Type, item.ChequeNo1)"
@@ -640,7 +644,7 @@
                                                     </a>
                                                 </span>
                                             </td>
-                                            <td class="center">
+                                            <td class="center" style="min-width:112px;">
                                                 <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                     <a style="cursor:pointer;text-decoration:underline;">
                                                         <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 2 Details" data-content="@PaymentDetails(item.Payment2Date, item.Payment2Type, item.ChequeNo2)"
@@ -648,7 +652,7 @@
                                                         </a>
                                                     </span>
                                                 </td>
-                                                <td class="center">
+                                                <td class="center" style="min-width:112px;">
                                                     <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                         <a style="cursor:pointer;text-decoration:underline;">
                                                             <span data-placement="top" data-toggle="popover" data-html="true" data-title="Payment 3 Details" data-content="@PaymentDetails(item.Payment3Date, item.Payment3Type, item.ChequeNo3)"
@@ -656,12 +660,12 @@
                                                             </a>
                                                         </span>
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:80px;">
                                                         <span style="@(Model.trainingconfDetail.Private? "visibility:hidden" : "visibility:visible")">
                                                             @ConvertToInt64dollarBalance(item.BalanceAmount)
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:100px;">
                                                         @if (item.Email != null && item.Email.ToString().Length > 20)
                                                         {
                                                             <a style="cursor:pointer;text-decoration:underline;">
@@ -673,33 +677,36 @@
                                                             <span>@item.Email</span>
                                                         }
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:80px;">
                                                         @item.Contact
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:215px; max-width:215px;">
                                                         @item.CompanyName
                                                     </td>
                                                 </tr>
-                                }
+                                            }
+
                             </tbody>
                             <tfoot>
                                 @if (Model.trainingconfDetail.Private)
                                 {
                                     <tr class="bordertopnocolor">
-                                        <td colspan="2">Payment Details</td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td style="min-width:95px;">Payment Details</td>
+                                        <td class="center" style="min-width:100px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:103px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:112px;"></td>
+                                        <td class="center" style="min-width:112px;"></td>
+                                        <td class="center" style="min-width:112px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:100px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:215px;"></td>
+
                                     </tr>
                                     <tr class="bordertop">
                                         <td colspan="2">Summary</td>
@@ -741,20 +748,21 @@
                                 else
                                 {
                                     <tr class="bordertop">
-                                        <td colspan="2">Summary</td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td style="min-width:95px;">Summary</td>
+                                        <td class="center" style="min-width:100px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:103px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:112px;"></td>
+                                        <td class="center" style="min-width:112px;"></td>
+                                        <td class="center" style="min-width:112px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:100px;"></td>
+                                        <td class="center" style="min-width:80px;"></td>
+                                        <td class="center" style="min-width:215px;"></td>
                                     </tr>
                                 }
                             </tfoot>

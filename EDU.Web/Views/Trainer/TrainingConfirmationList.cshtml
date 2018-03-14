@@ -77,20 +77,24 @@
     .action {
         width: 50px;
     }
-    .table-responsive {
+   table tbody, table thead {
+        display: block;
+    }
+
+    table tbody {
         max-height: 730px;
-        overflow: scroll;
+        overflow: auto;
     }
     @@media only screen and (max-width : 1366px) {
-        .table-responsive {
-            max-height: 400px;
-            overflow: scroll;
+        table tbody {
+            max-height: 340px;
+            overflow: auto;
         }
     }
     @@media only screen and (max-width : 720px) {
-        .table-responsive {
+        table tbody {
             max-height: 250px;
-            overflow: scroll;
+            overflow: auto;
         }
     }
 </style>
@@ -131,71 +135,71 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="css10 table-responsive">
-                                <table class="table-bordered tblSearch" id="tnlTrainingConfirmation" style="white-space:nowrap;width:100%">
+                                <table class="table-bordered tblSearch" id="tnlTrainingConfirmation" style="width:100%">
                                     <thead style="cursor:pointer">
                                         <tr>
                                             @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                                             {
-                                                <td style='width:60px;'>#Action</td>
+                                                <td style='min-width:66px; '>#Action</td>
                                             }
-                                            <td style='width:100px;'>Event ID</td>
-                                            <td style='width:100px;'>Country Name</td>
-                                            <td style='width:100px;'>Product Name</td>
-                                            <td style='width:200px;'>Course Name</td>
-                                            <td style='width:80px;'>No Of Students</td>
-                                            <td style='width:80px;'>Type</td>
-                                            <td style='width:100px;' class="center">Start Date</td>
-                                            <td style='width:100px;' class="center">End Date</td>
-                                            <td style='width:80px;'>Total # of days</td>
-                                            <td style='width:150px;'>Trianer Name</td>
+                                            <td style='min-width:100px;'>Event ID</td>
+                                            <td style='min-width:100px;'>Country Name</td>
+                                            <td style='min-width:100px;'>Product Name</td>
+                                            <td style='min-width:480px;'>Course Name</td>
+                                            <td style='min-width:100px;'>No Of Students</td>
+                                            <td style='min-width:80px;'>Type</td>
+                                            <td style='min-width:100px;' class="center">Start Date</td>
+                                            <td style='min-width:100px;' class="center">End Date</td>
+                                            <td style='min-width:100px;'>Total # of days</td>
+                                            <td style='min-width:150px;'>Trianer Name</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                            @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                            {
-                                                <td>
-                                                    <div style='width:60px;'>
-
+                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                                {
+                                                    <td style='min-width:66px;'>
                                                         <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                         <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
 
-                                                    </div>
+                                                    </td>
+                                                }
+                                                <td style='min-width:100px;'>
+                                                    @(item.TrainingConfirmationID)
                                                 </td>
-                                            }
-                                            <td>
-                                                @(item.TrainingConfirmationID)
-                                            </td>
-                                            <td>
-                                                @item.CountryName
-                                            </td>
-                                            <td>
-                                                @item.ProductName
-                                            </td>
-                                            <td>
-                                                @item.CourseName
-                                            </td>
-                                            <td class="center">
-                                                @item.NoOfStudents
-                                            </td>
-                                            <td>
-                                                @TypeColumn(item.Private, item.Public, item.LVC)
-                                            </td>
-                                            <td class="center">
-                                                @validateDate(item.StartDate)
-                                            </td>
-                                            <td class="center">
-                                                @validateDate(item.EndDate)
-                                            </td>
-                                            <td class="center">
-                                                @ConvertToInt64(item.TotalNoOfDays)
-                                            </td>
-                                            <td>
-                                                @item.TrianerName
-                                            </td>
-                                        </tr>
+                                                <td style='min-width:100px;'>
+                                                    @item.CountryName
+                                                </td>
+                                                <td style='min-width:100px;'>
+                                                    @item.ProductName
+                                                </td>
+                                                <td style="min-width:480px; max-width:480px;">
+
+                                                    @item.CourseName
+
+
+                                                </td>
+                                                <td style='min-width:100px;' class="center">
+                                                    @item.NoOfStudents
+                                                </td>
+                                                <td style='min-width:80px;'>
+                                                    @TypeColumn(item.Private, item.Public, item.LVC)
+                                                </td>
+                                                <td style='min-width:100px;' class="center">
+                                                    @validateDate(item.StartDate)
+                                                </td>
+                                                <td style='min-width:100px;' class="center">
+                                                    @validateDate(item.EndDate)
+                                                </td>
+                                                <td style='min-width:100px;' class="center">
+                                                    @ConvertToInt64(item.TotalNoOfDays)
+                                                </td>
+                                                <td style='min-width:150px;'>
+                                                    @item.TrianerName
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

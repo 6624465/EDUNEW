@@ -99,22 +99,26 @@
             font-weight: bold;
             color: blue;
         }
-    .table-responsive {
-        max-height: 730px;
-        overflow: scroll;
+    table tbody, table thead, tfoot {
+        display: block;
+    }
+
+    table tbody {
+        max-height: 630px;
+        overflow: auto;
     }
 
     @@media only screen and (max-width : 1366px) {
-        .table-responsive {
-            max-height: 400px;
-            overflow: scroll;
+        table tbody {
+            max-height: 320px;
+            overflow: auto;
         }
     }
 
     @@media only screen and (max-width : 720px) {
-        .table-responsive {
+        table tbody {
             max-height: 250px;
-            overflow: scroll;
+            overflow: auto;
         }
     }
 </style>
@@ -206,19 +210,19 @@
                                             <tr>
                                                 @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
                                                 {
-                                                <td style='width:60px;'>#Action</td>
+                                                <td style='width:60px; min-width:65px;'>#Action</td>
                                                 }
-                                                <td style='width:90px;'>Event ID</td>
-                                                <td style='width:150px;'>Customer</td>
-                                                <td style='width:90px;'>Product Name</td>
-                                                <td style='width:200px;'>Course Name</td>
-                                                <td style='width:88px;'>Invoice Amount</td>
-                                                <td style='width:78px;'>Paid Amount</td>
-                                                <td style='width:100px;'>Balance Amount</td>
-                                                <td style='width:120px;'>Other Receivables</td>
-                                                <td style='width:75px;'>Total Amount</td>
-                                                <td style='width:70px;'>Due Date</td>
-                                                <td style='width:90px;'>Receipt Date</td>
+                                                <td style='width:90px;  min-width:95px;'>Event ID</td>
+                                                <td style='width:150px;  min-width:159px;'>Customer</td>
+                                                <td style='width:90px;  min-width:95px;'>Product Name</td>
+                                                <td style='width:200px;  min-width:483px;'>Course Name</td>
+                                                <td style='width:88px;  min-width:90px;'>Invoice Amount</td>
+                                                <td style='width:78px;  min-width:80px;'>Paid Amount</td>
+                                                <td style='width:100px;  min-width:105px;'>Balance Amount</td>
+                                                <td style='width:120px;  min-width:125px;'>Other Receivables</td>
+                                                <td style='width:75px;  min-width:80px;'>Total Amount</td>
+                                                <td style='width:70px;  min-width:75px;'>Due Date</td>
+                                                <td style='width:90px; min-width:95px;'>Receipt Date</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -229,7 +233,7 @@
                                                 <tr>
                                                     @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
                                                     {
-                                                        <td>
+                                                        <td style="min-width:65px;">
                                                             <input type="hidden" id="hdncustomerpaymentId" value="@item.CustomerPaymentId" />
                                                             <button type="button" id="btn_edit_@recCount" class="btn btn-primary btn-xs waves-effect btn_edit " data-toggle="modal" data-object='@JsonConvert.SerializeObject(Model.customerPayment[recCount])' onclick="EditCustomerPaymentStatusDetail(this)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
                                                             @if (item.CustomerPaymentId > 0)
@@ -238,56 +242,57 @@
                                                             }
                                                         </td>
                                                     }
-                                                    <td>
+                                                    <td style="min-width:95px;">
                                                         @(item.TrainingConfirmationID)
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:155px;">
                                                         @GetCustomerName(item.RegistrationId)
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:95px;">
                                                         @GetProductName(item.TrainingConfirmationID)
                                                     </td>
-                                                    <td>
+                                                    <td style="min-width:483px; max-width:483px;">
                                                         @GetCourseName(item.TrainingConfirmationID)
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:90px;">
                                                         @ConvertToInt64dollar(item.InvoiceAmount)
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:80px;">
                                                         @ConvertToInt64dollar(item.PaidAmount)
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:105px;">
                                                         @ConvertToInt64dollar(item.BalanceAmount)
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:125px;">
                                                         @ConvertToInt64dollar(item.OtherReceivablesAmount)
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:80px;">
                                                         @ConvertToInt64dollar(item.TotalAmount)
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:75px;">
                                                         @(item.DueDate == null ? null : item.DueDate.Value.ToString("dd/MM/yyyy"))
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="min-width:95px;">
                                                         @(item.ReceiptDate == null ? null : item.ReceiptDate.Value.ToString("dd/MM/yyyy"))
                                                     </td>
                                                 </tr>
                                             }
+                                         
                                         </tbody>
                                         <tfoot>
                                             <tr class="bordertop">
-                                                <td>Summary</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td class="center"></td>
-                                                <td class="center"></td>
-                                                <td class="center"></td>
-                                                <td class="center"></td>
-                                                <td class="center"></td>
-                                                <td class="center"></td>
-                                                <td class="center"></td>
+                                                <td style="min-width:65px;">Summary</td>
+                                                <td style="min-width:95px;"></td>
+                                                <td style="min-width:159px;"></td>
+                                                <td style="min-width:95px;"></td>
+                                                <td style="min-width:483px;"></td>
+                                                <td class="center" style="min-width:90px;"></td>
+                                                <td class="center" style="min-width:80px;"></td>
+                                                <td class="center" style="min-width:105px;"></td>
+                                                <td class="center" style="min-width:125px;"></td>
+                                                <td class="center" style="min-width:80px;"></td>
+                                                <td class="center" style="min-width:75px;"></td>
+                                                <td class="center" style="min-width:95px;"></td>
                                             </tr>
                                         </tfoot>
                                     </table>
