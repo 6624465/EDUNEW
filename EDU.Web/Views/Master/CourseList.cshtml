@@ -15,27 +15,12 @@
 
 
 <style>
-        table tbody, table thead {
-        display: block;
+    table {
+        font-weight: bold;
     }
-
-    table tbody {
-        max-height: 700px;
-        overflow: auto;
-    }
-
-    @@media only screen and (max-width : 1366px) {
-        table tbody {
-            max-height: 340px;
-            overflow: auto;
-        }
-    }
-
-    @@media only screen and (max-width : 720px) {
-        table tbody {
-            max-height: 250px;
-            overflow: auto;
-        }
+    thead > tr > td {
+        font-weight: bold;
+        color: blue;
     }
 
 </style>
@@ -55,14 +40,14 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="css10 table-responsive">
-                        <table class="table-bordered tblSearch" id="tblCourse" style="width:100%">
-                            <thead style="cursor:pointer">
+                    <div class="css10">
+                        <table class="display tablescroll" style="width:100%">
+                            <thead style="cursor:pointer" class="nowrap">
                                 <tr>
                                     <td style='min-width:59px;'>#Action</td>
                                     <td style='min-width:150px;'>Country</td>
                                     <td style='min-width:150px;'>Product</td>
-                                    <td style='min-width:535px; max-width:535px;'>Course Name</td>
+                                    <td style='min-width:300px; max-width:300px;'>Course Name</td>
                                     <td style='min-width:105px;'>No Of Days</td>
                                     <td style='min-width:105px;'>Public Price</td>
                                     <td style='min-width:105px;'>Private Price</td>
@@ -73,22 +58,22 @@
                                 {
                                     <tr>
                                         <td style="min-width:59px;">
-                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                                {
-                                                    <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-                                                }
+                                            @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                            {
+                                                <button class="btn btn-xs btn-success waves-effect" id="btnEdit_@item.Id" data-cname="@item.CourseName.TrimEnd()" onclick="EditCourse(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                <button class="btn btn-xs btn-danger waves-effect" onclick="DeleteEduCourse(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+                                            }
                                         </td>
                                         <td style="min-width:150px;">
                                             @item.CountryName
                                         </td>
-                                        <td  style="min-width:150px;">
+                                        <td style="min-width:150px;">
                                             @item.ProductName
                                         </td>
-                                        <td  style="min-width:535px; max-width:535px;">
-                                           @item.CourseName
+                                        <td style="min-width:300px; max-width:300px;">
+                                            @item.CourseName
                                         </td>
-                                        <td class="center"  style="min-width:105px;">
+                                        <td class="center" style="min-width:105px;">
                                             @item.NoOfDays
                                         </td>
                                         <td class="center" style="min-width:105px;">
@@ -99,7 +84,7 @@
                                         </td>
                                     </tr>
                                 }
-                            </tbody>                            
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -129,6 +114,13 @@
         $(function () {
             debugger;
             $('#liCourse').addClass('active');
+
+            $('.tablescroll').DataTable({
+                scrollY: '50vh',
+                scrollCollapse: true,
+                scrollX: true,
+                paging: false
+            });
         });
 
         function PrintCourseList() {

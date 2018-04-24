@@ -85,7 +85,7 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="DDate">
-                            @Html.TextBoxFor(x => x.DueDate, new { @class = "form-control input-sm dtCss" })
+                            @Html.TextBoxFor(x => x.DueDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm dtCss" })
                             <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
@@ -100,7 +100,7 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="RDate">
-                            @Html.TextBoxFor(x => x.ReceiptDate, new { @class = "form-control input-sm dtCss", @required=true })
+                            @Html.TextBoxFor(x => x.ReceiptDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm dtCss", @required=true })
                             <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
@@ -129,7 +129,7 @@
 </div>
 <script type="text/javascript">
         $(function () {
-            $('#DDate, #RDate').datetimepicker({
+            $('#DDate, #RDate').datepicker({
                 icons: {
                     time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
@@ -137,7 +137,8 @@
                     down: 'fa fa-arrow-down'
                 },
                 minDate: new Date(),
-                format: 'DD/MM/YYYY'
+                format: 'dd/mm/yyyy',
+                autoclose: true
             });
            @if(Model.CustomerPaymentId != -1)
            {

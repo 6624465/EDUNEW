@@ -81,7 +81,7 @@
         width: 50px;
     }
 
-    table tbody, table thead, tfoot {
+    /*table tbody, table thead, tfoot {
         display: block;
     }
 
@@ -102,7 +102,7 @@
             max-height: 250px;
             overflow: auto;
         }
-    }
+    }*/
 </style>
 
 <div class="page">
@@ -154,14 +154,13 @@
                                             <div class="clearfix">
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <div class="table-responsive">
-                                                            <table class="table-bordered tblstyle" id="tblRegional_@j" style="width:100%">
-                                                                <thead style="cursor:pointer">
+                                                            <table class="display tablescroll" id="tblRegional_@j" style="width:100%">
+                                                                <thead style="cursor:pointer" class="nowrap">
                                                                     <tr>
                                                                         <td style='min-width:76px'>#Action</td>
                                                                         <td style='min-width:94px;'>Country</td>
                                                                         <td style='min-width:94px;'>Product Name</td>
-                                                                        <td style='min-width:489px;'>Course Name</td>
+                                                                        <td style='min-width:300px;'>Course Name</td>
                                                                         <td style='min-width:73px;'>No Of Days</td>
                                                                         <td style='min-width:73px;'>Month</td>
                                                                         <td style='min-width:71px;'>Start Dt.</td>
@@ -207,7 +206,7 @@
                                                                             <td style="min-width:94px;">
                                                                                 @item.ProductName
                                                                             </td>
-                                                                            <td style="min-width:489px; max-width:489px;">
+                                                                            <td style="min-width:300px; max-width:300px;">
                                                                                 @item.CourseName
                                                                             </td>
                                                                             <td class="center" style="min-width:73px;">
@@ -272,7 +271,7 @@
 
                                                                         <td style='min-width:94px'></td>
                                                                         <td style='min-width:94px'></td>
-                                                                        <td class="center" style='min-width:489px'></td>
+                                                                        <td class="center" style='min-width:300px'></td>
                                                                         <td style='min-width:73px'></td>
                                                                         <td class="center" style='min-width:73px'></td>
                                                                         <td class="center" style='min-width:71px'></td>
@@ -288,7 +287,7 @@
                                                                     </tr>
                                                                 </tfoot>
                                                             </table>
-                                                        </div>
+                                                     
                                                     </div>
                                                 </div>
                                             </div>
@@ -311,20 +310,14 @@
         width: 121px !important;
     }
 
-
-    .tblstyle {
+    table {
         font-weight: bold;
     }
 
-        .tblstyle td {
-            padding: 2px;
-        }
-
-        .tblstyle thead {
-            background-color: powderblue;
-            font-weight: bold;
-            color: blue;
-        }
+    thead > tr > td {
+        font-weight: bold;
+        color: blue;
+    }
 </style>
 
 @using (Html.BeginForm("DeleteCourseSalesMaster", "Master", FormMethod.Post, new { id = "frmDelete", name = "frmDelete" }))
@@ -343,6 +336,10 @@
             for (var j = 0; j < @ProductData.Count(); j++) {
                 $('#tblRegional_' + j).dataTable({
                     "bPaginate": false,
+                    scrollY: '37vh',
+                    scrollCollapse: true,
+                    scrollX: true,
+                    paging: false,
 
                     footerCallback: function (row, data, start, end, display) {
                         var api = this.api();

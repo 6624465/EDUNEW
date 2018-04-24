@@ -7,20 +7,20 @@
 @{
 
     var listMonths = new List<SelectListItem>()
-                                          {
-                                           new SelectListItem {Text = "January",   Value = "1"},
-                                           new SelectListItem {Text = "February", Value = "2"},
-                                           new SelectListItem {Text = "March", Value = "3"},
-                                           new SelectListItem {Text = "April",   Value = "4"},
-                                           new SelectListItem {Text = "May", Value = "5"},
-                                           new SelectListItem {Text = "June", Value = "6"},
-                                           new SelectListItem {Text = "July",   Value = "7"},
-                                           new SelectListItem {Text = "August", Value = "8"},
-                                           new SelectListItem {Text = "September", Value = "9"},
-                                           new SelectListItem {Text = "October",   Value = "10"},
-                                           new SelectListItem {Text = "November", Value = "11"},
-                                           new SelectListItem {Text = "December", Value = "12"}
-                                       };
+                                  {
+                                   new SelectListItem {Text = "January",   Value = "1"},
+                                   new SelectListItem {Text = "February", Value = "2"},
+                                   new SelectListItem {Text = "March", Value = "3"},
+                                   new SelectListItem {Text = "April",   Value = "4"},
+                                   new SelectListItem {Text = "May", Value = "5"},
+                                   new SelectListItem {Text = "June", Value = "6"},
+                                   new SelectListItem {Text = "July",   Value = "7"},
+                                   new SelectListItem {Text = "August", Value = "8"},
+                                   new SelectListItem {Text = "September", Value = "9"},
+                                   new SelectListItem {Text = "October",   Value = "10"},
+                                   new SelectListItem {Text = "November", Value = "11"},
+                                   new SelectListItem {Text = "December", Value = "12"}
+                               };
 
 
 }
@@ -46,9 +46,9 @@
                                             </label>
                                             <div class="col-md-4">
                                                 @Html.DropDownListFor(x => x.courseSalesMaster.Country,
-                                          new SelectList(Model.branchList, "BranchID", "BranchName"),
-                                       "Select Country",
-                                      new { @class = "form-control input-sm", onchange = "CountryChange(this);", @style = "width:100%" })
+                                               new SelectList(Model.branchList, "BranchID", "BranchName"),
+                                            "Select Country",
+                                           new { @class = "form-control input-sm", onchange = "CountryChange(this);", @style = "width:100%" })
                                             </div>
                                         </div>
                                     </div>
@@ -59,9 +59,9 @@
                                             </label>
                                             <div class="col-md-4">
                                                 @Html.DropDownListFor(x => x.courseSalesMaster.Product,
-                                       new SelectList(Model.eduProductList, "Id", "ProductName"),
-                                          "Select Product",
-                                        new { @class = "form-control input-sm", onchange = "ProductChange(this);", @style = "width:100%" })
+                                            new SelectList(Model.eduProductList, "Id", "ProductName"),
+                                               "Select Product",
+                                             new { @class = "form-control input-sm", onchange = "ProductChange(this);", @style = "width:100%" })
                                             </div>
                                         </div>
                                     </div>
@@ -74,16 +74,16 @@
                                                 @if (Model.courseSalesMaster.Id == -1)
                                                 {
                                                     @Html.DropDownListFor(x => x.courseSalesMaster.Course,
-                                Enumerable.Empty<SelectListItem>(),
-                                "Select Course",
-                                new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)", @style = "width:100%" })
+                                     Enumerable.Empty<SelectListItem>(),
+                                     "Select Course",
+                                     new { @class = "form-control input-sm", disabled = "disabled", onchange = "CourseChange(this)", @style = "width:100%" })
                                                 }
                                                 else
                                                 {
                                                     @Html.DropDownListFor(x => x.courseSalesMaster.Course,
-                                                 new SelectList(Model.courseList, "Id", "CourseName"),
-                                             "Select Course",
-                                        new { @class = "form-control input-sm", onchange = "CourseChange(this)", @style = "width:100%" })
+                                                      new SelectList(Model.courseList, "Id", "CourseName"),
+                                                  "Select Course",
+                                             new { @class = "form-control input-sm", onchange = "CourseChange(this)", @style = "width:100%" })
                                                 }
                                             </div>
                                         </div>
@@ -119,9 +119,9 @@
                                             </label>
                                             <div class="col-md-4">
                                                 @Html.DropDownListFor(x => x.courseSalesMaster.Month,
-                                       new SelectList(listMonths, "Value", "Text"),
-                                       "Select Month",
-                                      new { @class = "form-control input-sm", @disabled = "disabled", @style = "width:100%" })
+                                            new SelectList(listMonths, "Value", "Text"),
+                                            "Select Month",
+                                           new { @class = "form-control input-sm", @disabled = "disabled", @style = "width:100%" })
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                             </label>
                                             <div class="col-md-4">
                                                 <div class="input-group date" id="StartDt">
-                                                    @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, new { @class = "form-control input-sm dtCss" })
+                                                    @Html.TextBoxFor(x => x.courseSalesMaster.StartDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm dtCss StartDtcss" })
                                                     <span class="input-group-addon input-sm">
                                                         <i class="ion ion-calendar"></i>
                                                     </span>
@@ -143,7 +143,7 @@
                                             </label>
                                             <div class="col-md-4">
                                                 <div class="input-group date" id="EndDt">
-                                                    @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, new { @class = "form-control input-sm dtCss" })
+                                                    @Html.TextBoxFor(x => x.courseSalesMaster.EndDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm dtCss" })
                                                     <span class="input-group-addon input-sm">
                                                         <i class="ion ion-calendar"></i>
                                                     </span>
@@ -168,7 +168,7 @@
                                             </label>
                                             <div class="col-md-4">
                                                 @Html.TextBoxFor(x => x.courseSalesMaster.LeadsOnHead, "{0:#.#}",
-                                    new { @class = "form-control input-sm numCss" })
+                                         new { @class = "form-control input-sm numCss" })
                                             </div>
                                             <label class="col-md-2 control-label">
                                                 <span>Registered</span>
@@ -185,7 +185,7 @@
                                             </label>
                                             <div class="col-md-4">
                                                 @Html.TextAreaFor(x => x.courseSalesMaster.LeadsOnHeadRemarks,
-                                      new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
+                                           new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
 
                                             </div>
                                             <label class="col-md-2 control-label">
@@ -193,7 +193,7 @@
                                             </label>
                                             <div class="col-md-4">
                                                 @Html.TextAreaFor(x => x.courseSalesMaster.RegisteredRemarks,
-                                    new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
+                                         new { @class = "form-control input-sm", @style = "overflow-y: scroll" })
                                             </div>
                                         </div>
                                     </div>
@@ -204,14 +204,14 @@
                                             </label>
                                             <div class="col-md-4">
                                                 @Html.TextBoxFor(x => x.courseSalesMaster.AvailableSeats,
-                                 new { @class = "form-control input-sm numCss", @readonly = "readonly" })
+                                      new { @class = "form-control input-sm numCss", @readonly = "readonly" })
                                             </div>
                                             <div class="col-md-2 control-label">
                                                 <label>Revenue</label>
                                             </div>
                                             <div class="col-md-4">
                                                 @Html.TextBoxFor(x => x.courseSalesMaster.Revenue, "{0:#.#}",
-                        new { @class = "form-control input-sm numCss" })
+new { @class = "form-control input-sm numCss" })
                                             </div>
                                         </div>
                                     </div>
@@ -222,7 +222,7 @@
                                             </label>
                                             <div class="col-md-4">
                                                 <div class="input-group date" id="RegClosingDt">
-                                                    @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate, new { @class = "form-control input-sm dtCss" })
+                                                    @Html.TextBoxFor(x => x.courseSalesMaster.RegClosingDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm dtCss" })
                                                     <span class="input-group-addon input-sm">
                                                         <i class="ion ion-calendar"></i>
                                                     </span>
@@ -265,10 +265,10 @@
             </div>
         </div>
     }
-    </div>
+</div>
 
-    @section SectionScripts{
-        <script type="text/javascript">
+@section SectionScripts{
+    <script type="text/javascript">
         $(function () {
 
              @if (Model.courseSalesMaster.Id == -1) {
@@ -284,18 +284,19 @@
             $('#liRegionalLeads').addClass('active');
             $('#mnth').val(@mnth);
 
-            $('#StartDt, #RegClosingDt').datetimepicker({
-    icons: {
-        time: 'fa fa-clock-o',
+            $('#StartDt, #RegClosingDt').datepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
                     up: 'fa fa-arrow-up',
                     down: 'fa fa-arrow-down'
                 },
                 //minDate: new Date(),
-                format: 'DD/MM/YYYY'
+                format: 'dd/mm/yyyy',
+                autoclose: true
             });
 
-            $('#EndDt').datetimepicker({
+            $('#EndDt').datepicker({
                  useCurrent: false, //Important! See issue #1075
                 icons: {
                      time: 'fa fa-clock-o',
@@ -303,7 +304,8 @@
                     up: 'fa fa-arrow-up',
                     down: 'fa fa-arrow-down'
                 },
-                format: 'DD/MM/YYYY'
+                format: 'dd/mm/yyyy',
+                autoclose: true
             });
 
 
@@ -322,6 +324,7 @@
                     </text>
                 }
             }
+/**/
             @if (Model.courseSalesMaster.Id != -1)
             {
                 <text>
@@ -332,28 +335,40 @@
                      @if (Model.courseSalesMaster.EndDate != null) {
                         <text>$('#courseSalesMaster_EndDate').val('@Model.courseSalesMaster.EndDate.Value.ToString("dd/MM/yyyy")');</text>
                      }
+/**/
                     $('#courseSalesMaster_RegClosingDate').val('@Model.courseSalesMaster.RegClosingDate.Value.ToString("dd/MM/yyyy")');
-                    //$('#EndDt').data("DateTimePicker").minDate($('#courseSalesMaster_StartDate').val());
+                    //$('#EndDt').data("DatePicker").minDate($('#courseSalesMaster_StartDate').val());
 
             </text>
             }
             else
             {
                  <text>
-            //$('#EndDt').data("DateTimePicker").minDate(new Date());
+            //$('#EndDt').data("DatePicker").minDate(new Date());
             </text>
             }
-
-            $("#StartDt").on("dp.change", function (e) {
+            $('#StartDt').change(function () {
                 debugger;
                 var d = $('#courseSalesMaster_StartDate').val();
                 var m = d.toString().split("/")[1];
                 var dmonth = parseInt(m);
-               // $('#courseSalesMaster_Month').val(dmonth);
+                // $('#courseSalesMaster_Month').val(dmonth);
                 $("#courseSalesMaster_Month").select2().select2("val", dmonth);
                 $('#courseSalesMaster_EndDate').val('');
-                //$('#EndDt').data("DateTimePicker").minDate(e.date);
+                //$('#EndDt').data("DatePicker").minDate(e.date);
             });
+
+           
+            //$("#StartDt").on("dp.change", function (e) {
+            //    debugger;
+            //    var d = $('#courseSalesMaster_StartDate').val();
+            //    var m = d.toString().split("/")[1];
+            //    var dmonth = parseInt(m);
+            //   // $('#courseSalesMaster_Month').val(dmonth);
+            //    $("#courseSalesMaster_Month").select2().select2("val", dmonth);
+            //    $('#courseSalesMaster_EndDate').val('');
+            //    //$('#EndDt').data("DatePicker").minDate(e.date);
+            //});
         });
 
         function navigateToList() {
@@ -638,6 +653,6 @@
             }
         }
 
-        </script>
+    </script>
 
-    }
+}

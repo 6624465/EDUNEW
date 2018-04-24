@@ -3810,7 +3810,7 @@ fieldset[disabled] .btn-youtube.active {
   }
 }
 .site-head {
-    z-index: 1030;
+    z-index: 1;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     background: #D73925;
     -webkit-transition: 0.25s ease-in;

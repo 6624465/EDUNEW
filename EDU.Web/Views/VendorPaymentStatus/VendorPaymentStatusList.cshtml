@@ -62,40 +62,13 @@
         /*font-family: 'Bebas Neue'*/
     }
 
-    #tblVendorPayment {
+    table {
         font-weight: bold;
     }
 
-        #tblVendorPayment td {
-            padding: 2px;
-        }
-
-        #tblVendorPayment thead {
-            background-color: powderblue;
-            font-weight: bold;
-            color: blue;
-        }
-     table tbody, table thead, tfoot {
-        display: block;
-    }
-
-    table tbody {
-        max-height: 630px;
-        overflow: auto;
-    }
-
-    @@media only screen and (max-width : 1366px) {
-        table tbody {
-            max-height: 320px;
-            overflow: auto;
-        }
-    }
-
-    @@media only screen and (max-width : 720px) {
-        table tbody {
-            max-height: 250px;
-            overflow: auto;
-        }
+    thead > tr > td {
+        font-weight: bold;
+        color: blue;
     }
 </style>
 @functions {
@@ -176,8 +149,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table-bordered" id="tblVendorPayment" style="width:100%">
-                                        <thead style="cursor:pointer">
+                                    <table class="display tablescroll" id="tblVendorPayment" style="width:100%">
+                                        <thead style="cursor:pointer" class=" nowrap">
                                             <tr>
                                                 <td style='min-width:70px;'>#Action</td>
                                                 <td style='min-width:100px;'>Event ID</td>
@@ -297,6 +270,11 @@
         $(function () {
             $('#tblVendorPayment').DataTable({
                 "bPaginate": false,
+                scrollY: '48vh',
+                scrollCollapse: true,
+                scrollX: true,
+                paging: false,
+
                 footerCallback: function (row, data, start, end, display) {
                     var api = this.api();
                     // Remove the formatting to get integer data for summation

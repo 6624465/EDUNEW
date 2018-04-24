@@ -30,21 +30,21 @@
 }
 @{
     var listMonths = new List<SelectListItem>()
-                                          {
-                                           new SelectListItem {Text = "All",   Value = "0"},
-                                           new SelectListItem {Text = "January",   Value = "1"},
-                                           new SelectListItem {Text = "February", Value = "2"},
-                                           new SelectListItem {Text = "March", Value = "3"},
-                                           new SelectListItem {Text = "April",   Value = "4"},
-                                           new SelectListItem {Text = "May", Value = "5"},
-                                           new SelectListItem {Text = "June", Value = "6"},
-                                           new SelectListItem {Text = "July",   Value = "7"},
-                                           new SelectListItem {Text = "August", Value = "8"},
-                                           new SelectListItem {Text = "September", Value = "9"},
-                                           new SelectListItem {Text = "October",   Value = "10"},
-                                           new SelectListItem {Text = "November", Value = "11"},
-                                           new SelectListItem {Text = "December", Value = "12"}
-                                       };
+                                  {
+                                   new SelectListItem {Text = "All",   Value = "0"},
+                                   new SelectListItem {Text = "January",   Value = "1"},
+                                   new SelectListItem {Text = "February", Value = "2"},
+                                   new SelectListItem {Text = "March", Value = "3"},
+                                   new SelectListItem {Text = "April",   Value = "4"},
+                                   new SelectListItem {Text = "May", Value = "5"},
+                                   new SelectListItem {Text = "June", Value = "6"},
+                                   new SelectListItem {Text = "July",   Value = "7"},
+                                   new SelectListItem {Text = "August", Value = "8"},
+                                   new SelectListItem {Text = "September", Value = "9"},
+                                   new SelectListItem {Text = "October",   Value = "10"},
+                                   new SelectListItem {Text = "November", Value = "11"},
+                                   new SelectListItem {Text = "December", Value = "12"}
+                               };
 }
 <style>
     .bordertop {
@@ -77,25 +77,13 @@
     .action {
         width: 50px;
     }
-   table tbody, table thead {
-        display: block;
+    table {
+        font-weight: bold;
     }
 
-    table tbody {
-        max-height: 730px;
-        overflow: auto;
-    }
-    @@media only screen and (max-width : 1366px) {
-        table tbody {
-            max-height: 340px;
-            overflow: auto;
-        }
-    }
-    @@media only screen and (max-width : 720px) {
-        table tbody {
-            max-height: 250px;
-            overflow: auto;
-        }
+    thead > tr > td {
+        font-weight: bold;
+        color: blue;
     }
 </style>
 <div class="page">
@@ -134,76 +122,74 @@
                     <hr />
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="css10 table-responsive">
-                                <table class="table-bordered tblSearch" id="tnlTrainingConfirmation" style="width:100%">
-                                    <thead style="cursor:pointer">
+                            <table class="display tablescroll" style="width:100%">
+                                <thead style="cursor:pointer" class="nowrap">
+                                    <tr>
+                                        @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
+                                        {
+                                            <td style='min-width:66px; '>#Action</td>
+                                        }
+                                        <td style='min-width:100px;'>Event ID</td>
+                                        <td style='min-width:100px;'>Country Name</td>
+                                        <td style='min-width:100px;'>Product Name</td>
+                                        <td style='min-width:300px;'>Course Name</td>
+                                        <td style='min-width:100px;'>No Of Students</td>
+                                        <td style='min-width:80px;'>Type</td>
+                                        <td style='min-width:100px;' class="center">Start Date</td>
+                                        <td style='min-width:100px;' class="center">End Date</td>
+                                        <td style='min-width:100px;'>Total # of days</td>
+                                        <td style='min-width:150px;'>Trianer Name</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
                                             @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
                                             {
-                                                <td style='min-width:66px; '>#Action</td>
+                                                <td style='min-width:66px;'>
+                                                    <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
+                                                    <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
+
+                                                </td>
                                             }
-                                            <td style='min-width:100px;'>Event ID</td>
-                                            <td style='min-width:100px;'>Country Name</td>
-                                            <td style='min-width:100px;'>Product Name</td>
-                                            <td style='min-width:480px;'>Course Name</td>
-                                            <td style='min-width:100px;'>No Of Students</td>
-                                            <td style='min-width:80px;'>Type</td>
-                                            <td style='min-width:100px;' class="center">Start Date</td>
-                                            <td style='min-width:100px;' class="center">End Date</td>
-                                            <td style='min-width:100px;'>Total # of days</td>
-                                            <td style='min-width:150px;'>Trianer Name</td>
+                                            <td style='min-width:100px;'>
+                                                @(item.TrainingConfirmationID)
+                                            </td>
+                                            <td style='min-width:100px;'>
+                                                @item.CountryName
+                                            </td>
+                                            <td style='min-width:100px;'>
+                                                @item.ProductName
+                                            </td>
+                                            <td style="min-width:300px; max-width:300px;">
+
+                                                @item.CourseName
+
+
+                                            </td>
+                                            <td style='min-width:100px;' class="center">
+                                                @item.NoOfStudents
+                                            </td>
+                                            <td style='min-width:80px;'>
+                                                @TypeColumn(item.Private, item.Public, item.LVC)
+                                            </td>
+                                            <td style='min-width:100px;' class="center">
+                                                @validateDate(item.StartDate)
+                                            </td>
+                                            <td style='min-width:100px;' class="center">
+                                                @validateDate(item.EndDate)
+                                            </td>
+                                            <td style='min-width:100px;' class="center">
+                                                @ConvertToInt64(item.TotalNoOfDays)
+                                            </td>
+                                            <td style='min-width:150px;'>
+                                                @item.TrianerName
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "REGIONAL")
-                                                {
-                                                    <td style='min-width:66px;'>
-                                                        <button class="btn btn-xs btn-success waves-effect" onclick="EditTrainerConfirmation(@item.Id)"><i class="fa fa-pencil-square-o" style="padding-left: 5px;"></i></button>
-                                                        <button class="btn btn-xs btn-danger waves-effect" onclick="DeletetrainingConf(@item.Id)"><i class="fa fa-trash-o" style="padding-left: 5px;"></i></button>
-
-                                                    </td>
-                                                }
-                                                <td style='min-width:100px;'>
-                                                    @(item.TrainingConfirmationID)
-                                                </td>
-                                                <td style='min-width:100px;'>
-                                                    @item.CountryName
-                                                </td>
-                                                <td style='min-width:100px;'>
-                                                    @item.ProductName
-                                                </td>
-                                                <td style="min-width:480px; max-width:480px;">
-
-                                                    @item.CourseName
-
-
-                                                </td>
-                                                <td style='min-width:100px;' class="center">
-                                                    @item.NoOfStudents
-                                                </td>
-                                                <td style='min-width:80px;'>
-                                                    @TypeColumn(item.Private, item.Public, item.LVC)
-                                                </td>
-                                                <td style='min-width:100px;' class="center">
-                                                    @validateDate(item.StartDate)
-                                                </td>
-                                                <td style='min-width:100px;' class="center">
-                                                    @validateDate(item.EndDate)
-                                                </td>
-                                                <td style='min-width:100px;' class="center">
-                                                    @ConvertToInt64(item.TotalNoOfDays)
-                                                </td>
-                                                <td style='min-width:150px;'>
-                                                    @item.TrianerName
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -225,6 +211,13 @@
     <script type="text/javascript">
         $(function () {
             $('#liTrainingConfirmationList').addClass('active');
+
+            $('.tablescroll').DataTable({
+                scrollY: '50vh',
+                scrollCollapse: true,
+                scrollX: true,
+                paging: false
+            });
         });
         function TrainerConfirmation() {
             debugger;
@@ -374,42 +367,29 @@
             }
             else {
                 EnabledExamOrVocherFieldsFileds();
-
-                $('#rdoPublic').prop('checked', true);
+                debugger;
+                    $('#rdoPublic').prop('checked', true);
             }
 
         }
 
         function DisbledExamOrVocherFields() {
             debugger;
-            //$('#rdoPrivate').prop('checked', false);
-            //$('#rdoPublic').prop('checked', false);
-            //$('#rdoPublic').prop('checked', false);
-            //$('#StartDate').val('');
-            //$('#EndDate').val('');
             $('#TotalNoOfDays').val('');
             $('#TrianerId').val('');
-            //$('#rdoPrivate').attr('disabled', 'disabled');
-            //$('#rdoPublic').attr('disabled', 'disabled');
-            //$('#rdoLvc').attr('disabled', 'disabled');
-            //$('#StartDate').attr('disabled', 'disabled');
-            //$('#EndDate').attr('disabled', 'disabled');
             $('#TotalNoOfDays').attr('disabled', 'disabled');
             $('#TrianerId').attr('disabled', 'disabled');
         }
 
         function EnabledExamOrVocherFieldsFileds() {
             debugger;
-            //$('#rdoPrivate').removeAttr('disabled');
-            //$('#rdoPublic').removeAttr('disabled');
-            //$('#rdoLvc').removeAttr('disabled');
-            //$('#StartDate').removeAttr('disabled');
-            //$('#EndDate').removeAttr('disabled');
             $('#TotalNoOfDays').removeAttr('disabled');
             $('#TrianerId').removeAttr('disabled');
         }
 
         function CourseNameIsLabRental() {
+            debugger;
+
             var coursetext = $("#Course").find("option:selected").text();
             if (coursetext.toLowerCase().indexOf("rental") != -1) {
                 $('#rdoPrivate').prop('checked', true)
@@ -417,7 +397,8 @@
                 $('#rdoLvc').prop('checked', false)
             }
             else {
-                $('#rdoPublic').prop('checked', true);
+                debugger;
+                    $('#rdoPublic').prop('checked', true);
             }
 
         }

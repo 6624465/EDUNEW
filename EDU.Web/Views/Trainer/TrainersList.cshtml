@@ -19,27 +19,13 @@
 }
 <style>
 
-     table tbody, table thead{
-        display: block;
+    table {
+        font-weight: bold;
     }
 
-    table tbody {
-        max-height: 700px;
-        overflow: auto;
-    }
-
-    @@media only screen and (max-width : 1366px) {
-        table tbody {
-            max-height: 340px;
-            overflow: auto;
-        }
-    }
-
-    @@media only screen and (max-width : 720px) {
-        table tbody {
-            max-height: 250px;
-            overflow: auto;
-        }
+    thead > tr > td {
+        font-weight: bold;
+        color: blue;
     }
 </style>
 <div class="page">
@@ -61,7 +47,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table-bordered tblSearch" id="tblTrainer" style="width:100%">
+                                <table class="display tablescroll nowrap" id="tblTrainer" style="width:100%">
                                     <thead style="cursor:pointer">
                                         <tr>
                                             <td style='min-width:65px;'>#Action</td>
@@ -153,6 +139,12 @@
     <script type="text/javascript">
         $(function () {
             $('#liTrainersList').addClass('active');
+            $('.tablescroll').DataTable({
+                scrollY: '55vh',
+                scrollCollapse: true,
+                scrollX: true,
+                paging: false
+            });
         });
         function PrintTrainerList() {
             var country = null;

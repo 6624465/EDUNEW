@@ -61,8 +61,8 @@
                         else
                         {
                             @Html.DropDownListFor(x => x.Course,
-                    new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
-                    "Select Course", new { @class = "form-control input-sm", onchange = "ExamOrVocherDisbledFileds()", @style = "width:100%" })
+                                new SelectList((List<EZY.EDU.Contract.CourseVm>)ViewData["CourseData"], "Id", "CourseName"),
+                                "Select Course", new { @class = "form-control input-sm", onchange = "ExamOrVocherDisbledFileds();CourseNameIsLabRental()", @style = "width:100%" })
                         }
 
 
@@ -94,10 +94,6 @@
                         @Html.HiddenFor(x => x.Private)
                         @Html.HiddenFor(x => x.Public)
                         @Html.HiddenFor(x => x.LVC)
-                        @*<label>Private</label>&nbsp;&nbsp;
-                            @Html.CheckBoxFor(x => x.Private, new { name = "type" })
-                            <label>Public</label>&nbsp;&nbsp;
-                            @Html.CheckBoxFor(x => x.Public, new { name = "type" })*@
                     </div>
                 </div>
             </div>
@@ -108,7 +104,7 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="StartDt">
-                            @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control input-sm dtCss" })
+                            @Html.TextBoxFor(x => x.StartDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm dtCss" })
                             <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
@@ -123,7 +119,7 @@
                     </label>
                     <div class="col-md-6">
                         <div class="input-group date" id="EndDt">
-                            @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control input-sm dtCss" })
+                            @Html.TextBoxFor(x => x.EndDate, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm dtCss" })
                             <span class="input-group-addon input-sm">
                                 <i class="ion ion-calendar"></i>
                             </span>
@@ -183,7 +179,7 @@
             }
         }
 
-        $('#StartDt').datetimepicker({
+        $('#StartDt').datepicker({
             icons: {
                 time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',
@@ -191,10 +187,11 @@
                 down: 'fa fa-arrow-down'
                 },
             //minDate: new Date(),
-            format: 'DD/MM/YYYY'
+            format: 'dd/mm/yyyy',
+            autoclose: true
         });
 
-        $('#EndDt').datetimepicker({
+        $('#EndDt').datepicker({
             useCurrent: false, //Important! See issue #1075
             icons: {
                 time: 'fa fa-clock-o',
@@ -202,12 +199,14 @@
                 up: 'fa fa-arrow-up',
                 down: 'fa fa-arrow-down'
             },
-            format: 'DD/MM/YYYY'
+            format: 'dd/mm/yyyy',
+            autoclose: true
         });
 
-        $("#StartDt").on("dp.change", function (e) {
+        $('#StartDt').change(function () {
+        //$("#StartDt").on("dp.change", function (e) {
             $('#EndDate').val('');
-            //$('#EndDt').data("DateTimePicker").minDate(e.date);
+            //$('#EndDt').data("DatePicker").minDate(e.date);
         });
 
         @if (Model.Id != -1)
@@ -225,7 +224,8 @@
             }
                 //$('#Product').attr('disabled', 'disabled');
                 //$('#Course').attr('disabled', 'disabled');
-                ProductChangeOnLoad();
+                debugger
+                //ProductChangeOnLoad();
                 var product = $('#Product').find("option:selected").text();
                 var coursetext = $("#Course").find("option:selected").text();
 

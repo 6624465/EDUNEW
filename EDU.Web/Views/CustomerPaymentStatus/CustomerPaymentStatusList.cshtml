@@ -82,44 +82,13 @@
         /*font-family: 'Bebas Neue'*/
     }
 
-    .table tfoot {
-        display: block;
-    }
-
-    #tblCustomerPayment {
+    table {
         font-weight: bold;
     }
 
-        #tblCustomerPayment td {
-            padding: 2px;
-        }
-
-        #tblCustomerPayment thead {
-            background-color: powderblue;
-            font-weight: bold;
-            color: blue;
-        }
-    table tbody, table thead, tfoot {
-        display: block;
-    }
-
-    table tbody {
-        max-height: 630px;
-        overflow: auto;
-    }
-
-    @@media only screen and (max-width : 1366px) {
-        table tbody {
-            max-height: 320px;
-            overflow: auto;
-        }
-    }
-
-    @@media only screen and (max-width : 720px) {
-        table tbody {
-            max-height: 250px;
-            overflow: auto;
-        }
+    thead > tr > td {
+        font-weight: bold;
+        color: blue;
     }
 </style>
 @functions {
@@ -204,8 +173,7 @@
                         <hr />
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table-bordered" id="tblCustomerPayment" style="white-space:nowrap;width:100%">
+                                    <table class="display tablescroll nowrap" id="tblCustomerPayment" style="width:100%">
                                         <thead style="cursor:pointer">
                                             <tr>
                                                 @if (Session["RoleCode"].ToString() == "ADMIN" || Session["RoleCode"].ToString() == "FINANCE")
@@ -296,7 +264,6 @@
                                             </tr>
                                         </tfoot>
                                     </table>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -318,6 +285,10 @@
     <script type="text/javascript">
         $('#tblCustomerPayment').DataTable({
             "bPaginate": false,
+            scrollY: '48vh',
+            scrollCollapse: true,
+            scrollX: true,
+            paging: false,
 
             footerCallback: function (row, data, start, end, display) {
                 var api = this.api();

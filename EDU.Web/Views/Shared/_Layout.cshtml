@@ -23,11 +23,13 @@
 
     <!-- Css/Less Stylesheets -->
     <link href="@Url.Content("~/Css/bootstrap.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Css/bootstrap-datetimepicker.css")" rel="stylesheet" />
+    @*<link href="@Url.Content("~/Css/bootstrap-datetimepicker.css")" rel="stylesheet" />*@
+    <link href="@Url.Content("~/Scripts/bootstrap-datepicker.css")" rel="stylesheet" />
     <link rel="stylesheet" href="@Url.Content("~/Css/main.min.css")">
     <link href="@Url.Content("~/Css/style.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Css/sitecss.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Scripts/select2.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Scripts/jquery.dataTables.min.css")" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/jquery-2.2.3.min.js")"></script>
     <style type="text/css">
         .icheckbox_flat {
@@ -45,22 +47,24 @@
         .font20 {
             font-size: 20px !important;
         }
-        
+
         span.error {
             outline: none;
             border-bottom-color: #F44336 !important;
         }
-        .tblSearch {
-        font-weight: bold;
-    }
 
-    .tblSearch td {
-            padding: 2px;
+        .tblSearch {
+            font-weight: bold;
         }
+
+            .tblSearch td {
+                padding: 2px;
+            }
+
             .tblSearch thead {
-                background-color:powderblue;
-                font-weight:bold;
-                color:blue;
+                background-color: powderblue;
+                font-weight: bold;
+                color: blue;
             }
     </style>
     <style>
@@ -352,14 +356,15 @@
     <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
 
     <script src="@Url.Content("~/Scripts/Charts/canvasjs.min.js")"></script>
-    
+
     @*<script src="@Url.Content("~/Scripts/Core/vendors.js")"></script>*@
     @*<script src="@Url.Content("~/Scripts/Core/d3.min.js")"></script>
         <script src="@Url.Content("~/Scripts/Core/c3.min.js")"></script>*@
     @*<script src="@Url.Content("~/Scripts/icheck.js")"></script>*@
     <script src="@Url.Content("~/Scripts/bootstrap.js")"></script>
     <script src="@Url.Content("~/Scripts/moment.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap-datetimepicker.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/bootstrap-datetimepicker.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
     <script src="@Url.Content("~/Scripts/Core/screenfull.js")"></script>
     <script src="@Url.Content("~/Scripts/Core/perfect-scrollbar.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Core/waves.min.js")"></script>
@@ -369,7 +374,7 @@
     <script src="@Url.Content("~/Scripts/Core/index.init.js")"></script>
     <script src="@Url.Content("~/Scripts/layout.js")"></script>
     <script src="@Url.Content("~/Scripts/select2.full.min.js")"></script>
-    <script src="@Url.Content("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.min.js")"></script>
 
     @RenderSection("SectionScripts", false)
     <script type="text/javascript">
@@ -379,6 +384,8 @@
         });
 
         $(function () {
+
+           
 
             //$('input[type=search]').addClass('form-control input-sm');
             $('.waves-effect li a').on('click', function () {
@@ -401,6 +408,7 @@
             $('input.column_filter').on('keyup click', function () {
                 filterColumn($(this).parents('tr').attr('data-column'));
             });
+
         });
 
         function filterGlobal() {
