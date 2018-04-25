@@ -14,6 +14,8 @@
                                     revenueData.Sum(x => x.CoursewareMaterialAmount) +
                                     revenueData.Sum(x => x.MiscExpensesAmount) +
                                     revenueData.Sum(x => x.TrainerClaimsAmount));
+    var expensePercent = ((expensesdata * 100) / revenueData.Sum(x => x.TotalRevenueAmount)).Value.ToString("#0.00");
+    var profitPercent = ((revenueData.Sum(x => x.GrossProfit) * 100) / revenueData.Sum(x => x.TotalRevenueAmount)).Value.ToString("#0.00");
 }
 <style>
     .round {
@@ -38,7 +40,7 @@
         height: 140px;
         border-radius: 50%;
         font-size: 10pt;
-        font-weight:bold;
+        font-weight: bold;
         color: #fff;
         line-height: 140px;
         text-align: center;
@@ -57,6 +59,21 @@
         text-align: center;
         background: #ff6a00;
         margin-top: 25px
+    }
+
+    .popover {
+        color: black;
+        min-width: 50px;
+    }
+
+    .popover-title {
+        background-color: #F7F7F7;
+        border-bottom: 1px solid #EBEBEB;
+        border-radius: 5px 5px 0 0;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        margin: 0;
     }
 </style>
 <div class="page page-forms-elements">
@@ -103,55 +120,69 @@
                                 <div class="row css10" id="dvProducts">
                                     <div class="col-md-12">
                                         <div style="float:left; padding-right:2%">
-                                            <span style="font-size:7pt; text-align:center; display:block; font-weight:bold; color:red">TOTAL REVENUE<br/></span>
-                                            <div class="circle">$@Convert.ToInt64(revenueData.Sum(x => x.TotalRevenueAmount))</div>
+                                            <span style="font-size:7pt; text-align:center; display:block; font-weight:bold; color:red">TOTAL REVENUE<br /></span>
+                                            <div class="circle">
+                                                $@Convert.ToInt64(revenueData.Sum(x => x.TotalRevenueAmount))
+                                            </div>
                                         </div>
                                         <div style="float:left; padding-right:2%">
                                             <span style="font-size:7pt; text-align:center; display:block; font-weight:bold; color:red">TOTAL EXPENSES</span>
-                                            <div class="circle1">$@expensesdata</div>
-                                        </div>
+                                            <div class="circle1">
+                                                <a style="cursor:pointer;text-decoration:underline; color:white">
+                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="" data-content="@expensePercent%"
+                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">$@expensesdata</span>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         <div style="float:left">
                                             <span style="font-size:7pt; text-align:center; display:block; font-weight:bold; color:red">GROSS MARGIN</span>
-                                            <div class="circle2">$@Convert.ToInt64(revenueData.Sum(x => x.GrossProfit))</div>
+                                            <div class="circle2">
+                                                <a style="cursor:pointer;text-decoration:underline; color:white" ">
+                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="" data-content="@profitPercent%"
+                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">$@Convert.ToInt64(revenueData.Sum(x => x.GrossProfit))</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-6 css10" id="dvBangladesh">
-                                        <div id="jqChartdoughnut0" style="border:1px solid gray"></div>
-                                    </div>
-                                    <div class="col-md-6 css10" id="dvCombodia">
-                                        <div id="jqChartdoughnut1" style="border:1px solid gray"></div>
-                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <div class="col-md-6 css10" id="dvBangladesh">
+                                                <div id="jqChartdoughnut0" style="border:1px solid gray"></div>
+                                            </div>
+                                            <div class="col-md-6 css10" id="dvCombodia">
+                                                <div id="jqChartdoughnut1" style="border:1px solid gray"></div>
+                                            </div>
 
-                                    <div class="col-md-6 css10" id="dvMyanmar">
-                                        <div id="jqChartdoughnut4" style="border:1px solid gray"></div>
-                                    </div>
-                                    <div class="col-md-6 css10" id="dvSrilanka">
-                                        <div id="jqChartdoughnut8" style="border:1px solid gray"></div>
-                                    </div>
+                                            <div class="col-md-6 css10" id="dvMyanmar">
+                                                <div id="jqChartdoughnut4" style="border:1px solid gray"></div>
+                                            </div>
+                                            <div class="col-md-6 css10" id="dvSrilanka">
+                                                <div id="jqChartdoughnut8" style="border:1px solid gray"></div>
+                                            </div>
 
-                                    <div class="col-md-6 css10" id="dvPakistan">
-                                        <div id="jqChartdoughnut5" style="border:1px solid gray"></div>
-                                    </div>
-                                    <div class="col-md-6 css10" id="dvPhillipines">
-                                        <div id="jqChartdoughnut6" style="border:1px solid gray"></div>
-                                    </div>
+                                            <div class="col-md-6 css10" id="dvPakistan">
+                                                <div id="jqChartdoughnut5" style="border:1px solid gray"></div>
+                                            </div>
+                                            <div class="col-md-6 css10" id="dvPhillipines">
+                                                <div id="jqChartdoughnut6" style="border:1px solid gray"></div>
+                                            </div>
 
-                                    <div class="col-md-6 css10" id="dvVietnam">
-                                        <div id="jqChartdoughnut9" style="border:1px solid gray"></div>
-                                    </div>
-                                    <div class="col-md-6 css10" id="dvLaos">
-                                        <div id="jqChartdoughnut3" style="border:1px solid gray"></div>
-                                    </div>
+                                            <div class="col-md-6 css10" id="dvVietnam">
+                                                <div id="jqChartdoughnut9" style="border:1px solid gray"></div>
+                                            </div>
+                                            <div class="col-md-6 css10" id="dvLaos">
+                                                <div id="jqChartdoughnut3" style="border:1px solid gray"></div>
+                                            </div>
 
-                                    <div class="col-md-6 css10" id="dvSingapore">
-                                        <div id="jqChartdoughnut7" style="border:1px solid gray"></div>
-                                    </div>
-                                    <div class="col-md-6 css10" id="dvIndia">
-                                        <div id="jqChartdoughnut2" style="border:1px solid gray"></div>
+                                            <div class="col-md-6 css10" id="dvSingapore">
+                                                <div id="jqChartdoughnut7" style="border:1px solid gray"></div>
+                                            </div>
+                                            <div class="col-md-6 css10" id="dvIndia">
+                                                <div id="jqChartdoughnut2" style="border:1px solid gray"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -160,13 +191,11 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-</div>
-@section SectionScripts {
+        <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        </div>
+        @section SectionScripts {
 
-    <script lang="javascript" type="text/javascript">
+            <script lang="javascript" type="text/javascript">
 
         function ChangeMonth() {
             window.location = '@Url.Action("Achievement", "Dashboard", new { year = "" })' + '?year=' + $('#Year').val();
@@ -392,7 +421,7 @@
                             '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
                         ],
                         labels: {
-                            stringFormat: '%.1f%%',
+                            stringFormat: '%.2f%%',
                             valueType: 'percentage',
                             font: '12px sans-serif',
                             fillStyle: 'black'
@@ -532,7 +561,7 @@
                             '#00FF00', '#0000CD', '#FF4500', '#800080', '#9ACD32', '#008080',
                         ],
                         labels: {
-                            stringFormat: '%.1f%%',
+                            stringFormat: '%.2f%%',
                             valueType: 'percentage',
                             font: '12px sans-serif',
                             fillStyle: 'black'
@@ -659,5 +688,12 @@
         }*@
 
         });
-    </script>
-}
+        function mouseleave(el) {
+            $(el).popover("hide");
+        }
+
+        function mouseover(el) {
+            $(el).popover("show");
+        }
+            </script>
+        }
