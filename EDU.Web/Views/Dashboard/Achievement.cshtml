@@ -14,8 +14,8 @@
                                     revenueData.Sum(x => x.CoursewareMaterialAmount) +
                                     revenueData.Sum(x => x.MiscExpensesAmount) +
                                     revenueData.Sum(x => x.TrainerClaimsAmount));
-    var expensePercent = ((expensesdata * 100) / revenueData.Sum(x => x.TotalRevenueAmount)).Value.ToString("#0.00");
-    var profitPercent = ((revenueData.Sum(x => x.GrossProfit) * 100) / revenueData.Sum(x => x.TotalRevenueAmount)).Value.ToString("#0.00");
+    var expensePercent = revenueData.Sum(x => x.TotalRevenueAmount) == 0 ? "0.00" : ((expensesdata * 100) / revenueData.Sum(x => x.TotalRevenueAmount)).Value.ToString("#0.00");
+    var profitPercent = revenueData.Sum(x => x.TotalRevenueAmount) == 0 ? "0.00" : ((revenueData.Sum(x => x.GrossProfit) * 100) / revenueData.Sum(x => x.TotalRevenueAmount)).Value.ToString("#0.00");
 }
 <style>
     .round {
@@ -134,15 +134,15 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                        <div style="float:left">
-                                            <span style="font-size:7pt; text-align:center; display:block; font-weight:bold; color:red">GROSS MARGIN</span>
-                                            <div class="circle2">
-                                                <a style="cursor:pointer;text-decoration:underline; color:white" ">
-                                                    <span data-placement="top" data-toggle="popover" data-html="true" data-title="" data-content="@profitPercent%"
-                                                          onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">$@Convert.ToInt64(revenueData.Sum(x => x.GrossProfit))</span>
-                                                    </a>
+                                            <div style="float:left">
+                                                <span style="font-size:7pt; text-align:center; display:block; font-weight:bold; color:red">GROSS MARGIN</span>
+                                                <div class="circle2">
+                                                    <a style="cursor:pointer;text-decoration:underline; color:white" ">
+                                                        <span data-placement="top" data-toggle="popover" data-html="true" data-title="" data-content="@profitPercent%"
+                                                              onmouseover="mouseover(this)" onmouseout="mouseleave(this)" data-original-title="" title="">$@Convert.ToInt64(revenueData.Sum(x => x.GrossProfit))</span>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                         </div>
                                     </div>
